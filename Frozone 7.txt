@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Frozone — P+ LiveOps Image Cropper (Folder Bulk)</title>
+<style>
+  :root{
+    --bg1:#edf6ff; --bg2:#eef1ff; --ink:#0f172a; --muted:#64748b; --brand:#0ea5e9; --brand2:#6366f1; --accent:#f43f5e;
+    --card:#ffffffd9; --border:#e2e8f0; --shadow:0 10px 30px rgba(2,6,23,.08);
+    --radius:18px; --radius-sm:12px; --headerH:64px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color:var(--ink);
+    background: linear-gradient(180deg,var(--bg1),var(--bg2) 55%, #fff)}
+  .wrap{max-width:1280px; margin:0 auto; padding:16px}
+
+  header{position:sticky; top:0; z-index:40; backdrop-filter: blur(10px); background:#ffffffc7; border-bottom:1px solid var(--border)}
+  header .inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 16px}
+  .brand{display:flex; align-items:center; gap:12px}
+  .logo{width:40px; height:40px; border-radius:50%; overflow:hidden; box-shadow:0 6px 18px rgba(14,165,233,.35); display:grid; place-items:center; background:#fff}
+  .logo img{width:100%; height:100%; object-fit:cover}
+  .title{display:flex; flex-direction:column}
+  .title h1{font-size:20px; line-height:1.2; margin:0}
+  .title .sub{font-size:13px; color:var(--muted)}
+  .right-head{display:flex; flex-direction:column; align-items:flex-end; text-align:right}
+  .right-head .team{font-weight:600}
+  .right-head .by{font-size:12px; color:var(--muted)}
+  .right-head a{color:var(--muted); text-decoration:none}
+
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:12px; background:#fff; cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; border-color:transparent}
+  .btn.ghost{background:transparent; border-color:var(--border)}
+  .btn.small{padding:6px 10px; border-radius:10px; font-size:12px}
+  .btn.icon{width:36px; height:36px; padding:0; display:inline-grid; place-items:center}
+  .btn.danger{border-color:#fecaca; color:#b91c1c; background:#fff}
+  .btn.danger:hover{background:#fff5f5}
+  .btn:disabled{opacity:.6; cursor:not-allowed}
+
+  input[type="range"]{width:100%}
+  input[type="search"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px}
+
+  /* Minimal, polished switches */
+  label.switch{display:inline-flex; align-items:center; gap:10px; font-size:14px; user-select:none}
+  .switch input{position:absolute; opacity:0; width:0; height:0}
+  .switch .tgl{position:relative; width:48px; height:28px; background:#eef2f7; border:1px solid var(--border); border-radius:999px; transition:.25s ease; box-shadow:inset 0 1px 2px rgba(15,23,42,.06)}
+  .switch .knob{position:absolute; top:2px; left:2px; width:24px; height:24px; background:#fff; border-radius:50%; box-shadow:0 2px 6px rgba(15,23,42,.18); transition:.25s cubic-bezier(.2,.8,.2,1)}
+  .switch input:checked + .tgl{background:linear-gradient(135deg,var(--brand),var(--brand2)); border-color:transparent; box-shadow:0 2px 8px rgba(99,102,241,.25)}
+  .switch input:checked + .tgl .knob{transform:translateX(20px)}
+  .switch .lbl{color:var(--ink); opacity:.85}
+
+  main{display:grid; grid-template-columns: 1fr 1.25fr; gap:18px; padding:16px}
+  @media (max-width: 1000px){ main{grid-template-columns:1fr} .right-head{align-items:flex-start; text-align:left} }
+
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); display:flex; flex-direction:column;}
+  .panel.sticky{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);}
+  .panel .pad{padding:16px}
+  .panel .scroll{overflow:auto; padding:0 16px 16px}
+
+  .section{padding:16px 0; border-top:1px solid var(--border)}
+  .section:first-child{border-top:none}
+  .section-title{display:flex; align-items:center; gap:10px; font-weight:700; margin:0 0 10px 0; text-align:left}
+  .badge{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; font-size:13px; box-shadow:var(--shadow)}
+
+  .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  .stack{display:grid; gap:10px; text-align:left}
+  #formatRow{display:grid; gap:12px; text-align:left}
+  .muted{color:var(--muted)}
+
+  .chip{padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:#fff; font-size:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:280px; box-shadow:0 4px 10px rgba(2,6,23,.05); text-align:left; cursor:pointer}
+  .chip.active{border-color:var(--brand); background:#e6f2ff}
+  .chip .meta{font-size:12px; color:var(--muted)}
+  .chip .chipInner{display:flex; align-items:center; gap:10px}
+
+  .iconBox{stroke:#475569; fill:none; stroke-width:2; stroke-dasharray:4 4; rx:5; ry:5}
+
+  .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);} 
+  .preview-head{display:flex; align-items:center; justify-content:space-between; padding:16px}
+  .stage{position:relative; flex:1; background:#f8fafc; border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex}
+  .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:14px; background:#ffffff; border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px #fff}
+
+  .fileBadge{position:absolute; top:10px; left:10px; z-index:6}
+
+  .image-layer{position:absolute; left:50%; top:50%; transform-origin:center center; cursor:grab;}
+  .image-layer.dragging{cursor:grabbing}
+  .image-layer img{display:block; user-select:none; pointer-events:none}
+
+  .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
+
+  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:visible;}
+  .frostBg{position:absolute; inset:0; background:radial-gradient(ellipse 156.89% 179.02% at 10.05% 50%, rgba(255,255,255,0) 27%, white 95%), rgba(255,255,255,0.08); box-shadow:inset 0 2px 0 rgba(255,255,255,.10); backdrop-filter:blur(27.5px)}
+  .veil{position:absolute; inset:0; background:rgba(255,255,255,0.3);}
+  .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
+  .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
+  .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
+
+  .playWrap{position:absolute; display:none; pointer-events:none}
+  .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(28px); background:
+    linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.18)),
+    rgba(0,0,0,0.22);
+  }
+  .playTri{position:absolute; left:50%; top:50%; transform:translate(-44.5%,-50%)}
+
+  .sqLogo,.vertLogo{position:absolute; display:none; pointer-events:none}
+
+  .kv{display:flex; gap:8px; align-items:center}
+  .kv .k{width:120px; color:var(--muted)}
+  .kv .v{font-weight:600}
+
+  .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); max-width:360px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+
+  .libWrap{display:grid; gap:8px}
+  .libScroller{display:flex; gap:10px; overflow-x:auto; padding:8px; border:1px solid var(--border); border-radius:12px; background:#fff}
+  .libItem{flex:0 0 auto; display:grid; gap:6px; justify-items:center; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:#fff; box-shadow:0 1px 6px rgba(2,6,23,.04); cursor:pointer}
+  .libItem img{height:18px; width:auto; object-fit:contain}
+  .libItem .cap{font-size:11px; color:var(--muted)}
+  .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
+
+  .loading{position:fixed; inset:0; background:rgba(15,23,42,.35); display:none; align-items:center; justify-content:center; z-index:1000}
+  .loading .card{min-width:280px; max-width:420px; background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; text-align:center}
+  .loading .title{font-weight:700; margin-bottom:6px}
+  .spinner{width:36px; height:36px; border-radius:50%; border:4px solid #e5e7eb; border-top-color:#6366f1; animation:spin 1s linear infinite; margin:8px auto}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .bar{height:8px; background:#eef2ff; border-radius:999px; overflow:hidden}
+  .bar > span{display:block; height:100%; width:0%; background:linear-gradient(135deg,var(--brand),var(--brand2)); border-radius:999px; transition:width .2s}
+</style>
+</head>
+<body>
+  <header id="appHeader">
+    <div class="wrap inner">
+      <div class="brand">
+        <div class="logo"><img id="appLogo" alt="Frozone" src="https://i.postimg.cc/QMTckmdX/unnamed-1-1.png"></div>
+        <div class="title">
+          <h1>Frozone</h1>
+          <div class="sub">Design frosted-bar creatives in seconds</div>
+        </div>
+      </div>
+      <div class="right-head">
+        <div class="team">LiveOps Team</div>
+        <div class="by">made by <a href="https://www.pratov.site" target="_blank" rel="noopener">Beka Pratov</a></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Left: SETTINGS -->
+    <section class="panel sticky">
+      <div class="pad">
+        <div class="kv"><div class="k">Output</div><div class="v" id="outMeta">—</div></div>
+        <div class="kv"><div class="k">Batch</div><div class="v" id="batchMeta">0 / 0</div></div>
+      </div>
+
+      <div class="scroll">
+        <!-- Step 1: Upload -->
+        <div class="section">
+          <div class="section-title"><span class="badge">1</span> Upload image(s)</div>
+          <div class="row">
+            <label class="btn primary" title="Upload image">
+              Upload image
+              <input id="file" type="file" accept="image/*" style="display:none" />
+            </label>
+            <label class="btn ghost" title="Upload folder">
+              Upload folder
+              <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
+            </label>
+            <!-- filename chip removed from here -->
+            <button class="btn ghost" id="reset">Reset current</button>
+            <button class="btn danger" id="deleteBtn" title="Delete image(s)">Delete</button>
+          </div>
+          <div class="muted" style="margin-top:8px">PNG/JPEG supported. Drag inside preview to reframe. Folder = bulk upload.</div>
+        </div>
+
+        <!-- Step 2: Format -->
+        <div class="section">
+          <div class="section-title"><span class="badge">2</span> Choose format</div>
+          <div class="stack" id="formatRow"></div>
+          <div class="row" id="vertSizeRow" style="display:none; margin-top:8px">
+            <div class="seg" id="vertSizeSeg">
+              <button data-v="L" class="active">L 1080×1920</button>
+              <button data-v="M">M 1080×1440</button>
+              <button data-v="S">S 1080×1080</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Adjust -->
+        <div class="section">
+          <div class="section-title"><span class="badge">3</span> Adjust image</div>
+          <div class="stack">
+            <label>Brightness: <span id="bVal">100</span>%<br/>
+              <input id="brightness" type="range" min="0" max="200" value="100">
+            </label>
+            <label>Saturation: <span id="sVal">100</span>%<br/>
+              <input id="saturation" type="range" min="0" max="200" value="100">
+            </label>
+            <label>Contrast: <span id="cVal">100</span>%<br/>
+              <input id="contrast" type="range" min="0" max="200" value="100">
+            </label>
+            <label>Image Zoom (crop): <span id="imgZoomVal">1.00</span>×<br/>
+              <input id="imgZoom" type="range" min="1" max="4" step="0.01" value="1">
+            </label>
+            <div class="row">
+              <button class="btn" id="flipH">Flip horizontal</button>
+              <button class="btn" id="flipV">Flip vertical</button>
+              <button class="btn" id="rotate">Rotate 90°</button>
+              <span class="muted" id="rotLab">0°</span>
+            </div>
+            <label>Move X (px): <span id="xVal">0</span><br/>
+              <input id="moveX" type="range" min="-0" max="0" value="0">
+            </label>
+            <label>Move Y (px): <span id="yVal">0</span><br/>
+              <input id="moveY" type="range" min="-0" max="0" value="0">
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 4: Frosted bar -->
+        <div class="section" id="frostSection">
+          <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
+          <div class="row" style="gap:16px">
+            <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
+            <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
+            <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add second logo</span></label>
+          </div>
+
+          <div class="stack" style="margin-top:10px">
+            <div class="row">
+              <label class="btn ghost">Upload Logo 1<input id="logo1Input" type="file" accept="image/*" style="display:none"/></label>
+              <div class="seg" id="logo1Seg">
+                <button data-size="S" class="active">S</button>
+                <button data-size="M">M</button>
+                <button data-size="L">L</button>
+              </div>
+              <div class="seg" id="logo1ToneSeg">
+                <button data-tone="orig" class="active">Original</button>
+                <button data-tone="white">White</button>
+                <button data-tone="black">Black</button>
+              </div>
+            </div>
+            <div class="libWrap">
+              <input id="logo1Search" type="search" placeholder="Search partners…" />
+              <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
+            </div>
+          </div>
+
+          <div id="logo2Block" class="stack" style="display:none; margin-top:14px">
+            <div class="row">
+              <label class="btn ghost">Upload Logo 2<input id="logo2Input" type="file" accept="image/*" style="display:none"/></label>
+              <div class="seg" id="logo2Seg">
+                <button data-size="S" class="active">S</button>
+                <button data-size="M">M</button>
+                <button data-size="L">L</button>
+              </div>
+              <div class="seg" id="logo2ToneSeg">
+                <button data-tone="orig" class="active">Original</button>
+                <button data-tone="white">White</button>
+                <button data-tone="black">Black</button>
+              </div>
+              <button class="btn small ghost" id="removeLogo2">Remove Logo 2</button>
+            </div>
+            <div class="libWrap">
+              <input id="logo2Search" type="search" placeholder="Search partners…" />
+              <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
+            </div>
+          </div>
+
+          <div class="stack" style="margin-top:12px">
+            <label id="overlayLabel">White overlay opacity: <span id="overlayAlphaVal">30</span>%<br/>
+              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 4b: Square logo -->
+        <div class="section" id="squareLogoSection" style="display:none">
+          <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
+          <div class="stack">
+            <div class="row">
+              <label class="btn ghost">Square logo<input id="sqLogoInput" type="file" accept="image/*" style="display:none"/></label>
+              <div class="seg" id="sqLogoSeg">
+                <button data-size="S" class="active">S</button>
+                <button data-size="M">M</button>
+                <button data-size="L">L</button>
+              </div>
+              <div class="seg" id="sqLogoToneSeg">
+                <button data-tone="orig" class="active">Original</button>
+                <button data-tone="white">White</button>
+                <button data-tone="black">Black</button>
+              </div>
+              <button class="btn small ghost" id="removeSqLogo">Remove</button>
+            </div>
+            <div class="libWrap">
+              <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
+              <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4c: Vertical logo -->
+        <div class="section" id="verticalLogoSection" style="display:none">
+          <div class="section-title"><span class="badge">4c</span> Vertical logo (top-left)</div>
+          <div class="row" style="gap:16px">
+            <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
+          </div>
+          <div id="vertLogoBlock" class="stack" style="display:none; margin-top:10px">
+            <div class="row">
+              <label class="btn ghost">Vertical logo<input id="vertLogoInput" type="file" accept="image/*" style="display:none"/></label>
+              <div class="seg" id="vertLogoSeg">
+                <button data-size="S" class="active">S</button>
+                <button data-size="M">M</button>
+                <button data-size="L">L</button>
+              </div>
+              <div class="seg" id="vertLogoToneSeg">
+                <button data-tone="orig" class="active">Original</button>
+                <button data-tone="white">White</button>
+                <button data-tone="black">Black</button>
+              </div>
+              <button class="btn small ghost" id="removeVertLogo">Remove</button>
+            </div>
+            <div class="libWrap">
+              <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+              <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Export -->
+        <div class="section">
+          <div class="section-title"><span class="badge">5</span> Export</div>
+          <div class="row" style="justify-content:space-between; gap:12px; flex-wrap:wrap">
+            <button class="btn primary" id="exportBtn" disabled>Export current</button>
+            <button class="btn ghost" id="exportAllBtn" disabled>Export all (ZIP)</button>
+            <div class="chipInfo" id="lastExport" aria-live="polite">—</div>
+          </div>
+          <div class="muted" style="margin-top:6px">Max ~500 KB each. JPG at 1080px.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: PREVIEW -->
+    <section class="panel preview-panel">
+      <div class="preview-head">
+        <div class="row" style="gap:8px">
+          <button class="btn icon" id="prevBtn" title="Previous"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="btn icon" id="nextBtn" title="Next"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="chipInfo" id="batchLabel">0 / 0</div>
+        </div>
+        <div class="row" style="gap:12px">
+          <span class="muted">Preview Zoom</span>
+          <span class="muted"><span id="zoomLabel">1.00</span>×</span>
+          <input id="previewZoom" type="range" min="0.5" max="3" step="0.1" value="1" style="width:160px">
+        </div>
+      </div>
+      <div class="stage">
+        <div class="stage-inner" id="stage">
+          <div id="fileNameTop" class="chipInfo fileBadge">—</div>
+
+          <div class="image-layer" id="imageLayer">
+            <img id="img" alt="uploaded" />
+          </div>
+          <div class="frame" id="frame"></div>
+
+          <div class="frostBar" id="frostBar">
+            <div class="frostBg" id="frostBg"></div>
+            <div class="veil" id="frostVeil"></div>
+            <div class="logoDock" id="logoDockPrev">
+              <img id="logo1Prev" alt="logo 1" style="display:none"/>
+              <div class="logoSep" id="logoSepPrev" style="display:none"></div>
+              <img id="logo2Prev" alt="logo 2" style="display:none"/>
+            </div>
+          </div>
+
+          <div class="playWrap" id="playWrap">
+            <div class="playBg" id="playBg"></div>
+            <div class="playTri" aria-hidden="true">
+              <svg width="72" height="76" viewBox="0 0 59 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 14 L44 31.5 L18 49 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
+              </svg>
+            </div>
+          </div>
+
+          <img id="sqLogoPrev" class="sqLogo" alt="square logo" />
+          <img id="vertLogoPrev" class="vertLogo" alt="vertical logo" />
+        </div>
+      </div>
+      <div class="foot-note">Frosted bar and play badge use a gradient-based mimic for export; preview shows live blur.</div>
+    </section>
+  </main>
+
+  <div class="loading" id="loading">
+    <div class="card">
+      <div class="title" id="loadingTitle">Working…</div>
+      <div id="loadingText" class="muted" style="margin:2px 0 10px 0">Please wait</div>
+      <div class="spinner"></div>
+      <div class="bar" style="margin-top:10px"><span id="loadingBar"></span></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
+
+<script>
+(function(){
+  const FORMATS = {
+    HORIZ:   { key:'HORIZ', label:'Horizontal — Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
+    SQUARE:  { key:'SQUARE',label:'Square — Carousel / Story Exp / Co-Reg',    icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
+    VERT:    { key:'VERT',  label:'Vertical — Interstitial',                   icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
+  };
+
+  const PARTNERS = [
+    {name:'Philips', url:'https://cdn.worldvectorlogo.com/logos/philips-6.svg'},
+    {name:'Versuni', url:'https://newsroom.home-appliances.philips/images/Versuni-Logo.png'},
+    {name:'Petite Amelie', url:'https://www.thuiswinkel.org/Images/Logo/9dac5659-5662-4f9d-9203-fe1fcd980f04'},
+    {name:'Baby List', url:'https://upload.wikimedia.org/wikipedia/commons/3/3b/Babylist_Logo_03.png'},
+    {name:'C&A', url:'https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg'},
+    {name:'Nuna', url:'https://upload.wikimedia.org/wikipedia/commons/9/99/Nuna_%28logo%29.png'},
+    {name:'MATTEL', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png'},
+    {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
+    {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
+    {name:'GSK', url:'https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png'},
+    {name:'Amazon', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1280px-Amazon_logo.svg.png'},
+    {name:'NAIF', url:'https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png'},
+    {name:'HiPP', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png'}
+  ];
+
+  const els = {
+    header: document.getElementById('appHeader'),
+    file: document.getElementById('file'),
+    folder: document.getElementById('folder'),
+    reset: document.getElementById('reset'),
+    deleteBtn: document.getElementById('deleteBtn'),
+
+    formatRow: document.getElementById('formatRow'),
+    vertSizeRow: document.getElementById('vertSizeRow'), vertSizeSeg: document.getElementById('vertSizeSeg'),
+    brightness: document.getElementById('brightness'), bVal: document.getElementById('bVal'),
+    saturation: document.getElementById('saturation'), sVal: document.getElementById('sVal'),
+    contrast: document.getElementById('contrast'), cVal: document.getElementById('cVal'),
+    imgZoom: document.getElementById('imgZoom'), imgZoomVal: document.getElementById('imgZoomVal'),
+    flipH: document.getElementById('flipH'), flipV: document.getElementById('flipV'),
+    rotate: document.getElementById('rotate'), rotLab: document.getElementById('rotLab'),
+    moveX: document.getElementById('moveX'), xVal: document.getElementById('xVal'),
+    moveY: document.getElementById('moveY'), yVal: document.getElementById('yVal'),
+    previewZoom: document.getElementById('previewZoom'), zoomLabel: document.getElementById('zoomLabel'),
+    exportBtn: document.getElementById('exportBtn'), exportAllBtn: document.getElementById('exportAllBtn'),
+    outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
+    batchMeta: document.getElementById('batchMeta'), batchLabel: document.getElementById('batchLabel'),
+
+    stage: document.getElementById('stage'),
+    imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
+    frame: document.getElementById('frame'),
+    fileNameTop: document.getElementById('fileNameTop'),
+
+    frostSection: document.getElementById('frostSection'),
+    frostBar: document.getElementById('frostBar'), frostBg: document.getElementById('frostBg'), frostVeil: document.getElementById('frostVeil'),
+    toggleFrost: document.getElementById('toggleFrost'),
+    togglePlay: document.getElementById('togglePlay'),
+    playWrap: document.getElementById('playWrap'), playBg: document.getElementById('playBg'),
+
+    logoDockPrev: document.getElementById('logoDockPrev'),
+    logo1Prev: document.getElementById('logo1Prev'), logo2Prev: document.getElementById('logo2Prev'), logoSepPrev: document.getElementById('logoSepPrev'),
+    logo1Input: document.getElementById('logo1Input'), logo2Input: document.getElementById('logo2Input'),
+    logo1Seg: document.getElementById('logo1Seg'), logo2Seg: document.getElementById('logo2Seg'),
+    logo1ToneSeg: document.getElementById('logo1ToneSeg'), logo2ToneSeg: document.getElementById('logo2ToneSeg'),
+    removeLogo2: document.getElementById('removeLogo2'),
+    toggleLogo2: document.getElementById('toggleLogo2'), logo2Block: document.getElementById('logo2Block'),
+    logo1Search: document.getElementById('logo1Search'), logo2Search: document.getElementById('logo2Search'),
+    logo1Gallery: document.getElementById('logo1Gallery'), logo2Gallery: document.getElementById('logo2Gallery'),
+
+    squareLogoSection: document.getElementById('squareLogoSection'),
+    sqLogoPrev: document.getElementById('sqLogoPrev'),
+    sqLogoInput: document.getElementById('sqLogoInput'), sqLogoSeg: document.getElementById('sqLogoSeg'), sqLogoToneSeg: document.getElementById('sqLogoToneSeg'),
+    removeSqLogo: document.getElementById('removeSqLogo'),
+    sqLogoSearch: document.getElementById('sqLogoSearch'),
+
+    verticalLogoSection: document.getElementById('verticalLogoSection'),
+    toggleVertLogo: document.getElementById('toggleVertLogo'),
+    vertLogoBlock: document.getElementById('vertLogoBlock'),
+    vertLogoPrev: document.getElementById('vertLogoPrev'),
+    vertLogoInput: document.getElementById('vertLogoInput'), vertLogoSeg: document.getElementById('vertLogoSeg'), vertLogoToneSeg: document.getElementById('vertLogoToneSeg'),
+    removeVertLogo: document.getElementById('removeVertLogo'),
+    vertLogoSearch: document.getElementById('vertLogoSearch'),
+
+    overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
+
+    prevBtn: document.getElementById('prevBtn'), nextBtn: document.getElementById('nextBtn'),
+
+    loading: document.getElementById('loading'), loadingText: document.getElementById('loadingText'), loadingBar: document.getElementById('loadingBar'), loadingTitle: document.getElementById('loadingTitle'),
+  };
+
+  const SIZE_MAP = { S:23, M:30, L:53 };
+  const SIZE_MAP_SQ = { S:35, M:55, L:75 };
+
+  const state = {
+    images: [],
+    current: -1,
+
+    format: FORMATS.HORIZ,
+    vertVariant: 'L',
+    imageSrc: null,
+    natural: {w:0,h:0},
+    brightness: 100, saturation: 100, contrast: 100,
+    flipH: false, flipV: false, rotation: 0,
+    offset: {x:0,y:0},
+    coverScale: 1, imgZoom: 1,
+    limits: {x:0,y:0,imgW:0,imgH:0},
+    previewZoom: 1, dragging: null,
+
+    frost: {
+      enabled: true,
+      overlayAlpha: 0.30,
+      barHExp: 90, padYExp: 16, dockHExp: 65, padRightExp: 24, gapExp: 24,
+      logo1: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+      logo2: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+    },
+    play:{ enabled:false, sizeExp:175 },
+
+    squareLogo: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+    vertLogo:   { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+  };
+
+  function syncHeaderHeight(){
+    const h = els.header.offsetHeight || 64;
+    document.documentElement.style.setProperty('--headerH', h + 'px');
+  }
+
+  function iconSVG(kind){
+    if(kind==='H'){ return `<svg width="40" height="28" viewBox="0 0 40 28" aria-hidden="true"><rect x="2" y="4" width="36" height="20" class="iconBox"/></svg>`; }
+    if(kind==='S'){ return `<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="20" height="20" class="iconBox"/></svg>`; }
+    return `<svg width="28" height="40" viewBox="0 0 28 40" aria-hidden="true"><rect x="4" y="2" width="20" height="36" class="iconBox"/></svg>`;
+  }
+
+  function buildFormatChips(){
+    els.formatRow.innerHTML = '';
+    Object.values(FORMATS).forEach(f => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip' + (state.format.key===f.key?' active':'');
+      b.innerHTML = `
+        <span class="chipInner">
+          ${iconSVG(f.icon)}
+          <span>
+            <div>${f.label}</div>
+            <div class="meta">${(f.key==='VERT' ? variantDims().wExp : f.wExport)}×${(f.key==='VERT' ? variantDims().hExp : f.hExport)}px</div>
+          </span>
+        </span>
+      `;
+      b.addEventListener('click', ()=>{
+        setFormat(f.key); computeCover(); fitPreviewZoomToStage(); render(); updateControls();
+      });
+      els.formatRow.appendChild(b);
+    });
+  }
+
+  function setFormat(key){
+    if(key==='VERT'){ state.format = { ...FORMATS.VERT }; applyVerticalVariant(state.vertVariant); }
+    else { state.format = { ...(key==='HORIZ' ? FORMATS.HORIZ : FORMATS.SQUARE) }; }
+    if(state.imageSrc){ computeCover(); render(); updateControls(); }
+  }
+  function variantDims(){
+    if(state.vertVariant==='L') return { wPrev:300, hPrev:533, wExp:1080, hExp:1920 };
+    if(state.vertVariant==='M') return { wPrev:300, hPrev:400, wExp:1080, hExp:1440 };
+    return { wPrev:300, hPrev:300, wExp:1080, hExp:1080 };
+  }
+  function applyVerticalVariant(v){
+    state.vertVariant = v;
+    const vd = variantDims();
+    state.format.wPreview = vd.wPrev; state.format.hPreview = vd.hPrev;
+    state.format.wExport = vd.wExp;   state.format.hExport = vd.hExp;
+  }
+
+  function effectiveDims(){
+    const rot = ((state.rotation % 360)+360)%360;
+    return (rot===90 || rot===270) ? { w: state.natural.h, h: state.natural.w } : { w: state.natural.w, h: state.natural.h };
+  }
+  function computeCover(){
+    const {wPreview:fw,hPreview:fh} = state.format; const eff = effectiveDims();
+    const w = eff.w, h = eff.h;
+    if(!w||!h){ state.coverScale=1; state.limits={x:0,y:0,imgW:0,imgH:0}; return; }
+    const scaleCover = Math.max(fw/w, fh/h);
+    state.coverScale = scaleCover;
+    const imgW = (state.rotation%180===0 ? state.natural.w : state.natural.h) * scaleCover * state.imgZoom;
+    const imgH = (state.rotation%180===0 ? state.natural.h : state.natural.w) * scaleCover * state.imgZoom;
+    state.limits = { x:(imgW - fw)/2, y:(imgH - fh)/2, imgW, imgH };
+    state.offset.x = Math.max(-state.limits.x, Math.min(state.offset.x, state.limits.x));
+    state.offset.y = Math.max(-state.limits.y, Math.min(state.offset.y, state.limits.y));
+  }
+
+  function updateControls(){
+    els.squareLogoSection.style.display   = (state.format.key==='SQUARE') ? 'block' : 'none';
+    els.frostSection.style.display        = (state.format.key==='HORIZ')  ? 'block' : 'none';
+    els.verticalLogoSection.style.display = (state.format.key==='VERT')   ? 'block' : 'none';
+    els.vertSizeRow.style.display         = (state.format.key==='VERT')   ? 'flex' : 'none';
+
+    els.bVal.textContent = state.brightness;
+    els.sVal.textContent = state.saturation;
+    els.cVal.textContent = state.contrast;
+    els.imgZoomVal.textContent = state.imgZoom.toFixed(2);
+    els.moveX.min = (-Math.round(state.limits.x)).toString();
+    els.moveX.max = (Math.round(state.limits.x)).toString();
+    els.moveY.min = (-Math.round(state.limits.y)).toString();
+    els.moveY.max = (Math.round(state.limits.y)).toString();
+    els.moveX.value = state.offset.x; els.moveY.value = state.offset.y;
+    els.xVal.textContent = Math.round(state.offset.x); els.yVal.textContent = Math.round(state.offset.y);
+    els.zoomLabel.textContent = state.previewZoom.toFixed(2);
+    els.outMeta.textContent = `${state.format.wExport}×${state.format.hExport}px`;
+    els.rotLab.textContent = `${((state.rotation%360)+360)%360}°`;
+    els.exportBtn.disabled = !state.imageSrc;
+    els.exportAllBtn.disabled = state.images.length === 0;
+
+    const anyLogos = !!(state.frost.logo1.src || state.frost.logo2.src);
+    const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || anyLogos);
+    els.frostBar.style.display = shouldShowBar ? 'block' : 'none';
+    els.frostBg.style.display = state.frost.enabled ? 'block' : 'none';
+    els.frostVeil.style.display = (state.frost.enabled && state.frost.overlayAlpha>0) ? 'block' : 'none';
+
+    els.playWrap.style.display = (state.format.key==='HORIZ' && state.play.enabled) ? 'block' : 'none';
+
+    els.overlayAlpha.disabled = !state.frost.enabled;
+    els.overlayLabel.classList.toggle('dim', !state.frost.enabled);
+
+    [...els.logo1Seg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.size===state.frost.logo1.sizeKey));
+    [...els.logo2Seg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.size===state.frost.logo2.sizeKey));
+    [...els.logo1ToneSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.tone===state.frost.logo1.tone));
+    [...els.logo2ToneSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.tone===state.frost.logo2.tone));
+    if(els.sqLogoSeg) [...els.sqLogoSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.size===state.squareLogo.sizeKey));
+    if(els.sqLogoToneSeg) [...els.sqLogoToneSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.tone===state.squareLogo.tone));
+    if(els.vertLogoSeg) [...els.vertLogoSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.size===state.vertLogo.sizeKey));
+    if(els.vertLogoToneSeg) [...els.vertLogoToneSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.tone===state.vertLogo.tone));
+    if(els.vertSizeSeg) [...els.vertSizeSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.v===state.vertVariant));
+
+    els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
+    els.batchLabel.textContent = els.batchMeta.textContent;
+
+    // file name at top of preview
+    els.fileNameTop.textContent = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
+  }
+
+  function fitPreviewZoomToStage(){
+    const stageRect = els.stage.getBoundingClientRect();
+    const margin = 40;
+    const fitByW = (stageRect.width - margin) / state.format.wPreview;
+    const fitByH = (stageRect.height - margin) / state.format.hPreview;
+    const fit = Math.max(0.5, Math.min(3, Math.min(fitByW, fitByH)));
+    state.previewZoom = +fit.toFixed(2);
+    els.previewZoom.value = state.previewZoom;
+  }
+
+  function applyLogoPreviewTone(el, tone){
+    if(tone==='white') el.style.filter = 'brightness(0) invert(1)';
+    else if(tone==='black') el.style.filter = 'brightness(0)';
+    else el.style.filter = 'none';
+  }
+
+  function render(){
+    const fwPx = state.format.wPreview * state.previewZoom;
+    const fhPx = state.format.hPreview * state.previewZoom;
+    Object.assign(els.frame.style, { width: fwPx+"px", height: fhPx+"px" });
+
+    els.imageLayer.style.filter = `brightness(${state.brightness}%) saturate(${state.saturation}%) contrast(${state.contrast}%)`;
+
+    const scaleX = state.flipH ? -1 : 1;
+    const scaleY = state.flipV ? -1 : 1;
+    const dx = state.offset.x * state.previewZoom; const dy = state.offset.y * state.previewZoom;
+    els.imageLayer.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) rotate(${state.rotation}deg) scale(${state.previewZoom}) scaleX(${scaleX}) scaleY(${scaleY})`;
+
+    els.img.style.width = (state.natural.w * state.coverScale * state.imgZoom) + 'px';
+    els.img.style.height = (state.natural.h * state.coverScale * state.imgZoom) + 'px';
+
+    const frameLeftPx = (els.stage.clientWidth - fwPx)/2;
+    const frameTopPx = (els.stage.clientHeight - fhPx)/2;
+
+    if(state.format.key==='HORIZ'){
+      const scaleYPrev = (state.format.hPreview/635) * state.previewZoom;
+      const barHPrevPx = state.frost.barHExp * scaleYPrev;
+      const barTopPx = frameTopPx + fhPx - barHPrevPx;
+      Object.assign(els.frostBar.style, { width: fwPx+'px', height: barHPrevPx+'px', top: barTopPx+'px' });
+      els.logoDockPrev.style.paddingRight = (state.frost.padRightExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
+      els.logoDockPrev.style.gap = (state.frost.gapExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
+
+      const h1 = SIZE_MAP[state.frost.logo1.sizeKey] * scaleYPrev;
+      const h2 = SIZE_MAP[state.frost.logo2.sizeKey] * scaleYPrev;
+      if(state.frost.logo1.src){ els.logo1Prev.style.display='block'; els.logo1Prev.style.height = h1+'px'; applyLogoPreviewTone(els.logo1Prev, state.frost.logo1.tone); } else { els.logo1Prev.style.display='none'; }
+      if(state.frost.logo2.src){ els.logo2Prev.style.display='block'; els.logo2Prev.style.height = h2+'px'; applyLogoPreviewTone(els.logo2Prev, state.frost.logo2.tone); } else { els.logo2Prev.style.display='none'; }
+      els.logoSepPrev.style.display = (state.frost.logo1.src && state.frost.logo2.src) ? 'block' : 'none';
+      els.logoSepPrev.style.height = Math.round(state.frost.dockHExp * scaleYPrev * 0.9) + 'px';
+
+      if(state.play.enabled){
+        const playD = 175 * (state.format.hPreview/635) * state.previewZoom;
+        const cx = frameLeftPx + fwPx/2; const cy = frameTopPx + (fhPx - barHPrevPx)/2;
+        Object.assign(els.playWrap.style, { width: playD+'px', height: playD+'px', left: (cx - playD/2)+'px', top: (cy - playD/2)+'px' });
+      }
+    }
+
+    if(state.format.key==='SQUARE' && state.squareLogo.src){
+      const scale = (state.format.wPreview/1080) * state.previewZoom;
+      const h = (SIZE_MAP_SQ[state.squareLogo.sizeKey]||55) * scale;
+      const ratio = state.squareLogo.w && state.squareLogo.h ? (state.squareLogo.w/state.squareLogo.h) : 1;
+      const wpx = h * ratio;
+      const left = frameLeftPx + fwPx - (147*scale) - wpx;
+      const top = frameTopPx + 60*scale;
+      els.sqLogoPrev.style.display='block';
+      els.sqLogoPrev.style.height = h+'px';
+      els.sqLogoPrev.style.left = left + 'px';
+      els.sqLogoPrev.style.top = top + 'px';
+      applyLogoPreviewTone(els.sqLogoPrev, state.squareLogo.tone);
+    } else { els.sqLogoPrev.style.display='none'; }
+
+    if(state.format.key==='VERT' && state.vertLogo.src){
+      const scale = (state.format.wPreview/1080) * state.previewZoom;
+      const h = (SIZE_MAP_SQ[state.vertLogo.sizeKey]||55) * scale;
+      const left = frameLeftPx + 60*scale;
+      const top = frameTopPx + 50*scale;
+      els.vertLogoPrev.style.display='block';
+      els.vertLogoPrev.style.height = h+'px';
+      els.vertLogoPrev.style.left = left + 'px';
+      els.vertLogoPrev.style.top = top + 'px';
+      applyLogoPreviewTone(els.vertLogoPrev, state.vertLogo.tone);
+    } else { els.vertLogoPrev.style.display='none'; }
+  }
+
+  function showLoading(msg, pct){ els.loadingTitle.textContent='Please wait'; els.loadingText.textContent = msg||'Working…'; els.loadingBar.style.width=(pct||0)+'%'; els.loading.style.display='flex'; }
+  function hideLoading(){ els.loading.style.display='none'; els.loadingBar.style.width='0%'; }
+  function setLoadingProgress(p){ els.loadingBar.style.width = Math.max(0,Math.min(100,p))+'%'; }
+
+  // ---------- Uploads ----------
+  els.file.addEventListener('change', (e)=>{
+    const f = e.target.files && e.target.files[0]; if(!f) return;
+    const url = URL.createObjectURL(f);
+    const imgTmp = new Image();
+    imgTmp.onload = ()=>{ pushImage(url, f.name, {w:imgTmp.width, h:imgTmp.height}); loadImageAt(state.images.length-1); };
+    imgTmp.src = url;
+  });
+
+  els.folder.addEventListener('change', async (e)=>{
+    const files = Array.from(e.target.files||[]).filter(f=>/^image\//.test(f.type));
+    if(files.length===0) return;
+    files.sort((a,b)=>(a.webkitRelativePath||a.name).localeCompare(b.webkitRelativePath||b.name));
+    showLoading('Reading folder…', 0);
+    let added = 0;
+    for(let i=0;i<files.length;i++){
+      const f = files[i];
+      await new Promise(res=>{
+        const url = URL.createObjectURL(f);
+        const im = new Image();
+        im.onload = ()=>{ pushImage(url, f.name, {w:im.width, h:im.height}); added++; res(); };
+        im.onerror = ()=> res();
+        im.src = url;
+      });
+      setLoadingProgress(Math.round(((i+1)/files.length)*100));
+      els.loadingText.textContent = `Loading ${i+1}/${files.length}…`;
+    }
+    hideLoading();
+    if(added>0){ loadImageAt(state.images.length - added); }
+  });
+
+  // ---------- Delete / Reset ----------
+  els.reset.addEventListener('click', ()=>{
+    if(state.current<0) return;
+    Object.assign(state, {
+      ...state,
+      brightness:100, saturation:100, contrast:100,
+      flipH:false, flipV:false, rotation:0,
+      imgZoom:1, offset:{x:0,y:0}
+    });
+    computeCover(); render(); updateControls(); serializeCurrent();
+  });
+
+  els.deleteBtn.addEventListener('click', ()=>{
+    if(state.current<0) return;
+    const removed = state.images.splice(state.current,1)[0];
+    try{ if(removed && removed.src && removed.src.startsWith('blob:')) URL.revokeObjectURL(removed.src); }catch(e){}
+    if(state.images.length===0){
+      state.current=-1; state.imageSrc=null; state.natural={w:0,h:0};
+      els.img.removeAttribute('src'); computeCover(); render(); updateControls();
+      return;
+    }
+    const next = Math.min(state.current, state.images.length-1);
+    loadImageAt(next);
+  });
+
+  // ---------- Batch helpers ----------
+  function pushImage(src, name, natural){
+    state.images.push({
+      src, name, natural,
+      brightness:100, saturation:100, contrast:100,
+      flipH:false, flipV:false, rotation:0,
+      imgZoom:1, offset:{x:0,y:0}
+    });
+    els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
+    els.batchLabel.textContent = els.batchMeta.textContent;
+    els.exportAllBtn.disabled = state.images.length===0;
+  }
+  function serializeCurrent(){
+    if(state.current<0) return;
+    const it = state.images[state.current];
+    it.brightness = state.brightness; it.saturation = state.saturation; it.contrast = state.contrast;
+    it.flipH = state.flipH; it.flipV = state.flipV; it.rotation = state.rotation;
+    it.imgZoom = state.imgZoom; it.offset = {x:state.offset.x, y:state.offset.y};
+    it.natural = {w:state.natural.w, h:state.natural.h};
+  }
+  function loadImageAt(idx){
+    if(idx<0 || idx>=state.images.length) return;
+    const it = state.images[idx];
+    state.current = idx;
+    state.imageSrc = it.src;
+    state.natural = {w:it.natural.w, h:it.natural.h};
+    state.brightness = it.brightness; state.saturation = it.saturation; state.contrast = it.contrast;
+    state.flipH = it.flipH; state.flipV = it.flipV; state.rotation = it.rotation;
+    state.imgZoom = it.imgZoom; state.offset = {x:it.offset.x, y:it.offset.y};
+    els.img.src = it.src;
+    computeCover(); fitPreviewZoomToStage(); render(); updateControls();
+  }
+  function goto(delta){
+    if(state.images.length===0) return;
+    serializeCurrent();
+    let n = (state.current + delta + state.images.length) % state.images.length;
+    loadImageAt(n);
+  }
+  els.prevBtn.addEventListener('click', ()=>goto(-1));
+  els.nextBtn.addEventListener('click', ()=>goto(1));
+
+  // ---------- Controls ----------
+  els.brightness.addEventListener('input', e=>{ state.brightness = +e.target.value; els.bVal.textContent = state.brightness; render(); serializeCurrent(); });
+  els.saturation.addEventListener('input', e=>{ state.saturation = +e.target.value; els.sVal.textContent = state.saturation; render(); serializeCurrent(); });
+  els.contrast.addEventListener('input', e=>{ state.contrast = +e.target.value; els.cVal.textContent = state.contrast; render(); serializeCurrent(); });
+  els.imgZoom.addEventListener('input', e=>{ state.imgZoom = Math.max(1, +e.target.value); computeCover(); render(); updateControls(); serializeCurrent(); });
+  els.flipH.addEventListener('click', ()=>{ state.flipH = !state.flipH; render(); serializeCurrent(); });
+  els.flipV.addEventListener('click', ()=>{ state.flipV = !state.flipV; render(); serializeCurrent(); });
+  els.rotate.addEventListener('click', ()=>{ state.rotation = (state.rotation + 90) % 360; computeCover(); render(); updateControls(); serializeCurrent(); });
+  els.moveX.addEventListener('input', e=>{ state.offset.x = +e.target.value; els.xVal.textContent = Math.round(state.offset.x); render(); serializeCurrent(); });
+  els.moveY.addEventListener('input', e=>{ state.offset.y = +e.target.value; els.yVal.textContent = Math.round(state.offset.y); render(); serializeCurrent(); });
+  els.previewZoom.addEventListener('input', e=>{ state.previewZoom = +e.target.value; els.zoomLabel.textContent = state.previewZoom.toFixed(2); render(); });
+
+  els.toggleFrost.addEventListener('change', ()=>{ state.frost.enabled = els.toggleFrost.checked; updateControls(); render(); });
+  els.togglePlay.addEventListener('change', ()=>{ state.play.enabled = els.togglePlay.checked; updateControls(); render(); });
+  els.toggleLogo2.addEventListener('change', ()=>{
+    els.logo2Block.style.display = els.toggleLogo2.checked?'grid':'none';
+    if(!els.toggleLogo2.checked){
+      state.frost.logo2={src:null,w:0,h:0,sizeKey:state.frost.logo2.sizeKey||'M', tone: state.frost.logo2.tone||'orig', source:'none', chosen:""}; els.logo2Prev.style.display='none';
+    }
+    render(); updateControls();
+  });
+
+  els.toggleVertLogo.addEventListener('change', ()=>{
+    els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
+    if(!els.toggleVertLogo.checked){
+      state.vertLogo={src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
+      els.vertLogoPrev.style.display='none';
+      render(); updateControls();
+    }
+  });
+  els.vertSizeSeg.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const v = btn.dataset.v; if(!v) return;
+    applyVerticalVariant(v);
+    fitPreviewZoomToStage(); render(); updateControls(); buildFormatChips();
+  });
+
+  els.overlayAlpha.addEventListener('input', (e)=>{ state.frost.overlayAlpha = (+e.target.value)/100; els.overlayAlphaVal.textContent = Math.round(state.frost.overlayAlpha*100); updateControls(); render(); });
+
+  function segSizeHandler(segEl, which, map){
+    if(!segEl) return;
+    segEl.addEventListener('click', (e)=>{
+      const btn=e.target.closest('button'); if(!btn) return; const key=btn.dataset.size;
+      if(!(map||SIZE_MAP)[key]) return;
+      if(which==='squareLogo') state.squareLogo.sizeKey=key;
+      else if(which==='vertLogo') state.vertLogo.sizeKey=key;
+      else state.frost[which].sizeKey=key;
+      updateControls(); render();
+    });
+  }
+  function segToneHandler(segEl, which){
+    if(!segEl) return;
+    segEl.addEventListener('click', (e)=>{
+      const btn=e.target.closest('button'); if(!btn) return; const tone=btn.dataset.tone; if(!tone) return;
+      if(which==='squareLogo') state.squareLogo.tone=tone;
+      else if(which==='vertLogo') state.vertLogo.tone=tone;
+      else state.frost[which].tone=tone;
+      updateControls(); render();
+    });
+  }
+  segSizeHandler(els.logo1Seg,'logo1', SIZE_MAP); segSizeHandler(els.logo2Seg,'logo2', SIZE_MAP);
+  segToneHandler(els.logo1ToneSeg,'logo1'); segToneHandler(els.logo2ToneSeg,'logo2');
+  segSizeHandler(els.sqLogoSeg,'squareLogo', SIZE_MAP_SQ); segToneHandler(els.sqLogoToneSeg,'squareLogo');
+  segSizeHandler(els.vertLogoSeg,'vertLogo', SIZE_MAP_SQ); segToneHandler(els.vertLogoToneSeg,'vertLogo');
+
+  function buildGallery(scroller, onPick){
+    if(!scroller) return;
+    scroller.innerHTML='';
+    PARTNERS.forEach(p=>{
+      const it = document.createElement('button'); it.type='button'; it.className='libItem'; it.dataset.name=p.name.toLowerCase();
+      it.innerHTML = `<img alt="${p.name}" src="${p.url}"><div class="cap">${p.name}</div>`;
+      it.addEventListener('click', async ()=>{ scroller.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); it.classList.add('active'); await onPick(p); });
+      scroller.appendChild(it);
+    });
+  }
+  function filterGallery(scroller, q){ const qq=(q||'').trim().toLowerCase(); scroller?.querySelectorAll('.libItem').forEach(it=>{ it.style.display = (!qq || it.dataset.name.includes(qq)) ? '' : 'none'; }); }
+
+  function loadImageCORS(src){ return new Promise((res,rej)=>{ if(!src) return res(null); const im=new Image(); im.crossOrigin='anonymous'; im.onload=()=>res(im); im.onerror=(e)=>rej(e); im.src=src; }); }
+  function exclusivePick(which, sourceType){
+    if(which==='logo1'){ if(sourceType==='upload'){ els.logo1Gallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.logo1Input.value=''; } }
+    else if(which==='logo2'){ if(sourceType==='upload'){ els.logo2Gallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.logo2Input.value=''; } }
+    else if(which==='squareLogo'){ if(sourceType==='upload'){ els.sqLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.sqLogoInput.value=''; } }
+    else if(which==='vertLogo'){ if(sourceType==='upload'){ els.vertLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.vertLogoInput.value=''; } }
+  }
+  function loadLogo(file, targetImgEl, store, which){
+    if(!file){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; render(); updateControls(); return; }
+    const r = new FileReader();
+    r.onload = ()=>{
+      const src = r.result; targetImgEl.onload = ()=>{
+        targetImgEl.style.display='block';
+        const temp = new Image(); temp.onload = ()=>{ store.src = src; store.w = temp.width; store.h = temp.height; store.source='upload'; store.chosen=""; exclusivePick(which,'upload'); render(); updateControls(); };
+        temp.src = src;
+      }; targetImgEl.src = src;
+    };
+    r.readAsDataURL(file);
+  }
+  async function loadLogoURL(url, targetImgEl, store, which, label){
+    if(!url){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; render(); updateControls(); return; }
+    try{
+      const im = await loadImageCORS(url);
+      store.src = url; store.w = im.width; store.h = im.height; store.source='partner'; store.chosen = (label||''); targetImgEl.src = url; targetImgEl.style.display='block'; exclusivePick(which,'partner'); render(); updateControls();
+    }catch(err){ console.error('Failed to load partner logo', err); alert('This logo host blocks export due to CORS. Please upload the logo file instead.'); }
+  }
+  els.logo1Input.addEventListener('change', ()=> loadLogo(els.logo1Input.files?.[0], els.logo1Prev, state.frost.logo1, 'logo1'));
+  els.logo2Input.addEventListener('change', ()=> loadLogo(els.logo2Input.files?.[0], els.logo2Prev, state.frost.logo2, 'logo2'));
+  els.removeLogo2.addEventListener('click', ()=>{ state.frost.logo2 = {src:null,w:0,h:0,sizeKey:state.frost.logo2.sizeKey||'M', tone: state.frost.logo2.tone||'orig', source:'none', chosen:""}; els.logo2Prev.style.display='none'; render(); updateControls(); });
+  els.sqLogoInput?.addEventListener('change', ()=> loadLogo(els.sqLogoInput.files?.[0], els.sqLogoPrev, state.squareLogo, 'squareLogo'));
+  els.removeSqLogo?.addEventListener('click', ()=>{ state.squareLogo = {src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.sqLogoPrev.style.display='none'; render(); updateControls(); });
+  els.vertLogoInput?.addEventListener('change', ()=> loadLogo(els.vertLogoInput.files?.[0], els.vertLogoPrev, state.vertLogo, 'vertLogo'));
+  els.removeVertLogo?.addEventListener('click', ()=>{ state.vertLogo = {src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.vertLogoPrev.style.display='none'; render(); updateControls(); });
+
+  function buildAllGalleries(){
+    buildGallery(els.logo1Gallery, p=>loadLogoURL(p.url, els.logo1Prev, state.frost.logo1, 'logo1', p.name));
+    buildGallery(els.logo2Gallery, p=>loadLogoURL(p.url, els.logo2Prev, state.frost.logo2, 'logo2', p.name));
+    buildGallery(els.sqLogoGallery, p=>loadLogoURL(p.url, els.sqLogoPrev, state.squareLogo, 'squareLogo', p.name));
+    buildGallery(els.vertLogoGallery, p=>loadLogoURL(p.url, els.vertLogoPrev, state.vertLogo, 'vertLogo', p.name));
+  }
+  els.logo1Search.addEventListener('input', e=>filterGallery(els.logo1Gallery, e.target.value));
+  els.logo2Search.addEventListener('input', e=>filterGallery(els.logo2Gallery, e.target.value));
+  els.sqLogoSearch?.addEventListener('input', e=>filterGallery(els.sqLogoGallery, e.target.value));
+  els.vertLogoSearch?.addEventListener('input', e=>filterGallery(els.vertLogoGallery, e.target.value));
+
+  // ---------- Export helpers ----------
+  function bytesFromDataURL(dataURL){ try{ return atob(dataURL.split(',')[1]).length; }catch(e){ return Infinity; } }
+  function dataURLToU8(dataURL){
+    const bin = atob(dataURL.split(',')[1]);
+    const len = bin.length, u8 = new Uint8Array(len);
+    for(let i=0;i<len;i++){ u8[i] = bin.charCodeAt(i); }
+    return u8;
+  }
+
+  async function renderCurrentToDataURL(){
+    const fw = state.format.wExport, fh = state.format.hExport;
+    const canvas = document.createElement('canvas');
+    canvas.width = fw; canvas.height = fh;
+    const ctx = canvas.getContext('2d');
+
+    // bg
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,fw,fh);
+    ctx.filter = `brightness(${(state.brightness/100).toFixed(3)}) saturate(${(state.saturation/100).toFixed(3)}) contrast(${(state.contrast/100).toFixed(3)})`;
+
+    const eff = effectiveDims(); const w = eff.w, h = eff.h;
+    const scaleCoverExport = Math.max(fw/w, fh/h);
+    const imgScaleExport = scaleCoverExport * state.imgZoom;
+    const imgWexp = (state.rotation%180===0 ? state.natural.w : state.natural.h) * imgScaleExport;
+    const imgHexp = (state.rotation%180===0 ? state.natural.h : state.natural.w) * imgScaleExport;
+
+    const limXexp = (imgWexp - fw)/2; const limYexp = (imgHexp - fh)/2;
+    const ratioX = (state.limits.x !== 0) ? (state.offset.x / state.limits.x) : 0;
+    const ratioY = (state.limits.y !== 0) ? (state.offset.y / state.limits.y) : 0;
+    const dx = -imgWexp/2 + ratioX * limXexp;
+    const dy = -imgHexp/2 + ratioY * limYexp;
+
+    ctx.save();
+    ctx.translate(fw/2, fh/2);
+    ctx.rotate(state.rotation * Math.PI/180);
+    ctx.scale(state.flipH ? -1 : 1, state.flipV ? -1 : 1);
+    // draw source
+    const imgSource = els.img;
+    if(!imgSource.complete){ await new Promise(r=>{ imgSource.onload=r; }); }
+    ctx.drawImage(imgSource, dx, dy, imgWexp, imgHexp);
+    ctx.restore();
+
+    // ---------- HORIZONTAL Frosted Bar (edge-to-edge, blurred) ----------
+    if(state.format.key==='HORIZ'){
+      const barH = state.frost.barHExp;
+      const barY = fh - barH;
+
+      if(state.frost.enabled){
+        const stopsN = 10;
+        const y0 = Math.max(0, barY - Math.round(barH*0.9));
+        const y1 = Math.min(fh, barY + Math.round(barH*0.1));
+        const sampleH = Math.max(1, y1 - y0);
+        let colorStops = null;
+
+        try{
+          const imgData = ctx.getImageData(0, y0, fw, sampleH).data;
+          const sums = new Array(stopsN).fill(0).map(()=>({r:0,g:0,b:0,c:0}));
+          for(let y=0; y<sampleH; y++){
+            for(let x=0; x<fw; x++){
+              const i = (y*fw + x)*4; const t = x/(fw-1); const b = Math.min(stopsN-1, Math.max(0, Math.floor(t*(stopsN-1))));
+              sums[b].r += imgData[i]; sums[b].g += imgData[i+1]; sums[b].b += imgData[i+2]; sums[b].c++;
+            }
+          }
+          colorStops = sums.map((s,i)=>{ const c=Math.max(1,s.c); return { t: i/(stopsN-1), r:Math.round(s.r/c), g:Math.round(s.g/c), b:Math.round(s.b/c)}; });
+        }catch(e){
+          colorStops = [{t:0,r:255,g:255,b:255},{t:1,r:255,g:255,b:255}];
+        }
+
+        // Draw on offscreen with padding to avoid edge fade after blur
+        const pad = 48;
+        const tc = document.createElement('canvas'); tc.width = fw + pad*2; tc.height = barH;
+        const tctx = tc.getContext('2d');
+        const grad2 = tctx.createLinearGradient(0, 0, tc.width, 0);
+        colorStops.forEach(s=>grad2.addColorStop(s.t, `rgba(${s.r},${s.g},${s.b},1)`));
+        tctx.filter = 'blur(12px)';
+        tctx.fillStyle = grad2; tctx.fillRect(0, 0, tc.width, barH);
+        // place blurred gradient edge-to-edge
+        ctx.drawImage(tc, -pad, barY);
+
+        // white overlay (controls strength)
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, Math.min(1, state.frost.overlayAlpha + 0.08));
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, barH);
+        ctx.restore();
+
+        // subtle top highlight
+        ctx.save(); ctx.globalAlpha = 0.12; ctx.fillStyle = '#fff'; ctx.fillRect(0, barY, fw, 2); ctx.restore();
+      }
+
+      // logos on bar
+      const padding = state.frost.padRightExp; const gap = state.frost.gapExp; const sepH = Math.round(state.frost.dockHExp * 0.9);
+      const h1 = SIZE_MAP[state.frost.logo1.sizeKey] || 30; const h2 = SIZE_MAP[state.frost.logo2.sizeKey] || 30;
+
+      async function drawLogo(ctx, src, targetH, tone, xRight){
+        if(!src) return {w:0,h:0};
+        const im = await loadImageCORS(src);
+        if(!im) return {w:0,h:0};
+        const scale = targetH / im.height; const w = Math.max(1, Math.round(im.width*scale));
+        let filter = 'none'; if(tone==='white') filter='invert(1) brightness(2)'; else if(tone==='black') filter='brightness(0)';
+        ctx.save(); ctx.filter = filter; ctx.drawImage(im, xRight - w, barY + Math.round((state.frost.barHExp - targetH)/2), w, targetH); ctx.restore();
+        return {w, h:targetH};
+      }
+      let x = fw - padding;
+      if(state.frost.logo2.src){ const m2 = await drawLogo(ctx, state.frost.logo2.src, h2, state.frost.logo2.tone, x); x -= m2.w; }
+      if(state.frost.logo1.src && state.frost.logo2.src){ x -= gap; ctx.fillStyle='rgba(98,101,106,1)'; ctx.fillRect(x, barY + Math.round((state.frost.barHExp - sepH)/2), 1, sepH); x -= gap; }
+      if(state.frost.logo1.src){ const m1 = await drawLogo(ctx, state.frost.logo1.src, h1, state.frost.logo1.tone, x); x -= m1.w; }
+
+      // Play badge (fake background blur)
+      if(state.play.enabled){
+        const d = state.play.sizeExp;
+        const cy = (fh - state.frost.barHExp)/2; const cx = fw/2; const r = d/2;
+
+        // Offscreen blurred circle with gradient + dark base
+        const pad = 32;
+        const pc = document.createElement('canvas'); pc.width = d + pad*2; pc.height = d + pad*2;
+        const pctx = pc.getContext('2d');
+
+        // dark base
+        pctx.filter = 'blur(18px)';
+        pctx.fillStyle = 'rgba(0,0,0,0.22)';
+        pctx.beginPath(); pctx.arc(pad+r, pad+r, r, 0, Math.PI*2); pctx.fill();
+
+        // soft linear highlight gradient across circle
+        const lg = pctx.createLinearGradient(pad, pad+r, pad+d, pad+r);
+        lg.addColorStop(0, 'rgba(255,255,255,.38)');
+        lg.addColorStop(1, 'rgba(255,255,255,.18)');
+        pctx.globalCompositeOperation = 'lighter';
+        pctx.fillStyle = lg;
+        pctx.beginPath(); pctx.arc(pad+r, pad+r, r, 0, Math.PI*2); pctx.fill();
+        pctx.globalCompositeOperation = 'source-over';
+
+        ctx.drawImage(pc, cx - r - pad, cy - r - pad);
+
+        // slight outer dark halo
+        ctx.save(); ctx.globalAlpha = 0.18; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fillStyle = '#000'; ctx.fill(); ctx.restore();
+
+        // Triangle path (bolder)
+        ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
+        const scale = Math.min(d*0.55/59, d*0.55/63);
+        ctx.translate(cx - (59*scale)/2 + 10*scale, cy - (63*scale)/2);
+        ctx.scale(scale, scale);
+        const path = new Path2D('M18 14 L44 31.5 L18 49 Z');
+        ctx.fill(path); ctx.stroke(path);
+        ctx.restore();
+      }
+    }
+
+    // Square corner logo
+    if(state.format.key==='SQUARE' && state.squareLogo.src){
+      const im = await loadImageCORS(state.squareLogo.src);
+      if(im){
+        const targetH = (SIZE_MAP_SQ[state.squareLogo.sizeKey]||55);
+        const scale = targetH / im.height; const w = Math.round(im.width*scale); const h = Math.round(targetH);
+        const x = fw - 147 - w; const y = 60;
+        let filter = 'none'; if(state.squareLogo.tone==='white') filter='invert(1) brightness(2)'; else if(state.squareLogo.tone==='black') filter='brightness(0)';
+        ctx.save(); ctx.filter = filter; ctx.drawImage(im, x, y, w, h); ctx.restore();
+      }
+    }
+
+    // Vertical corner logo (top-left)
+    if(state.format.key==='VERT' && state.vertLogo.src){
+      const im = await loadImageCORS(state.vertLogo.src);
+      if(im){
+        const targetH = (SIZE_MAP_SQ[state.vertLogo.sizeKey]||55);
+        const scale = targetH / im.height; const w = Math.round(im.width*scale); const h = Math.round(targetH);
+        const x = 60; const y = 50;
+        let filter = 'none'; if(state.vertLogo.tone==='white') filter='invert(1) brightness(2)'; else if(state.vertLogo.tone==='black') filter='brightness(0)';
+        ctx.save(); ctx.filter = filter; ctx.drawImage(im, x, y, w, h); ctx.restore();
+      }
+    }
+
+    // JPEG size 300–500 KB
+    let quality = 0.98; let dataURL = canvas.toDataURL('image/jpeg', quality);
+    let bytes = bytesFromDataURL(dataURL);
+    while(bytes > 500*1024 && quality > 0.6){ quality -= 0.02; dataURL = canvas.toDataURL('image/jpeg', quality); bytes = bytesFromDataURL(dataURL); }
+    if(bytes < 300*1024){
+      const ctx2 = canvas.getContext('2d');
+      // very subtle noise to lift size floor
+      const tile = document.createElement('canvas'); tile.width=64; tile.height=64; const ictx=tile.getContext('2d');
+      const imgData = ictx.createImageData(tile.width, tile.height);
+      for(let i=0;i<imgData.data.length;i+=4){
+        const n = 230 + Math.floor(Math.random()*25);
+        imgData.data[i]=n; imgData.data[i+1]=n; imgData.data[i+2]=n; imgData.data[i+3]=24;
+      }
+      ictx.putImageData(imgData,0,0);
+      const pat = ctx2.createPattern(tile,'repeat');
+      ctx2.save(); ctx2.globalAlpha = 0.35; ctx2.fillStyle = pat; ctx2.fillRect(0,0,fw,fh); ctx2.restore();
+      dataURL = canvas.toDataURL('image/jpeg', quality); bytes = bytesFromDataURL(dataURL);
+      if(bytes < 300*1024){ ctx2.save(); ctx2.globalAlpha=0.45; ctx2.fillStyle = pat; ctx2.fillRect(0,0,fw,fh); ctx2.restore(); dataURL = canvas.toDataURL('image/jpeg', quality); bytes = bytesFromDataURL(dataURL); }
+    }
+    return { dataURL, bytes, quality };
+  }
+
+  // Single export
+  els.exportBtn.addEventListener('click', async ()=>{
+    if(state.current<0) return;
+    serializeCurrent();
+    const out = await renderCurrentToDataURL();
+    const a = document.createElement('a');
+    const base = (state.images[state.current].name||'image').replace(/\.[^.]+$/,'');
+    const now = new Date();
+    const stamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+    a.href = out.dataURL; a.download = `${base}_${state.format.wExport}x${state.format.hExport}_${stamp}.jpg`;
+    document.body.appendChild(a); a.click(); a.remove();
+    els.lastExport.textContent = `Exported: ${(out.bytes/1024).toFixed(1)} KB @ q=${out.quality.toFixed(2)}`;
+  });
+
+  // Bulk export (ZIP)
+  els.exportAllBtn.addEventListener('click', async ()=>{
+    if(state.images.length===0) return;
+    serializeCurrent();
+
+    showLoading('Exporting…', 0);
+    const filesObj = {};
+    for(let i=0;i<state.images.length;i++){
+      const it = state.images[i];
+      state.current = i;
+      state.imageSrc = it.src; state.natural = {w:it.natural.w,h:it.natural.h};
+      state.brightness=it.brightness; state.saturation=it.saturation; state.contrast=it.contrast;
+      state.flipH=it.flipH; state.flipV=it.flipV; state.rotation=it.rotation; state.imgZoom=it.imgZoom; state.offset={x:it.offset.x,y:it.offset.y};
+      els.img.src = it.src;
+      computeCover();
+      await new Promise(res=>{ if(els.img.complete) res(); else els.img.onload=()=>res(); });
+      const out = await renderCurrentToDataURL();
+      const base = (it.name||`image_${i+1}`).replace(/\.[^.]+$/,'');
+      filesObj[`${String(i+1).padStart(2,'0')}_${base}_${state.format.wExport}x${state.format.hExport}.jpg`] = dataURLToU8(out.dataURL);
+      const pct = Math.round(((i+1)/state.images.length)*100);
+      setLoadingProgress(pct);
+      els.loadingText.textContent = `Exporting ${i+1}/${state.images.length}…`;
+    }
+    const zipped = fflate.zipSync(filesObj, { level: 6 });
+    hideLoading();
+
+    const blob = new Blob([zipped], {type:'application/zip'});
+    const a = document.createElement('a');
+    const now = new Date();
+    const stamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+    a.href = URL.createObjectURL(blob);
+    a.download = `frozone_batch_${state.format.wExport}x${state.format.hExport}_${stamp}.zip`;
+    document.body.appendChild(a); a.click(); a.remove();
+    els.lastExport.textContent = `Exported ZIP (${state.images.length} files)`;
+  });
+
+  // Drag move
+  els.stage.addEventListener('mousedown', (e)=>{
+    const rect = els.stage.getBoundingClientRect();
+    const fwPx = state.format.wPreview * state.previewZoom;
+    const fhPx = state.format.hPreview * state.previewZoom;
+    const fx = rect.left + (rect.width - fwPx)/2;
+    const fy = rect.top + (rect.height - fhPx)/2;
+    if(e.clientX<fx || e.clientX>fx+fwPx || e.clientY<fy || e.clientY>fy+fhPx) return;
+    state.dragging = { startX:e.clientX, startY:e.clientY, ox:state.offset.x, oy:state.offset.y };
+    els.imageLayer.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', (e)=>{
+    if(!state.dragging) return;
+    const dx = (e.clientX - state.dragging.startX)/state.previewZoom;
+    const dy = (e.clientY - state.dragging.startY)/state.previewZoom;
+    state.offset.x = Math.max(-state.limits.x, Math.min(state.dragging.ox + dx, state.limits.x));
+    state.offset.y = Math.max(-state.limits.y, Math.min(state.dragging.oy + dy, state.limits.y));
+    render();
+  });
+  window.addEventListener('mouseup', ()=>{ if(state.dragging){ state.dragging=null; els.imageLayer.classList.remove('dragging'); serializeCurrent(); } });
+
+  const ro = new ResizeObserver(()=>{ fitPreviewZoomToStage(); render(); });
+  ro.observe(els.stage);
+  window.addEventListener('resize', ()=>{ syncHeaderHeight(); fitPreviewZoomToStage(); render(); });
+
+  // Init
+  syncHeaderHeight();
+  buildFormatChips();
+  buildAllGalleries();
+  els.toggleLogo2.checked = false; els.logo2Block.style.display='none';
+  els.toggleVertLogo.checked = false; els.vertLogoBlock.style.display='none';
+  fitPreviewZoomToStage();
+  render();
+  updateControls();
+})();
+</script>
+</body>
+</html>
