@@ -72,11 +72,18 @@
 
   .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
   .stack{display:grid; gap:10px; text-align:left}
-  #formatRow{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px}
+  #formatRow{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
+  #formatRow .formatCard.wide{grid-column:1 / -1}
+  @media(max-width:720px){
+    #formatRow{grid-template-columns:1fr}
+    #formatRow .formatCard.wide{grid-column:auto}
+  }
   .formatCard{position:relative; border:1px solid var(--border); border-radius:18px; padding:20px; background:#fff; text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
   .formatCard .formatIcon{width:48px; height:48px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(99,102,241,0.12))}
   .formatCard .formatIcon svg{width:32px; height:auto}
-  .formatCard .formatTitle{font-size:15px; font-weight:700; line-height:1.3}
+  .formatCard .formatCopy{display:flex; flex-direction:column; gap:2px}
+  .formatCard .formatTitle{font-size:16px; font-weight:700; line-height:1.35}
+  .formatCard .formatSub{font-size:13px; color:var(--muted); margin-top:2px}
   .formatCard .formatMeta{font-size:13px; color:var(--muted); margin-top:4px}
   .formatCard.active{border-color:rgba(14,165,233,0.55); box-shadow:0 12px 30px rgba(14,165,233,0.16); transform:translateY(-2px)}
   .formatCard:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(14,165,233,0.12)}
@@ -103,7 +110,7 @@
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
   .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:hidden;}
-  .frostBg{position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,255,255,0.88),rgba(241,245,249,0.82)); backdrop-filter:blur(28px); border-top:1px solid rgba(255,255,255,0.85); border-left:1px solid rgba(148,163,184,0.18); border-right:1px solid rgba(148,163,184,0.18)}
+  .frostBg{position:absolute; inset:-12px 0 0 0; background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(235,241,248,0.86)); backdrop-filter:blur(36px); border-top:1px solid rgba(255,255,255,0.92); border-left:1px solid rgba(148,163,184,0.22); border-right:1px solid rgba(148,163,184,0.22)}
   .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.08)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
@@ -114,7 +121,7 @@
     linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.18)),
     rgba(0,0,0,0.22);
   }
-  .playTri{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%)}
+  .playTri{position:absolute; left:50%; top:50%; transform:translate(-56%,-50%)}
 
   .sqLogo,.vertLogo{position:absolute; display:none; pointer-events:none}
 
@@ -443,9 +450,9 @@
 <script>
 (function(){
   const FORMATS = {
-    HORIZ:   { key:'HORIZ', label:'Horizontal — Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
-    SQUARE:  { key:'SQUARE',label:'Square — Carousel / Story Exp / Co-Reg',    icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
-    VERT:    { key:'VERT',  label:'Vertical — Interstitial',                   icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
+    HORIZ:   { key:'HORIZ', title:'Horizontal', sub:'Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
+    SQUARE:  { key:'SQUARE',title:'Square',    sub:'Carousel / Story Exp / Co-Reg',             icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
+    VERT:    { key:'VERT',  title:'Vertical',  sub:'Interstitial',                               icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
   };
 
   const PARTNERS = [
@@ -512,6 +519,7 @@
     sqLogoInput: document.getElementById('sqLogoInput'), sqLogoSeg: document.getElementById('sqLogoSeg'), sqLogoToneSeg: document.getElementById('sqLogoToneSeg'),
     removeSqLogo: document.getElementById('removeSqLogo'),
     sqLogoSearch: document.getElementById('sqLogoSearch'),
+    sqLogoGallery: document.getElementById('sqLogoGallery'),
 
     verticalLogoSection: document.getElementById('verticalLogoSection'),
     toggleVertLogo: document.getElementById('toggleVertLogo'),
@@ -520,6 +528,7 @@
     vertLogoInput: document.getElementById('vertLogoInput'), vertLogoSeg: document.getElementById('vertLogoSeg'), vertLogoToneSeg: document.getElementById('vertLogoToneSeg'),
     removeVertLogo: document.getElementById('removeVertLogo'),
     vertLogoSearch: document.getElementById('vertLogoSearch'),
+    vertLogoGallery: document.getElementById('vertLogoGallery'),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
@@ -574,13 +583,16 @@
     els.formatRow.innerHTML = '';
     Object.values(FORMATS).forEach(f => {
       const b = document.createElement('button');
-      b.type = 'button'; b.className = 'formatCard' + (state.format.key===f.key?' active':'');
+      b.type = 'button';
+      b.className = 'formatCard' + (state.format.key===f.key?' active':'');
+      if(f.key==='HORIZ'){ b.classList.add('wide'); }
       b.dataset.key = f.key;
       b.setAttribute('aria-pressed', state.format.key===f.key);
       b.innerHTML = `
         <span class="formatIcon">${iconSVG(f.icon)}</span>
-        <div>
-          <div class="formatTitle">${f.label}</div>
+        <div class="formatCopy">
+          <div class="formatTitle">${f.title}</div>
+          ${f.sub ? `<div class="formatSub">${f.sub}</div>` : ''}
           <div class="formatMeta">${(f.key==='VERT' ? variantDims().wExp : f.wExport)}×${(f.key==='VERT' ? variantDims().hExp : f.hExport)}px</div>
         </div>
       `;
@@ -1073,7 +1085,7 @@
       const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
 
       if(shouldShowBar){
-        const pad = Math.round(barH * 0.6);
+        const pad = Math.round(barH * 0.95);
         const sampleY = Math.max(0, barY - pad);
         const sampleH = Math.min(fh - sampleY, barH + pad*2);
         const barSource = document.createElement('canvas');
@@ -1082,7 +1094,7 @@
         barCtx.drawImage(baseLayer, 0, sampleY, fw, sampleH, 0, 0, fw, sampleH);
 
         ctx.save();
-        ctx.filter = `blur(${Math.max(12, Math.round(barH*0.35))}px) saturate(1.05)`;
+        ctx.filter = `blur(${Math.max(16, Math.round(barH*0.45))}px) saturate(1.08)`;
         const drawY = barY - Math.round((sampleH - barH)/2);
         ctx.drawImage(barSource, 0, drawY, fw, sampleH);
         ctx.restore();
@@ -1093,15 +1105,16 @@
         if(overlayStrength > 0){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${overlayStrength})`);
-          grad.addColorStop(1, `rgba(246,248,252,${overlayStrength * 0.85})`);
+          const topStop = Math.min(1, overlayStrength * 1.15);
+          grad.addColorStop(0, `rgba(255,255,255,${topStop})`);
+          grad.addColorStop(1, `rgba(244,247,252,${overlayStrength})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
 
-        ctx.save(); ctx.globalAlpha = 0.1 + overlayStrength*0.2; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.08 + overlayStrength*0.18; ctx.fillStyle = 'rgba(15,23,42,0.12)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.14 + overlayStrength*0.22; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.1 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
@@ -1161,7 +1174,7 @@
 
         ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
         const scale = Math.min(d*0.55/59, d*0.55/63);
-        ctx.translate(cx - (59*scale)/2 + 10*scale, cy - (63*scale)/2);
+        ctx.translate(cx - (59*scale)/2 + 7*scale, cy - (63*scale)/2);
         ctx.scale(scale, scale);
         const path = new Path2D('M18 14 L44 31.5 L18 49 Z');
         ctx.fill(path); ctx.stroke(path);
