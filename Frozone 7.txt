@@ -42,21 +42,19 @@
   input[type="range"]{width:100%}
   input[type="search"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px}
 
-  .seg{display:inline-flex; background:#f1f5f9; border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6); position:relative}
-  .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; transition:background .18s ease, color .18s ease; min-width:44px; text-align:center; position:relative}
-  .seg button:not(.active):hover{color:var(--ink); background:rgba(148,163,184,0.18)}
-  .seg button::after{content:""; position:absolute; inset:0; border-right:1px solid rgba(148,163,184,0.4); pointer-events:none}
-  .seg button:last-child::after{display:none}
-  .seg button.active{color:var(--ink); background:#e0ecff; box-shadow:inset 0 1px 0 rgba(255,255,255,0.9)}
-  .seg button:focus-visible{outline:2px solid var(--brand); outline-offset:1px}
+  .seg{display:inline-flex; gap:6px; padding:4px; background:linear-gradient(135deg,#e0e7ff,#f5f8ff); border:1px solid rgba(99,102,241,0.2); border-radius:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 14px rgba(14,165,233,0.08)}
+  .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; border-radius:10px; min-width:48px; text-align:center; transition:all .18s ease}
+  .seg button:not(.active):hover{color:var(--ink); background:rgba(148,163,184,0.16); box-shadow:0 4px 8px rgba(15,23,42,0.08)}
+  .seg button.active{color:var(--ink); background:#fff; box-shadow:0 6px 16px rgba(99,102,241,0.18)}
+  .seg button:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
 
   /* Minimal, polished switches */
   label.switch{display:inline-flex; align-items:center; gap:10px; font-size:14px; user-select:none}
   .switch input{position:absolute; opacity:0; width:0; height:0}
-  .switch .tgl{position:relative; width:48px; height:28px; background:#eef2f7; border:1px solid var(--border); border-radius:999px; transition:.25s ease; box-shadow:inset 0 1px 2px rgba(15,23,42,.06)}
-  .switch .knob{position:absolute; top:2px; left:2px; width:24px; height:24px; background:#fff; border-radius:50%; box-shadow:0 2px 6px rgba(15,23,42,.18); transition:.25s cubic-bezier(.2,.8,.2,1)}
-  .switch input:checked + .tgl{background:linear-gradient(135deg,var(--brand),var(--brand2)); border-color:transparent; box-shadow:0 2px 8px rgba(99,102,241,.25)}
-  .switch input:checked + .tgl .knob{transform:translateX(20px)}
+  .switch .tgl{position:relative; width:52px; height:28px; background:linear-gradient(135deg,#e2e8f0,#f8fafc); border:1px solid rgba(148,163,184,0.55); border-radius:999px; transition:.25s ease; box-shadow:inset 0 1px 2px rgba(15,23,42,.08)}
+  .switch .knob{position:absolute; top:2px; left:2px; width:24px; height:24px; background:#fff; border-radius:50%; box-shadow:0 4px 10px rgba(15,23,42,.18); transition:.25s cubic-bezier(.2,.8,.2,1)}
+  .switch input:checked + .tgl{background:linear-gradient(135deg,var(--brand),var(--brand2)); border-color:transparent; box-shadow:0 4px 12px rgba(99,102,241,.28)}
+  .switch input:checked + .tgl .knob{transform:translateX(24px)}
   .switch .lbl{color:var(--ink); opacity:.85}
 
   main{display:grid; grid-template-columns: 1fr 1.25fr; gap:18px; padding:16px}
@@ -74,7 +72,14 @@
 
   .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
   .stack{display:grid; gap:10px; text-align:left}
-  #formatRow{display:grid; gap:12px; text-align:left}
+  #formatRow{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px}
+  .formatCard{position:relative; border:1px solid var(--border); border-radius:18px; padding:20px; background:#fff; text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
+  .formatCard .formatIcon{width:48px; height:48px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(99,102,241,0.12))}
+  .formatCard .formatIcon svg{width:32px; height:auto}
+  .formatCard .formatTitle{font-size:15px; font-weight:700; line-height:1.3}
+  .formatCard .formatMeta{font-size:13px; color:var(--muted); margin-top:4px}
+  .formatCard.active{border-color:rgba(14,165,233,0.55); box-shadow:0 12px 30px rgba(14,165,233,0.16); transform:translateY(-2px)}
+  .formatCard:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(14,165,233,0.12)}
   .muted{color:var(--muted)}
 
   .chip{padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:#fff; font-size:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:280px; box-shadow:0 4px 10px rgba(2,6,23,.05); text-align:left; cursor:pointer}
@@ -89,7 +94,7 @@
   .stage{position:relative; flex:1; background:#f8fafc; border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex}
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:14px; background:#ffffff; border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px #fff}
 
-  .fileBadge{position:absolute; top:10px; left:10px; z-index:6}
+  .fileBadge{position:absolute; top:10px; left:10px; z-index:6; max-width:calc(100% - 20px)}
 
   .image-layer{position:absolute; left:50%; top:50%; transform-origin:center center; cursor:grab;}
   .image-layer.dragging{cursor:grabbing}
@@ -97,9 +102,9 @@
 
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
-  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:visible;}
-  .frostBg{position:absolute; inset:0; background:radial-gradient(ellipse 156.89% 179.02% at 10.05% 50%, rgba(255,255,255,0) 27%, white 95%), rgba(255,255,255,0.08); box-shadow:inset 0 2px 0 rgba(255,255,255,.10); backdrop-filter:blur(27.5px)}
-  .veil{position:absolute; inset:0; background:rgba(255,255,255,0.3);}
+  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:hidden;}
+  .frostBg{position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,255,255,0.88),rgba(241,245,249,0.82)); backdrop-filter:blur(28px); border-top:1px solid rgba(255,255,255,0.85); border-left:1px solid rgba(148,163,184,0.18); border-right:1px solid rgba(148,163,184,0.18)}
+  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.08)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
@@ -109,7 +114,7 @@
     linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.18)),
     rgba(0,0,0,0.22);
   }
-  .playTri{position:absolute; left:50%; top:50%; transform:translate(-44.5%,-50%)}
+  .playTri{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%)}
 
   .sqLogo,.vertLogo{position:absolute; display:none; pointer-events:none}
 
@@ -117,7 +122,8 @@
   .kv .k{width:120px; color:var(--muted)}
   .kv .v{font-weight:600}
 
-  .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); max-width:360px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); white-space:nowrap}
+  .chipInfo.flexible{max-width:none; white-space:normal; word-break:break-word; flex-wrap:wrap; align-items:flex-start}
 
   .libWrap{display:grid; gap:8px}
   .libScroller{display:flex; gap:10px; overflow-x:auto; padding:8px; border:1px solid var(--border); border-radius:12px; background:#fff}
@@ -133,6 +139,18 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .bar{height:8px; background:#eef2ff; border-radius:999px; overflow:hidden}
   .bar > span{display:block; height:100%; width:0%; background:linear-gradient(135deg,var(--brand),var(--brand2)); border-radius:999px; transition:width .2s}
+
+  .foot-note{font-size:11px; color:var(--muted); padding:10px 16px; text-align:center}
+  .adjust-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
+  .adjust-card{background:#fff; border:1px solid var(--border); border-radius:14px; padding:12px 14px; box-shadow:0 6px 16px rgba(15,23,42,0.06); display:grid; gap:6px}
+  .adjust-card label{font-size:13px; color:var(--muted); font-weight:600}
+  .adjust-card .value{font-size:18px; font-weight:700; color:var(--ink)}
+  .adjust-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
+  .adjust-actions .btn{flex:1 1 120px; justify-content:center}
+  .adjust-coords{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-top:12px}
+  .adjust-rot-label{display:flex; align-items:center; padding:10px 12px; color:var(--muted); font-weight:600}
+  .exportActions{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
+  .exportMeta{margin-top:10px; display:flex; width:100%; justify-content:space-between}
 </style>
 </head>
 <body>
@@ -196,31 +214,45 @@
         <!-- Step 3: Adjust -->
         <div class="section">
           <div class="section-title"><span class="badge">3</span> Adjust image</div>
-          <div class="stack">
-            <label>Brightness: <span id="bVal">100</span>%<br/>
+          <div class="adjust-grid">
+            <div class="adjust-card">
+              <label for="brightness">Brightness</label>
+              <div class="value"><span id="bVal">100</span>%</div>
               <input id="brightness" type="range" min="0" max="200" value="100">
-            </label>
-            <label>Saturation: <span id="sVal">100</span>%<br/>
-              <input id="saturation" type="range" min="0" max="200" value="100">
-            </label>
-            <label>Contrast: <span id="cVal">100</span>%<br/>
-              <input id="contrast" type="range" min="0" max="200" value="100">
-            </label>
-            <label>Image Zoom (crop): <span id="imgZoomVal">1.00</span>×<br/>
-              <input id="imgZoom" type="range" min="1" max="4" step="0.01" value="1">
-            </label>
-            <div class="row">
-              <button class="btn" id="flipH">Flip horizontal</button>
-              <button class="btn" id="flipV">Flip vertical</button>
-              <button class="btn" id="rotate">Rotate 90°</button>
-              <span class="muted" id="rotLab">0°</span>
             </div>
-            <label>Move X (px): <span id="xVal">0</span><br/>
+            <div class="adjust-card">
+              <label for="saturation">Saturation</label>
+              <div class="value"><span id="sVal">100</span>%</div>
+              <input id="saturation" type="range" min="0" max="200" value="100">
+            </div>
+            <div class="adjust-card">
+              <label for="contrast">Contrast</label>
+              <div class="value"><span id="cVal">100</span>%</div>
+              <input id="contrast" type="range" min="0" max="200" value="100">
+            </div>
+            <div class="adjust-card">
+              <label for="imgZoom">Image Zoom (crop)</label>
+              <div class="value"><span id="imgZoomVal">1.00</span>×</div>
+              <input id="imgZoom" type="range" min="1" max="4" step="0.01" value="1">
+            </div>
+          </div>
+          <div class="adjust-actions">
+            <button class="btn" id="flipH">Flip horizontal</button>
+            <button class="btn" id="flipV">Flip vertical</button>
+            <button class="btn" id="rotate">Rotate 90°</button>
+            <span class="adjust-rot-label" id="rotLab">0°</span>
+          </div>
+          <div class="adjust-coords">
+            <div class="adjust-card">
+              <label for="moveX">Move X (px)</label>
+              <div class="value"><span id="xVal">0</span></div>
               <input id="moveX" type="range" min="-0" max="0" value="0">
-            </label>
-            <label>Move Y (px): <span id="yVal">0</span><br/>
+            </div>
+            <div class="adjust-card">
+              <label for="moveY">Move Y (px)</label>
+              <div class="value"><span id="yVal">0</span></div>
               <input id="moveY" type="range" min="-0" max="0" value="0">
-            </label>
+            </div>
           </div>
         </div>
 
@@ -337,11 +369,11 @@
         <!-- Step 5: Export -->
         <div class="section">
           <div class="section-title"><span class="badge">5</span> Export</div>
-          <div class="row" style="justify-content:space-between; gap:12px; flex-wrap:wrap">
+          <div class="exportActions">
             <button class="btn primary" id="exportBtn" disabled>Export current</button>
             <button class="btn ghost" id="exportAllBtn" disabled>Export all (ZIP)</button>
-            <div class="chipInfo" id="lastExport" aria-live="polite">—</div>
           </div>
+          <div class="chipInfo exportMeta" id="lastExport" aria-live="polite">—</div>
           <div class="muted" style="margin-top:6px">Max ~500 KB each. JPG at 1080px.</div>
         </div>
       </div>
@@ -363,7 +395,7 @@
       </div>
       <div class="stage">
         <div class="stage-inner" id="stage">
-          <div id="fileNameTop" class="chipInfo fileBadge">—</div>
+          <div id="fileNameTop" class="chipInfo flexible fileBadge">—</div>
 
           <div class="image-layer" id="imageLayer">
             <img id="img" alt="uploaded" />
@@ -418,11 +450,11 @@
 
   const PARTNERS = [
     {name:'Philips', url:'https://cdn.worldvectorlogo.com/logos/philips-6.svg'},
-    {name:'Versuni', url:'https://newsroom.home-appliances.philips/images/Versuni-Logo.png'},
-    {name:'Petite Amelie', url:'https://www.thuiswinkel.org/Images/Logo/9dac5659-5662-4f9d-9203-fe1fcd980f04'},
+    {name:'Versuni', url:'https://i.imghippo.com/files/tWvR4051Aws.png'},
+    {name:'Petite Amelie', url:'https://i.imghippo.com/files/KpIL9265gYA.png'},
     {name:'Baby List', url:'https://upload.wikimedia.org/wikipedia/commons/3/3b/Babylist_Logo_03.png'},
     {name:'C&A', url:'https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg'},
-    {name:'Nuna', url:'https://upload.wikimedia.org/wikipedia/commons/9/99/Nuna_%28logo%29.png'},
+    {name:'Nuna', url:'https://i.imghippo.com/files/sbJA8488Sbo.png'},
     {name:'MATTEL', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png'},
     {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
     {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
@@ -542,16 +574,15 @@
     els.formatRow.innerHTML = '';
     Object.values(FORMATS).forEach(f => {
       const b = document.createElement('button');
-      b.type = 'button'; b.className = 'chip' + (state.format.key===f.key?' active':'');
+      b.type = 'button'; b.className = 'formatCard' + (state.format.key===f.key?' active':'');
       b.dataset.key = f.key;
+      b.setAttribute('aria-pressed', state.format.key===f.key);
       b.innerHTML = `
-        <span class="chipInner">
-          ${iconSVG(f.icon)}
-          <span>
-            <div>${f.label}</div>
-            <div class="meta">${(f.key==='VERT' ? variantDims().wExp : f.wExport)}×${(f.key==='VERT' ? variantDims().hExp : f.hExport)}px</div>
-          </span>
-        </span>
+        <span class="formatIcon">${iconSVG(f.icon)}</span>
+        <div>
+          <div class="formatTitle">${f.label}</div>
+          <div class="formatMeta">${(f.key==='VERT' ? variantDims().wExp : f.wExport)}×${(f.key==='VERT' ? variantDims().hExp : f.hExport)}px</div>
+        </div>
       `;
       b.addEventListener('click', ()=>{
         setFormat(f.key); computeCover(); fitPreviewZoomToStage(); render(); updateControls(); updateFormatChipActive();
@@ -562,11 +593,13 @@
   }
 
   function updateFormatChipActive(){
-    [...els.formatRow.querySelectorAll('.chip')].forEach(chip=>{
+    [...els.formatRow.querySelectorAll('.formatCard')].forEach(chip=>{
       const key = chip.dataset.key;
       if(!key) return;
-      chip.classList.toggle('active', key === state.format.key);
-      const meta = chip.querySelector('.meta');
+      const isActive = key === state.format.key;
+      chip.classList.toggle('active', isActive);
+      chip.setAttribute('aria-pressed', isActive);
+      const meta = chip.querySelector('.formatMeta');
       if(meta){
         let dims = null;
         if(key === 'VERT') dims = variantDims();
@@ -928,6 +961,21 @@
   function filterGallery(scroller, q){ const qq=(q||'').trim().toLowerCase(); scroller?.querySelectorAll('.libItem').forEach(it=>{ it.style.display = (!qq || it.dataset.name.includes(qq)) ? '' : 'none'; }); }
 
   function loadImageCORS(src){ return new Promise((res,rej)=>{ if(!src) return res(null); const im=new Image(); im.crossOrigin='anonymous'; im.onload=()=>res(im); im.onerror=(e)=>rej(e); im.src=src; }); }
+
+  function toneImageSource(image, tone){
+    if(!tone || tone==='orig') return image;
+    const baseW = image.naturalWidth || image.width;
+    const baseH = image.naturalHeight || image.height;
+    const canvas = document.createElement('canvas');
+    canvas.width = baseW; canvas.height = baseH;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(image, 0, 0, baseW, baseH);
+    ctx.globalCompositeOperation = 'source-in';
+    const fill = tone==='white' ? '#ffffff' : '#000000';
+    ctx.fillStyle = fill;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    return canvas;
+  }
   function exclusivePick(which, sourceType){
     if(which==='logo1'){ if(sourceType==='upload'){ els.logo1Gallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.logo1Input.value=''; } }
     else if(which==='logo2'){ if(sourceType==='upload'){ els.logo2Gallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.logo2Input.value=''; } }
@@ -1045,14 +1093,15 @@
         if(overlayStrength > 0){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${overlayStrength * 0.85})`);
-          grad.addColorStop(1, `rgba(255,255,255,${overlayStrength * 0.55})`);
+          grad.addColorStop(0, `rgba(255,255,255,${overlayStrength})`);
+          grad.addColorStop(1, `rgba(246,248,252,${overlayStrength * 0.85})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
 
-        ctx.save(); ctx.globalAlpha = 0.1 + overlayStrength*0.15; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.1 + overlayStrength*0.2; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.08 + overlayStrength*0.18; ctx.fillStyle = 'rgba(15,23,42,0.12)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
@@ -1063,9 +1112,12 @@
         if(!src) return {w:0,h:0};
         const im = await loadImageCORS(src);
         if(!im) return {w:0,h:0};
-        const scale = targetH / im.height; const w = Math.max(1, Math.round(im.width*scale));
-        let filter = 'none'; if(tone==='white') filter='invert(1) brightness(2)'; else if(tone==='black') filter='brightness(0)';
-        ctx.save(); ctx.filter = filter; ctx.drawImage(im, xRight - w, barY + Math.round((state.frost.barHExp - targetH)/2), w, targetH); ctx.restore();
+        const baseW = im.naturalWidth || im.width; const baseH = im.naturalHeight || im.height;
+        const scale = targetH / baseH; const w = Math.max(1, Math.round(baseW*scale));
+        const source = toneImageSource(im, tone);
+        ctx.save();
+        ctx.drawImage(source, xRight - w, barY + Math.round((state.frost.barHExp - targetH)/2), w, targetH);
+        ctx.restore();
         return {w, h:targetH};
       }
       let x = fw - padding;
@@ -1122,10 +1174,11 @@
       const im = await loadImageCORS(state.squareLogo.src);
       if(im){
         const targetH = (SIZE_MAP_SQ[state.squareLogo.sizeKey]||55);
-        const scale = targetH / im.height; const w = Math.round(im.width*scale); const h = Math.round(targetH);
+        const baseW = im.naturalWidth || im.width; const baseH = im.naturalHeight || im.height;
+        const scale = targetH / baseH; const w = Math.round(baseW*scale); const h = Math.round(targetH);
         const x = fw - 147 - w; const y = 60;
-        let filter = 'none'; if(state.squareLogo.tone==='white') filter='invert(1) brightness(2)'; else if(state.squareLogo.tone==='black') filter='brightness(0)';
-        ctx.save(); ctx.filter = filter; ctx.drawImage(im, x, y, w, h); ctx.restore();
+        const source = toneImageSource(im, state.squareLogo.tone);
+        ctx.save(); ctx.drawImage(source, x, y, w, h); ctx.restore();
       }
     }
 
@@ -1134,10 +1187,11 @@
       const im = await loadImageCORS(state.vertLogo.src);
       if(im){
         const targetH = (SIZE_MAP_SQ[state.vertLogo.sizeKey]||55);
-        const scale = targetH / im.height; const w = Math.round(im.width*scale); const h = Math.round(targetH);
+        const baseW = im.naturalWidth || im.width; const baseH = im.naturalHeight || im.height;
+        const scale = targetH / baseH; const w = Math.round(baseW*scale); const h = Math.round(targetH);
         const x = 60; const y = 50;
-        let filter = 'none'; if(state.vertLogo.tone==='white') filter='invert(1) brightness(2)'; else if(state.vertLogo.tone==='black') filter='brightness(0)';
-        ctx.save(); ctx.filter = filter; ctx.drawImage(im, x, y, w, h); ctx.restore();
+        const source = toneImageSource(im, state.vertLogo.tone);
+        ctx.save(); ctx.drawImage(source, x, y, w, h); ctx.restore();
       }
     }
 
