@@ -72,12 +72,19 @@
 
   .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
   .stack{display:grid; gap:10px; text-align:left}
-  #formatRow{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px}
+  #formatRow{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
+  @media (max-width: 720px){
+    #formatRow{grid-template-columns:1fr}
+  }
   .formatCard{position:relative; border:1px solid var(--border); border-radius:18px; padding:20px; background:#fff; text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
+  .formatCard.wide{grid-column:span 2}
+  @media (max-width: 720px){ .formatCard.wide{grid-column:auto} }
   .formatCard .formatIcon{width:48px; height:48px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(99,102,241,0.12))}
   .formatCard .formatIcon svg{width:32px; height:auto}
+  .formatCard .formatInfo{display:grid; gap:4px}
   .formatCard .formatTitle{font-size:15px; font-weight:700; line-height:1.3}
-  .formatCard .formatMeta{font-size:13px; color:var(--muted); margin-top:4px}
+  .formatCard .formatSub{font-size:13px; color:var(--muted)}
+  .formatCard .formatMeta{font-size:12px; color:var(--muted)}
   .formatCard.active{border-color:rgba(14,165,233,0.55); box-shadow:0 12px 30px rgba(14,165,233,0.16); transform:translateY(-2px)}
   .formatCard:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(14,165,233,0.12)}
   .muted{color:var(--muted)}
@@ -443,9 +450,9 @@
 <script>
 (function(){
   const FORMATS = {
-    HORIZ:   { key:'HORIZ', label:'Horizontal — Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
-    SQUARE:  { key:'SQUARE',label:'Square — Carousel / Story Exp / Co-Reg',    icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
-    VERT:    { key:'VERT',  label:'Vertical — Interstitial',                   icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
+    HORIZ:   { key:'HORIZ', label:'Horizontal', sub:'Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
+    SQUARE:  { key:'SQUARE',label:'Square',     sub:'Carousel / Story Exp / Co-Reg',          icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
+    VERT:    { key:'VERT',  label:'Vertical',   sub:'Interstitial',                           icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
   };
 
   const PARTNERS = [
@@ -512,6 +519,7 @@
     sqLogoInput: document.getElementById('sqLogoInput'), sqLogoSeg: document.getElementById('sqLogoSeg'), sqLogoToneSeg: document.getElementById('sqLogoToneSeg'),
     removeSqLogo: document.getElementById('removeSqLogo'),
     sqLogoSearch: document.getElementById('sqLogoSearch'),
+    sqLogoGallery: document.getElementById('sqLogoGallery'),
 
     verticalLogoSection: document.getElementById('verticalLogoSection'),
     toggleVertLogo: document.getElementById('toggleVertLogo'),
@@ -520,6 +528,7 @@
     vertLogoInput: document.getElementById('vertLogoInput'), vertLogoSeg: document.getElementById('vertLogoSeg'), vertLogoToneSeg: document.getElementById('vertLogoToneSeg'),
     removeVertLogo: document.getElementById('removeVertLogo'),
     vertLogoSearch: document.getElementById('vertLogoSearch'),
+    vertLogoGallery: document.getElementById('vertLogoGallery'),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
@@ -574,13 +583,17 @@
     els.formatRow.innerHTML = '';
     Object.values(FORMATS).forEach(f => {
       const b = document.createElement('button');
-      b.type = 'button'; b.className = 'formatCard' + (state.format.key===f.key?' active':'');
+      const classes = ['formatCard'];
+      if(f.key==='HORIZ') classes.push('wide');
+      if(state.format.key===f.key) classes.push('active');
+      b.type = 'button'; b.className = classes.join(' ');
       b.dataset.key = f.key;
       b.setAttribute('aria-pressed', state.format.key===f.key);
       b.innerHTML = `
         <span class="formatIcon">${iconSVG(f.icon)}</span>
-        <div>
+        <div class="formatInfo">
           <div class="formatTitle">${f.label}</div>
+          <div class="formatSub">${f.sub||''}</div>
           <div class="formatMeta">${(f.key==='VERT' ? variantDims().wExp : f.wExport)}×${(f.key==='VERT' ? variantDims().hExp : f.hExport)}px</div>
         </div>
       `;
@@ -1073,7 +1086,7 @@
       const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
 
       if(shouldShowBar){
-        const pad = Math.round(barH * 0.6);
+        const pad = Math.round(barH * 1.25);
         const sampleY = Math.max(0, barY - pad);
         const sampleH = Math.min(fh - sampleY, barH + pad*2);
         const barSource = document.createElement('canvas');
@@ -1082,9 +1095,18 @@
         barCtx.drawImage(baseLayer, 0, sampleY, fw, sampleH, 0, 0, fw, sampleH);
 
         ctx.save();
-        ctx.filter = `blur(${Math.max(12, Math.round(barH*0.35))}px) saturate(1.05)`;
+        ctx.filter = `blur(${Math.max(18, Math.round(barH*0.45))}px) saturate(1.08)`;
         const drawY = barY - Math.round((sampleH - barH)/2);
         ctx.drawImage(barSource, 0, drawY, fw, sampleH);
+        ctx.restore();
+
+        ctx.save();
+        ctx.globalAlpha = 0.16;
+        const baseGrad = ctx.createLinearGradient(0, barY, 0, barY + barH);
+        baseGrad.addColorStop(0, 'rgba(255,255,255,1)');
+        baseGrad.addColorStop(1, 'rgba(241,245,249,0.85)');
+        ctx.fillStyle = baseGrad;
+        ctx.fillRect(0, barY, fw, barH);
         ctx.restore();
       }
 
@@ -1093,15 +1115,15 @@
         if(overlayStrength > 0){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${overlayStrength})`);
-          grad.addColorStop(1, `rgba(246,248,252,${overlayStrength * 0.85})`);
+          grad.addColorStop(0, `rgba(255,255,255,${0.2 + overlayStrength*0.6})`);
+          grad.addColorStop(1, `rgba(246,248,252,${0.14 + overlayStrength*0.45})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
 
-        ctx.save(); ctx.globalAlpha = 0.1 + overlayStrength*0.2; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.08 + overlayStrength*0.18; ctx.fillStyle = 'rgba(15,23,42,0.12)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.25; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
@@ -1161,7 +1183,7 @@
 
         ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
         const scale = Math.min(d*0.55/59, d*0.55/63);
-        ctx.translate(cx - (59*scale)/2 + 10*scale, cy - (63*scale)/2);
+        ctx.translate(cx - (59*scale)/2 - 1.5*scale, cy - (63*scale)/2);
         ctx.scale(scale, scale);
         const path = new Path2D('M18 14 L44 31.5 L18 49 Z');
         ctx.fill(path); ctx.stroke(path);
