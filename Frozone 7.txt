@@ -34,6 +34,8 @@
   .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; border-color:transparent}
   .btn.ghost{background:transparent; border-color:var(--border)}
   .btn.small{padding:6px 10px; border-radius:10px; font-size:12px}
+  .btn.compact{padding:8px 12px; border-radius:10px; font-size:13px; background:linear-gradient(180deg,#f8fafc,#eef2ff); border-color:rgba(148,163,184,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.7), 0 6px 12px rgba(15,23,42,0.08)}
+  .btn.compact:hover{background:linear-gradient(170deg,#fff,#e0ecff)}
   .btn.icon{width:36px; height:36px; padding:0; display:inline-grid; place-items:center}
   .btn.danger{border-color:#fecaca; color:#b91c1c; background:#fff}
   .btn.danger:hover{background:#fff5f5}
@@ -42,12 +44,11 @@
   input[type="range"]{width:100%}
   input[type="search"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px}
 
-  .seg{display:inline-flex; background:#f1f5f9; border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6); position:relative}
-  .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; transition:background .18s ease, color .18s ease; min-width:44px; text-align:center; position:relative}
-  .seg button:not(.active):hover{color:var(--ink); background:rgba(148,163,184,0.18)}
-  .seg button::after{content:""; position:absolute; inset:0; border-right:1px solid rgba(148,163,184,0.4); pointer-events:none}
-  .seg button:last-child::after{display:none}
-  .seg button.active{color:var(--ink); background:#e0ecff; box-shadow:inset 0 1px 0 rgba(255,255,255,0.9)}
+  .seg{display:inline-flex; background:linear-gradient(135deg,rgba(226,232,240,0.6),rgba(241,245,249,0.9)); border:1px solid rgba(148,163,184,0.45); border-radius:999px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.7); position:relative; padding:2px}
+  .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 16px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; transition:background .18s ease, color .18s ease, box-shadow .18s ease; min-width:48px; text-align:center; position:relative; border-radius:999px}
+  .seg button:not(.active):hover{color:var(--ink); background:rgba(255,255,255,0.9); box-shadow:0 6px 12px rgba(15,23,42,0.08)}
+  .seg button::after{display:none}
+  .seg button.active{color:var(--ink); background:linear-gradient(140deg,rgba(219,234,254,0.95),rgba(221,214,254,0.92)); box-shadow:0 10px 18px rgba(99,102,241,0.18)}
   .seg button:focus-visible{outline:2px solid var(--brand); outline-offset:1px}
 
   /* Minimal, polished switches */
@@ -74,13 +75,17 @@
 
   .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
   .stack{display:grid; gap:10px; text-align:left}
-  #formatRow{display:grid; gap:12px; text-align:left}
+  #formatRow{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); text-align:center}
   .muted{color:var(--muted)}
 
-  .chip{padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:#fff; font-size:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:280px; box-shadow:0 4px 10px rgba(2,6,23,.05); text-align:left; cursor:pointer}
-  .chip.active{border-color:var(--brand); background:#e6f2ff}
-  .chip .meta{font-size:12px; color:var(--muted)}
-  .chip .chipInner{display:flex; align-items:center; gap:10px}
+  .chip{padding:20px 18px; border:1px solid var(--border); border-radius:18px; background:linear-gradient(180deg,#fff,rgba(248,250,252,0.92)); font-size:15px; display:flex; align-items:center; justify-content:center; gap:14px; min-height:170px; width:100%; box-shadow:0 6px 18px rgba(15,23,42,0.06); text-align:center; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
+  .chip:hover{transform:translateY(-2px); box-shadow:0 14px 30px rgba(15,23,42,0.12)}
+  .chip.active{border-color:rgba(99,102,241,0.5); background:linear-gradient(160deg,rgba(219,234,254,0.65),rgba(221,214,254,0.75)); box-shadow:0 16px 34px rgba(99,102,241,0.18)}
+  .chip:focus-visible{outline:3px solid rgba(99,102,241,0.65); outline-offset:2px}
+  .chip .meta{font-size:12px; color:var(--muted); margin-top:6px}
+  .chip .chipInner{display:flex; flex-direction:column; align-items:center; gap:12px}
+  .chip .chipInner span{display:flex; flex-direction:column; gap:4px}
+  #formatRow .chip span{text-align:center}
 
   .iconBox{stroke:#475569; fill:none; stroke-width:2; stroke-dasharray:4 4; rx:5; ry:5}
 
@@ -97,19 +102,21 @@
 
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
-  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:visible;}
-  .frostBg{position:absolute; inset:0; background:radial-gradient(ellipse 156.89% 179.02% at 10.05% 50%, rgba(255,255,255,0) 27%, white 95%), rgba(255,255,255,0.08); box-shadow:inset 0 2px 0 rgba(255,255,255,.10); backdrop-filter:blur(27.5px)}
-  .veil{position:absolute; inset:0; background:rgba(255,255,255,0.3);}
+  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:hidden;}
+  .frostBg{position:absolute; inset:0; background:linear-gradient(120deg, rgba(255,255,255,0.78), rgba(255,255,255,0.62)); box-shadow:inset 0 2px 0 rgba(255,255,255,.18); backdrop-filter:blur(32px);}
+  .frostBg::after{content:""; position:absolute; inset:0; border-radius:inherit; border:1px solid rgba(255,255,255,0.35); mix-blend-mode:screen; pointer-events:none}
+  .veil{position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.38), rgba(255,255,255,0.32)); mix-blend-mode:soft-light;}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
 
-  .playWrap{position:absolute; display:none; pointer-events:none}
+  .playWrap{position:absolute; display:none; pointer-events:none; align-items:center; justify-content:center}
   .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(28px); background:
     linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.18)),
     rgba(0,0,0,0.22);
   }
-  .playTri{position:absolute; left:50%; top:50%; transform:translate(-44.5%,-50%)}
+  .playTri{position:relative; display:flex; align-items:center; justify-content:center; z-index:1}
+  .playTri svg{width:62%; height:auto}
 
   .sqLogo,.vertLogo{position:absolute; display:none; pointer-events:none}
 
@@ -117,7 +124,17 @@
   .kv .k{width:120px; color:var(--muted)}
   .kv .v{font-weight:600}
 
+  .adjust-actions{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; align-items:stretch}
+  .adjust-actions .btn{justify-content:center}
+  .adjust-meta{font-size:13px; color:var(--muted); padding:6px 10px; background:rgba(148,163,184,0.12); border-radius:10px; display:inline-flex; align-items:center; justify-content:center; min-height:36px; justify-self:end}
+
+  .export-actions{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; width:100%}
+  .export-actions .btn{width:100%; justify-content:center}
+
+  #formatRow .chip svg{filter:drop-shadow(0 4px 10px rgba(15,23,42,0.08))}
+
   .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); max-width:360px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .chipInfo.fileBadge{max-width:none; width:fit-content; overflow:visible; text-overflow:unset; white-space:nowrap}
 
   .libWrap{display:grid; gap:8px}
   .libScroller{display:flex; gap:10px; overflow-x:auto; padding:8px; border:1px solid var(--border); border-radius:12px; background:#fff}
@@ -125,6 +142,8 @@
   .libItem img{height:18px; width:auto; object-fit:contain}
   .libItem .cap{font-size:11px; color:var(--muted)}
   .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
+
+  .foot-note{font-size:12px; color:var(--muted); margin:10px 16px 20px; text-align:center}
 
   .loading{position:fixed; inset:0; background:rgba(15,23,42,.35); display:none; align-items:center; justify-content:center; z-index:1000}
   .loading .card{min-width:280px; max-width:420px; background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; text-align:center}
@@ -209,11 +228,11 @@
             <label>Image Zoom (crop): <span id="imgZoomVal">1.00</span>×<br/>
               <input id="imgZoom" type="range" min="1" max="4" step="0.01" value="1">
             </label>
-            <div class="row">
-              <button class="btn" id="flipH">Flip horizontal</button>
-              <button class="btn" id="flipV">Flip vertical</button>
-              <button class="btn" id="rotate">Rotate 90°</button>
-              <span class="muted" id="rotLab">0°</span>
+            <div class="adjust-actions">
+              <button class="btn compact" id="flipH">Flip horizontal</button>
+              <button class="btn compact" id="flipV">Flip vertical</button>
+              <button class="btn compact" id="rotate">Rotate 90°</button>
+              <div class="adjust-meta" id="rotLab">0°</div>
             </div>
             <label>Move X (px): <span id="xVal">0</span><br/>
               <input id="moveX" type="range" min="-0" max="0" value="0">
@@ -337,11 +356,11 @@
         <!-- Step 5: Export -->
         <div class="section">
           <div class="section-title"><span class="badge">5</span> Export</div>
-          <div class="row" style="justify-content:space-between; gap:12px; flex-wrap:wrap">
+          <div class="export-actions">
             <button class="btn primary" id="exportBtn" disabled>Export current</button>
             <button class="btn ghost" id="exportAllBtn" disabled>Export all (ZIP)</button>
-            <div class="chipInfo" id="lastExport" aria-live="polite">—</div>
           </div>
+          <div class="chipInfo" id="lastExport" aria-live="polite" style="margin-top:12px">—</div>
           <div class="muted" style="margin-top:6px">Max ~500 KB each. JPG at 1080px.</div>
         </div>
       </div>
@@ -383,8 +402,8 @@
           <div class="playWrap" id="playWrap">
             <div class="playBg" id="playBg"></div>
             <div class="playTri" aria-hidden="true">
-              <svg width="72" height="76" viewBox="0 0 59 63" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 14 L44 31.5 L18 49 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
+              <svg width="100%" height="100%" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M38 25 L72 50 L38 75 Z" fill="#fff" stroke="#fff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"></path>
               </svg>
             </div>
           </div>
@@ -418,11 +437,11 @@
 
   const PARTNERS = [
     {name:'Philips', url:'https://cdn.worldvectorlogo.com/logos/philips-6.svg'},
-    {name:'Versuni', url:'https://newsroom.home-appliances.philips/images/Versuni-Logo.png'},
-    {name:'Petite Amelie', url:'https://www.thuiswinkel.org/Images/Logo/9dac5659-5662-4f9d-9203-fe1fcd980f04'},
+    {name:'Versuni', url:'https://i.imghippo.com/files/tWvR4051Aws.png'},
+    {name:'Petite Amelie', url:'https://i.imghippo.com/files/KpIL9265gYA.png'},
     {name:'Baby List', url:'https://upload.wikimedia.org/wikipedia/commons/3/3b/Babylist_Logo_03.png'},
     {name:'C&A', url:'https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg'},
-    {name:'Nuna', url:'https://upload.wikimedia.org/wikipedia/commons/9/99/Nuna_%28logo%29.png'},
+    {name:'Nuna', url:'https://i.imghippo.com/files/sbJA8488Sbo.png'},
     {name:'MATTEL', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png'},
     {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
     {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
@@ -544,6 +563,7 @@
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'chip' + (state.format.key===f.key?' active':'');
       b.dataset.key = f.key;
+      b.setAttribute('aria-pressed', state.format.key===f.key ? 'true' : 'false');
       b.innerHTML = `
         <span class="chipInner">
           ${iconSVG(f.icon)}
@@ -565,7 +585,9 @@
     [...els.formatRow.querySelectorAll('.chip')].forEach(chip=>{
       const key = chip.dataset.key;
       if(!key) return;
-      chip.classList.toggle('active', key === state.format.key);
+      const isActive = key === state.format.key;
+      chip.classList.toggle('active', isActive);
+      chip.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       const meta = chip.querySelector('.meta');
       if(meta){
         let dims = null;
@@ -643,7 +665,7 @@
     els.frostBg.style.display = state.frost.enabled ? 'block' : 'none';
     els.frostVeil.style.display = (state.frost.enabled && state.frost.overlayAlpha>0) ? 'block' : 'none';
 
-    els.playWrap.style.display = (state.format.key==='HORIZ' && state.play.enabled) ? 'block' : 'none';
+    els.playWrap.style.display = (state.format.key==='HORIZ' && state.play.enabled) ? 'flex' : 'none';
 
     els.overlayAlpha.disabled = !state.frost.enabled;
     els.overlayLabel.classList.toggle('dim', !state.frost.enabled);
@@ -1044,15 +1066,13 @@
         const overlayStrength = Math.max(0, Math.min(1, state.frost.overlayAlpha));
         if(overlayStrength > 0){
           ctx.save();
-          const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${overlayStrength * 0.85})`);
-          grad.addColorStop(1, `rgba(255,255,255,${overlayStrength * 0.55})`);
-          ctx.fillStyle = grad;
+          const tint = Math.min(0.9, overlayStrength * 0.8);
+          ctx.fillStyle = `rgba(255,255,255,${tint})`;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
 
-        ctx.save(); ctx.globalAlpha = 0.1 + overlayStrength*0.15; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.18 + overlayStrength*0.12; ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.moveTo(0, barY + 0.5); ctx.lineTo(fw, barY + 0.5); ctx.stroke(); ctx.restore();
       }
 
       // logos on bar
@@ -1064,7 +1084,7 @@
         const im = await loadImageCORS(src);
         if(!im) return {w:0,h:0};
         const scale = targetH / im.height; const w = Math.max(1, Math.round(im.width*scale));
-        let filter = 'none'; if(tone==='white') filter='invert(1) brightness(2)'; else if(tone==='black') filter='brightness(0)';
+        let filter = 'none'; if(tone==='white') filter='brightness(0) invert(1)'; else if(tone==='black') filter='brightness(0)';
         ctx.save(); ctx.filter = filter; ctx.drawImage(im, xRight - w, barY + Math.round((state.frost.barHExp - targetH)/2), w, targetH); ctx.restore();
         return {w, h:targetH};
       }
@@ -1107,12 +1127,14 @@
 
         ctx.save(); ctx.globalAlpha = 0.2; ctx.strokeStyle = 'rgba(15,23,42,0.25)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, r-1, 0, Math.PI*2); ctx.stroke(); ctx.restore();
 
-        ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
-        const scale = Math.min(d*0.55/59, d*0.55/63);
-        ctx.translate(cx - (59*scale)/2 + 10*scale, cy - (63*scale)/2);
-        ctx.scale(scale, scale);
-        const path = new Path2D('M18 14 L44 31.5 L18 49 Z');
-        ctx.fill(path); ctx.stroke(path);
+        ctx.save(); ctx.lineWidth = Math.max(4, d*0.08); ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
+        const triW = d * 0.36; const triH = d * 0.42;
+        ctx.beginPath();
+        ctx.moveTo(cx - triW * 0.5, cy - triH * 0.5);
+        ctx.lineTo(cx + triW * 0.5, cy);
+        ctx.lineTo(cx - triW * 0.5, cy + triH * 0.5);
+        ctx.closePath();
+        ctx.fill(); ctx.stroke();
         ctx.restore();
       }
     }
@@ -1124,7 +1146,7 @@
         const targetH = (SIZE_MAP_SQ[state.squareLogo.sizeKey]||55);
         const scale = targetH / im.height; const w = Math.round(im.width*scale); const h = Math.round(targetH);
         const x = fw - 147 - w; const y = 60;
-        let filter = 'none'; if(state.squareLogo.tone==='white') filter='invert(1) brightness(2)'; else if(state.squareLogo.tone==='black') filter='brightness(0)';
+        let filter = 'none'; if(state.squareLogo.tone==='white') filter='brightness(0) invert(1)'; else if(state.squareLogo.tone==='black') filter='brightness(0)';
         ctx.save(); ctx.filter = filter; ctx.drawImage(im, x, y, w, h); ctx.restore();
       }
     }
@@ -1136,7 +1158,7 @@
         const targetH = (SIZE_MAP_SQ[state.vertLogo.sizeKey]||55);
         const scale = targetH / im.height; const w = Math.round(im.width*scale); const h = Math.round(targetH);
         const x = 60; const y = 50;
-        let filter = 'none'; if(state.vertLogo.tone==='white') filter='invert(1) brightness(2)'; else if(state.vertLogo.tone==='black') filter='brightness(0)';
+        let filter = 'none'; if(state.vertLogo.tone==='white') filter='brightness(0) invert(1)'; else if(state.vertLogo.tone==='black') filter='brightness(0)';
         ctx.save(); ctx.filter = filter; ctx.drawImage(im, x, y, w, h); ctx.restore();
       }
     }
