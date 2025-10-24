@@ -42,6 +42,14 @@
   input[type="range"]{width:100%}
   input[type="search"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px}
 
+  .seg{display:inline-flex; background:#f1f5f9; border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6); position:relative}
+  .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; transition:background .18s ease, color .18s ease; min-width:44px; text-align:center; position:relative}
+  .seg button:not(.active):hover{color:var(--ink); background:rgba(148,163,184,0.18)}
+  .seg button::after{content:""; position:absolute; inset:0; border-right:1px solid rgba(148,163,184,0.4); pointer-events:none}
+  .seg button:last-child::after{display:none}
+  .seg button.active{color:var(--ink); background:#e0ecff; box-shadow:inset 0 1px 0 rgba(255,255,255,0.9)}
+  .seg button:focus-visible{outline:2px solid var(--brand); outline-offset:1px}
+
   /* Minimal, polished switches */
   label.switch{display:inline-flex; align-items:center; gap:10px; font-size:14px; user-select:none}
   .switch input{position:absolute; opacity:0; width:0; height:0}
@@ -535,6 +543,7 @@
     Object.values(FORMATS).forEach(f => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'chip' + (state.format.key===f.key?' active':'');
+      b.dataset.key = f.key;
       b.innerHTML = `
         <span class="chipInner">
           ${iconSVG(f.icon)}
@@ -545,15 +554,32 @@
         </span>
       `;
       b.addEventListener('click', ()=>{
-        setFormat(f.key); computeCover(); fitPreviewZoomToStage(); render(); updateControls();
+        setFormat(f.key); computeCover(); fitPreviewZoomToStage(); render(); updateControls(); updateFormatChipActive();
       });
       els.formatRow.appendChild(b);
+    });
+    updateFormatChipActive();
+  }
+
+  function updateFormatChipActive(){
+    [...els.formatRow.querySelectorAll('.chip')].forEach(chip=>{
+      const key = chip.dataset.key;
+      if(!key) return;
+      chip.classList.toggle('active', key === state.format.key);
+      const meta = chip.querySelector('.meta');
+      if(meta){
+        let dims = null;
+        if(key === 'VERT') dims = variantDims();
+        else if(FORMATS[key]) dims = { wExp: FORMATS[key].wExport, hExp: FORMATS[key].hExport };
+        if(dims){ meta.textContent = `${dims.wExp}×${dims.hExp}px`; }
+      }
     });
   }
 
   function setFormat(key){
     if(key==='VERT'){ state.format = { ...FORMATS.VERT }; applyVerticalVariant(state.vertVariant); }
     else { state.format = { ...(key==='HORIZ' ? FORMATS.HORIZ : FORMATS.SQUARE) }; }
+    updateFormatChipActive();
     if(state.imageSrc){ computeCover(); render(); updateControls(); }
   }
   function variantDims(){
@@ -566,6 +592,7 @@
     const vd = variantDims();
     state.format.wPreview = vd.wPrev; state.format.hPreview = vd.hPrev;
     state.format.wExport = vd.wExp;   state.format.hExport = vd.hExp;
+    updateFormatChipActive();
   }
 
   function effectiveDims(){
@@ -590,6 +617,9 @@
     els.frostSection.style.display        = (state.format.key==='HORIZ')  ? 'block' : 'none';
     els.verticalLogoSection.style.display = (state.format.key==='VERT')   ? 'block' : 'none';
     els.vertSizeRow.style.display         = (state.format.key==='VERT')   ? 'flex' : 'none';
+    if(state.format.key==='VERT'){
+      els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
+    }
 
     els.bVal.textContent = state.brightness;
     els.sVal.textContent = state.saturation;
@@ -676,6 +706,7 @@
       Object.assign(els.frostBar.style, { width: fwPx+'px', height: barHPrevPx+'px', top: barTopPx+'px' });
       els.logoDockPrev.style.paddingRight = (state.frost.padRightExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
       els.logoDockPrev.style.gap = (state.frost.gapExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
+      els.frostVeil.style.opacity = state.frost.overlayAlpha;
 
       const h1 = SIZE_MAP[state.frost.logo1.sizeKey] * scaleYPrev;
       const h2 = SIZE_MAP[state.frost.logo2.sizeKey] * scaleYPrev;
@@ -982,51 +1013,46 @@
     ctx.drawImage(imgSource, dx, dy, imgWexp, imgHexp);
     ctx.restore();
 
+    const baseLayer = document.createElement('canvas');
+    baseLayer.width = fw; baseLayer.height = fh;
+    baseLayer.getContext('2d').drawImage(canvas, 0, 0);
+
     // ---------- HORIZONTAL Frosted Bar (edge-to-edge, blurred) ----------
     if(state.format.key==='HORIZ'){
       const barH = state.frost.barHExp;
       const barY = fh - barH;
 
-      if(state.frost.enabled){
-        const stopsN = 10;
-        const y0 = Math.max(0, barY - Math.round(barH*0.9));
-        const y1 = Math.min(fh, barY + Math.round(barH*0.1));
-        const sampleH = Math.max(1, y1 - y0);
-        let colorStops = null;
+      const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
 
-        try{
-          const imgData = ctx.getImageData(0, y0, fw, sampleH).data;
-          const sums = new Array(stopsN).fill(0).map(()=>({r:0,g:0,b:0,c:0}));
-          for(let y=0; y<sampleH; y++){
-            for(let x=0; x<fw; x++){
-              const i = (y*fw + x)*4; const t = x/(fw-1); const b = Math.min(stopsN-1, Math.max(0, Math.floor(t*(stopsN-1))));
-              sums[b].r += imgData[i]; sums[b].g += imgData[i+1]; sums[b].b += imgData[i+2]; sums[b].c++;
-            }
-          }
-          colorStops = sums.map((s,i)=>{ const c=Math.max(1,s.c); return { t: i/(stopsN-1), r:Math.round(s.r/c), g:Math.round(s.g/c), b:Math.round(s.b/c)}; });
-        }catch(e){
-          colorStops = [{t:0,r:255,g:255,b:255},{t:1,r:255,g:255,b:255}];
+      if(shouldShowBar){
+        const pad = Math.round(barH * 0.6);
+        const sampleY = Math.max(0, barY - pad);
+        const sampleH = Math.min(fh - sampleY, barH + pad*2);
+        const barSource = document.createElement('canvas');
+        barSource.width = fw; barSource.height = sampleH;
+        const barCtx = barSource.getContext('2d');
+        barCtx.drawImage(baseLayer, 0, sampleY, fw, sampleH, 0, 0, fw, sampleH);
+
+        ctx.save();
+        ctx.filter = `blur(${Math.max(12, Math.round(barH*0.35))}px) saturate(1.05)`;
+        const drawY = barY - Math.round((sampleH - barH)/2);
+        ctx.drawImage(barSource, 0, drawY, fw, sampleH);
+        ctx.restore();
+      }
+
+      if(state.frost.enabled){
+        const overlayStrength = Math.max(0, Math.min(1, state.frost.overlayAlpha));
+        if(overlayStrength > 0){
+          ctx.save();
+          const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
+          grad.addColorStop(0, `rgba(255,255,255,${overlayStrength * 0.85})`);
+          grad.addColorStop(1, `rgba(255,255,255,${overlayStrength * 0.55})`);
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, barY, fw, barH);
+          ctx.restore();
         }
 
-        // Draw on offscreen with padding to avoid edge fade after blur
-        const pad = 48;
-        const tc = document.createElement('canvas'); tc.width = fw + pad*2; tc.height = barH;
-        const tctx = tc.getContext('2d');
-        const grad2 = tctx.createLinearGradient(0, 0, tc.width, 0);
-        colorStops.forEach(s=>grad2.addColorStop(s.t, `rgba(${s.r},${s.g},${s.b},1)`));
-        tctx.filter = 'blur(12px)';
-        tctx.fillStyle = grad2; tctx.fillRect(0, 0, tc.width, barH);
-        // place blurred gradient edge-to-edge
-        ctx.drawImage(tc, -pad, barY);
-
-        // white overlay (controls strength)
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, Math.min(1, state.frost.overlayAlpha + 0.08));
-        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, barH);
-        ctx.restore();
-
-        // subtle top highlight
-        ctx.save(); ctx.globalAlpha = 0.12; ctx.fillStyle = '#fff'; ctx.fillRect(0, barY, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.1 + overlayStrength*0.15; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
       }
 
       // logos on bar
@@ -1052,31 +1078,35 @@
         const d = state.play.sizeExp;
         const cy = (fh - state.frost.barHExp)/2; const cx = fw/2; const r = d/2;
 
-        // Offscreen blurred circle with gradient + dark base
-        const pad = 32;
-        const pc = document.createElement('canvas'); pc.width = d + pad*2; pc.height = d + pad*2;
-        const pctx = pc.getContext('2d');
+        const pad = Math.round(d * 0.45);
+        const sampleSize = d + pad*2;
+        const sx = Math.max(0, Math.round(cx - sampleSize/2));
+        const sy = Math.max(0, Math.round(cy - sampleSize/2));
+        const sw = Math.min(sampleSize, fw - sx);
+        const sh = Math.min(sampleSize, fh - sy);
+        const sampleCanvas = document.createElement('canvas');
+        sampleCanvas.width = sampleSize; sampleCanvas.height = sampleSize;
+        const sampleCtx = sampleCanvas.getContext('2d');
+        sampleCtx.drawImage(baseLayer, sx, sy, sw, sh, 0, 0, sampleSize, sampleSize);
 
-        // dark base
-        pctx.filter = 'blur(18px)';
-        pctx.fillStyle = 'rgba(0,0,0,0.22)';
-        pctx.beginPath(); pctx.arc(pad+r, pad+r, r, 0, Math.PI*2); pctx.fill();
+        ctx.save();
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
+        ctx.filter = `blur(${Math.max(16, Math.round(d*0.2))}px) saturate(1.05)`;
+        ctx.drawImage(sampleCanvas, cx - sampleSize/2, cy - sampleSize/2);
+        ctx.restore();
 
-        // soft linear highlight gradient across circle
-        const lg = pctx.createLinearGradient(pad, pad+r, pad+d, pad+r);
-        lg.addColorStop(0, 'rgba(255,255,255,.38)');
-        lg.addColorStop(1, 'rgba(255,255,255,.18)');
-        pctx.globalCompositeOperation = 'lighter';
-        pctx.fillStyle = lg;
-        pctx.beginPath(); pctx.arc(pad+r, pad+r, r, 0, Math.PI*2); pctx.fill();
-        pctx.globalCompositeOperation = 'source-over';
+        ctx.save();
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
+        const glow = ctx.createRadialGradient(cx - r*0.3, cy - r*0.4, r*0.25, cx, cy, r);
+        glow.addColorStop(0, 'rgba(255,255,255,0.55)');
+        glow.addColorStop(1, 'rgba(255,255,255,0.18)');
+        ctx.globalAlpha = 0.95;
+        ctx.fillStyle = glow;
+        ctx.fillRect(cx - r, cy - r, d, d);
+        ctx.restore();
 
-        ctx.drawImage(pc, cx - r - pad, cy - r - pad);
+        ctx.save(); ctx.globalAlpha = 0.2; ctx.strokeStyle = 'rgba(15,23,42,0.25)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, r-1, 0, Math.PI*2); ctx.stroke(); ctx.restore();
 
-        // slight outer dark halo
-        ctx.save(); ctx.globalAlpha = 0.18; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fillStyle = '#000'; ctx.fill(); ctx.restore();
-
-        // Triangle path (bolder)
         ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
         const scale = Math.min(d*0.55/59, d*0.55/63);
         ctx.translate(cx - (59*scale)/2 + 10*scale, cy - (63*scale)/2);
@@ -1213,7 +1243,7 @@
   buildFormatChips();
   buildAllGalleries();
   els.toggleLogo2.checked = false; els.logo2Block.style.display='none';
-  els.toggleVertLogo.checked = false; els.vertLogoBlock.style.display='none';
+  els.toggleVertLogo.checked = true; els.vertLogoBlock.style.display='grid';
   fitPreviewZoomToStage();
   render();
   updateControls();
