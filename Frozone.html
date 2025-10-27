@@ -6,20 +6,28 @@
 <title>Frozone — P+ LiveOps Image Cropper (Folder Bulk)</title>
 <style>
   :root{
-    --bg1:#edf6ff; --bg2:#eef1ff; --ink:#0f172a; --muted:#64748b; --brand:#0ea5e9; --brand2:#6366f1; --accent:#f43f5e;
-    --card:#ffffffd9; --border:#e2e8f0; --shadow:0 10px 30px rgba(2,6,23,.08);
+    --bg1:#edf6ff; --bg2:#eef1ff; --bg3:#ffffff; --ink:#0f172a; --muted:#64748b; --brand:#0ea5e9; --brand2:#6366f1; --accent:#f43f5e;
+    --card:#ffffffd9; --surface:#ffffff; --border:#e2e8f0; --shadow:0 10px 30px rgba(2,6,23,.08);
+    --stageBg:#f8fafc; --btnIconBg:rgba(148,163,184,0.14); --btnIconBgPrimary:rgba(255,255,255,0.18);
+    --headerBg:#ffffffc7;
     --radius:18px; --radius-sm:12px; --headerH:64px;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color:var(--ink);
-    background: linear-gradient(180deg,var(--bg1),var(--bg2) 55%, #fff)}
+    background: linear-gradient(180deg,var(--bg1),var(--bg2) 55%, var(--bg3)); transition:background .3s ease, color .3s ease;}
+  body.dark{
+    --bg1:#0f172a; --bg2:#111827; --bg3:#0b1220; --ink:#f8fafc; --muted:#cbd5f5; --card:rgba(15,23,42,0.9); --surface:rgba(17,24,39,0.92);
+    --border:rgba(148,163,184,0.28); --shadow:0 16px 38px rgba(2,6,23,0.72);
+    --stageBg:#0b1220; --btnIconBg:rgba(148,163,184,0.25); --btnIconBgPrimary:rgba(255,255,255,0.32);
+    --headerBg:rgba(17,24,39,0.88);
+  }
   .wrap{max-width:1280px; margin:0 auto; padding:16px}
 
-  header{position:sticky; top:0; z-index:40; backdrop-filter: blur(10px); background:#ffffffc7; border-bottom:1px solid var(--border)}
+  header{position:sticky; top:0; z-index:40; backdrop-filter: blur(12px); background:var(--headerBg); border-bottom:1px solid var(--border); transition:background .3s ease}
   header .inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 16px}
   .brand{display:flex; align-items:center; gap:12px}
-  .logo{width:40px; height:40px; border-radius:50%; overflow:hidden; box-shadow:0 6px 18px rgba(14,165,233,.35); display:grid; place-items:center; background:#fff}
+  .logo{width:40px; height:40px; border-radius:50%; overflow:hidden; box-shadow:0 6px 18px rgba(14,165,233,.35); display:grid; place-items:center; background:var(--surface)}
   .logo img{width:100%; height:100%; object-fit:cover}
   .title{display:flex; flex-direction:column}
   .title h1{font-size:20px; line-height:1.2; margin:0}
@@ -29,24 +37,29 @@
   .right-head .by{font-size:12px; color:var(--muted)}
   .right-head a{color:var(--muted); text-decoration:none}
 
-  .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:12px; background:#fff; cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:14px; background:var(--surface); cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease, background .2s ease, color .2s ease}
   .btn:active{transform:translateY(1px)}
   .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; border-color:transparent}
   .btn.ghost{background:transparent; border-color:var(--border)}
   .btn.small{padding:6px 10px; border-radius:10px; font-size:12px}
-  .btn.icon{width:36px; height:36px; padding:0; display:inline-grid; place-items:center}
-  .btn.danger{border-color:#fecaca; color:#b91c1c; background:#fff}
-  .btn.danger:hover{background:#fff5f5}
+  .btn.icon{width:38px; height:38px; padding:0; display:inline-grid; place-items:center; border-radius:50%; background:var(--surface)}
+  .btn.icon svg{stroke-width:1.6}
+  .btn.danger{border-color:#fecaca; color:#b91c1c; background:var(--surface)}
+  .btn.danger:hover{background:rgba(254,202,202,0.12)}
   .btn:disabled{opacity:.6; cursor:not-allowed}
 
-  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; flex-shrink:0}
-  .btn.primary .btn-ico{stroke:#fff}
+  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.6; flex-shrink:0; border-radius:10px; padding:3px; background:var(--btnIconBg)}
+  .btn.primary .btn-ico{stroke:#fff; background:var(--btnIconBgPrimary)}
+  .btn .btn-ico path,
+  .btn .btn-ico rect,
+  .btn .btn-ico line{stroke-linecap:round; stroke-linejoin:round}
   .btn .btn-text{display:inline}
 
   input[type="range"]{width:100%}
-  input[type="search"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px}
+  input[type="search"], select, input[type="url"]{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--surface); font-size:14px; color:var(--ink)}
+  input[type="search"]::placeholder, input[type="url"]::placeholder{color:var(--muted)}
 
-  .seg{display:inline-flex; gap:6px; padding:4px; background:linear-gradient(135deg,#e0e7ff,#f5f8ff); border:1px solid rgba(99,102,241,0.2); border-radius:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 14px rgba(14,165,233,0.08)}
+  .seg{display:inline-flex; gap:6px; padding:4px; background:linear-gradient(135deg,#e0e7ff,#f5f8ff); border:1px solid rgba(99,102,241,0.2); border-radius:16px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 14px rgba(14,165,233,0.08)}
   .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; border-radius:10px; min-width:48px; text-align:center; transition:all .18s ease}
   .seg button:not(.active):hover{color:var(--ink); background:rgba(148,163,184,0.16); box-shadow:0 4px 8px rgba(15,23,42,0.08)}
   .seg button.active{color:var(--ink); background:#fff; box-shadow:0 6px 16px rgba(99,102,241,0.18)}
@@ -64,7 +77,7 @@
   main{display:grid; grid-template-columns: 1fr 1.25fr; gap:18px; padding:16px}
   @media (max-width: 1000px){ main{grid-template-columns:1fr} .right-head{align-items:flex-start; text-align:left} }
 
-  .panel{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); display:flex; flex-direction:column;}
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); display:flex; flex-direction:column; transition:background .3s ease, border .3s ease, box-shadow .3s ease;}
   .panel.sticky{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);}
   .panel .pad{padding:16px}
   .panel .scroll{overflow:auto; padding:0 16px 16px}
@@ -80,10 +93,10 @@
   @media (max-width: 720px){
     #formatRow{grid-template-columns:1fr}
   }
-  .formatCard{position:relative; border:1px solid var(--border); border-radius:18px; padding:20px; background:#fff; text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
+  .formatCard{position:relative; border:1px solid var(--border); border-radius:20px; padding:20px; background:var(--surface); text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, background .2s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
   .formatCard.wide{grid-column:span 2}
   @media (max-width: 720px){ .formatCard.wide{grid-column:auto} }
-  .formatCard .formatIcon{width:48px; height:48px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(99,102,241,0.12))}
+  .formatCard .formatIcon{width:48px; height:48px; border-radius:16px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(14,165,233,0.12),rgba(99,102,241,0.2))}
   .formatCard .formatIcon svg{width:32px; height:auto}
   .formatCard .formatInfo{display:grid; gap:4px}
   .formatCard .formatTitle{font-size:15px; font-weight:700; line-height:1.3}
@@ -93,7 +106,7 @@
   .formatCard:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(14,165,233,0.12)}
   .muted{color:var(--muted)}
 
-  .chip{padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:#fff; font-size:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:280px; box-shadow:0 4px 10px rgba(2,6,23,.05); text-align:left; cursor:pointer}
+  .chip{padding:10px 12px; border:1px solid var(--border); border-radius:16px; background:var(--surface); font-size:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:280px; box-shadow:0 4px 10px rgba(2,6,23,.05); text-align:left; cursor:pointer; transition:background .2s ease}
   .chip.active{border-color:var(--brand); background:#e6f2ff}
   .chip .meta{font-size:12px; color:var(--muted)}
   .chip .chipInner{display:flex; align-items:center; gap:10px}
@@ -102,8 +115,9 @@
 
   .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);} 
   .preview-head{display:flex; align-items:center; justify-content:space-between; padding:16px}
-  .stage{position:relative; flex:1; background:#f8fafc; border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex}
-  .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:14px; background:#ffffff; border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px #fff}
+  .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .3s ease}
+  .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--surface); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.35); transition:background .3s ease, border .3s ease}
+  body.dark .stage-inner{box-shadow:inset 0 0 0 1px rgba(15,23,42,0.45)}
 
   .fileBadge{position:absolute; top:10px; left:10px; z-index:6; max-width:calc(100% - 20px)}
 
@@ -114,16 +128,17 @@
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
   .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:hidden;}
-  .frostBg{position:absolute; inset:0; background:radial-gradient(308.59% 338.4% at 86.71% 130.56%, #FFF 0%, rgba(255, 255, 255, 0.00) 100%), rgba(255, 255, 255, 0.08); box-shadow:0 0.62px 0 0 rgba(255,255,255,0.10) inset; backdrop-filter:blur(8.5300931930542px)}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.08)}
+  .frostBg{position:absolute; inset:0; background:radial-gradient(308.59% 338.4% at 86.71% 130.56%, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.08) 100%), rgba(255, 255, 255, 0.08); box-shadow:0 0.62px 0 0 rgba(255,255,255,0.12) inset; backdrop-filter:blur(18px)}
+  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.2),rgba(255,255,255,0.08)); box-shadow:inset 0 2px 6px rgba(15,23,42,0.14)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
 
   .playWrap{position:absolute; display:none; pointer-events:none}
   .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(28px); background:
-    linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.18)),
-    rgba(0,0,0,0.22);
+    linear-gradient(120deg, rgba(15,23,42,0.65), rgba(14,165,233,0.18)),
+    rgba(2,6,23,0.45);
+    box-shadow:0 10px 35px rgba(2,6,23,0.45);
   }
   .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
   .playTri svg{width:54%; max-width:72px; height:auto}
@@ -134,12 +149,21 @@
   .kv .k{width:120px; color:var(--muted)}
   .kv .v{font-weight:600}
 
-  .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); white-space:nowrap}
+  .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:var(--surface); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); white-space:nowrap; transition:background .2s ease}
   .chipInfo.flexible{max-width:none; white-space:normal; word-break:break-word; flex-wrap:wrap; align-items:flex-start}
 
+  .urlUpload{display:flex; gap:8px; flex:1 1 260px; align-items:stretch; margin:0}
+  .urlUpload input{flex:1}
+  .urlUpload button{white-space:nowrap}
+
+  .dropNote{font-size:12px; color:var(--muted); margin-top:6px}
+
+  body.drag-files .stage-inner{outline:3px solid rgba(99,102,241,0.55); outline-offset:0; box-shadow:0 0 0 4px rgba(99,102,241,0.18)}
+  body.drag-files .stage-inner::after{content:"Drop to upload"; position:absolute; inset:0; display:grid; place-items:center; font-weight:700; color:var(--brand2); background:rgba(14,165,233,0.08); pointer-events:none}
+
   .libWrap{display:grid; gap:8px}
-  .libScroller{display:flex; gap:10px; overflow-x:auto; padding:8px; border:1px solid var(--border); border-radius:12px; background:#fff}
-  .libItem{flex:0 0 auto; display:grid; gap:6px; justify-items:center; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:#fff; box-shadow:0 1px 6px rgba(2,6,23,.04); cursor:pointer}
+  .libScroller{display:flex; gap:10px; overflow-x:auto; padding:8px; border:1px solid var(--border); border-radius:12px; background:var(--surface)}
+  .libItem{flex:0 0 auto; display:grid; gap:6px; justify-items:center; padding:8px 10px; border:1px solid var(--border); border-radius:12px; background:var(--surface); box-shadow:0 1px 6px rgba(2,6,23,.04); cursor:pointer; transition:background .2s ease, border .2s ease}
   .libItem img{height:18px; width:auto; object-fit:contain}
   .libItem .cap{font-size:11px; color:var(--muted)}
   .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
@@ -147,7 +171,7 @@
   .tone-note{font-size:12px; color:var(--muted); margin-top:6px}
 
   .loading{position:fixed; inset:0; background:rgba(15,23,42,.35); display:none; align-items:center; justify-content:center; z-index:1000}
-  .loading .card{min-width:280px; max-width:420px; background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; text-align:center}
+  .loading .card{min-width:280px; max-width:420px; background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; text-align:center}
   .loading .title{font-weight:700; margin-bottom:6px}
   .spinner{width:36px; height:36px; border-radius:50%; border:4px solid #e5e7eb; border-top-color:#6366f1; animation:spin 1s linear infinite; margin:8px auto}
   @keyframes spin{to{transform:rotate(360deg)}}
@@ -156,7 +180,7 @@
 
   .foot-note{font-size:11px; color:var(--muted); padding:10px 16px; text-align:center}
   .adjust-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
-  .adjust-card{background:#fff; border:1px solid var(--border); border-radius:14px; padding:12px 14px; box-shadow:0 6px 16px rgba(15,23,42,0.06); display:grid; gap:6px}
+  .adjust-card{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:12px 14px; box-shadow:0 6px 16px rgba(15,23,42,0.06); display:grid; gap:6px; transition:background .2s ease}
   .adjust-card label{font-size:13px; color:var(--muted); font-weight:600}
   .adjust-card .value{font-size:18px; font-weight:700; color:var(--ink)}
   .adjust-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
@@ -180,6 +204,12 @@
       <div class="right-head">
         <div class="team">LiveOps Team</div>
         <div class="by">made by <a href="https://www.pratov.site" target="_blank" rel="noopener">Beka Pratov</a></div>
+        <button class="btn small ghost" id="themeToggle" type="button" aria-pressed="false">
+          <svg class="btn-ico" id="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.5A4.5 4.5 0 0 0 7.5 8c0 3.38 3.07 6.23 7.16 6.23A5.84 5.84 0 0 0 20.5 8.5 8.5 8.5 0 1 1 12 3.5Z"></path>
+          </svg>
+          <span class="btn-text" id="themeLabel">Dark mode</span>
+        </button>
       </div>
     </div>
   </header>
@@ -214,6 +244,17 @@
               <span class="btn-text">Upload folder</span>
               <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
             </label>
+            <form class="urlUpload" id="urlForm">
+              <input id="urlInput" type="url" placeholder="Paste image URL" aria-label="Image URL" />
+              <button class="btn ghost" type="submit">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24">
+                  <path d="M4 12h16"></path>
+                  <path d="M12 4l4 4-4 4"></path>
+                  <path d="M12 20l-4-4 4-4"></path>
+                </svg>
+                <span class="btn-text">Import URL</span>
+              </button>
+            </form>
             <!-- filename chip removed from here -->
             <button class="btn ghost" id="reset">
               <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
@@ -235,6 +276,7 @@
             </button>
           </div>
           <div class="muted" style="margin-top:8px">PNG/JPEG supported. Drag inside preview to reframe. Folder = bulk upload.</div>
+          <div class="dropNote">Tip: Drag &amp; drop images anywhere on the canvas or add them via URL.</div>
         </div>
 
         <!-- Step 2: Format -->
@@ -430,8 +472,22 @@
         <div class="section">
           <div class="section-title"><span class="badge">5</span> Export</div>
           <div class="exportActions">
-            <button class="btn primary" id="exportBtn" disabled>Export current</button>
-            <button class="btn ghost" id="exportAllBtn" disabled>Export all (ZIP)</button>
+            <button class="btn primary" id="exportBtn" disabled>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M12 4v12"></path>
+                <path d="M7 11l5 5 5-5"></path>
+                <rect x="5" y="18" width="14" height="2" rx="1"></rect>
+              </svg>
+              <span class="btn-text">Export current</span>
+            </button>
+            <button class="btn ghost" id="exportAllBtn" disabled>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M4 7h16l-1.5 11h-13z"></path>
+                <path d="M8 7l1-3h6l1 3"></path>
+                <path d="M10 11h4"></path>
+              </svg>
+              <span class="btn-text">Export all (ZIP)</span>
+            </button>
           </div>
           <div class="chipInfo exportMeta" id="lastExport" aria-live="polite">—</div>
           <div class="muted" style="margin-top:6px">Max ~500 KB each. JPG at 1080px.</div>
@@ -512,24 +568,44 @@
     {name:'Philips', url:'https://cdn.worldvectorlogo.com/logos/philips-6.svg'},
     {name:'Versuni', url:'https://i.imghippo.com/files/tWvR4051Aws.png'},
     {name:'Petite Amelie', url:'https://i.imghippo.com/files/KpIL9265gYA.png'},
-    {name:'Baby List', url:'https://upload.wikimedia.org/wikipedia/commons/3/3b/Babylist_Logo_03.png'},
+    {name:'Babylist', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babylist_Logo_02.png'},
     {name:'C&A', url:'https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg'},
     {name:'Nuna', url:'https://i.imghippo.com/files/sbJA8488Sbo.png'},
     {name:'MATTEL', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png'},
     {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
     {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
     {name:'GSK', url:'https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png'},
-    {name:'Amazon', url:'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg'},
+    {name:'Amazon', url:'https://i.imghippo.com/files/KHpN4511hII.png'},
     {name:'NAIF', url:'https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png'},
-    {name:'HiPP', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png'}
+    {name:'HiPP', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png'},
+    {name:'Walmart', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Walmart_Logo.png'},
+    {name:'Groupe Mutuel', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Gm_logo_hor_rvb_bicol.png'},
+    {name:'Fisher-Price', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Fisher-Price_logo.svg?width=1000'},
+    {name:'Kruidvat', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Kruidvat-New.png'},
+    {name:'Monoprix', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Monoprix_logo_2013.png'},
+    {name:'Lemonade', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_of_Lemonade%2C_Inc.svg?width=1000'},
+    {name:'LEGO', url:'https://commons.wikimedia.org/wiki/Special:FilePath/LEGO_logo.svg?width=1000'},
+    {name:'El Corte Inglés', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Corte_Ingl%C3%A9s.svg?width=1000'},
+    {name:'Babies“R”Us', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babies_%22R%22_Us_logo.svg?width=1000'},
+    {name:'Livi (Kry)', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Kry_logo.svg?width=800'},
+    {name:'Target', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Target_Logo.svg?width=1000'},
+    {name:'Zocdoc', url:'https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png'},
+    {name:'Bayer Bepanthen', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Bayer_Logo.svg?width=1000'},
+    {name:'Doctolib', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Doctolib_Logo.svg?width=1000'},
+    {name:'H&M', url:'https://commons.wikimedia.org/wiki/Special:FilePath/H%26M-Logo.svg?width=1000'}
   ];
 
   const els = {
     header: document.getElementById('appHeader'),
     file: document.getElementById('file'),
     folder: document.getElementById('folder'),
+    urlForm: document.getElementById('urlForm'),
+    urlInput: document.getElementById('urlInput'),
     reset: document.getElementById('reset'),
     deleteBtn: document.getElementById('deleteBtn'),
+    themeToggle: document.getElementById('themeToggle'),
+    themeIcon: document.getElementById('themeIcon'),
+    themeLabel: document.getElementById('themeLabel'),
 
     formatRow: document.getElementById('formatRow'),
     vertSizeRow: document.getElementById('vertSizeRow'), vertSizeSeg: document.getElementById('vertSizeSeg'),
@@ -621,10 +697,37 @@
     vertLogo:   { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
   };
 
+  const bodyEl = document.body;
+  const THEME_KEY = 'frozone-theme';
+
   function syncHeaderHeight(){
     const h = els.header.offsetHeight || 64;
     document.documentElement.style.setProperty('--headerH', h + 'px');
   }
+
+  function updateThemeToggle(){
+    const isDark = bodyEl.classList.contains('dark');
+    if(els.themeLabel) els.themeLabel.textContent = isDark ? 'Light mode' : 'Dark mode';
+    if(els.themeToggle) els.themeToggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    if(els.themeIcon){
+      els.themeIcon.innerHTML = isDark
+        ? '<path d="M12 4.5a7.5 7.5 0 1 0 7.5 7.5 5.5 5.5 0 0 1-7.5-7.5Z"></path><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="M4.93 4.93l1.42 1.42"></path><path d="M17.65 17.65l1.42 1.42"></path>'
+        : '<path d="M21 12.79A9 9 0 1 1 11.21 3 6 6 0 0 0 21 12.79Z"></path>';
+    }
+  }
+
+  function applyTheme(theme){
+    const isDark = theme === 'dark';
+    bodyEl.classList.toggle('dark', isDark);
+    try{ localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light'); }catch(e){}
+    updateThemeToggle();
+  }
+
+  let storedTheme = null;
+  try{ storedTheme = localStorage.getItem(THEME_KEY); }catch(e){}
+  if(storedTheme === 'dark'){ bodyEl.classList.add('dark'); }
+  else if(storedTheme === 'light'){ bodyEl.classList.remove('dark'); }
+  updateThemeToggle();
 
   function iconSVG(kind){
     if(kind==='H'){ return `<svg width="40" height="28" viewBox="0 0 40 28" aria-hidden="true"><rect x="2" y="4" width="36" height="20" class="iconBox"/></svg>`; }
@@ -852,35 +955,112 @@
   function hideLoading(){ els.loading.style.display='none'; els.loadingBar.style.width='0%'; }
   function setLoadingProgress(p){ els.loadingBar.style.width = Math.max(0,Math.min(100,p))+'%'; }
 
+  async function handleUrlUpload(url, opts={}){
+    const { silent=false } = opts;
+    const trimmed = (url||'').trim();
+    if(!trimmed) return false;
+    if(!/^https?:\/\//i.test(trimmed)){
+      if(!silent) window.alert('Please enter a valid image URL (http/https).');
+      return false;
+    }
+    if(!silent) showLoading('Fetching image…', 12);
+    try{
+      const res = await fetch(trimmed, {mode:'cors'});
+      if(!res.ok) throw new Error('Network response was not OK');
+      const blob = await res.blob();
+      if(!/^image\//.test(blob.type||'')) throw new Error('URL did not return an image');
+      const name = deriveNameFromURL(trimmed);
+      const added = await importBlobItems([{blob, name}]);
+      return added>0;
+    }catch(err){
+      console.error(err);
+      if(!silent) window.alert('Unable to load image from that URL. Please verify the link and try again.');
+      return false;
+    }finally{
+      if(!silent) hideLoading();
+    }
+  }
+
   // ---------- Uploads ----------
-  els.file.addEventListener('change', (e)=>{
-    const f = e.target.files && e.target.files[0]; if(!f) return;
-    const url = URL.createObjectURL(f);
-    const imgTmp = new Image();
-    imgTmp.onload = ()=>{ pushImage(url, f.name, {w:imgTmp.width, h:imgTmp.height}); loadImageAt(state.images.length-1); };
-    imgTmp.src = url;
+  els.file.addEventListener('change', async (e)=>{
+    const files = Array.from(e.target.files||[]).filter(hasImageMime);
+    if(files.length===0) return;
+    await importBlobItems(files.map(f=>({blob:f, name:f.name})));
+    e.target.value='';
   });
 
   els.folder.addEventListener('change', async (e)=>{
-    const files = Array.from(e.target.files||[]).filter(f=>/^image\//.test(f.type));
+    const files = Array.from(e.target.files||[]).filter(hasImageMime);
     if(files.length===0) return;
     files.sort((a,b)=>(a.webkitRelativePath||a.name).localeCompare(b.webkitRelativePath||b.name));
     showLoading('Reading folder…', 0);
-    let added = 0;
-    for(let i=0;i<files.length;i++){
-      const f = files[i];
-      await new Promise(res=>{
-        const url = URL.createObjectURL(f);
-        const im = new Image();
-        im.onload = ()=>{ pushImage(url, f.name, {w:im.width, h:im.height}); added++; res(); };
-        im.onerror = ()=> res();
-        im.src = url;
+    try{
+      await importBlobItems(files.map(f=>({blob:f, name:f.webkitRelativePath||f.name})), {
+        onProgress:(idx,total)=>{
+          setLoadingProgress(Math.round((idx/total)*100));
+          els.loadingText.textContent = `Loading ${idx}/${total}…`;
+        }
       });
-      setLoadingProgress(Math.round(((i+1)/files.length)*100));
-      els.loadingText.textContent = `Loading ${i+1}/${files.length}…`;
+    } finally {
+      hideLoading();
+      e.target.value='';
     }
-    hideLoading();
-    if(added>0){ loadImageAt(state.images.length - added); }
+  });
+
+  els.urlForm?.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const value = els.urlInput?.value || '';
+    const success = await handleUrlUpload(value, { silent:false });
+    if(success && els.urlInput) els.urlInput.value='';
+  });
+
+  let dragDepth = 0;
+  document.addEventListener('dragenter', (e)=>{
+    if(eventContainsFiles(e)){
+      dragDepth++;
+      bodyEl.classList.add('drag-files');
+    }
+  });
+  document.addEventListener('dragover', (e)=>{
+    if(eventContainsFiles(e)){
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'copy';
+    }
+  });
+  document.addEventListener('dragleave', (e)=>{
+    if(eventContainsFiles(e)){
+      dragDepth = Math.max(0, dragDepth-1);
+      if(dragDepth===0) bodyEl.classList.remove('drag-files');
+    }
+  });
+  document.addEventListener('dragend', ()=>{
+    dragDepth = 0;
+    bodyEl.classList.remove('drag-files');
+  });
+  document.addEventListener('drop', async (e)=>{
+    if(eventContainsFiles(e) || e.dataTransfer?.getData('text/uri-list')){
+      e.preventDefault();
+    }
+    dragDepth = 0;
+    bodyEl.classList.remove('drag-files');
+    const files = Array.from(e.dataTransfer?.files||[]).filter(hasImageMime);
+    const uriListRaw = (e.dataTransfer?.getData('text/uri-list')||'').split('\n').map(v=>v.trim()).filter(Boolean);
+    let urls = uriListRaw;
+    if(!urls.length){
+      const plain = (e.dataTransfer?.getData('text/plain')||'').trim();
+      if(/^https?:\/\//i.test(plain)) urls = [plain];
+    }
+    if(files.length){
+      await importBlobItems(files.map(f=>({blob:f, name:f.name})));
+    }
+    if(urls.length){
+      for(const url of urls){ await handleUrlUpload(url, {silent:true}); }
+    }
+  });
+
+  els.themeToggle?.addEventListener('click', ()=>{
+    const next = bodyEl.classList.contains('dark') ? 'light' : 'dark';
+    applyTheme(next);
   });
 
   // ---------- Delete / Reset ----------
@@ -919,6 +1099,64 @@
     els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
     els.batchLabel.textContent = els.batchMeta.textContent;
     els.exportAllBtn.disabled = state.images.length===0;
+    return state.images.length-1;
+  }
+
+  async function addBlobAsImage(blob, name){
+    if(!blob) return {success:false};
+    return new Promise(resolve=>{
+      const url = URL.createObjectURL(blob);
+      const im = new Image();
+      im.onload = ()=>{
+        const idx = pushImage(url, name, {w:im.naturalWidth||im.width, h:im.naturalHeight||im.height});
+        resolve({success:true, index:idx});
+      };
+      im.onerror = ()=>{
+        try{ URL.revokeObjectURL(url); }catch(e){}
+        resolve({success:false});
+      };
+      im.src = url;
+    });
+  }
+
+  async function importBlobItems(items, opts={}){
+    const { onProgress } = opts;
+    let added = 0;
+    let firstIndex = null;
+    for(let i=0;i<items.length;i++){
+      const entry = items[i];
+      if(!entry) { if(onProgress) onProgress(i+1, items.length); continue; }
+      const res = await addBlobAsImage(entry.blob, entry.name);
+      if(res.success){
+        added++;
+        if(firstIndex===null) firstIndex = res.index;
+      }
+      if(onProgress) onProgress(i+1, items.length);
+    }
+    if(firstIndex!==null){
+      serializeCurrent();
+      loadImageAt(firstIndex);
+    }
+    return added;
+  }
+
+  function deriveNameFromURL(url){
+    try{
+      const parsed = new URL(url);
+      const last = parsed.pathname.split('/').filter(Boolean).pop();
+      if(last){
+        const clean = last.split('?')[0] || last;
+        return clean.includes('.') ? clean : `${clean}.jpg`;
+      }
+    }catch(e){}
+    return `remote-image-${Date.now()}.jpg`;
+  }
+
+  function hasImageMime(file){ return file && /^image\//.test(file.type||''); }
+  function eventContainsFiles(e){
+    if(!e || !e.dataTransfer) return false;
+    const types = e.dataTransfer.types ? Array.from(e.dataTransfer.types) : [];
+    return types.includes('Files');
   }
   function serializeCurrent(){
     if(state.current<0) return;
@@ -1151,20 +1389,23 @@
         const captureCtx = captureCanvas.getContext('2d');
         captureCtx.drawImage(baseLayer, 0, captureY, fw, captureH, 0, 0, fw, captureH);
 
-        const smearWidth = Math.max(8, Math.round(fw / 6));
-        const smearHeight = Math.max(4, Math.round(barH / 6));
+        const smearWidth = Math.max(8, Math.round(fw / 10));
+        const smearHeight = Math.max(6, Math.round(barH / 3));
         const smearCanvas = document.createElement('canvas');
         smearCanvas.width = smearWidth; smearCanvas.height = smearHeight;
         const smearCtx = smearCanvas.getContext('2d');
         smearCtx.imageSmoothingEnabled = true;
+        smearCtx.filter = `blur(${Math.max(18, Math.round(barH*0.55))}px)`;
         smearCtx.drawImage(captureCanvas, 0, Math.max(0, captureH - smearHeight), fw, smearHeight, 0, 0, smearWidth, smearHeight);
 
+        frostCtx.filter = `blur(${Math.max(20, Math.round(barH*0.45))}px)`;
         frostCtx.drawImage(smearCanvas, 0, 0, smearWidth, smearHeight, 0, 0, fw, barH);
+        frostCtx.filter = 'none';
 
         const lighting = frostCtx.createLinearGradient(0, 0, 0, barH);
-        lighting.addColorStop(0, 'rgba(255,255,255,0.32)');
-        lighting.addColorStop(0.55, 'rgba(255,255,255,0.12)');
-        lighting.addColorStop(1, 'rgba(210,225,240,0.12)');
+        lighting.addColorStop(0, 'rgba(255,255,255,0.42)');
+        lighting.addColorStop(0.6, 'rgba(255,255,255,0.16)');
+        lighting.addColorStop(1, 'rgba(200,220,240,0.18)');
         frostCtx.fillStyle = lighting;
         frostCtx.fillRect(0, 0, fw, barH);
 
@@ -1176,15 +1417,15 @@
         if(overlayStrength > 0){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.2 + overlayStrength*0.6})`);
-          grad.addColorStop(1, `rgba(246,248,252,${0.14 + overlayStrength*0.45})`);
+          grad.addColorStop(0, `rgba(255,255,255,${0.28 + overlayStrength*0.55})`);
+          grad.addColorStop(1, `rgba(241,244,248,${0.2 + overlayStrength*0.5})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
 
-        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.25; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.18 + overlayStrength*0.28; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.18 + overlayStrength*0.24; ctx.fillStyle = 'rgba(15,23,42,0.22)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
@@ -1226,21 +1467,31 @@
 
         ctx.save();
         ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-        ctx.filter = `blur(${Math.max(16, Math.round(d*0.2))}px) saturate(1.05)`;
+        ctx.filter = `blur(${Math.max(18, Math.round(d*0.22))}px) saturate(1.08)`;
         ctx.drawImage(sampleCanvas, cx - sampleSize/2, cy - sampleSize/2);
         ctx.restore();
 
         ctx.save();
         ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-        const glow = ctx.createRadialGradient(cx - r*0.3, cy - r*0.4, r*0.25, cx, cy, r);
-        glow.addColorStop(0, 'rgba(255,255,255,0.55)');
-        glow.addColorStop(1, 'rgba(255,255,255,0.18)');
-        ctx.globalAlpha = 0.95;
-        ctx.fillStyle = glow;
+        const baseTone = ctx.createRadialGradient(cx, cy, r*0.05, cx, cy, r);
+        baseTone.addColorStop(0, 'rgba(30,41,59,0.25)');
+        baseTone.addColorStop(1, 'rgba(15,23,42,0.65)');
+        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = baseTone;
         ctx.fillRect(cx - r, cy - r, d, d);
         ctx.restore();
 
-        ctx.save(); ctx.globalAlpha = 0.2; ctx.strokeStyle = 'rgba(15,23,42,0.25)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, r-1, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+        ctx.save();
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
+        const sheen = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+        sheen.addColorStop(0, 'rgba(148,163,184,0.18)');
+        sheen.addColorStop(1, 'rgba(56,189,248,0.25)');
+        ctx.globalAlpha = 0.55;
+        ctx.fillStyle = sheen;
+        ctx.fillRect(cx - r, cy - r, d, d);
+        ctx.restore();
+
+        ctx.save(); ctx.globalAlpha = 0.3; ctx.strokeStyle = 'rgba(15,23,42,0.45)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, r-1, 0, Math.PI*2); ctx.stroke(); ctx.restore();
 
         ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
         const scale = Math.min(d*0.55/59, d*0.55/63);
