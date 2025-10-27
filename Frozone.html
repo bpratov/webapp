@@ -51,11 +51,16 @@
   /* Minimal, polished switches */
   label.switch{display:inline-flex; align-items:center; gap:10px; font-size:14px; user-select:none}
   .switch input{position:absolute; opacity:0; width:0; height:0}
-  .switch .tgl{position:relative; width:52px; height:28px; background:linear-gradient(135deg,#e2e8f0,#f8fafc); border:1px solid rgba(148,163,184,0.55); border-radius:999px; transition:.25s ease; box-shadow:inset 0 1px 2px rgba(15,23,42,.08)}
-  .switch .knob{position:absolute; top:2px; left:2px; width:24px; height:24px; background:#fff; border-radius:50%; box-shadow:0 4px 10px rgba(15,23,42,.18); transition:.25s cubic-bezier(.2,.8,.2,1)}
+  .switch .tgl{position:relative; width:52px; height:28px; padding:2px; display:flex; align-items:center; background:linear-gradient(135deg,#e2e8f0,#f8fafc); border:1px solid rgba(148,163,184,0.55); border-radius:999px; transition:.25s ease; box-shadow:inset 0 1px 2px rgba(15,23,42,.08); overflow:hidden}
+  .switch .knob{width:24px; height:24px; background:#fff; border-radius:50%; box-shadow:0 4px 10px rgba(15,23,42,.18); transition:transform .25s cubic-bezier(.2,.8,.2,1); transform:translateX(0)}
   .switch input:checked + .tgl{background:linear-gradient(135deg,var(--brand),var(--brand2)); border-color:transparent; box-shadow:0 4px 12px rgba(99,102,241,.28)}
   .switch input:checked + .tgl .knob{transform:translateX(24px)}
   .switch .lbl{color:var(--ink); opacity:.85}
+
+  .btn svg{width:18px; height:18px; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0}
+  .btn svg[data-fill]{stroke:none; fill:currentColor; width:19px; height:19px}
+
+  .tone-note{font-size:12px; color:var(--muted); opacity:0.85; display:block; margin:-4px 0 0 4px}
 
   main{display:grid; grid-template-columns: 1fr 1.25fr; gap:18px; padding:16px}
   @media (max-width: 1000px){ main{grid-template-columns:1fr} .right-head{align-items:flex-start; text-align:left} }
@@ -110,18 +115,19 @@
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
   .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:hidden;}
-  .frostBg{position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,255,255,0.88),rgba(241,245,249,0.82)); backdrop-filter:blur(28px); border-top:1px solid rgba(255,255,255,0.85); border-left:1px solid rgba(148,163,184,0.18); border-right:1px solid rgba(148,163,184,0.18)}
+  .frostBg{position:absolute; inset:0; background:radial-gradient(308.59% 338.4% at 86.71% 130.56%, #fff 0%, rgba(255,255,255,0) 100%), rgba(255,255,255,0.08); box-shadow:0 0.62px 0 0 rgba(255,255,255,0.1) inset; backdrop-filter:blur(8.5300931930542px); border-top:1px solid rgba(255,255,255,0.55); border-left:1px solid rgba(148,163,184,0.18); border-right:1px solid rgba(148,163,184,0.18)}
   .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.08)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
 
   .playWrap{position:absolute; display:none; pointer-events:none}
-  .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(28px); background:
+  .playBg{position:absolute; inset:0; border-radius:9999px; backdrop-filter: blur(28px); background:
     linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.18)),
     rgba(0,0,0,0.22);
   }
-  .playTri{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%)}
+  .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+  .playTri svg{width:58%; height:auto}
 
   .sqLogo,.vertLogo{position:absolute; display:none; pointer-events:none}
 
@@ -191,16 +197,42 @@
           <div class="section-title"><span class="badge">1</span> Upload image(s)</div>
           <div class="row">
             <label class="btn primary" title="Upload image">
-              Upload image
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 16V4" fill="none" stroke="currentColor"/>
+                <path d="M12 4l4 4M12 4L8 8" fill="none" stroke="currentColor"/>
+                <path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3" fill="none" stroke="currentColor"/>
+              </svg>
+              <span>Upload image</span>
               <input id="file" type="file" accept="image/*" style="display:none" />
             </label>
             <label class="btn ghost" title="Upload folder">
-              Upload folder
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3.5 7h5l2 2H20a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 01.5-1z" fill="none" stroke="currentColor"/>
+                <path d="M12 12v3" fill="none" stroke="currentColor"/>
+                <path d="M10.5 13.5L12 12l1.5 1.5" fill="none" stroke="currentColor"/>
+              </svg>
+              <span>Upload folder</span>
               <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
             </label>
             <!-- filename chip removed from here -->
-            <button class="btn ghost" id="reset">Reset current</button>
-            <button class="btn danger" id="deleteBtn" title="Delete image(s)">Delete</button>
+            <button class="btn ghost" id="reset">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12a7 7 0 017-7 7 7 0 015.65 3" fill="none" stroke="currentColor"/>
+                <path d="M5 12h3" fill="none" stroke="currentColor"/>
+                <path d="M5 12l-2-2" fill="none" stroke="currentColor"/>
+                <path d="M19 12a7 7 0 01-7 7 7 7 0 01-5.65-3" fill="none" stroke="currentColor"/>
+              </svg>
+              <span>Reset current</span>
+            </button>
+            <button class="btn danger" id="deleteBtn" title="Delete image(s)">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 7h14" fill="none" stroke="currentColor"/>
+                <path d="M9 7V5h6v2" fill="none" stroke="currentColor"/>
+                <path d="M9.5 10v7M14.5 10v7" fill="none" stroke="currentColor"/>
+                <path d="M7 7h10l-.8 11a1 1 0 01-1 .92H8.8a1 1 0 01-1-.92L7 7z" fill="none" stroke="currentColor"/>
+              </svg>
+              <span>Delete</span>
+            </button>
           </div>
           <div class="muted" style="margin-top:8px">PNG/JPEG supported. Drag inside preview to reframe. Folder = bulk upload.</div>
         </div>
@@ -244,9 +276,30 @@
             </div>
           </div>
           <div class="adjust-actions">
-            <button class="btn" id="flipH">Flip horizontal</button>
-            <button class="btn" id="flipV">Flip vertical</button>
-            <button class="btn" id="rotate">Rotate 90°</button>
+            <button class="btn" id="flipH">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 5L4 12l5 7" fill="none" stroke="currentColor"/>
+                <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor"/>
+                <path d="M15 5l5 7-5 7" fill="none" stroke="currentColor"/>
+              </svg>
+              <span>Flip horizontal</span>
+            </button>
+            <button class="btn" id="flipV">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 9l7-5 7 5" fill="none" stroke="currentColor"/>
+                <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor"/>
+                <path d="M5 15l7 5 7-5" fill="none" stroke="currentColor"/>
+              </svg>
+              <span>Flip vertical</span>
+            </button>
+            <button class="btn" id="rotate">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 7.5A7 7 0 1119 12" fill="none" stroke="currentColor"/>
+                <path d="M19 12h-3" fill="none" stroke="currentColor"/>
+                <path d="M19 12l2 2" fill="none" stroke="currentColor"/>
+              </svg>
+              <span>Rotate 90°</span>
+            </button>
             <span class="adjust-rot-label" id="rotLab">0°</span>
           </div>
           <div class="adjust-coords">
@@ -286,6 +339,7 @@
                 <button data-tone="black">Black</button>
               </div>
             </div>
+            <span class="tone-note">Please confirm partner guidelines allow color switching.</span>
             <div class="libWrap">
               <input id="logo1Search" type="search" placeholder="Search partners…" />
               <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
@@ -307,6 +361,7 @@
               </div>
               <button class="btn small ghost" id="removeLogo2">Remove Logo 2</button>
             </div>
+            <span class="tone-note">Please confirm partner guidelines allow color switching.</span>
             <div class="libWrap">
               <input id="logo2Search" type="search" placeholder="Search partners…" />
               <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
@@ -466,7 +521,7 @@
     {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
     {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
     {name:'GSK', url:'https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png'},
-    {name:'Amazon', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1280px-Amazon_logo.svg.png'},
+    {name:'Amazon', url:'https://m.media-amazon.com/images/G/01/social/api-share/amazon_logo._CB633266945_.png'},
     {name:'NAIF', url:'https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png'},
     {name:'HiPP', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png'}
   ];
@@ -1078,7 +1133,7 @@
     baseLayer.width = fw; baseLayer.height = fh;
     baseLayer.getContext('2d').drawImage(canvas, 0, 0);
 
-    // ---------- HORIZONTAL Frosted Bar (edge-to-edge, blurred) ----------
+    // ---------- HORIZONTAL Frosted Bar (edge-to-edge, gradient mimic) ----------
     if(state.format.key==='HORIZ'){
       const barH = state.frost.barHExp;
       const barY = fh - barH;
@@ -1086,44 +1141,75 @@
       const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
 
       if(shouldShowBar){
-        const pad = Math.round(barH * 1.25);
-        const sampleY = Math.max(0, barY - pad);
-        const sampleH = Math.min(fh - sampleY, barH + pad*2);
-        const barSource = document.createElement('canvas');
-        barSource.width = fw; barSource.height = sampleH;
-        const barCtx = barSource.getContext('2d');
-        barCtx.drawImage(baseLayer, 0, sampleY, fw, sampleH, 0, 0, fw, sampleH);
+        let gradientDrawn = false;
+        const sampleHeight = Math.min(Math.round(barH * 1.5), barY);
+        if(sampleHeight > 0){
+          try{
+            const baseCtx = baseLayer.getContext('2d');
+            const slice = baseCtx.getImageData(0, barY - sampleHeight, fw, sampleHeight);
+            const data = slice.data;
+            const gradient = ctx.createLinearGradient(0, barY, 0, barY + barH);
+            const stops = 7;
+            const sampleStep = Math.max(1, Math.floor(fw/160));
+            for(let i=0;i<=stops;i++){
+              const t = i/stops;
+              const center = sampleHeight - 1 - Math.round(t * (sampleHeight - 1));
+              const radius = Math.max(1, Math.round(sampleHeight * 0.1));
+              const start = Math.max(0, center - radius);
+              const end = Math.min(sampleHeight, center + radius);
+              let r=0,g=0,b=0,count=0;
+              for(let y=start;y<end;y++){
+                const rowIndex = y * fw * 4;
+                for(let x=0;x<fw;x+=sampleStep){
+                  const idx = rowIndex + x*4;
+                  r += data[idx];
+                  g += data[idx+1];
+                  b += data[idx+2];
+                  count++;
+                }
+              }
+              if(count>0){
+                r = Math.round(r/count);
+                g = Math.round(g/count);
+                b = Math.round(b/count);
+                const alpha = Math.max(0.18, 0.7 - 0.45*t);
+                gradient.addColorStop(t, `rgba(${r},${g},${b},${alpha})`);
+                gradientDrawn = true;
+              }
+            }
+            if(gradientDrawn){
+              ctx.save();
+              ctx.fillStyle = gradient;
+              ctx.fillRect(0, barY, fw, barH);
+              ctx.restore();
+            }
+          }catch(err){ console.warn('Frost mimic fallback', err); }
+        }
+        if(!gradientDrawn){
+          const fallback = ctx.createLinearGradient(0, barY, 0, barY + barH);
+          fallback.addColorStop(0, 'rgba(255,255,255,0.28)');
+          fallback.addColorStop(1, 'rgba(226,232,240,0.16)');
+          ctx.save();
+          ctx.fillStyle = fallback;
+          ctx.fillRect(0, barY, fw, barH);
+          ctx.restore();
+        }
 
-        ctx.save();
-        ctx.filter = `blur(${Math.max(18, Math.round(barH*0.45))}px) saturate(1.08)`;
-        const drawY = barY - Math.round((sampleH - barH)/2);
-        ctx.drawImage(barSource, 0, drawY, fw, sampleH);
-        ctx.restore();
-
-        ctx.save();
-        ctx.globalAlpha = 0.16;
-        const baseGrad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-        baseGrad.addColorStop(0, 'rgba(255,255,255,1)');
-        baseGrad.addColorStop(1, 'rgba(241,245,249,0.85)');
-        ctx.fillStyle = baseGrad;
-        ctx.fillRect(0, barY, fw, barH);
-        ctx.restore();
-      }
-
-      if(state.frost.enabled){
-        const overlayStrength = Math.max(0, Math.min(1, state.frost.overlayAlpha));
-        if(overlayStrength > 0){
+        const overlayStrength = state.frost.enabled ? Math.max(0, Math.min(1, state.frost.overlayAlpha)) : 0;
+        if(state.frost.enabled && overlayStrength > 0){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.2 + overlayStrength*0.6})`);
-          grad.addColorStop(1, `rgba(246,248,252,${0.14 + overlayStrength*0.45})`);
+          grad.addColorStop(0, `rgba(255,255,255,${0.24 + overlayStrength*0.5})`);
+          grad.addColorStop(1, `rgba(246,248,252,${0.16 + overlayStrength*0.4})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
 
-        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.25; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        const topLineAlpha = state.frost.enabled ? 0.16 + overlayStrength*0.25 : 0.12;
+        ctx.save(); ctx.globalAlpha = topLineAlpha; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        const bottomLineAlpha = state.frost.enabled ? 0.1 + overlayStrength*0.22 : 0.1;
+        ctx.save(); ctx.globalAlpha = bottomLineAlpha; ctx.fillStyle = 'rgba(15,23,42,0.2)'; ctx.fillRect(0, barY + barH - 1, fw, 1); ctx.restore();
       }
 
       // logos on bar
