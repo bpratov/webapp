@@ -10,13 +10,19 @@
     --card:#ffffffd9; --border:#e2e8f0; --shadow:0 10px 30px rgba(2,6,23,.08);
     --radius:18px; --radius-sm:12px; --headerH:64px;
   }
+  body.dark{
+    --bg1:#0f172a; --bg2:#111827; --ink:#e2e8f0; --muted:#94a3b8;
+    --card:rgba(15,23,42,0.86); --border:rgba(148,163,184,0.28);
+    --shadow:0 18px 40px rgba(0,0,0,0.45);
+  }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color:var(--ink);
     background: linear-gradient(180deg,var(--bg1),var(--bg2) 55%, #fff)}
   .wrap{max-width:1280px; margin:0 auto; padding:16px}
 
-  header{position:sticky; top:0; z-index:40; backdrop-filter: blur(10px); background:#ffffffc7; border-bottom:1px solid var(--border)}
+  header{position:sticky; top:0; z-index:40; backdrop-filter: blur(14px); background:#ffffffc9; border-bottom:1px solid var(--border)}
+  body.dark header{background:rgba(15,23,42,0.82); border-bottom-color:rgba(148,163,184,0.32)}
   header .inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 16px}
   .brand{display:flex; align-items:center; gap:12px}
   .logo{width:40px; height:40px; border-radius:50%; overflow:hidden; box-shadow:0 6px 18px rgba(14,165,233,.35); display:grid; place-items:center; background:#fff}
@@ -24,12 +30,12 @@
   .title{display:flex; flex-direction:column}
   .title h1{font-size:20px; line-height:1.2; margin:0}
   .title .sub{font-size:13px; color:var(--muted)}
-  .right-head{display:flex; flex-direction:column; align-items:flex-end; text-align:right}
+  .right-head{display:flex; flex-direction:column; align-items:flex-end; text-align:right; gap:6px}
   .right-head .team{font-weight:600}
   .right-head .by{font-size:12px; color:var(--muted)}
   .right-head a{color:var(--muted); text-decoration:none}
 
-  .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:12px; background:#fff; cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:14px; background:#fff; cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease}
   .btn:active{transform:translateY(1px)}
   .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; border-color:transparent}
   .btn.ghost{background:transparent; border-color:var(--border)}
@@ -39,12 +45,15 @@
   .btn.danger:hover{background:#fff5f5}
   .btn:disabled{opacity:.6; cursor:not-allowed}
 
-  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; flex-shrink:0}
+  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; flex-shrink:0; opacity:.9}
   .btn.primary .btn-ico{stroke:#fff}
   .btn .btn-text{display:inline}
 
   input[type="range"]{width:100%}
   input[type="search"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px}
+  .urlInputWrap{display:flex; align-items:stretch; gap:8px; flex:1 1 260px}
+  .urlInputWrap input{flex:1; border-radius:10px; padding:10px 12px; border:1px solid var(--border); font-size:14px}
+  .urlInputWrap button{white-space:nowrap}
 
   .seg{display:inline-flex; gap:6px; padding:4px; background:linear-gradient(135deg,#e0e7ff,#f5f8ff); border:1px solid rgba(99,102,241,0.2); border-radius:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 14px rgba(14,165,233,0.08)}
   .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; border-radius:10px; min-width:48px; text-align:center; transition:all .18s ease}
@@ -83,8 +92,8 @@
   .formatCard{position:relative; border:1px solid var(--border); border-radius:18px; padding:20px; background:#fff; text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
   .formatCard.wide{grid-column:span 2}
   @media (max-width: 720px){ .formatCard.wide{grid-column:auto} }
-  .formatCard .formatIcon{width:48px; height:48px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(99,102,241,0.12))}
-  .formatCard .formatIcon svg{width:32px; height:auto}
+  .formatCard .formatIcon{position:relative; width:48px; height:48px; border-radius:18px; display:grid; place-items:center; background:linear-gradient(145deg,rgba(148,163,184,0.16),rgba(79,70,229,0.18)); box-shadow:inset 0 1px 1px rgba(255,255,255,0.5)}
+  .formatCard .formatIcon svg{width:30px; height:auto; filter:drop-shadow(0 4px 6px rgba(15,23,42,0.1))}
   .formatCard .formatInfo{display:grid; gap:4px}
   .formatCard .formatTitle{font-size:15px; font-weight:700; line-height:1.3}
   .formatCard .formatSub{font-size:13px; color:var(--muted)}
@@ -98,7 +107,7 @@
   .chip .meta{font-size:12px; color:var(--muted)}
   .chip .chipInner{display:flex; align-items:center; gap:10px}
 
-  .iconBox{stroke:#475569; fill:none; stroke-width:2; stroke-dasharray:4 4; rx:5; ry:5}
+  .iconBox{stroke:#475569; fill:rgba(99,102,241,0.12); stroke-width:1.6; stroke-dasharray:0; rx:10; ry:10}
 
   .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);} 
   .preview-head{display:flex; align-items:center; justify-content:space-between; padding:16px}
@@ -114,16 +123,17 @@
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
   .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:hidden;}
-  .frostBg{position:absolute; inset:0; background:radial-gradient(308.59% 338.4% at 86.71% 130.56%, #FFF 0%, rgba(255, 255, 255, 0.00) 100%), rgba(255, 255, 255, 0.08); box-shadow:0 0.62px 0 0 rgba(255,255,255,0.10) inset; backdrop-filter:blur(8.5300931930542px)}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.08)}
+  .frostBg{position:absolute; inset:0; background:radial-gradient(308.59% 338.4% at 86.71% 130.56%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(255, 255, 255, 0.12); box-shadow:0 0.62px 0 0 rgba(255,255,255,0.14) inset; backdrop-filter:blur(16px)}
+  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08)); box-shadow:inset 0 2px 6px rgba(15,23,42,0.12)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
 
   .playWrap{position:absolute; display:none; pointer-events:none}
-  .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(28px); background:
-    linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.18)),
-    rgba(0,0,0,0.22);
+  .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(32px); background:
+    linear-gradient(120deg, rgba(15,23,42,0.75), rgba(30,41,59,0.55)),
+    rgba(0,0,0,0.35);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.12);
   }
   .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
   .playTri svg{width:54%; max-width:72px; height:auto}
@@ -154,6 +164,27 @@
   .bar{height:8px; background:#eef2ff; border-radius:999px; overflow:hidden}
   .bar > span{display:block; height:100%; width:0%; background:linear-gradient(135deg,var(--brand),var(--brand2)); border-radius:999px; transition:width .2s}
 
+  body.dark{color:var(--ink); background:radial-gradient(circle at top, rgba(15,23,42,0.92), rgba(15,23,42,0.96));}
+  body.dark .btn{background:rgba(30,41,59,0.72); color:var(--ink); border-color:rgba(148,163,184,0.35)}
+  body.dark .btn.ghost{background:rgba(15,23,42,0.6)}
+  body.dark .btn.danger{background:rgba(69,10,10,0.4); color:#fecaca; border-color:rgba(248,113,113,0.45)}
+  body.dark .btn.danger:hover{background:rgba(127,29,29,0.45)}
+  body.dark input[type="search"], body.dark select, body.dark .urlInputWrap input{background:rgba(30,41,59,0.72); color:var(--ink); border-color:rgba(148,163,184,0.3)}
+  body.dark input[type="search"]::placeholder, body.dark .urlInputWrap input::placeholder{color:rgba(148,163,184,0.65)}
+  body.dark .panel{background:var(--card); border-color:rgba(148,163,184,0.28)}
+  body.dark .libScroller{background:rgba(15,23,42,0.72); border-color:rgba(148,163,184,0.28)}
+  body.dark .libItem{background:rgba(30,41,59,0.76); border-color:rgba(148,163,184,0.24); box-shadow:none}
+  body.dark .libItem:hover{box-shadow:0 6px 14px rgba(0,0,0,0.5)}
+  body.dark .stage{background:#111827}
+  body.dark .stage-inner{background:rgba(15,23,42,0.95); border-color:rgba(148,163,184,0.25); box-shadow:inset 0 0 0 1px rgba(15,23,42,0.6)}
+  body.dark .chip, body.dark .adjust-card{background:rgba(30,41,59,0.75); border-color:rgba(148,163,184,0.28); color:var(--ink)}
+  body.dark .chipInfo{background:rgba(30,41,59,0.7); border-color:rgba(148,163,184,0.24)}
+  body.dark .muted{color:var(--muted)}
+  body.dark .loading .card{background:rgba(15,23,42,0.92); color:var(--ink)}
+  body.dark .bar{background:rgba(30,41,59,0.72)}
+
+  body.drag-active .stage-inner::after{content:""; position:absolute; inset:0; border:2px dashed var(--brand); border-radius:14px; background:rgba(14,165,233,0.08); pointer-events:none}
+
   .foot-note{font-size:11px; color:var(--muted); padding:10px 16px; text-align:center}
   .adjust-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
   .adjust-card{background:#fff; border:1px solid var(--border); border-radius:14px; padding:12px 14px; box-shadow:0 6px 16px rgba(15,23,42,0.06); display:grid; gap:6px}
@@ -180,6 +211,12 @@
       <div class="right-head">
         <div class="team">LiveOps Team</div>
         <div class="by">made by <a href="https://www.pratov.site" target="_blank" rel="noopener">Beka Pratov</a></div>
+        <button class="btn small ghost" id="themeToggle" type="button">
+          <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 13.5A8.5 8.5 0 1 1 10.5 3a6.5 6.5 0 0 0 10.5 10.5Z"></path>
+          </svg>
+          <span class="btn-text" id="themeToggleLabel">Dark theme</span>
+        </button>
       </div>
     </div>
   </header>
@@ -214,6 +251,17 @@
               <span class="btn-text">Upload folder</span>
               <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
             </label>
+            <div class="urlInputWrap">
+              <input id="urlInput" type="url" placeholder="Paste image URL" aria-label="Image URL" />
+              <button class="btn ghost" id="urlSubmit" type="button" title="Add image by URL">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.5 6.5h-2a4 4 0 0 0 0 8h2"></path>
+                  <path d="M13.5 6.5h2a4 4 0 0 1 0 8h-2"></path>
+                  <path d="M8 10h8"></path>
+                </svg>
+                <span class="btn-text">Add URL</span>
+              </button>
+            </div>
             <!-- filename chip removed from here -->
             <button class="btn ghost" id="reset">
               <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
@@ -430,8 +478,23 @@
         <div class="section">
           <div class="section-title"><span class="badge">5</span> Export</div>
           <div class="exportActions">
-            <button class="btn primary" id="exportBtn" disabled>Export current</button>
-            <button class="btn ghost" id="exportAllBtn" disabled>Export all (ZIP)</button>
+            <button class="btn primary" id="exportBtn" disabled>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v12"></path>
+                <path d="M7 13l5 5 5-5"></path>
+                <path d="M5 19h14"></path>
+              </svg>
+              <span class="btn-text">Export current</span>
+            </button>
+            <button class="btn ghost" id="exportAllBtn" disabled>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 7h16l-1 11H5z"></path>
+                <path d="M9 7V4h6v3"></path>
+                <path d="M10 12h4"></path>
+                <path d="M10 16h4"></path>
+              </svg>
+              <span class="btn-text">Export all (ZIP)</span>
+            </button>
           </div>
           <div class="chipInfo exportMeta" id="lastExport" aria-live="polite">—</div>
           <div class="muted" style="margin-top:6px">Max ~500 KB each. JPG at 1080px.</div>
@@ -509,25 +572,42 @@
   };
 
   const PARTNERS = [
-    {name:'Philips', url:'https://cdn.worldvectorlogo.com/logos/philips-6.svg'},
-    {name:'Versuni', url:'https://i.imghippo.com/files/tWvR4051Aws.png'},
-    {name:'Petite Amelie', url:'https://i.imghippo.com/files/KpIL9265gYA.png'},
-    {name:'Baby List', url:'https://upload.wikimedia.org/wikipedia/commons/3/3b/Babylist_Logo_03.png'},
+    {name:'Amazon', url:'https://i.imghippo.com/files/KHpN4511hII.png'},
+    {name:'Babies “R” Us', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babies_%22R%22_Us_logo.svg?width=1000'},
+    {name:'Babylist', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babylist_Logo_02.png'},
+    {name:'Bayer Bepanthen', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Bayer_Logo.svg?width=1000'},
     {name:'C&A', url:'https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg'},
-    {name:'Nuna', url:'https://i.imghippo.com/files/sbJA8488Sbo.png'},
-    {name:'MATTEL', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png'},
-    {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
-    {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
+    {name:'Doctolib', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Doctolib_Logo.svg?width=1000'},
+    {name:'El Corte Inglés', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Corte_Ingl%C3%A9s.svg?width=1000'},
+    {name:'Fisher-Price', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Fisher-Price_logo.svg?width=1000'},
     {name:'GSK', url:'https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png'},
-    {name:'Amazon', url:'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg'},
+    {name:'Groupe Mutuel', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Gm_logo_hor_rvb_bicol.png'},
+    {name:'H&M', url:'https://commons.wikimedia.org/wiki/Special:FilePath/H%26M-Logo.svg?width=1000'},
+    {name:'HiPP', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png'},
+    {name:'Kruidvat', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Kruidvat-New.png'},
+    {name:'LEGO', url:'https://commons.wikimedia.org/wiki/Special:FilePath/LEGO_logo.svg?width=1000'},
+    {name:'Lemonade', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_of_Lemonade%2C_Inc.svg?width=1000'},
+    {name:'Livi (Kry)', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Kry_logo.svg?width=800'},
+    {name:'MATTEL', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png'},
+    {name:'Monoprix', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Monoprix_logo_2013.png'},
     {name:'NAIF', url:'https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png'},
-    {name:'HiPP', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png'}
+    {name:'Nuna', url:'https://i.imghippo.com/files/sbJA8488Sbo.png'},
+    {name:'Petite Amelie', url:'https://i.imghippo.com/files/KpIL9265gYA.png'},
+    {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
+    {name:'Philips', url:'https://cdn.worldvectorlogo.com/logos/philips-6.svg'},
+    {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
+    {name:'Target', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Target_Logo.svg?width=1000'},
+    {name:'Versuni', url:'https://i.imghippo.com/files/tWvR4051Aws.png'},
+    {name:'Walmart', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Walmart_Logo.png'},
+    {name:'Zocdoc', url:'https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png'}
   ];
 
   const els = {
     header: document.getElementById('appHeader'),
+    themeToggle: document.getElementById('themeToggle'), themeToggleLabel: document.getElementById('themeToggleLabel'),
     file: document.getElementById('file'),
     folder: document.getElementById('folder'),
+    urlInput: document.getElementById('urlInput'), urlSubmit: document.getElementById('urlSubmit'),
     reset: document.getElementById('reset'),
     deleteBtn: document.getElementById('deleteBtn'),
 
@@ -621,9 +701,37 @@
     vertLogo:   { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
   };
 
+  const THEME_KEY = 'frozone-theme';
+  let darkTheme = false;
+  let dragLayerDepth = 0;
+
   function syncHeaderHeight(){
     const h = els.header.offsetHeight || 64;
     document.documentElement.style.setProperty('--headerH', h + 'px');
+  }
+
+  function updateBatchMeta(){
+    const total = state.images.length;
+    const currentDisplay = (state.current >= 0 && total > 0) ? state.current + 1 : 0;
+    const label = `${currentDisplay} / ${total}`;
+    if(els.batchMeta) els.batchMeta.textContent = label;
+    if(els.batchLabel) els.batchLabel.textContent = label;
+  }
+
+  function applyTheme(dark){
+    darkTheme = !!dark;
+    document.body.classList.toggle('dark', darkTheme);
+    if(els.themeToggleLabel) els.themeToggleLabel.textContent = darkTheme ? 'Light theme' : 'Dark theme';
+    if(els.themeToggle) els.themeToggle.setAttribute('aria-pressed', darkTheme ? 'true' : 'false');
+    try{ localStorage.setItem(THEME_KEY, darkTheme ? 'dark' : 'light'); }catch(err){ /* ignore storage issues */ }
+  }
+
+  function initTheme(){
+    let stored = null;
+    try{ stored = localStorage.getItem(THEME_KEY); }catch(err){ stored = null; }
+    const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const shouldDark = stored ? stored === 'dark' : prefers;
+    applyTheme(shouldDark);
   }
 
   function iconSVG(kind){
@@ -757,8 +865,7 @@
     if(els.vertLogoToneSeg) [...els.vertLogoToneSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.tone===state.vertLogo.tone));
     if(els.vertSizeSeg) [...els.vertSizeSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.v===state.vertVariant));
 
-    els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
-    els.batchLabel.textContent = els.batchMeta.textContent;
+    updateBatchMeta();
 
     // file name at top of preview
     els.fileNameTop.textContent = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
@@ -853,35 +960,112 @@
   function setLoadingProgress(p){ els.loadingBar.style.width = Math.max(0,Math.min(100,p))+'%'; }
 
   // ---------- Uploads ----------
-  els.file.addEventListener('change', (e)=>{
-    const f = e.target.files && e.target.files[0]; if(!f) return;
-    const url = URL.createObjectURL(f);
-    const imgTmp = new Image();
-    imgTmp.onload = ()=>{ pushImage(url, f.name, {w:imgTmp.width, h:imgTmp.height}); loadImageAt(state.images.length-1); };
-    imgTmp.src = url;
-  });
+  els.themeToggle?.addEventListener('click', ()=>{ applyTheme(!darkTheme); });
 
-  els.folder.addEventListener('change', async (e)=>{
-    const files = Array.from(e.target.files||[]).filter(f=>/^image\//.test(f.type));
-    if(files.length===0) return;
-    files.sort((a,b)=>(a.webkitRelativePath||a.name).localeCompare(b.webkitRelativePath||b.name));
-    showLoading('Reading folder…', 0);
+  function getFileArray(list){
+    return Array.from(list || []).filter(f=>/^image\//.test(f.type));
+  }
+
+  async function ingestFileList(files, opts={}){
+    let arr = getFileArray(files);
+    if(opts.sortByPath){ arr = arr.sort((a,b)=>(a.webkitRelativePath||a.name).localeCompare(b.webkitRelativePath||b.name)); }
+    if(arr.length===0) return 0;
+    const showProgress = opts.progress || arr.length>1;
+    if(showProgress){ showLoading(opts.message || 'Loading images…', 0); }
     let added = 0;
-    for(let i=0;i<files.length;i++){
-      const f = files[i];
+    for(let i=0;i<arr.length;i++){
+      const f = arr[i];
       await new Promise(res=>{
         const url = URL.createObjectURL(f);
         const im = new Image();
         im.onload = ()=>{ pushImage(url, f.name, {w:im.width, h:im.height}); added++; res(); };
-        im.onerror = ()=> res();
+        im.onerror = ()=>{ try{ URL.revokeObjectURL(url); }catch(err){} res(); };
         im.src = url;
       });
-      setLoadingProgress(Math.round(((i+1)/files.length)*100));
-      els.loadingText.textContent = `Loading ${i+1}/${files.length}…`;
+      if(showProgress){
+        const pct = Math.round(((i+1)/arr.length)*100);
+        setLoadingProgress(pct);
+        els.loadingText.textContent = `${opts.stepLabel || 'Loading'} ${i+1}/${arr.length}…`;
+      }
     }
-    hideLoading();
+    if(showProgress){ hideLoading(); }
     if(added>0){ loadImageAt(state.images.length - added); }
+    return added;
+  }
+
+  els.file.addEventListener('change', async (e)=>{
+    await ingestFileList(e.target.files, {progress:false});
+    e.target.value = '';
   });
+
+  els.folder.addEventListener('change', async (e)=>{
+    await ingestFileList(e.target.files, {progress:true, message:'Reading folder…', stepLabel:'Loading', sortByPath:true});
+    e.target.value = '';
+  });
+
+  async function addImageFromURL(raw){
+    const link = (raw || '').trim();
+    if(!link) return;
+    showLoading('Fetching image…', 12);
+    let objUrl = null;
+    try{
+      const response = await fetch(link, {mode:'cors'});
+      if(!response.ok) throw new Error('bad status');
+      const blob = await response.blob();
+      if(!/^image\//.test(blob.type)) throw new Error('not image');
+      objUrl = URL.createObjectURL(blob);
+      const temp = new Image();
+      await new Promise((resolve, reject)=>{ temp.onload = resolve; temp.onerror = reject; temp.src = objUrl; });
+      const namePart = link.split('/').pop() || 'remote-image';
+      const cleanName = decodeURIComponent(namePart.split('?')[0] || 'remote-image');
+      pushImage(objUrl, cleanName || 'remote-image', {w:temp.width, h:temp.height});
+      loadImageAt(state.images.length-1);
+      if(els.urlInput) els.urlInput.value = '';
+    }catch(err){
+      if(objUrl){ try{ URL.revokeObjectURL(objUrl); }catch(e){} }
+      console.error('URL upload failed', err);
+      alert('Unable to load image from this URL. Please verify the link or download the file instead.');
+    }finally{
+      hideLoading();
+    }
+  }
+
+  els.urlSubmit?.addEventListener('click', ()=>{ addImageFromURL(els.urlInput?.value); });
+  els.urlInput?.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); addImageFromURL(e.target.value); } });
+
+  function setDragActive(active){
+    document.body.classList.toggle('drag-active', !!active);
+  }
+
+  window.addEventListener('dragenter', (e)=>{
+    if(!e.dataTransfer) return;
+    e.preventDefault();
+    dragLayerDepth++;
+    setDragActive(true);
+  });
+  window.addEventListener('dragover', (e)=>{
+    if(!e.dataTransfer) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+  });
+  window.addEventListener('dragleave', (e)=>{
+    if(!e.dataTransfer) return;
+    dragLayerDepth = Math.max(0, dragLayerDepth-1);
+    if(dragLayerDepth===0) setDragActive(false);
+  });
+  window.addEventListener('drop', async (e)=>{
+    if(!e.dataTransfer) return;
+    e.preventDefault();
+    dragLayerDepth = 0;
+    setDragActive(false);
+    if(e.dataTransfer.files && e.dataTransfer.files.length){
+      await ingestFileList(e.dataTransfer.files, {progress:true, message:'Adding images…', stepLabel:'Adding'});
+    } else {
+      const dropped = e.dataTransfer.getData('text/uri-list') || e.dataTransfer.getData('text/plain');
+      if(dropped){ addImageFromURL(dropped); }
+    }
+  });
+  window.addEventListener('dragend', ()=>{ dragLayerDepth = 0; setDragActive(false); });
 
   // ---------- Delete / Reset ----------
   els.reset.addEventListener('click', ()=>{
@@ -897,14 +1081,16 @@
 
   els.deleteBtn.addEventListener('click', ()=>{
     if(state.current<0) return;
-    const removed = state.images.splice(state.current,1)[0];
+    const removeIndex = state.current;
+    const removed = state.images.splice(removeIndex,1)[0];
     try{ if(removed && removed.src && removed.src.startsWith('blob:')) URL.revokeObjectURL(removed.src); }catch(e){}
     if(state.images.length===0){
       state.current=-1; state.imageSrc=null; state.natural={w:0,h:0};
-      els.img.removeAttribute('src'); computeCover(); render(); updateControls();
+      els.img.removeAttribute('src');
+      computeCover(); render(); updateControls();
       return;
     }
-    const next = Math.min(state.current, state.images.length-1);
+    const next = Math.min(removeIndex, state.images.length-1);
     loadImageAt(next);
   });
 
@@ -916,8 +1102,7 @@
       flipH:false, flipV:false, rotation:0,
       imgZoom:1, offset:{x:0,y:0}
     });
-    els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
-    els.batchLabel.textContent = els.batchMeta.textContent;
+    updateBatchMeta();
     els.exportAllBtn.disabled = state.images.length===0;
   }
   function serializeCurrent(){
@@ -1159,14 +1344,28 @@
         smearCtx.imageSmoothingEnabled = true;
         smearCtx.drawImage(captureCanvas, 0, Math.max(0, captureH - smearHeight), fw, smearHeight, 0, 0, smearWidth, smearHeight);
 
+        frostCtx.filter = `blur(${Math.max(18, Math.round(barH*0.6))}px) saturate(1.12)`;
         frostCtx.drawImage(smearCanvas, 0, 0, smearWidth, smearHeight, 0, 0, fw, barH);
+        frostCtx.filter = 'none';
+        frostCtx.globalAlpha = 0.18;
+        frostCtx.fillStyle = 'rgba(15,23,42,0.22)';
+        frostCtx.fillRect(0, 0, fw, barH);
+        frostCtx.globalAlpha = 1;
 
         const lighting = frostCtx.createLinearGradient(0, 0, 0, barH);
-        lighting.addColorStop(0, 'rgba(255,255,255,0.32)');
-        lighting.addColorStop(0.55, 'rgba(255,255,255,0.12)');
-        lighting.addColorStop(1, 'rgba(210,225,240,0.12)');
+        lighting.addColorStop(0, 'rgba(255,255,255,0.42)');
+        lighting.addColorStop(0.55, 'rgba(255,255,255,0.18)');
+        lighting.addColorStop(1, 'rgba(210,225,240,0.18)');
         frostCtx.fillStyle = lighting;
         frostCtx.fillRect(0, 0, fw, barH);
+
+        frostCtx.globalCompositeOperation = 'screen';
+        const sheen = frostCtx.createLinearGradient(0, 0, fw, 0);
+        sheen.addColorStop(0, 'rgba(255,255,255,0.08)');
+        sheen.addColorStop(1, 'rgba(255,255,255,0.02)');
+        frostCtx.fillStyle = sheen;
+        frostCtx.fillRect(0, 0, fw, barH);
+        frostCtx.globalCompositeOperation = 'source-over';
 
         ctx.drawImage(frostCanvas, 0, barY);
       }
@@ -1176,15 +1375,15 @@
         if(overlayStrength > 0){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.2 + overlayStrength*0.6})`);
-          grad.addColorStop(1, `rgba(246,248,252,${0.14 + overlayStrength*0.45})`);
+          grad.addColorStop(0, `rgba(255,255,255,${0.28 + overlayStrength*0.55})`);
+          grad.addColorStop(1, `rgba(246,248,252,${0.18 + overlayStrength*0.5})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
 
-        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.25; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.22 + overlayStrength*0.28; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.18 + overlayStrength*0.26; ctx.fillStyle = 'rgba(15,23,42,0.22)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
@@ -1226,21 +1425,30 @@
 
         ctx.save();
         ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-        ctx.filter = `blur(${Math.max(16, Math.round(d*0.2))}px) saturate(1.05)`;
+        ctx.filter = `blur(${Math.max(22, Math.round(d*0.3))}px) saturate(1.12)`;
         ctx.drawImage(sampleCanvas, cx - sampleSize/2, cy - sampleSize/2);
         ctx.restore();
 
         ctx.save();
         ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-        const glow = ctx.createRadialGradient(cx - r*0.3, cy - r*0.4, r*0.25, cx, cy, r);
-        glow.addColorStop(0, 'rgba(255,255,255,0.55)');
-        glow.addColorStop(1, 'rgba(255,255,255,0.18)');
-        ctx.globalAlpha = 0.95;
+        const glow = ctx.createRadialGradient(cx - r*0.2, cy - r*0.25, r*0.1, cx, cy, r);
+        glow.addColorStop(0, 'rgba(20,32,55,0.78)');
+        glow.addColorStop(1, 'rgba(8,11,23,0.92)');
+        ctx.globalAlpha = 0.9;
         ctx.fillStyle = glow;
         ctx.fillRect(cx - r, cy - r, d, d);
         ctx.restore();
 
-        ctx.save(); ctx.globalAlpha = 0.2; ctx.strokeStyle = 'rgba(15,23,42,0.25)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, r-1, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+        ctx.save();
+        ctx.globalCompositeOperation = 'screen';
+        const highlight = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+        highlight.addColorStop(0, 'rgba(255,255,255,0.08)');
+        highlight.addColorStop(1, 'rgba(255,255,255,0.02)');
+        ctx.fillStyle = highlight;
+        ctx.fillRect(cx - r, cy - r, d, d);
+        ctx.restore();
+
+        ctx.save(); ctx.globalAlpha = 0.45; ctx.strokeStyle = 'rgba(15,23,42,0.55)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(cx, cy, r-1, 0, Math.PI*2); ctx.stroke(); ctx.restore();
 
         ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
         const scale = Math.min(d*0.55/59, d*0.55/63);
@@ -1376,6 +1584,7 @@
   window.addEventListener('resize', ()=>{ syncHeaderHeight(); fitPreviewZoomToStage(); render(); });
 
   // Init
+  initTheme();
   syncHeaderHeight();
   buildFormatChips();
   buildAllGalleries();
