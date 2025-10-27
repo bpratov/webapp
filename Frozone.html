@@ -39,6 +39,10 @@
   .btn.danger:hover{background:#fff5f5}
   .btn:disabled{opacity:.6; cursor:not-allowed}
 
+  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.8; flex-shrink:0}
+  .btn.primary .btn-ico{stroke:#fff}
+  .btn .btn-text{display:inline}
+
   input[type="range"]{width:100%}
   input[type="search"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px}
 
@@ -51,8 +55,8 @@
   /* Minimal, polished switches */
   label.switch{display:inline-flex; align-items:center; gap:10px; font-size:14px; user-select:none}
   .switch input{position:absolute; opacity:0; width:0; height:0}
-  .switch .tgl{position:relative; width:52px; height:28px; background:linear-gradient(135deg,#e2e8f0,#f8fafc); border:1px solid rgba(148,163,184,0.55); border-radius:999px; transition:.25s ease; box-shadow:inset 0 1px 2px rgba(15,23,42,.08)}
-  .switch .knob{position:absolute; top:2px; left:2px; width:24px; height:24px; background:#fff; border-radius:50%; box-shadow:0 4px 10px rgba(15,23,42,.18); transition:.25s cubic-bezier(.2,.8,.2,1)}
+  .switch .tgl{position:relative; display:flex; align-items:center; width:52px; height:28px; padding:2px; background:linear-gradient(135deg,#e2e8f0,#f8fafc); border:1px solid rgba(148,163,184,0.55); border-radius:999px; transition:.25s ease; box-shadow:inset 0 1px 2px rgba(15,23,42,.08)}
+  .switch .knob{position:relative; width:24px; height:24px; background:#fff; border-radius:50%; box-shadow:0 4px 10px rgba(15,23,42,.18); transition:transform .25s cubic-bezier(.2,.8,.2,1); transform:translateX(0)}
   .switch input:checked + .tgl{background:linear-gradient(135deg,var(--brand),var(--brand2)); border-color:transparent; box-shadow:0 4px 12px rgba(99,102,241,.28)}
   .switch input:checked + .tgl .knob{transform:translateX(24px)}
   .switch .lbl{color:var(--ink); opacity:.85}
@@ -110,7 +114,7 @@
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
   .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:hidden;}
-  .frostBg{position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,255,255,0.88),rgba(241,245,249,0.82)); backdrop-filter:blur(28px); border-top:1px solid rgba(255,255,255,0.85); border-left:1px solid rgba(148,163,184,0.18); border-right:1px solid rgba(148,163,184,0.18)}
+  .frostBg{position:absolute; inset:0; background:radial-gradient(308.59% 338.4% at 86.71% 130.56%, #FFF 0%, rgba(255, 255, 255, 0.00) 100%), rgba(255, 255, 255, 0.08); box-shadow:0 0.62px 0 0 rgba(255,255,255,0.10) inset; backdrop-filter:blur(8.5300931930542px)}
   .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.08)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
@@ -121,7 +125,8 @@
     linear-gradient(90deg, rgba(255,255,255,.38), rgba(255,255,255,.18)),
     rgba(0,0,0,0.22);
   }
-  .playTri{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%)}
+  .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
+  .playTri svg{width:54%; max-width:72px; height:auto}
 
   .sqLogo,.vertLogo{position:absolute; display:none; pointer-events:none}
 
@@ -138,6 +143,8 @@
   .libItem img{height:18px; width:auto; object-fit:contain}
   .libItem .cap{font-size:11px; color:var(--muted)}
   .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
+
+  .tone-note{font-size:12px; color:var(--muted); margin-top:6px}
 
   .loading{position:fixed; inset:0; background:rgba(15,23,42,.35); display:none; align-items:center; justify-content:center; z-index:1000}
   .loading .card{min-width:280px; max-width:420px; background:#fff; border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; text-align:center}
@@ -191,16 +198,41 @@
           <div class="section-title"><span class="badge">1</span> Upload image(s)</div>
           <div class="row">
             <label class="btn primary" title="Upload image">
-              Upload image
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19V7"></path>
+                <path d="M7.5 11l4.5-4.5L16.5 11"></path>
+                <path d="M5 19h14"></path>
+              </svg>
+              <span class="btn-text">Upload image</span>
               <input id="file" type="file" accept="image/*" style="display:none" />
             </label>
             <label class="btn ghost" title="Upload folder">
-              Upload folder
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3.5 6.5h5l2 2h10.5"></path>
+                <path d="M20.5 8.5v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2h3"></path>
+              </svg>
+              <span class="btn-text">Upload folder</span>
               <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
             </label>
             <!-- filename chip removed from here -->
-            <button class="btn ghost" id="reset">Reset current</button>
-            <button class="btn danger" id="deleteBtn" title="Delete image(s)">Delete</button>
+            <button class="btn ghost" id="reset">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 12a6 6 0 1 1 6 6"></path>
+                <path d="M16 4v4h4"></path>
+                <path d="M8 20v-4H4"></path>
+              </svg>
+              <span class="btn-text">Reset current</span>
+            </button>
+            <button class="btn danger" id="deleteBtn" title="Delete image(s)">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 7h12"></path>
+                <path d="M10 4h4l.5 2h-5z"></path>
+                <rect x="7" y="7" width="10" height="13" rx="1.5"></rect>
+                <path d="M10 11v6"></path>
+                <path d="M14 11v6"></path>
+              </svg>
+              <span class="btn-text">Delete</span>
+            </button>
           </div>
           <div class="muted" style="margin-top:8px">PNG/JPEG supported. Drag inside preview to reframe. Folder = bulk upload.</div>
         </div>
@@ -244,9 +276,29 @@
             </div>
           </div>
           <div class="adjust-actions">
-            <button class="btn" id="flipH">Flip horizontal</button>
-            <button class="btn" id="flipV">Flip vertical</button>
-            <button class="btn" id="rotate">Rotate 90°</button>
+            <button class="btn" id="flipH">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14"></path>
+                <path d="M8 8l-3 3 3 3"></path>
+                <path d="M16 8l3 3-3 3"></path>
+              </svg>
+              <span class="btn-text">Flip horizontal</span>
+            </button>
+            <button class="btn" id="flipV">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"></path>
+                <path d="M8 8l3-3 3 3"></path>
+                <path d="M8 16l3 3 3-3"></path>
+              </svg>
+              <span class="btn-text">Flip vertical</span>
+            </button>
+            <button class="btn" id="rotate">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 10a6 6 0 1 1 6 6"></path>
+                <path d="M16 4v5h5"></path>
+              </svg>
+              <span class="btn-text">Rotate 90°</span>
+            </button>
             <span class="adjust-rot-label" id="rotLab">0°</span>
           </div>
           <div class="adjust-coords">
@@ -286,6 +338,7 @@
                 <button data-tone="black">Black</button>
               </div>
             </div>
+            <div class="tone-note">Please double-check partner branding guidelines permit recoloring before switching logo colors.</div>
             <div class="libWrap">
               <input id="logo1Search" type="search" placeholder="Search partners…" />
               <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
@@ -422,7 +475,7 @@
           <div class="playWrap" id="playWrap">
             <div class="playBg" id="playBg"></div>
             <div class="playTri" aria-hidden="true">
-              <svg width="72" height="76" viewBox="0 0 59 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg viewBox="0 0 59 63" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 14 L44 31.5 L18 49 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
               </svg>
             </div>
@@ -466,7 +519,7 @@
     {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
     {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
     {name:'GSK', url:'https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png'},
-    {name:'Amazon', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1280px-Amazon_logo.svg.png'},
+    {name:'Amazon', url:'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg'},
     {name:'NAIF', url:'https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png'},
     {name:'HiPP', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png'}
   ];
@@ -1086,28 +1139,36 @@
       const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
 
       if(shouldShowBar){
-        const pad = Math.round(barH * 1.25);
-        const sampleY = Math.max(0, barY - pad);
-        const sampleH = Math.min(fh - sampleY, barH + pad*2);
-        const barSource = document.createElement('canvas');
-        barSource.width = fw; barSource.height = sampleH;
-        const barCtx = barSource.getContext('2d');
-        barCtx.drawImage(baseLayer, 0, sampleY, fw, sampleH, 0, 0, fw, sampleH);
+        const frostCanvas = document.createElement('canvas');
+        frostCanvas.width = fw; frostCanvas.height = barH;
+        const frostCtx = frostCanvas.getContext('2d');
+        frostCtx.imageSmoothingEnabled = true;
 
-        ctx.save();
-        ctx.filter = `blur(${Math.max(18, Math.round(barH*0.45))}px) saturate(1.08)`;
-        const drawY = barY - Math.round((sampleH - barH)/2);
-        ctx.drawImage(barSource, 0, drawY, fw, sampleH);
-        ctx.restore();
+        const captureH = Math.max(12, Math.min(fh, Math.round(barH * 0.85)));
+        const captureY = Math.max(0, barY - captureH);
+        const captureCanvas = document.createElement('canvas');
+        captureCanvas.width = fw; captureCanvas.height = captureH;
+        const captureCtx = captureCanvas.getContext('2d');
+        captureCtx.drawImage(baseLayer, 0, captureY, fw, captureH, 0, 0, fw, captureH);
 
-        ctx.save();
-        ctx.globalAlpha = 0.16;
-        const baseGrad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-        baseGrad.addColorStop(0, 'rgba(255,255,255,1)');
-        baseGrad.addColorStop(1, 'rgba(241,245,249,0.85)');
-        ctx.fillStyle = baseGrad;
-        ctx.fillRect(0, barY, fw, barH);
-        ctx.restore();
+        const smearWidth = Math.max(8, Math.round(fw / 6));
+        const smearHeight = Math.max(4, Math.round(barH / 6));
+        const smearCanvas = document.createElement('canvas');
+        smearCanvas.width = smearWidth; smearCanvas.height = smearHeight;
+        const smearCtx = smearCanvas.getContext('2d');
+        smearCtx.imageSmoothingEnabled = true;
+        smearCtx.drawImage(captureCanvas, 0, Math.max(0, captureH - smearHeight), fw, smearHeight, 0, 0, smearWidth, smearHeight);
+
+        frostCtx.drawImage(smearCanvas, 0, 0, smearWidth, smearHeight, 0, 0, fw, barH);
+
+        const lighting = frostCtx.createLinearGradient(0, 0, 0, barH);
+        lighting.addColorStop(0, 'rgba(255,255,255,0.32)');
+        lighting.addColorStop(0.55, 'rgba(255,255,255,0.12)');
+        lighting.addColorStop(1, 'rgba(210,225,240,0.12)');
+        frostCtx.fillStyle = lighting;
+        frostCtx.fillRect(0, 0, fw, barH);
+
+        ctx.drawImage(frostCanvas, 0, barY);
       }
 
       if(state.frost.enabled){
