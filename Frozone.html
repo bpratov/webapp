@@ -42,20 +42,23 @@
   .right-head .team{font-weight:600}
   .right-head .by{font-size:12px; color:var(--muted)}
   .right-head a{color:var(--muted); text-decoration:none}
-  #themeToggle{margin-top:10px; align-self:flex-end}
-  #themeToggle .btn-ico{filter:none}
+  #themeToggle{position:fixed; right:28px; bottom:28px; z-index:120; margin:0; box-shadow:0 12px 28px rgba(15,23,42,0.22); background:linear-gradient(135deg,var(--bg3),rgba(148,163,184,0.2)); border:1px solid rgba(148,163,184,0.35); backdrop-filter:blur(20px)}
+  #themeToggle .btn-ico{filter:none; width:24px; height:24px; stroke-width:1.8}
 
-  .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:14px; background:var(--btn-bg); color:var(--ink); cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease, background .2s ease, color .2s ease, box-shadow .2s ease}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:14px; background:var(--btn-bg); color:var(--ink); cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease, background .2s ease, color .2s ease, box-shadow .2s ease}
   .btn:active{transform:translateY(1px)}
   .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; border-color:transparent}
   .btn.ghost{background:var(--btn-ghost-bg); border-color:var(--border)}
   .btn.small{padding:6px 10px; border-radius:10px; font-size:12px}
   .btn.icon{width:36px; height:36px; padding:0; display:inline-grid; place-items:center}
+  .btn.circle{border-radius:50%; width:52px; height:52px; padding:0}
+  .btn.circle .btn-text{position:absolute; clip:rect(0 0 0 0); width:1px; height:1px; margin:-1px; overflow:hidden}
   .btn.danger{border-color:#fecaca; color:#b91c1c; background:var(--btn-bg)}
   .btn.danger:hover{background:rgba(254,226,226,0.35)}
   .btn:disabled{opacity:.6; cursor:not-allowed}
+  .btn.armed{border-color:#f87171; color:#b91c1c; box-shadow:0 10px 24px rgba(248,113,113,0.25)}
 
-  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.6; flex-shrink:0; filter:drop-shadow(0 2px 4px rgba(15,23,42,0.08))}
+  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; flex-shrink:0; filter:drop-shadow(0 2px 4px rgba(15,23,42,0.08))}
   .btn.primary .btn-ico{stroke:#fff}
   .btn .btn-text{display:inline}
 
@@ -85,19 +88,29 @@
   .panel .pad{padding:16px}
   .panel .scroll{overflow:auto; padding:0 16px 16px}
 
-  .section{padding:16px 0; border-top:1px solid var(--border)}
+  .section{padding:20px 0; border-top:1px solid var(--border)}
   .section:first-child{border-top:none}
   .section-title{display:flex; align-items:center; gap:10px; font-weight:700; margin:0 0 10px 0; text-align:left}
   .badge{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; font-size:13px; box-shadow:var(--shadow)}
+  .mockup-master{position:relative; overflow:hidden}
+  .mockup-master .comingSoon{position:absolute; inset:0; background:rgba(15,23,42,0.28); backdrop-filter:blur(14px); display:flex; align-items:center; justify-content:center; padding:20px; text-align:center; color:var(--ink); font-weight:600; gap:10px; pointer-events:auto; border-radius:var(--radius)}
+  .mockup-master .comingSoon .inner{display:flex; align-items:center; gap:10px; pointer-events:none}
+  .mockup-master .comingSoon svg{width:20px; height:20px; stroke:currentColor; stroke-width:1.8; fill:none}
+  .mockup-master .comingSoon strong{display:block; font-size:14px}
+  .mockup-master .comingSoon span{display:block; font-size:12px; color:var(--muted)}
 
-  .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-  .urlUpload{display:flex; gap:10px; align-items:stretch; width:100%; flex:1 1 280px;}
+  .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+  .stack{display:grid; gap:18px; text-align:left}
+  .stack.tight{gap:10px}
+  .uploadGrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; width:100%}
+  .uploadGrid .btn,.uploadGrid .urlUpload{width:100%}
+  .uploadGrid .btn{justify-content:flex-start}
+  .urlUpload{display:flex; gap:10px; align-items:stretch; width:100%; flex:1 1 auto;}
   .urlUpload .urlField{flex:1; display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:14px; background:var(--stageInner); box-shadow:inset 0 1px 2px rgba(15,23,42,0.08); transition:background .2s ease, border-color .2s ease}
   .urlUpload .urlField svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8; flex-shrink:0}
   .urlUpload .urlField input{flex:1; border:none; outline:none; background:transparent; color:var(--ink); font-size:13px}
   .urlUpload .urlField input::placeholder{color:var(--muted)}
   .urlUpload button{display:inline-flex; align-items:center; justify-content:center; white-space:nowrap; height:100%}
-  .stack{display:grid; gap:10px; text-align:left}
   #formatRow{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
   @media (max-width: 720px){
     #formatRow{grid-template-columns:1fr}
@@ -105,7 +118,7 @@
   .formatCard{position:relative; border:1px solid var(--border); border-radius:20px; padding:20px; background:var(--chip-bg); text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
   .formatCard.wide{grid-column:span 2}
   @media (max-width: 720px){ .formatCard.wide{grid-column:auto} }
-  .formatCard .formatIcon{width:52px; height:52px; border-radius:18px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(59,130,246,0.22),rgba(99,102,241,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.35)}
+  .formatCard .formatIcon{width:52px; height:52px; border-radius:14px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(59,130,246,0.22),rgba(99,102,241,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.35)}
   .formatCard .formatIcon svg{width:34px; height:auto}
   .formatCard .formatInfo{display:grid; gap:4px}
   .formatCard .formatTitle{font-size:15px; font-weight:700; line-height:1.3}
@@ -120,15 +133,30 @@
   .chip .meta{font-size:12px; color:var(--muted)}
   .chip .chipInner{display:flex; align-items:center; gap:10px}
 
-  .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:10; ry:10}
+  .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:4; ry:4}
 
   .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);}
-  .preview-head{display:flex; align-items:center; justify-content:space-between; padding:16px}
+  .preview-head{display:flex; align-items:center; justify-content:space-between; padding:16px; flex-wrap:wrap; gap:16px}
+  .thumbCarouselWrap{display:flex; flex-direction:column; gap:8px; flex:1 1 60%}
+  .thumbCarouselWrap .muted{font-size:12px; letter-spacing:0.02em; text-transform:uppercase; font-weight:600}
+  .thumbScroller{display:flex; gap:10px; overflow-x:auto; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:var(--stageInner); box-shadow:inset 0 1px 2px rgba(15,23,42,0.08)}
+  .thumbScroller::-webkit-scrollbar{height:6px}
+  .thumbScroller::-webkit-scrollbar-thumb{background:rgba(148,163,184,0.35); border-radius:999px}
+  .thumbItem{position:relative; flex:0 0 auto; border:none; background:var(--chip-bg); border-radius:12px; box-shadow:0 4px 12px rgba(15,23,42,0.08); display:grid; place-items:center; padding:6px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+  .thumbItem:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .thumbItem img{width:56px; height:56px; object-fit:cover; border-radius:10px}
+  .thumbItem .thumbNum{position:absolute; top:6px; left:6px; background:rgba(15,23,42,0.72); color:#fff; font-size:11px; font-weight:600; border-radius:999px; padding:2px 6px; box-shadow:0 6px 14px rgba(2,6,23,0.25)}
+  .thumbItem.active{transform:translateY(-2px); box-shadow:0 12px 26px rgba(14,165,233,0.26); border:1px solid rgba(14,165,233,0.5)}
+  .preview-head .row{gap:10px}
   .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .25s ease, border-color .2s ease}
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .dropOverlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; color:var(--brand2); background:rgba(14,165,233,0.14); backdrop-filter:blur(18px); opacity:0; transition:opacity .2s ease; pointer-events:none; text-align:center; padding:24px; z-index:20}
   .stage-inner.drag-over .dropOverlay{opacity:1}
+  .global-drop-overlay{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:700; color:var(--brand2); background:rgba(14,165,233,0.16); backdrop-filter:blur(20px); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:110; text-align:center; padding:24px}
+  .global-drop-overlay.show{opacity:1; pointer-events:auto}
+
+  .versionTag{position:fixed; left:28px; bottom:28px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.85); font-weight:600; z-index:80}
 
   .fileBadge{position:absolute; top:10px; left:10px; z-index:6; max-width:calc(100% - 20px)}
 
@@ -137,20 +165,21 @@
   .image-layer img{display:block; user-select:none; pointer-events:none}
 
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
+  .resize-handle{position:absolute; width:16px; height:16px; border-radius:50%; background:var(--card); border:2px solid rgba(148,163,184,0.6); box-shadow:0 6px 14px rgba(2,6,23,0.2); display:none; z-index:18}
+  .resize-handle::after{content:''; position:absolute; inset:3px; border-radius:50%; background:rgba(148,163,184,0.55)}
+  .resize-handle[data-dir="nw"], .resize-handle[data-dir="se"]{cursor:nwse-resize}
+  .resize-handle[data-dir="ne"], .resize-handle[data-dir="sw"]{cursor:nesw-resize}
+  .resize-active{user-select:none}
 
-  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:8px 8px 0 0; overflow:hidden;}
-  .frostBg{position:absolute; inset:0; background:radial-gradient(320% 340% at 80% 140%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.06) 100%), rgba(255,255,255,0.16); box-shadow:0 0.62px 0 0 rgba(255,255,255,0.12) inset; backdrop-filter:blur(18px) saturate(1.06)}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.28),rgba(255,255,255,0.08)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.12)}
+  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden;}
+  .frostBg{position:absolute; inset:0; background:linear-gradient(90deg, rgba(248,250,252,0.95), rgba(241,245,249,0.85)); filter:saturate(1.05)}
+  .veil{position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,255,255,0.32),rgba(248,250,252,0.1)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.12)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
 
   .playWrap{position:absolute; display:none; pointer-events:none}
-  .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(32px); background:
-    linear-gradient(135deg, rgba(15,23,42,0.65), rgba(2,6,23,0.4)),
-    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.28), transparent 55%);
-    box-shadow:inset 0 1px 2px rgba(255,255,255,0.2), 0 10px 30px rgba(2,6,23,0.25);
-  }
+  .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; background:rgba(0,0,0,0.40); backdrop-filter:blur(6.2037px); box-shadow:inset 0 1px 2px rgba(255,255,255,0.12), 0 10px 30px rgba(2,6,23,0.28);}
   .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
   .playTri svg{width:54%; max-width:72px; height:auto}
 
@@ -163,7 +192,7 @@
   .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:var(--chip-bg); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); white-space:nowrap; transition:background .2s ease, border-color .2s ease}
   .chipInfo.flexible{max-width:none; white-space:normal; word-break:break-word; flex-wrap:wrap; align-items:flex-start}
 
-  .libWrap{display:grid; gap:8px}
+  .libWrap{display:grid; gap:12px}
   .libScroller{display:flex; gap:10px; overflow-x:auto; padding:8px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); transition:background .2s ease, border-color .2s ease}
   .libItem{flex:0 0 auto; display:grid; gap:6px; justify-items:center; padding:8px 10px; border:1px solid var(--border); border-radius:12px; background:var(--chip-bg); box-shadow:0 1px 6px rgba(2,6,23,.04); cursor:pointer; transition:background .2s ease, border-color .2s ease, box-shadow .2s ease}
   .libItem img{height:18px; width:auto; object-fit:contain}
@@ -181,16 +210,16 @@
   .bar > span{display:block; height:100%; width:0%; background:linear-gradient(135deg,var(--brand),var(--brand2)); border-radius:999px; transition:width .2s}
 
   .foot-note{font-size:11px; color:var(--muted); padding:10px 16px; text-align:center}
-  .adjust-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
-  .adjust-card{background:var(--chip-bg); border:1px solid var(--border); border-radius:14px; padding:12px 14px; box-shadow:0 6px 16px rgba(15,23,42,0.06); display:grid; gap:6px; transition:background .2s ease, border-color .2s ease}
-  .adjust-card label{font-size:13px; color:var(--muted); font-weight:600}
+  .adjust-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px}
+  .adjust-card{background:var(--chip-bg); border:1px solid var(--border); border-radius:14px; padding:14px 16px; box-shadow:0 6px 16px rgba(15,23,42,0.06); display:grid; gap:8px; transition:background .2s ease, border-color .2s ease}
+  .adjust-card label{font-size:13px; color:var(--muted); font-weight:600; letter-spacing:.01em}
   .adjust-card .value{font-size:18px; font-weight:700; color:var(--ink)}
-  .adjust-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
-  .adjust-actions .btn{flex:1 1 120px; justify-content:center}
-  .adjust-coords{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-top:12px}
+  .adjust-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:10px}
+  .adjust-actions .btn{flex:1 1 140px; justify-content:center}
+  .adjust-coords{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-top:14px}
   .adjust-rot-label{display:flex; align-items:center; padding:10px 12px; color:var(--muted); font-weight:600}
-  .exportActions{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
-  .exportMeta{margin-top:10px; display:flex; width:100%; justify-content:space-between}
+  .exportActions{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px}
+  .exportMeta{margin-top:12px; display:flex; width:100%; justify-content:space-between}
 
   :root[data-theme="dark"] .logo{box-shadow:0 6px 18px rgba(14,165,233,0.25)}
   :root[data-theme="dark"] .formatCard{box-shadow:0 18px 36px rgba(2,6,23,0.45)}
@@ -206,6 +235,14 @@
   :root[data-theme="dark"] .veil{box-shadow:inset 0 2px 6px rgba(2,6,23,0.5)}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
   :root[data-theme="dark"] input[type="search"], :root[data-theme="dark"] select{border-color:rgba(148,163,184,0.45)}
+  :root[data-theme="dark"] #themeToggle{background:linear-gradient(135deg,rgba(15,23,42,0.92),rgba(30,41,59,0.82)); border-color:rgba(71,85,105,0.55); box-shadow:0 12px 28px rgba(2,6,23,0.6)}
+  :root[data-theme="dark"] .thumbScroller{background:rgba(15,23,42,0.75); border-color:rgba(71,85,105,0.45)}
+  :root[data-theme="dark"] .thumbItem{background:rgba(30,41,59,0.92); box-shadow:0 10px 24px rgba(2,6,23,0.55)}
+  :root[data-theme="dark"] .thumbItem .thumbNum{background:rgba(15,23,42,0.88)}
+  :root[data-theme="dark"] .global-drop-overlay{background:rgba(15,23,42,0.55); color:var(--brand)}
+  :root[data-theme="dark"] .versionTag{color:rgba(148,163,184,0.72)}
+  :root[data-theme="dark"] .mockup-master .comingSoon{background:rgba(15,23,42,0.6); color:rgba(226,232,240,0.92)}
+  :root[data-theme="dark"] .btn.armed{border-color:rgba(248,113,113,0.55); color:#fecaca; box-shadow:0 12px 26px rgba(248,113,113,0.28)}
 </style>
 </head>
 <body>
@@ -221,7 +258,7 @@
       <div class="right-head">
         <div class="team">LiveOps Team</div>
         <div class="by">made by <a href="https://www.pratov.site" target="_blank" rel="noopener">Beka Pratov</a></div>
-        <button class="btn small ghost" type="button" id="themeToggle" aria-pressed="false">
+        <button class="btn circle ghost" type="button" id="themeToggle" aria-pressed="false">
           <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
             <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z"></path>
           </svg>
@@ -243,20 +280,20 @@
         <!-- Step 1: Upload -->
         <div class="section">
           <div class="section-title"><span class="badge">1</span> Upload image(s)</div>
-          <div class="row">
+          <div class="uploadGrid">
             <label class="btn primary" title="Upload image">
               <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 19V7"></path>
-                <path d="M7.5 11l4.5-4.5L16.5 11"></path>
-                <path d="M5 19h14"></path>
+                <path d="M12 18.75V8.6"></path>
+                <path d="M7.6 12.6 12 8.2l4.4 4.4"></path>
+                <path d="M4.75 18.75h14.5"></path>
               </svg>
               <span class="btn-text">Upload image</span>
               <input id="file" type="file" accept="image/*" style="display:none" />
             </label>
             <label class="btn ghost" title="Upload folder">
               <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3.5 6.5h5l2 2h10.5"></path>
-                <path d="M20.5 8.5v9a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2h3"></path>
+                <path d="M4.4 6.5h4.5c.4 0 .8.16 1.1.44l1.2 1.12c.3.28.7.44 1.1.44h7.1c1 0 1.8.8 1.8 1.8v7.6c0 1-.8 1.8-1.8 1.8H6.2c-1 0-1.8-.8-1.8-1.8V8.3c0-1 .8-1.8 1.8-1.8Z"></path>
+                <path d="M3.8 10.8h16.4"></path>
               </svg>
               <span class="btn-text">Upload folder</span>
               <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
@@ -264,36 +301,44 @@
             <div class="urlUpload">
               <div class="urlField">
                 <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M10.5 13.5L8 16a4 4 0 0 0 0 5.66 4 4 0 0 0 5.66 0L17 17.34"></path>
-                  <path d="M13.5 10.5L16 8a4 4 0 0 0 0-5.66 4 4 0 0 0-5.66 0L7 6.66"></path>
-                  <path d="M8.5 15.5l7-7"></path>
+                  <path d="M9.1 15.1 7 17.2a3.4 3.4 0 0 0 0 4.8 3.4 3.4 0 0 0 4.8 0l2.1-2.1"></path>
+                  <path d="M14.9 8.9 17 6.8a3.4 3.4 0 0 0 0-4.8 3.4 3.4 0 0 0-4.8 0L10.1 4"></path>
+                  <path d="M9.6 14.4 14.4 9.6"></path>
                 </svg>
                 <input id="urlInput" type="url" placeholder="Paste image URL" autocomplete="off" spellcheck="false" />
               </div>
               <button class="btn ghost" type="button" id="urlImport">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 17l8 5 8-5"></path>
-                  <path d="M12 3v19"></path>
+                  <path d="M5.5 17.4 12 21l6.5-3.6"></path>
+                  <path d="M12 3v15"></path>
                 </svg>
                 <span class="btn-text">Import URL</span>
               </button>
             </div>
-            <!-- filename chip removed from here -->
             <button class="btn ghost" id="reset">
               <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 12a6 6 0 1 1 6 6"></path>
-                <path d="M16 4v4h4"></path>
-                <path d="M8 20v-4H4"></path>
+                <path d="M7 7.8a7 7 0 1 1-.9 6.6"></path>
+                <path d="M6.1 4.5v3.8H9.9"></path>
               </svg>
               <span class="btn-text">Reset current</span>
             </button>
+            <button class="btn ghost" id="deleteAllBtn" title="Delete all images">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 6.5h14"></path>
+                <path d="M7 6.5v-.9A1.6 1.6 0 0 1 8.6 4h6.8A1.6 1.6 0 0 1 17 5.6v.9"></path>
+                <path d="M7.5 10.5v8.2"></path>
+                <path d="M12 10.5v8.2"></path>
+                <path d="M16.5 10.5v8.2"></path>
+              </svg>
+              <span class="btn-text">Delete all</span>
+            </button>
             <button class="btn danger" id="deleteBtn" title="Delete image(s)">
               <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 7h12"></path>
-                <path d="M10 4h4l.5 2h-5z"></path>
-                <rect x="7" y="7" width="10" height="13" rx="1.5"></rect>
-                <path d="M10 11v6"></path>
-                <path d="M14 11v6"></path>
+                <path d="M5.2 6.6h13.6"></path>
+                <path d="M9.4 4.5h5.2a1.4 1.4 0 0 1 1.3.9l.5 1.2"></path>
+                <path d="M7.4 9.5v8.1a2 2 0 0 0 2 2h5.2a2 2 0 0 0 2-2V9.5"></path>
+                <path d="M9.6 11.8v5"></path>
+                <path d="M14.4 11.8v5"></path>
               </svg>
               <span class="btn-text">Delete</span>
             </button>
@@ -490,6 +535,24 @@
           </div>
         </div>
 
+        <div class="section mockup-master">
+          <div class="section-title"><span class="badge">4d</span> Mockup Master</div>
+          <div class="stack tight">
+            <label class="switch"><input type="checkbox" disabled><span class="tgl"><span class="knob"></span></span><span class="lbl">Shadow sculpting</span></label>
+            <label class="switch"><input type="checkbox" disabled><span class="tgl"><span class="knob"></span></span><span class="lbl">Perspective wrap</span></label>
+            <label class="switch"><input type="checkbox" disabled><span class="tgl"><span class="knob"></span></span><span class="lbl">Ambient occlusion boost</span></label>
+          </div>
+          <div class="comingSoon">
+            <div class="inner">
+              <svg viewBox="0 0 24 24" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2 2 2 0 0 0-2 2v3a2 2 0 0 0 2 2Z"></path><path d="M17 9V7a5 5 0 1 0-10 0v2"></path><path d="M5 11h14v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-8Z"></path></svg>
+              <div>
+                <strong>Coming soon</strong>
+                <span>Check updates on Slack channel.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Step 5: Export -->
         <div class="section">
           <div class="section-title"><span class="badge">5</span> Export</div>
@@ -520,9 +583,9 @@
     <!-- Right: PREVIEW -->
     <section class="panel preview-panel">
       <div class="preview-head">
-        <div class="row" style="gap:8px">
-          <button class="btn icon" id="prevBtn" title="Previous"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <button class="btn icon" id="nextBtn" title="Next"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="thumbCarouselWrap">
+          <div class="muted">Uploaded images</div>
+          <div class="thumbScroller" id="thumbScroller" aria-label="Uploaded images"></div>
           <div class="chipInfo" id="batchLabel">0 / 0</div>
         </div>
         <div class="row" style="gap:12px">
@@ -539,6 +602,10 @@
             <img id="img" alt="uploaded" />
           </div>
           <div class="frame" id="frame"></div>
+          <div class="resize-handle" data-dir="nw" id="resizeNW"></div>
+          <div class="resize-handle" data-dir="ne" id="resizeNE"></div>
+          <div class="resize-handle" data-dir="sw" id="resizeSW"></div>
+          <div class="resize-handle" data-dir="se" id="resizeSE"></div>
 
           <div class="frostBar" id="frostBar">
             <div class="frostBg" id="frostBg"></div>
@@ -567,6 +634,9 @@
       <div class="foot-note">Frosted bar and play badge use a gradient-based mimic for export; preview shows live blur.</div>
     </section>
   </main>
+
+  <div class="global-drop-overlay" id="globalDropOverlay">Drop images anywhere to upload</div>
+  <div class="versionTag">version 6.18</div>
 
   <div class="loading" id="loading">
     <div class="card">
@@ -618,6 +688,11 @@
     {name:'Zocdoc', url:'https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png'}
   ];
 
+  const ICON_PATHS = {
+    sun: 'M12 4.5a7.5 7.5 0 1 1 0 15 7.5 7.5 0 0 1 0-15Zm0-3v2.6M12 19.9v2.6M4.2 12H1.6M22.4 12H19.8M5.64 5.64 3.9 3.9M20.1 20.1l-1.74-1.74M20.1 3.9l-1.74 1.74M5.64 18.36 3.9 20.1',
+    moon: 'M17.4 4.8a8.2 8.2 0 1 1-9.6 9.6 6.4 6.4 0 1 0 9.6-9.6Z'
+  };
+
   const els = {
     header: document.getElementById('appHeader'),
     themeToggle: document.getElementById('themeToggle'),
@@ -627,6 +702,7 @@
     urlImport: document.getElementById('urlImport'),
     reset: document.getElementById('reset'),
     deleteBtn: document.getElementById('deleteBtn'),
+    deleteAllBtn: document.getElementById('deleteAllBtn'),
 
     formatRow: document.getElementById('formatRow'),
     vertSizeRow: document.getElementById('vertSizeRow'), vertSizeSeg: document.getElementById('vertSizeSeg'),
@@ -639,11 +715,13 @@
     moveX: document.getElementById('moveX'), xVal: document.getElementById('xVal'),
     moveY: document.getElementById('moveY'), yVal: document.getElementById('yVal'),
     previewZoom: document.getElementById('previewZoom'), zoomLabel: document.getElementById('zoomLabel'),
+    thumbScroller: document.getElementById('thumbScroller'),
     exportBtn: document.getElementById('exportBtn'), exportAllBtn: document.getElementById('exportAllBtn'),
     outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
     batchMeta: document.getElementById('batchMeta'), batchLabel: document.getElementById('batchLabel'),
 
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
+    globalDropOverlay: document.getElementById('globalDropOverlay'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
     frame: document.getElementById('frame'),
     fileNameTop: document.getElementById('fileNameTop'),
@@ -682,10 +760,12 @@
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
-    prevBtn: document.getElementById('prevBtn'), nextBtn: document.getElementById('nextBtn'),
-
     loading: document.getElementById('loading'), loadingText: document.getElementById('loadingText'), loadingBar: document.getElementById('loadingBar'), loadingTitle: document.getElementById('loadingTitle'),
-  };
+    resizeNW: document.getElementById('resizeNW'),
+    resizeNE: document.getElementById('resizeNE'),
+    resizeSW: document.getElementById('resizeSW'),
+    resizeSE: document.getElementById('resizeSE'),
+    };
 
   const SIZE_MAP = { S:23, M:30, L:53 };
   const SIZE_MAP_SQ = { S:35, M:55, L:75 };
@@ -703,7 +783,7 @@
     offset: {x:0,y:0},
     coverScale: 1, imgZoom: 1,
     limits: {x:0,y:0,imgW:0,imgH:0},
-    previewZoom: 1, dragging: null,
+    previewZoom: 1, dragging: null, resizing: null,
 
     frost: {
       enabled: true,
@@ -717,6 +797,9 @@
     squareLogo: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
     vertLogo:   { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
   };
+
+  let deleteAllArmed = false;
+  let deleteAllTimer = null;
 
   function syncHeaderHeight(){
     const h = els.header.offsetHeight || 64;
@@ -734,11 +817,7 @@
       if(label) label.textContent = next === 'dark' ? 'Light mode' : 'Dark mode';
       const iconPath = els.themeToggle.querySelector('path');
       if(iconPath){
-        if(next === 'dark'){
-          iconPath.setAttribute('d', 'M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M16.24 7.76l1.42-1.42 M6.34 17.66l1.42-1.42 M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z');
-        } else {
-          iconPath.setAttribute('d', 'M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z');
-        }
+        iconPath.setAttribute('d', next === 'dark' ? ICON_PATHS.sun : ICON_PATHS.moon);
       }
     }
     try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
@@ -927,6 +1006,27 @@
     const frameLeftPx = (els.stage.clientWidth - fwPx)/2;
     const frameTopPx = (els.stage.clientHeight - fhPx)/2;
 
+    const handleHalf = 8;
+    const handles = [els.resizeNW, els.resizeNE, els.resizeSW, els.resizeSE];
+    if(state.imageSrc){
+      const positions = [
+        [els.resizeNW, frameLeftPx - handleHalf, frameTopPx - handleHalf],
+        [els.resizeNE, frameLeftPx + fwPx - handleHalf, frameTopPx - handleHalf],
+        [els.resizeSW, frameLeftPx - handleHalf, frameTopPx + fhPx - handleHalf],
+        [els.resizeSE, frameLeftPx + fwPx - handleHalf, frameTopPx + fhPx - handleHalf]
+      ];
+      positions.forEach(([handle, left, top])=>{
+        if(!handle) return;
+        handle.style.display = 'block';
+        handle.style.left = `${left}px`;
+        handle.style.top = `${top}px`;
+      });
+    } else {
+      handles.forEach(handle=>{ if(handle) handle.style.display='none'; });
+    }
+
+    if(els.frostBg){ els.frostBg.style.backgroundImage = ''; }
+
     if(state.format.key==='HORIZ'){
       const scaleYPrev = (state.format.hPreview/635) * state.previewZoom;
       const barHPrevPx = state.frost.barHExp * scaleYPrev;
@@ -935,6 +1035,21 @@
       els.logoDockPrev.style.paddingRight = (state.frost.padRightExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
       els.logoDockPrev.style.gap = (state.frost.gapExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
       els.frostVeil.style.opacity = state.frost.overlayAlpha;
+
+      const nativeBarH = Math.max(8, Math.round(state.frost.barHExp * (state.format.hPreview/635)));
+      const shouldRenderBar = state.frostBar.style.display !== 'none';
+      if(shouldRenderBar && state.imageSrc){
+        const baseCanvas = buildBaseCanvasSync(state.format.wPreview, state.format.hPreview);
+        if(baseCanvas){
+          const frostTexture = buildFrostTexture(baseCanvas.getContext('2d'), baseCanvas.width, baseCanvas.height, nativeBarH);
+          if(frostTexture){
+            const url = frostTexture.toDataURL('image/png');
+            els.frostBg.style.backgroundImage = `url(${url})`;
+            els.frostBg.style.backgroundSize = 'cover';
+            els.frostBg.style.backgroundPosition = 'center';
+          }
+        }
+      }
 
       const h1 = SIZE_MAP[state.frost.logo1.sizeKey] * scaleYPrev;
       const h2 = SIZE_MAP[state.frost.logo2.sizeKey] * scaleYPrev;
@@ -1006,7 +1121,10 @@
       }
     }
     if(shouldShow) hideLoading();
-    if(added>0){ loadImageAt(state.images.length - added); }
+    if(added>0){
+      refreshCarousel();
+      loadImageAt(state.images.length - added);
+    }
     return added;
   }
 
@@ -1025,7 +1143,7 @@
       try{ fileName = decodeURIComponent((new URL(url)).pathname.split('/').pop() || 'remote_image'); }catch(err){ fileName = 'remote_image'; }
       await new Promise((resolve, reject)=>{
         const im = new Image();
-        im.onload = ()=>{ pushImage(objectURL, fileName, {w:im.width, h:im.height}); loadImageAt(state.images.length-1); resolve(); };
+        im.onload = ()=>{ pushImage(objectURL, fileName, {w:im.width, h:im.height}); refreshCarousel(); loadImageAt(state.images.length-1); resolve(); };
         im.onerror = (err)=>{ reject(err); };
         im.src = objectURL;
       });
@@ -1063,6 +1181,7 @@
     if(!hasFileType(e.dataTransfer)) return;
     dragDepth++;
     els.stage.classList.add('drag-over');
+    els.globalDropOverlay?.classList.add('show');
     e.preventDefault();
   });
   window.addEventListener('dragover', (e)=>{
@@ -1073,18 +1192,22 @@
   window.addEventListener('dragleave', (e)=>{
     if(!hasFileType(e.dataTransfer)) return;
     dragDepth = Math.max(0, dragDepth-1);
-    if(dragDepth===0){ els.stage.classList.remove('drag-over'); }
+    if(dragDepth===0){
+      els.stage.classList.remove('drag-over');
+      els.globalDropOverlay?.classList.remove('show');
+    }
   });
   window.addEventListener('drop', async (e)=>{
     if(!hasFileType(e.dataTransfer)) return;
     e.preventDefault();
     dragDepth = 0;
     els.stage.classList.remove('drag-over');
+    els.globalDropOverlay?.classList.remove('show');
     const files = e.dataTransfer.files;
     if(files && files.length){ await addFilesFromList(files, { showProgress:true, label:'Importing dropped images…' }); }
   });
   els.stage.addEventListener('dragover', (e)=>{ if(hasFileType(e.dataTransfer)){ e.preventDefault(); } });
-  window.addEventListener('dragend', ()=>{ dragDepth = 0; els.stage.classList.remove('drag-over'); });
+  window.addEventListener('dragend', ()=>{ dragDepth = 0; els.stage.classList.remove('drag-over'); els.globalDropOverlay?.classList.remove('show'); });
 
   // ---------- Delete / Reset ----------
   els.reset.addEventListener('click', ()=>{
@@ -1098,20 +1221,115 @@
     computeCover(); render(); updateControls(); serializeCurrent();
   });
 
+  function resetDeleteAllPrompt(){
+    deleteAllArmed = false;
+    if(deleteAllTimer){ clearTimeout(deleteAllTimer); deleteAllTimer = null; }
+    if(els.deleteAllBtn){
+      els.deleteAllBtn.classList.remove('armed');
+      const label = els.deleteAllBtn.querySelector('.btn-text');
+      if(label) label.textContent = 'Delete all';
+    }
+  }
+
+  function performDeleteAll(){
+    const removed = state.images.splice(0, state.images.length);
+    removed.forEach(it=>{
+      try{ if(it && it.src && it.src.startsWith('blob:')) URL.revokeObjectURL(it.src); }catch(e){}
+    });
+    state.current = -1;
+    state.imageSrc = null;
+    state.natural = {w:0, h:0};
+    els.img.removeAttribute('src');
+    computeCover(); render(); updateControls();
+    els.batchMeta.textContent = '0 / 0';
+    els.batchLabel.textContent = '0 / 0';
+    refreshCarousel();
+    setActiveThumb();
+  }
+
   els.deleteBtn.addEventListener('click', ()=>{
     if(state.current<0) return;
+    resetDeleteAllPrompt();
     const removed = state.images.splice(state.current,1)[0];
     try{ if(removed && removed.src && removed.src.startsWith('blob:')) URL.revokeObjectURL(removed.src); }catch(e){}
+    refreshCarousel();
     if(state.images.length===0){
       state.current=-1; state.imageSrc=null; state.natural={w:0,h:0};
       els.img.removeAttribute('src'); computeCover(); render(); updateControls();
       els.batchMeta.textContent = '0 / 0';
       els.batchLabel.textContent = '0 / 0';
+      setActiveThumb();
       return;
     }
     const next = Math.min(state.current, state.images.length-1);
     loadImageAt(next);
   });
+
+  if(els.deleteAllBtn){
+    els.deleteAllBtn.addEventListener('click', ()=>{
+      if(state.images.length===0){ resetDeleteAllPrompt(); return; }
+      if(!deleteAllArmed){
+        deleteAllArmed = true;
+        els.deleteAllBtn.classList.add('armed');
+        const label = els.deleteAllBtn.querySelector('.btn-text');
+        if(label) label.textContent = 'Confirm delete all';
+        if(deleteAllTimer) clearTimeout(deleteAllTimer);
+        deleteAllTimer = setTimeout(()=>resetDeleteAllPrompt(), 3200);
+      } else {
+        resetDeleteAllPrompt();
+        performDeleteAll();
+      }
+    });
+  }
+
+  function refreshCarousel(){
+    if(!els.thumbScroller) return;
+    els.thumbScroller.innerHTML = '';
+    if(state.images.length===0){
+      const placeholder = document.createElement('div');
+      placeholder.className = 'muted';
+      placeholder.textContent = 'Upload images to begin';
+      placeholder.style.padding = '6px 0';
+      els.thumbScroller.appendChild(placeholder);
+      return;
+    }
+    state.images.forEach((item, idx)=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'thumbItem';
+      btn.dataset.idx = String(idx);
+      const thumb = document.createElement('img');
+      thumb.src = item.src;
+      thumb.alt = item.name || `Upload ${idx+1}`;
+      btn.appendChild(thumb);
+      const badge = document.createElement('span');
+      badge.className = 'thumbNum';
+      badge.textContent = String(idx+1);
+      btn.appendChild(badge);
+      if(idx === state.current) btn.classList.add('active');
+      btn.addEventListener('click', ()=>{
+        if(state.current === idx) return;
+        serializeCurrent();
+        loadImageAt(idx);
+      });
+      els.thumbScroller.appendChild(btn);
+    });
+  }
+
+  function setActiveThumb(){
+    if(!els.thumbScroller) return;
+    const items = els.thumbScroller.querySelectorAll('.thumbItem');
+    items.forEach(btn=>{
+      const idx = Number(btn.dataset.idx);
+      btn.classList.toggle('active', idx === state.current);
+    });
+    if(state.current>=0){
+      const active = els.thumbScroller.querySelector('.thumbItem.active');
+      if(active && typeof active.scrollIntoView === 'function'){
+        active.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
+      }
+    }
+  }
 
   // ---------- Batch helpers ----------
   function pushImage(src, name, natural){
@@ -1149,16 +1367,8 @@
     els.batchMeta.textContent = text;
     els.batchLabel.textContent = text;
     computeCover(); fitPreviewZoomToStage(); render(); updateControls();
+    setActiveThumb();
   }
-  function goto(delta){
-    if(state.images.length===0) return;
-    serializeCurrent();
-    let n = (state.current + delta + state.images.length) % state.images.length;
-    loadImageAt(n);
-  }
-  els.prevBtn.addEventListener('click', ()=>goto(-1));
-  els.nextBtn.addEventListener('click', ()=>goto(1));
-
   // ---------- Controls ----------
   els.brightness.addEventListener('input', e=>{ state.brightness = +e.target.value; els.bVal.textContent = state.brightness; render(); serializeCurrent(); });
   els.saturation.addEventListener('input', e=>{ state.saturation = +e.target.value; els.sVal.textContent = state.saturation; render(); serializeCurrent(); });
@@ -1170,6 +1380,25 @@
   els.moveX.addEventListener('input', e=>{ state.offset.x = +e.target.value; els.xVal.textContent = Math.round(state.offset.x); render(); serializeCurrent(); });
   els.moveY.addEventListener('input', e=>{ state.offset.y = +e.target.value; els.yVal.textContent = Math.round(state.offset.y); render(); serializeCurrent(); });
   els.previewZoom.addEventListener('input', e=>{ state.previewZoom = +e.target.value; els.zoomLabel.textContent = state.previewZoom.toFixed(2); render(); });
+
+  function adjustPreviewZoomFromWheel(deltaY, isCtrl){
+    const step = isCtrl ? 0.06 : 0.12;
+    const next = Math.max(0.5, Math.min(3, +(state.previewZoom + (deltaY > 0 ? -step : step)).toFixed(2)));
+    if(next !== state.previewZoom){
+      state.previewZoom = next;
+      els.previewZoom.value = state.previewZoom;
+      els.zoomLabel.textContent = state.previewZoom.toFixed(2);
+      render();
+    }
+  }
+
+  els.stage.addEventListener('wheel', (e)=>{
+    if(!state.imageSrc) return;
+    if(e.ctrlKey || Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+      e.preventDefault();
+      adjustPreviewZoomFromWheel(e.deltaY, e.ctrlKey);
+    }
+  }, { passive:false });
 
   els.toggleFrost.addEventListener('change', ()=>{ state.frost.enabled = els.toggleFrost.checked; updateControls(); render(); });
   els.togglePlay.addEventListener('change', ()=>{ state.play.enabled = els.togglePlay.checked; updateControls(); render(); });
@@ -1252,6 +1481,129 @@
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     return canvas;
   }
+
+  function buildBaseCanvasSync(width, height){
+    if(!state.imageSrc || !els.img || !els.img.complete) return null;
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(width));
+    canvas.height = Math.max(1, Math.round(height));
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.filter = `brightness(${(state.brightness/100).toFixed(3)}) saturate(${(state.saturation/100).toFixed(3)}) contrast(${(state.contrast/100).toFixed(3)})`;
+    const eff = effectiveDims();
+    const w = eff.w, h = eff.h;
+    if(!w || !h) return canvas;
+    const scaleCover = Math.max(canvas.width / w, canvas.height / h);
+    const scale = scaleCover * state.imgZoom;
+    const imgW = (state.rotation%180===0 ? state.natural.w : state.natural.h) * scale;
+    const imgH = (state.rotation%180===0 ? state.natural.h : state.natural.w) * scale;
+    const limX = (imgW - canvas.width)/2;
+    const limY = (imgH - canvas.height)/2;
+    const ratioX = state.limits.x ? (state.offset.x / state.limits.x) : 0;
+    const ratioY = state.limits.y ? (state.offset.y / state.limits.y) : 0;
+    const dx = -imgW/2 + ratioX * limX;
+    const dy = -imgH/2 + ratioY * limY;
+    ctx.save();
+    ctx.translate(canvas.width/2, canvas.height/2);
+    ctx.rotate(state.rotation * Math.PI/180);
+    ctx.scale(state.flipH ? -1 : 1, state.flipV ? -1 : 1);
+    ctx.drawImage(els.img, dx, dy, imgW, imgH);
+    ctx.restore();
+    return canvas;
+  }
+
+  async function buildBaseCanvas(width, height){
+    if(!state.imageSrc) return null;
+    if(els.img && !els.img.complete){
+      await new Promise(resolve => {
+        const original = els.img.onload;
+        els.img.onload = ()=>{
+          if(typeof original === 'function') original();
+          els.img.onload = original;
+          resolve();
+        };
+      });
+    }
+    return buildBaseCanvasSync(width, height);
+  }
+
+  function averageSegment(data, width, height, x0, x1){
+    const startX = Math.max(0, Math.min(width-1, Math.floor(x0)));
+    const endX = Math.max(startX+1, Math.min(width, Math.ceil(x1)));
+    let r=0, g=0, b=0, count=0;
+    for(let y=0; y<height; y++){
+      const row = y * width;
+      for(let x=startX; x<endX; x++){
+        const idx = (row + x) * 4;
+        r += data[idx];
+        g += data[idx+1];
+        b += data[idx+2];
+        count++;
+      }
+    }
+    if(count===0) return {r:236, g:242, b:248};
+    return { r: r/count, g: g/count, b: b/count };
+  }
+
+  function buildFrostTexture(baseCtx, width, height, barH){
+    if(!baseCtx || !barH || barH <= 0) return null;
+    const sampleBand = Math.max(6, Math.min(Math.round(barH * 0.9), Math.round(height * 0.25)));
+    const sampleOffset = Math.max(0, Math.round(height - barH - sampleBand * 0.6));
+    const effectiveBand = Math.min(sampleBand, height - sampleOffset);
+    const imageData = baseCtx.getImageData(0, sampleOffset, width, Math.max(1, effectiveBand));
+    const sampleCount = Math.max(6, Math.round(width / 90));
+    const stops = [];
+    for(let i=0;i<sampleCount;i++){
+      const start = (i / sampleCount) * width;
+      const end = ((i + 1) / sampleCount) * width;
+      const avg = averageSegment(imageData.data, width, imageData.height, start, end);
+      const mix = 0.22;
+      const r = Math.min(255, Math.round(avg.r + (255 - avg.r) * mix));
+      const g = Math.min(255, Math.round(avg.g + (255 - avg.g) * mix));
+      const b = Math.min(255, Math.round(avg.b + (255 - avg.b) * mix));
+      const pos = sampleCount === 1 ? 0.5 : i/(sampleCount-1);
+      stops.push({ pos, color: `rgba(${r},${g},${b},1)` });
+    }
+
+    const pad = Math.max(30, Math.round(width * 0.08));
+    const softWidth = width + pad*2;
+    const gradCanvas = document.createElement('canvas');
+    gradCanvas.width = softWidth; gradCanvas.height = barH;
+    const gradCtx = gradCanvas.getContext('2d');
+    const grad = gradCtx.createLinearGradient(pad, 0, pad + width, 0);
+    stops.forEach(stop => grad.addColorStop(stop.pos, stop.color));
+    gradCtx.fillStyle = grad;
+    gradCtx.fillRect(0, 0, softWidth, barH);
+
+    const blurCanvas = document.createElement('canvas');
+    blurCanvas.width = softWidth; blurCanvas.height = barH;
+    const blurCtx = blurCanvas.getContext('2d');
+    blurCtx.filter = `blur(${Math.max(12, Math.round(width * 0.015))}px)`;
+    blurCtx.drawImage(gradCanvas, 0, 0);
+    blurCtx.filter = 'none';
+
+    const textureCanvas = document.createElement('canvas');
+    textureCanvas.width = width; textureCanvas.height = barH;
+    const textureCtx = textureCanvas.getContext('2d');
+    textureCtx.drawImage(gradCanvas, pad, 0, width, barH, 0, 0, width, barH);
+    textureCtx.globalAlpha = 0.68;
+    textureCtx.drawImage(blurCanvas, pad, 0, width, barH, 0, 0, width, barH);
+    textureCtx.globalAlpha = 1;
+
+    const tint = textureCtx.createLinearGradient(0, 0, 0, barH);
+    tint.addColorStop(0, 'rgba(255,255,255,0.28)');
+    tint.addColorStop(1, 'rgba(236,244,248,0.18)');
+    textureCtx.fillStyle = tint;
+    textureCtx.fillRect(0, 0, width, barH);
+
+    textureCtx.fillStyle = 'rgba(255,255,255,0.18)';
+    textureCtx.fillRect(0, 0, width, Math.max(1, Math.round(barH * 0.12)));
+    textureCtx.fillStyle = 'rgba(15,23,42,0.15)';
+    textureCtx.fillRect(0, barH - 2, width, 2);
+
+    return textureCanvas;
+  }
   function exclusivePick(which, sourceType){
     if(which==='logo1'){ if(sourceType==='upload'){ els.logo1Gallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.logo1Input.value=''; } }
     else if(which==='logo2'){ if(sourceType==='upload'){ els.logo2Gallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.logo2Input.value=''; } }
@@ -1307,100 +1659,47 @@
 
   async function renderCurrentToDataURL(){
     const fw = state.format.wExport, fh = state.format.hExport;
-    const canvas = document.createElement('canvas');
-    canvas.width = fw; canvas.height = fh;
+    const canvas = await buildBaseCanvas(fw, fh);
+    if(!canvas){
+      const fallback = document.createElement('canvas');
+      fallback.width = fw; fallback.height = fh;
+      const blank = fallback.toDataURL('image/jpeg', 0.92);
+      return { dataURL: blank, bytes: bytesFromDataURL(blank), quality: 0.92 };
+    }
     const ctx = canvas.getContext('2d');
-
-    // bg
-    ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,fw,fh);
-    ctx.filter = `brightness(${(state.brightness/100).toFixed(3)}) saturate(${(state.saturation/100).toFixed(3)}) contrast(${(state.contrast/100).toFixed(3)})`;
-
-    const eff = effectiveDims(); const w = eff.w, h = eff.h;
-    const scaleCoverExport = Math.max(fw/w, fh/h);
-    const imgScaleExport = scaleCoverExport * state.imgZoom;
-    const imgWexp = (state.rotation%180===0 ? state.natural.w : state.natural.h) * imgScaleExport;
-    const imgHexp = (state.rotation%180===0 ? state.natural.h : state.natural.w) * imgScaleExport;
-
-    const limXexp = (imgWexp - fw)/2; const limYexp = (imgHexp - fh)/2;
-    const ratioX = (state.limits.x !== 0) ? (state.offset.x / state.limits.x) : 0;
-    const ratioY = (state.limits.y !== 0) ? (state.offset.y / state.limits.y) : 0;
-    const dx = -imgWexp/2 + ratioX * limXexp;
-    const dy = -imgHexp/2 + ratioY * limYexp;
-
-    ctx.save();
-    ctx.translate(fw/2, fh/2);
-    ctx.rotate(state.rotation * Math.PI/180);
-    ctx.scale(state.flipH ? -1 : 1, state.flipV ? -1 : 1);
-    // draw source
-    const imgSource = els.img;
-    if(!imgSource.complete){ await new Promise(r=>{ imgSource.onload=r; }); }
-    ctx.drawImage(imgSource, dx, dy, imgWexp, imgHexp);
-    ctx.restore();
-
     const baseLayer = document.createElement('canvas');
     baseLayer.width = fw; baseLayer.height = fh;
-    baseLayer.getContext('2d').drawImage(canvas, 0, 0);
+    const baseCtx = baseLayer.getContext('2d');
+    baseCtx.drawImage(canvas, 0, 0);
+    ctx.filter = 'none';
 
-    // ---------- HORIZONTAL Frosted Bar (edge-to-edge, blurred) ----------
     if(state.format.key==='HORIZ'){
       const barH = state.frost.barHExp;
       const barY = fh - barH;
-
-      const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
-
+      const anyLogos = !!(state.frost.logo1.src || state.frost.logo2.src);
+      const shouldShowBar = state.frost.enabled || anyLogos;
       if(shouldShowBar){
-        const frostCanvas = document.createElement('canvas');
-        frostCanvas.width = fw; frostCanvas.height = barH;
-        const frostCtx = frostCanvas.getContext('2d');
-        frostCtx.imageSmoothingEnabled = true;
-
-        const captureH = Math.max(24, Math.min(fh, Math.round(barH * 1.25)));
-        const captureY = Math.max(0, barY - captureH);
-        const captureCanvas = document.createElement('canvas');
-        captureCanvas.width = fw; captureCanvas.height = captureH;
-        const captureCtx = captureCanvas.getContext('2d');
-        captureCtx.drawImage(baseLayer, 0, captureY, fw, captureH, 0, 0, fw, captureH);
-
-        const smearWidth = Math.max(6, Math.round(fw / 22));
-        const smearHeight = Math.max(6, Math.round(barH / 6));
-        const smearCanvas = document.createElement('canvas');
-        smearCanvas.width = smearWidth; smearCanvas.height = smearHeight;
-        const smearCtx = smearCanvas.getContext('2d');
-        smearCtx.imageSmoothingEnabled = true;
-        smearCtx.drawImage(captureCanvas, 0, Math.max(0, captureH - smearHeight), fw, smearHeight, 0, 0, smearWidth, smearHeight);
-
-        frostCtx.save();
-        frostCtx.filter = 'blur(22px) saturate(1.08)';
-        frostCtx.drawImage(smearCanvas, 0, 0, smearWidth, smearHeight, 0, 0, fw, barH);
-        frostCtx.restore();
-
-        const lighting = frostCtx.createLinearGradient(0, 0, 0, barH);
-        lighting.addColorStop(0, 'rgba(255,255,255,0.32)');
-        lighting.addColorStop(0.55, 'rgba(255,255,255,0.12)');
-        lighting.addColorStop(1, 'rgba(210,225,240,0.12)');
-        frostCtx.fillStyle = lighting;
-        frostCtx.fillRect(0, 0, fw, barH);
-
-        ctx.drawImage(frostCanvas, 0, barY);
+        const frostTexture = buildFrostTexture(baseCtx, fw, fh, barH);
+        if(frostTexture){
+          ctx.drawImage(frostTexture, 0, barY);
+        } else {
+          ctx.fillStyle = 'rgba(244,248,252,0.9)';
+          ctx.fillRect(0, barY, fw, barH);
+        }
       }
-
       if(state.frost.enabled){
         const overlayStrength = Math.max(0, Math.min(1, state.frost.overlayAlpha));
         if(overlayStrength > 0){
-          ctx.save();
-          const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.2 + overlayStrength*0.6})`);
-          grad.addColorStop(1, `rgba(246,248,252,${0.14 + overlayStrength*0.45})`);
-          ctx.fillStyle = grad;
+          const overlayGrad = ctx.createLinearGradient(0, barY, 0, barY + barH);
+          overlayGrad.addColorStop(0, `rgba(255,255,255,${0.24 + overlayStrength*0.5})`);
+          overlayGrad.addColorStop(1, `rgba(236,242,248,${0.16 + overlayStrength*0.35})`);
+          ctx.fillStyle = overlayGrad;
           ctx.fillRect(0, barY, fw, barH);
-          ctx.restore();
         }
-
-        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.25; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.22 + overlayStrength*0.22; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.2)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
-      // logos on bar
       const padding = state.frost.padRightExp; const gap = state.frost.gapExp; const sepH = Math.round(state.frost.dockHExp * 0.9);
       const h1 = SIZE_MAP[state.frost.logo1.sizeKey] || 30; const h2 = SIZE_MAP[state.frost.logo2.sizeKey] || 30;
 
@@ -1412,19 +1711,23 @@
         const scale = targetH / baseH; const w = Math.max(1, Math.round(baseW*scale));
         const source = toneImageSource(im, tone);
         ctx.save();
-        ctx.drawImage(source, xRight - w, barY + Math.round((state.frost.barHExp - targetH)/2), w, targetH);
+        ctx.drawImage(source, xRight - w, barY + Math.round((barH - targetH)/2), w, targetH);
         ctx.restore();
         return {w, h:targetH};
       }
       let x = fw - padding;
       if(state.frost.logo2.src){ const m2 = await drawLogo(ctx, state.frost.logo2.src, h2, state.frost.logo2.tone, x); x -= m2.w; }
-      if(state.frost.logo1.src && state.frost.logo2.src){ x -= gap; ctx.fillStyle='rgba(98,101,106,1)'; ctx.fillRect(x, barY + Math.round((state.frost.barHExp - sepH)/2), 1, sepH); x -= gap; }
+      if(state.frost.logo1.src && state.frost.logo2.src){
+        x -= gap;
+        ctx.fillStyle='rgba(98,101,106,1)';
+        ctx.fillRect(x, barY + Math.round((barH - sepH)/2), 1, sepH);
+        x -= gap;
+      }
       if(state.frost.logo1.src){ const m1 = await drawLogo(ctx, state.frost.logo1.src, h1, state.frost.logo1.tone, x); x -= m1.w; }
 
-      // Play badge (fake background blur)
       if(state.play.enabled){
         const d = state.play.sizeExp;
-        const cy = (fh - state.frost.barHExp)/2; const cx = fw/2; const r = d/2;
+        const cy = (fh - barH)/2; const cx = fw/2; const r = d/2;
 
         const pad = Math.round(d * 0.45);
         const sampleSize = d + pad*2;
@@ -1445,22 +1748,21 @@
 
         ctx.save();
         ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-        ctx.globalAlpha = 0.65;
-        ctx.fillStyle = 'rgba(8,15,32,0.75)';
+        ctx.fillStyle = 'rgba(0,0,0,0.4)';
         ctx.fillRect(cx - r, cy - r, d, d);
         ctx.restore();
 
         ctx.save();
         ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-        const glow = ctx.createRadialGradient(cx - r*0.2, cy - r*0.35, r*0.2, cx, cy, r);
-        glow.addColorStop(0, 'rgba(255,255,255,0.35)');
-        glow.addColorStop(1, 'rgba(59,130,246,0.24)');
-        ctx.globalAlpha = 0.9;
+        const glow = ctx.createRadialGradient(cx - r*0.3, cy - r*0.3, r*0.1, cx, cy, r);
+        glow.addColorStop(0, 'rgba(255,255,255,0.22)');
+        glow.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalAlpha = 0.55;
         ctx.fillStyle = glow;
         ctx.fillRect(cx - r, cy - r, d, d);
         ctx.restore();
 
-        ctx.save(); ctx.globalAlpha = 0.5; ctx.strokeStyle = 'rgba(15,23,42,0.6)'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.arc(cx, cy, r-1, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.45; ctx.strokeStyle = 'rgba(0,0,0,0.55)'; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.arc(cx, cy, r-1, 0, Math.PI*2); ctx.stroke(); ctx.restore();
 
         ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
         const scale = Math.min(d*0.55/59, d*0.55/63);
@@ -1571,6 +1873,56 @@
   });
 
   // Drag move
+  function startResize(event){
+    if(state.current<0) return;
+    const rect = els.stage.getBoundingClientRect();
+    const fwPx = state.format.wPreview * state.previewZoom;
+    const fhPx = state.format.hPreview * state.previewZoom;
+    if(fwPx<=0 || fhPx<=0) return;
+    const frameLeft = rect.left + (rect.width - fwPx)/2;
+    const frameTop = rect.top + (rect.height - fhPx)/2;
+    const cx = frameLeft + fwPx/2;
+    const cy = frameTop + fhPx/2;
+    const startDist = Math.hypot(event.clientX - cx, event.clientY - cy);
+    if(startDist < 6) return;
+    state.resizing = { startDist, startZoom: state.imgZoom, cx, cy };
+    document.body.classList.add('resize-active');
+  }
+
+  function handleResizeMove(e){
+    if(!state.resizing) return;
+    const dist = Math.hypot(e.clientX - state.resizing.cx, e.clientY - state.resizing.cy);
+    if(dist <= 0) return;
+    const ratio = dist / state.resizing.startDist;
+    const next = Math.max(1, Math.min(4, state.resizing.startZoom * ratio));
+    if(Math.abs(next - state.imgZoom) > 0.0005){
+      state.imgZoom = next;
+      computeCover();
+      els.imgZoom.value = state.imgZoom;
+      els.imgZoomVal.textContent = state.imgZoom.toFixed(2);
+      render();
+    }
+  }
+
+  function stopResize(){
+    if(!state.resizing) return;
+    state.resizing = null;
+    document.body.classList.remove('resize-active');
+    updateControls();
+    serializeCurrent();
+  }
+
+  [els.resizeNW, els.resizeNE, els.resizeSW, els.resizeSE].forEach((handle)=>{
+    if(!handle) return;
+    handle.addEventListener('mousedown', (ev)=>{
+      ev.preventDefault();
+      ev.stopPropagation();
+      startResize(ev);
+    });
+  });
+  window.addEventListener('mousemove', handleResizeMove);
+  window.addEventListener('mouseup', stopResize);
+
   els.stage.addEventListener('mousedown', (e)=>{
     const rect = els.stage.getBoundingClientRect();
     const fwPx = state.format.wPreview * state.previewZoom;
@@ -1605,6 +1957,8 @@
   fitPreviewZoomToStage();
   render();
   updateControls();
+  refreshCarousel();
+  setActiveThumb();
 })();
 </script>
 </body>
