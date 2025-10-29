@@ -99,16 +99,13 @@
   .badge{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; font-size:13px; box-shadow:var(--shadow)}
 
   .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-  .uploadGrid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); align-items:stretch}
+  .uploadGrid{display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); align-items:stretch}
   .uploadCell{display:flex; width:100%}
-  .uploadCell .btn{flex:1; justify-content:center}
-  .uploadActions{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-  .urlUpload{display:flex; gap:10px; align-items:stretch; width:100%; flex:1 1 280px;}
-  .urlUpload .urlField{flex:1; display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:14px; background:var(--stageInner); box-shadow:inset 0 1px 2px rgba(15,23,42,0.08); transition:background .2s ease, border-color .2s ease}
-  .urlUpload .urlField svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8; flex-shrink:0}
-  .urlUpload .urlField input{flex:1; border:none; outline:none; background:transparent; color:var(--ink); font-size:13px}
-  .urlUpload .urlField input::placeholder{color:var(--muted)}
-  .urlUpload button{display:inline-flex; align-items:center; justify-content:center; white-space:nowrap; height:100%}
+  .uploadCell .btn{flex:1; justify-content:center; padding:14px 20px; font-size:15px; border-radius:16px}
+  .uploadFeedback{font-size:13px; color:var(--muted); margin-top:10px}
+  .uploadFeedback.error{color:#b91c1c}
+  .btn.error{border-color:#fca5a5; color:#b91c1c; box-shadow:0 10px 24px rgba(248,113,113,0.18)}
+  .btn.error:hover{background:rgba(254,226,226,0.35)}
   .stack{display:grid; gap:16px; text-align:left}
   #formatRow{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
   @media (max-width: 720px){
@@ -117,7 +114,7 @@
   .formatCard{position:relative; border:1px solid var(--border); border-radius:20px; padding:20px; background:var(--chip-bg); text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
   .formatCard.wide{grid-column:span 2}
   @media (max-width: 720px){ .formatCard.wide{grid-column:auto} }
-  .formatCard .formatIcon{width:52px; height:52px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(59,130,246,0.22),rgba(99,102,241,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.35)}
+  .formatCard .formatIcon{width:52px; height:52px; border-radius:8px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(59,130,246,0.22),rgba(99,102,241,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.35)}
   .formatCard .formatIcon svg{width:34px; height:auto}
   .formatCard .formatInfo{display:grid; gap:4px}
   .formatCard .formatTitle{font-size:15px; font-weight:700; line-height:1.3}
@@ -180,6 +177,48 @@
 
   .tone-note{font-size:12px; color:var(--muted); margin-top:6px}
 
+  .frostSwitches{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); align-items:flex-start; margin-bottom:20px}
+  .frostSwitches .switch{justify-content:flex-start}
+
+  .logoGroup{border:1px solid var(--border); border-radius:18px; padding:18px; background:var(--chip-bg); box-shadow:0 8px 18px rgba(2,6,23,0.05); display:grid; gap:16px}
+  .logoGroup + .logoGroup{margin-top:18px}
+  .logoGroupHeader{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .logoGroupTitle{font-weight:700; font-size:15px}
+  .logoGroupBody{display:grid; gap:16px}
+  .logoBar{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+  .logoBar .btn{justify-content:flex-start; padding:10px 16px}
+  .logoBar .btn .btn-text{flex:1}
+
+  .libHeader{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  .libHeader input{flex:1 1 220px}
+  .libSettings{display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:12px; border:1px solid var(--border); background:var(--btn-bg); box-shadow:0 8px 18px rgba(15,23,42,0.08); cursor:pointer; transition:transform .16s ease, box-shadow .16s ease}
+  .libSettings:hover{transform:translateY(-1px); box-shadow:0 12px 24px rgba(15,23,42,0.12)}
+  .libSettings svg{width:18px; height:18px; stroke:var(--muted); stroke-width:2}
+
+  .logoSettingsModal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:80}
+  .logoSettingsModal.open{display:flex}
+  .logoSettingsModal .backdrop{position:absolute; inset:0; background:rgba(15,23,42,0.55); backdrop-filter:blur(6px)}
+  .logoSettingsModal .card{position:relative; width:min(720px,90vw); max-height:80vh; overflow:hidden; background:var(--stageInner); border:1px solid var(--border); border-radius:22px; box-shadow:0 20px 60px rgba(15,23,42,0.35); display:grid; grid-template-rows:auto 1fr auto}
+  .logoSettingsModal header{padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .logoSettingsModal header h2{margin:0; font-size:18px}
+  .logoSettingsModal header button{background:transparent; border:none; color:var(--muted); cursor:pointer; padding:4px; border-radius:8px; transition:background .15s ease, color .15s ease}
+  .logoSettingsModal header button:hover{background:rgba(148,163,184,0.12); color:var(--ink)}
+  .logoSettingsModal header svg{width:20px; height:20px; stroke:currentColor; stroke-width:2}
+  .logoSettingsModal .body{padding:20px 24px; overflow:auto; display:grid; gap:14px}
+  .logoSettingsModal .row{display:grid; grid-template-columns:auto 1fr auto; gap:16px; align-items:center; border:1px solid var(--border); border-radius:14px; padding:12px 14px; background:var(--chip-bg); box-shadow:0 6px 16px rgba(2,6,23,0.05)}
+  .logoSettingsModal .row img{width:48px; height:48px; object-fit:contain; border-radius:12px; background:#fff; padding:6px; box-shadow:inset 0 1px 2px rgba(15,23,42,0.12)}
+  .logoSettingsModal .fields{display:grid; gap:10px}
+  .logoSettingsModal label{font-size:12px; font-weight:600; color:var(--muted); display:grid; gap:6px}
+  .logoSettingsModal input{padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); color:var(--ink); font-size:13px}
+  .logoSettingsModal .actions{display:flex; gap:8px}
+  .logoSettingsModal .actions button{border:none; background:rgba(248,113,113,0.12); color:#b91c1c; border-radius:10px; padding:8px 12px; cursor:pointer; font-size:12px; font-weight:600}
+  .logoSettingsModal .actions button:hover{background:rgba(248,113,113,0.2)}
+  .logoSettingsModal footer{padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; gap:12px}
+  .logoSettingsModal .addBtn{display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:12px; border:1px solid var(--border); background:var(--btn-bg); font-weight:600; cursor:pointer; box-shadow:0 10px 24px rgba(15,23,42,0.08); transition:transform .12s ease, box-shadow .12s ease}
+  .logoSettingsModal .addBtn:hover{transform:translateY(-1px); box-shadow:0 16px 28px rgba(15,23,42,0.12)}
+  .logoSettingsModal .addBtn svg{width:18px; height:18px; stroke:var(--muted); stroke-width:2}
+  .logoSettingsEmpty{font-size:13px; color:var(--muted); text-align:center; padding:24px}
+
   .loading{position:fixed; inset:0; background:rgba(15,23,42,.35); display:none; align-items:center; justify-content:center; z-index:1000}
   .loading .card{min-width:280px; max-width:420px; background:var(--stageInner); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; text-align:center; transition:background .2s ease, border-color .2s ease}
   .loading .title{font-weight:700; margin-bottom:6px}
@@ -200,15 +239,17 @@
   .exportActions{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
   .exportMeta{margin-top:10px; display:flex; width:100%; justify-content:space-between}
 
-  .carouselWrap{flex:1; padding:0 16px 0 16px; display:flex; flex-direction:column; justify-content:flex-start;}
-  .imageCarousel{display:flex; gap:12px; overflow-x:auto; padding:10px 0 4px 0; scroll-snap-type:x mandatory;}
+  .carouselWrap{flex:1; padding:0 16px 0 16px; display:flex; flex-direction:column; justify-content:flex-start; min-width:0;}
+  .imageCarousel{display:flex; gap:12px; overflow-x:auto; padding:8px 0; scroll-snap-type:x mandatory; min-width:0;}
   .imageCarousel::-webkit-scrollbar{height:6px}
   .imageCarousel::-webkit-scrollbar-thumb{background:rgba(148,163,184,0.5); border-radius:999px}
-  .thumbItem{flex:0 0 auto; scroll-snap-align:start; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 14px rgba(2,6,23,0.08); padding:6px; display:grid; gap:6px; width:88px; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; text-align:center}
-  .thumbItem:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(2,6,23,0.12)}
-  .thumbItem.active{border-color:rgba(14,165,233,0.6); box-shadow:0 14px 30px rgba(14,165,233,0.18); transform:translateY(-3px)}
-  .thumbItem img{width:100%; height:60px; object-fit:cover; border-radius:10px; box-shadow:inset 0 1px 2px rgba(255,255,255,0.25)}
-  .thumbNum{font-size:12px; font-weight:600; color:var(--muted)}
+  .imageCarousel{scrollbar-width:thin}
+  .thumbItem{flex:0 0 auto; scroll-snap-align:start; border:1px solid var(--border); border-radius:16px; background:var(--chip-bg); box-shadow:0 8px 18px rgba(2,6,23,0.08); padding:10px; display:grid; gap:8px; width:150px; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; text-align:left}
+  .thumbItem:hover{transform:translateY(-2px); box-shadow:0 16px 30px rgba(2,6,23,0.12)}
+  .thumbItem.active{border-color:rgba(14,165,233,0.6); box-shadow:0 18px 34px rgba(14,165,233,0.18); transform:translateY(-3px)}
+  .thumbItem img{width:100%; height:78px; object-fit:cover; border-radius:12px; box-shadow:inset 0 1px 2px rgba(255,255,255,0.25)}
+  .thumbBadge{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; color:var(--muted); background:rgba(148,163,184,0.12); border-radius:999px; padding:4px 8px}
+  .thumbName{font-size:12px; color:var(--muted); line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
 
   .mockupBlock{position:relative; border:1px solid var(--border); border-radius:16px; padding:18px; display:grid; gap:16px; background:linear-gradient(135deg,rgba(148,197,255,0.12),rgba(244,250,255,0.22)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
@@ -241,10 +282,17 @@
   :root[data-theme="dark"] input[type="search"], :root[data-theme="dark"] select{border-color:rgba(148,163,184,0.45)}
   :root[data-theme="dark"] .thumbItem{border-color:rgba(71,85,105,0.75); box-shadow:0 12px 30px rgba(2,6,23,0.55);}
   :root[data-theme="dark"] .thumbItem.active{border-color:rgba(56,189,248,0.75);}
+  :root[data-theme="dark"] .thumbBadge{background:rgba(56,189,248,0.18); color:#e2e8f0;}
   :root[data-theme="dark"] .mockupBlock{background:linear-gradient(135deg,rgba(30,64,175,0.22),rgba(15,23,42,0.55)); border-color:rgba(71,85,105,0.75); box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);}
   :root[data-theme="dark"] .mockupOverlay{background:rgba(15,23,42,0.5); color:#e2e8f0;}
   :root[data-theme="dark"] .versionTag{background:rgba(15,23,42,0.7); color:rgba(226,232,240,0.7); box-shadow:0 16px 30px rgba(2,6,23,0.55);}
   :root[data-theme="dark"] #themeToggle{box-shadow:0 20px 40px rgba(0,0,0,0.55);}
+  :root[data-theme="dark"] .logoGroup{background:rgba(15,23,42,0.55); box-shadow:0 14px 36px rgba(2,6,23,0.55); border-color:rgba(71,85,105,0.7);}
+  :root[data-theme="dark"] .libSettings{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.7);}
+  :root[data-theme="dark"] .logoSettingsModal .card{background:var(--stageInner); border-color:rgba(71,85,105,0.7);}
+  :root[data-theme="dark"] .logoSettingsModal .row{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.7);}
+  :root[data-theme="dark"] .logoSettingsModal input{background:var(--stageInner); border-color:rgba(148,163,184,0.45); color:var(--ink);}
+  :root[data-theme="dark"] .logoSettingsModal .actions button{background:rgba(248,113,113,0.2); color:#fecaca;}
 </style>
 </head>
 <body>
@@ -280,9 +328,9 @@
             <div class="uploadCell">
               <label class="btn primary" title="Upload image">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 4v10"></path>
-                  <path d="M8.5 8.5L12 5l3.5 3.5"></path>
-                  <path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"></path>
+                  <path d="M12 4v12"></path>
+                  <path d="M7.5 10.5L12 6l4.5 4.5"></path>
+                  <path d="M5 20h14"></path>
                 </svg>
                 <span class="btn-text">Upload image</span>
                 <input id="file" type="file" accept="image/*" style="display:none" />
@@ -291,63 +339,59 @@
             <div class="uploadCell">
               <label class="btn ghost" title="Upload folder">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4.5 6.5h4l2 2H19a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 1.5-2"></path>
-                  <path d="M12 11v5.5"></path>
-                  <path d="M9.5 13.5L12 11l2.5 2.5"></path>
+                  <path d="M3.5 6.5h5l2 2H20a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H4.5A1.5 1.5 0 0 1 3 19V8a1.5 1.5 0 0 1 .5-1.5z"></path>
+                  <path d="M12 11v6"></path>
+                  <path d="M9 14l3 3 3-3"></path>
                 </svg>
                 <span class="btn-text">Upload folder</span>
                 <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
               </label>
             </div>
             <div class="uploadCell">
-              <div class="urlUpload">
-                <div class="urlField">
-                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1">
-                    <path d="M9.5 14.5L7 17a4 4 0 0 0 0 5.66 4 4 0 0 0 5.66 0L17 18.34"></path>
-                    <path d="M14.5 9.5L17 7a4 4 0 0 0 0-5.66 4 4 0 0 0-5.66 0L7 5.66"></path>
-                    <path d="M8.5 15.5l7-7"></path>
-                  </svg>
-                  <input id="urlInput" type="url" placeholder="Paste image URL" autocomplete="off" spellcheck="false" />
-                </div>
-                <button class="btn ghost" type="button" id="urlImport">
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 4v13"></path>
-                    <path d="M7.5 12.5L12 17l4.5-4.5"></path>
-                    <path d="M5 20h14"></path>
-                  </svg>
-                  <span class="btn-text">Import URL</span>
-                </button>
-              </div>
+              <button class="btn ghost" type="button" id="pasteUrlBtn">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 3h6"></path>
+                  <path d="M8 5h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"></path>
+                  <path d="M12 9v6"></path>
+                  <path d="M9.5 11.5 12 9l2.5 2.5"></path>
+                </svg>
+                <span class="btn-text">Paste image URL</span>
+              </button>
+            </div>
+            <div class="uploadCell">
+              <button class="btn ghost" id="reset">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4v6h6"></path>
+                  <path d="M4.6 14.5a8 8 0 1 0 2.1-6.4"></path>
+                </svg>
+                <span class="btn-text">Reset current</span>
+              </button>
+            </div>
+            <div class="uploadCell">
+              <button class="btn danger ghost" id="deleteAllBtn" title="Delete all uploaded images">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 7h13a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"></path>
+                  <path d="M7 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  <path d="M9.5 12.5 12 15l2.5-2.5"></path>
+                  <path d="M12 15v-6"></path>
+                </svg>
+                <span class="btn-text">Delete all</span>
+              </button>
+            </div>
+            <div class="uploadCell">
+              <button class="btn danger" id="deleteBtn" title="Delete current image">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 7h14"></path>
+                  <path d="M10 11v6"></path>
+                  <path d="M14 11v6"></path>
+                  <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                  <path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"></path>
+                </svg>
+                <span class="btn-text">Delete current</span>
+              </button>
             </div>
           </div>
-          <div class="uploadActions" style="margin-top:12px">
-            <button class="btn ghost" id="reset">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 9a7 7 0 1 1-2 5"></path>
-                <path d="M5 9h4.5"></path>
-                <path d="M5 9v4.5"></path>
-              </svg>
-              <span class="btn-text">Reset current</span>
-            </button>
-            <button class="btn danger" id="deleteBtn" title="Delete current image">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 7h14"></path>
-                <path d="M9 4.5h6l.8 2.5"></path>
-                <path d="M8 9v9a1.8 1.8 0 0 0 1.8 1.8h4.4A1.8 1.8 0 0 0 16 18V9"></path>
-                <path d="M10 12.5v4"></path>
-                <path d="M14 12.5v4"></path>
-              </svg>
-              <span class="btn-text">Delete current</span>
-            </button>
-            <button class="btn danger ghost" id="deleteAllBtn" title="Delete all uploaded images">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 6h6l1.8 2H19a2 2 0 0 1 2 2v8.5A1.5 1.5 0 0 1 19.5 20h-15A1.5 1.5 0 0 1 3 18.5V7.5A1.5 1.5 0 0 1 4.5 6z"></path>
-                <path d="M9 12.5l2.5 2.5L14 12.5"></path>
-                <path d="M12 15v-5"></path>
-              </svg>
-              <span class="btn-text">Delete all</span>
-            </button>
-          </div>
+          <div class="uploadFeedback" id="urlFeedback" role="status" aria-live="polite"></div>
           <div class="muted" style="margin-top:12px">PNG/JPEG supported. Drop anywhere, zoom with scroll or pinch, and drag corners to resize.</div>
         </div>
 
@@ -436,82 +480,151 @@
         <!-- Step 4: Frosted bar -->
         <div class="section" id="frostSection">
           <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
-          <div class="row" style="gap:16px">
+          <div class="frostSwitches">
             <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
             <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
-            <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add second logo</span></label>
+            <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
           </div>
 
-          <div class="stack" style="margin-top:10px">
-            <div class="row">
-              <label class="btn ghost">Upload Logo 1<input id="logo1Input" type="file" accept="image/*" style="display:none"/></label>
-              <div class="seg" id="logo1Seg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
-              </div>
-              <div class="seg" id="logo1ToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
+          <div class="logoGroup" id="logo1Group">
+            <div class="logoGroupHeader">
+              <div class="logoGroupTitle">Logo 1</div>
             </div>
-            <div class="tone-note">Please double-check partner branding guidelines permit recoloring before switching logo colors.</div>
-            <div class="libWrap">
-              <input id="logo1Search" type="search" placeholder="Search partners…" />
-              <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
+            <div class="logoGroupBody">
+              <div class="logoBar">
+                <label class="btn ghost"> 
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 4v9"></path>
+                    <path d="M7.5 9.5 12 5l4.5 4.5"></path>
+                    <rect x="4" y="13" width="16" height="7" rx="2"></rect>
+                  </svg>
+                  <span class="btn-text">Upload logo 1</span>
+                  <input id="logo1Input" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="seg" id="logo1Seg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
+                <div class="seg" id="logo1ToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
+              </div>
+              <div class="tone-note">Branding note: confirm partner approval before recoloring.</div>
+              <div class="libWrap" id="vertLogoBlock">
+                <div class="libHeader">
+                  <input id="logo1Search" type="search" placeholder="Search partners…" />
+                  <button type="button" class="libSettings" data-action="open-logo-settings" aria-label="Open partner logo settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M19.4 15a1.78 1.78 0 0 0 .37 1.95l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.78 1.78 0 0 0-1.95-.37 1.78 1.78 0 0 0-1 1.62V21a2 2 0 0 1-4 0v-.09a1.78 1.78 0 0 0-1-1.62 1.78 1.78 0 0 0-1.95.37l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.78 1.78 0 0 0 .37-1.95 1.78 1.78 0 0 0-1.62-1H3a2 2 0 0 1 0-4h.09a1.78 1.78 0 0 0 1.62-1 1.78 1.78 0 0 0-.37-1.95l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.78 1.78 0 0 0 1.95.37H9a1.78 1.78 0 0 0 1-1.62V3a2 2 0 0 1 4 0v.09a1.78 1.78 0 0 0 1 1.62 1.78 1.78 0 0 0 1.95-.37l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.78 1.78 0 0 0-.37 1.95V9a1.78 1.78 0 0 0 1.62 1H21a2 2 0 0 1 0 4h-.09a1.78 1.78 0 0 0-1.51 1.62z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
 
-          <div id="logo2Block" class="stack" style="display:none; margin-top:14px">
-            <div class="row">
-              <label class="btn ghost">Upload Logo 2<input id="logo2Input" type="file" accept="image/*" style="display:none"/></label>
-              <div class="seg" id="logo2Seg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
-              </div>
-              <div class="seg" id="logo2ToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
-              <button class="btn small ghost" id="removeLogo2">Remove Logo 2</button>
+          <div id="logo2Block" class="logoGroup" style="display:none">
+            <div class="logoGroupHeader">
+              <div class="logoGroupTitle">Logo 2</div>
+              <button class="btn small ghost" id="removeLogo2">Remove</button>
             </div>
-            <div class="libWrap">
-              <input id="logo2Search" type="search" placeholder="Search partners…" />
-              <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
+            <div class="logoGroupBody">
+              <div class="logoBar">
+                <label class="btn ghost">
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 4v9"></path>
+                    <path d="M7.5 9.5 12 5l4.5 4.5"></path>
+                    <rect x="4" y="13" width="16" height="7" rx="2"></rect>
+                  </svg>
+                  <span class="btn-text">Upload logo 2</span>
+                  <input id="logo2Input" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="seg" id="logo2Seg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
+                <div class="seg" id="logo2ToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
+              </div>
+              <div class="tone-note">Branding note: confirm partner approval before recoloring.</div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="logo2Search" type="search" placeholder="Search partners…" />
+                  <button type="button" class="libSettings" data-action="open-logo-settings" aria-label="Open partner logo settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M19.4 15a1.78 1.78 0 0 0 .37 1.95l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.78 1.78 0 0 0-1.95-.37 1.78 1.78 0 0 0-1 1.62V21a2 2 0 0 1-4 0v-.09a1.78 1.78 0 0 0-1-1.62 1.78 1.78 0 0 0-1.95.37l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.78 1.78 0 0 0 .37-1.95 1.78 1.78 0 0 0-1.62-1H3a2 2 0 0 1 0-4h.09a1.78 1.78 0 0 0 1.62-1 1.78 1.78 0 0 0-.37-1.95l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.78 1.78 0 0 0 1.95.37H9a1.78 1.78 0 0 0 1-1.62V3a2 2 0 0 1 4 0v.09a1.78 1.78 0 0 0 1 1.62 1.78 1.78 0 0 0 1.95-.37l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.78 1.78 0 0 0-.37 1.95V9a1.78 1.78 0 0 0 1.62 1H21a2 2 0 0 1 0 4h-.09a1.78 1.78 0 0 0-1.51 1.62z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
 
-          <div class="stack" style="margin-top:12px">
-            <label id="overlayLabel">White overlay opacity: <span id="overlayAlphaVal">30</span>%<br/>
-              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
-            </label>
+          <div class="logoGroup" style="margin-top:18px">
+            <div class="logoGroupHeader">
+              <div class="logoGroupTitle">Overlay</div>
+            </div>
+            <div class="logoGroupBody">
+              <label id="overlayLabel">White overlay opacity: <span id="overlayAlphaVal">30</span>%<br/>
+                <input id="overlayAlpha" type="range" min="0" max="100" value="30">
+              </label>
+            </div>
           </div>
         </div>
 
         <!-- Step 4b: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none">
           <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
-          <div class="stack">
-            <div class="row">
-              <label class="btn ghost">Square logo<input id="sqLogoInput" type="file" accept="image/*" style="display:none"/></label>
-              <div class="seg" id="sqLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
-              </div>
-              <div class="seg" id="sqLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
+          <div class="logoGroup">
+            <div class="logoGroupHeader">
+              <div class="logoGroupTitle">Square logo</div>
               <button class="btn small ghost" id="removeSqLogo">Remove</button>
             </div>
-            <div class="libWrap">
-              <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
-              <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
+            <div class="logoGroupBody">
+              <div class="logoBar">
+                <label class="btn ghost">
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 4v9"></path>
+                    <path d="M7.5 9.5 12 5l4.5 4.5"></path>
+                    <rect x="4" y="13" width="16" height="7" rx="2"></rect>
+                  </svg>
+                  <span class="btn-text">Upload square logo</span>
+                  <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="seg" id="sqLogoSeg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
+                <div class="seg" id="sqLogoToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
+              </div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
+                  <button type="button" class="libSettings" data-action="open-logo-settings" aria-label="Open partner logo settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M19.4 15a1.78 1.78 0 0 0 .37 1.95l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.78 1.78 0 0 0-1.95-.37 1.78 1.78 0 0 0-1 1.62V21a2 2 0 0 1-4 0v-.09a1.78 1.78 0 0 0-1-1.62 1.78 1.78 0 0 0-1.95.37l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.78 1.78 0 0 0 .37-1.95 1.78 1.78 0 0 0-1.62-1H3a2 2 0 0 1 0-4h.09a1.78 1.78 0 0 0 1.62-1 1.78 1.78 0 0 0-.37-1.95l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.78 1.78 0 0 0 1.95.37H9a1.78 1.78 0 0 0 1-1.62V3a2 2 0 0 1 4 0v.09a1.78 1.78 0 0 0 1 1.62 1.78 1.78 0 0 0 1.95-.37l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.78 1.78 0 0 0-.37 1.95V9a1.78 1.78 0 0 0 1.62 1H21a2 2 0 0 1 0 4h-.09a1.78 1.78 0 0 0-1.51 1.62z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -522,24 +635,47 @@
           <div class="row" style="gap:16px">
             <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
           </div>
-          <div id="vertLogoBlock" class="stack" style="display:none; margin-top:10px">
-            <div class="row">
-              <label class="btn ghost">Vertical logo<input id="vertLogoInput" type="file" accept="image/*" style="display:none"/></label>
-              <div class="seg" id="vertLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+          <div class="logoGroup" id="vertLogoGroup" style="display:none">
+            <div class="logoGroupHeader">
+              <div class="logoGroupTitle">Vertical logo</div>
+              <div class="row" style="gap:10px; flex-wrap:nowrap">
+                <button class="btn small ghost" id="removeVertLogo">Remove</button>
               </div>
-              <div class="seg" id="vertLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
-              <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
-            <div class="libWrap">
-              <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
-              <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+            <div class="logoGroupBody">
+              <div class="logoBar">
+                <label class="btn ghost">
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 4v9"></path>
+                    <path d="M7.5 9.5 12 5l4.5 4.5"></path>
+                    <rect x="4" y="13" width="16" height="7" rx="2"></rect>
+                  </svg>
+                  <span class="btn-text">Upload vertical logo</span>
+                  <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="seg" id="vertLogoSeg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
+                <div class="seg" id="vertLogoToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
+              </div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+                  <button type="button" class="libSettings" data-action="open-logo-settings" aria-label="Open partner logo settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M19.4 15a1.78 1.78 0 0 0 .37 1.95l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.78 1.78 0 0 0-1.95-.37 1.78 1.78 0 0 0-1 1.62V21a2 2 0 0 1-4 0v-.09a1.78 1.78 0 0 0-1-1.62 1.78 1.78 0 0 0-1.95.37l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.78 1.78 0 0 0 .37-1.95 1.78 1.78 0 0 0-1.62-1H3a2 2 0 0 1 0-4h.09a1.78 1.78 0 0 0 1.62-1 1.78 1.78 0 0 0-.37-1.95l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.78 1.78 0 0 0 1.95.37H9a1.78 1.78 0 0 0 1-1.62V3a2 2 0 0 1 4 0v.09a1.78 1.78 0 0 0 1 1.62 1.78 1.78 0 0 0 1.95-.37l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.78 1.78 0 0 0-.37 1.95V9a1.78 1.78 0 0 0 1.62 1H21a2 2 0 0 1 0 4h-.09a1.78 1.78 0 0 0-1.51 1.62z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -591,7 +727,6 @@
         <div class="carouselWrap">
           <div id="carouselEmpty" class="carouselEmpty">Upload images to start your carousel.</div>
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
-          <div class="chipInfo" id="batchLabel" style="margin-top:8px; width:max-content">0 / 0</div>
         </div>
         <div class="row" style="gap:12px; justify-content:flex-end">
           <span class="muted">Preview Zoom</span>
@@ -652,10 +787,44 @@
   <div class="globalDropOverlay" id="globalDropOverlay">Drop images anywhere to upload</div>
   <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">
     <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z"></path>
+      <circle cx="12" cy="12" r="5"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="M4 12h2"></path>
+      <path d="M18 12h2"></path>
+      <path d="m5.6 5.6 1.4 1.4"></path>
+      <path d="m17 17 1.4 1.4"></path>
+      <path d="m5.6 18.4 1.4-1.4"></path>
+      <path d="m17 7 1.4-1.4"></path>
     </svg>
   </button>
-  <div class="versionTag">version 6.18</div>
+  <div class="versionTag">V6.18</div>
+
+  <div class="logoSettingsModal" id="logoSettingsModal" aria-hidden="true">
+    <div class="backdrop" data-action="close-logo-settings"></div>
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="logoSettingsTitle">
+      <header>
+        <h2 id="logoSettingsTitle">Partner logo library</h2>
+        <button type="button" id="logoSettingsClose" aria-label="Close settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </header>
+      <div class="body" id="logoSettingsBody"></div>
+      <footer>
+        <span class="muted">Logos are stored locally for quick reuse.</span>
+        <button type="button" class="addBtn" id="logoSettingsAdd">
+          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14"></path>
+            <path d="M5 12h14"></path>
+          </svg>
+          <span>Add logo</span>
+        </button>
+      </footer>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
 
@@ -667,7 +836,9 @@
     VERT:    { key:'VERT',  label:'Vertical',   sub:'Interstitial',                           icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
   };
 
-  const PARTNERS = [
+  const LOGO_PLACEHOLDER = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%23e2e8f0"/><path d="M20 32h24" stroke="%2394a3b8" stroke-width="4" stroke-linecap="round"/><path d="M32 20v24" stroke="%2394a3b8" stroke-width="4" stroke-linecap="round"/></svg>';
+  const PARTNERS_STORAGE_KEY = 'frozone.partnerLogos.v1';
+  let PARTNERS = [
     {name:'Amazon', url:'https://i.imghippo.com/files/KHpN4511hII.png'},
     {name:'Babylist', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babylist_Logo_02.png'},
     {name:'Babies “R” Us', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babies_%22R%22_Us_logo.svg?width=1000'},
@@ -698,13 +869,26 @@
     {name:'Zocdoc', url:'https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png'}
   ];
 
+  if(typeof window !== 'undefined' && window.localStorage){
+    try{
+      const stored = JSON.parse(window.localStorage.getItem(PARTNERS_STORAGE_KEY) || 'null');
+      if(Array.isArray(stored)){
+        const cleaned = stored.map(item=>({
+          name: (item && typeof item.name === 'string') ? item.name : '',
+          url: (item && typeof item.url === 'string') ? item.url : ''
+        })).filter(p=>p.name || p.url);
+        if(cleaned.length){ PARTNERS = cleaned; }
+      }
+    }catch(err){ console.warn('Unable to load saved partner logos', err); }
+  }
+
   const els = {
     header: document.getElementById('appHeader'),
     themeToggle: document.getElementById('themeToggle'),
     file: document.getElementById('file'),
     folder: document.getElementById('folder'),
-    urlInput: document.getElementById('urlInput'),
-    urlImport: document.getElementById('urlImport'),
+    pasteUrlBtn: document.getElementById('pasteUrlBtn'),
+    urlFeedback: document.getElementById('urlFeedback'),
     reset: document.getElementById('reset'),
     deleteBtn: document.getElementById('deleteBtn'),
 
@@ -721,7 +905,7 @@
     previewZoom: document.getElementById('previewZoom'), zoomLabel: document.getElementById('zoomLabel'),
     exportBtn: document.getElementById('exportBtn'), exportAllBtn: document.getElementById('exportAllBtn'),
     outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
-    batchMeta: document.getElementById('batchMeta'), batchLabel: document.getElementById('batchLabel'),
+    batchMeta: document.getElementById('batchMeta'),
 
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
@@ -753,7 +937,7 @@
 
     verticalLogoSection: document.getElementById('verticalLogoSection'),
     toggleVertLogo: document.getElementById('toggleVertLogo'),
-    vertLogoBlock: document.getElementById('vertLogoBlock'),
+    vertLogoBlock: document.getElementById('vertLogoBlock'), vertLogoGroup: document.getElementById('vertLogoGroup'),
     vertLogoPrev: document.getElementById('vertLogoPrev'),
     vertLogoInput: document.getElementById('vertLogoInput'), vertLogoSeg: document.getElementById('vertLogoSeg'), vertLogoToneSeg: document.getElementById('vertLogoToneSeg'),
     removeVertLogo: document.getElementById('removeVertLogo'),
@@ -768,6 +952,10 @@
     resizeHandles: Array.from(document.querySelectorAll('.resizeHandle')),
 
     loading: document.getElementById('loading'), loadingText: document.getElementById('loadingText'), loadingBar: document.getElementById('loadingBar'), loadingTitle: document.getElementById('loadingTitle'),
+    logoSettingsModal: document.getElementById('logoSettingsModal'),
+    logoSettingsBody: document.getElementById('logoSettingsBody'),
+    logoSettingsAdd: document.getElementById('logoSettingsAdd'),
+    logoSettingsClose: document.getElementById('logoSettingsClose'),
   };
 
 
@@ -803,6 +991,8 @@
   };
 
   let frameMetrics = { left:0, top:0, width:0, height:0 };
+  let imageMetrics = { left:0, top:0, width:0, height:0 };
+  let lastSettingsTrigger = null;
   let frostPreviewCache = { key:null, data:null };
   let resizeState = null;
 
@@ -816,6 +1006,10 @@
   }
 
   const THEME_KEY = 'frozone-theme';
+  const THEME_ICONS = {
+    light: `<svg class="btn-ico" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="M4 12h2"></path><path d="M18 12h2"></path><path d="m5.6 5.6 1.4 1.4"></path><path d="m17 17 1.4 1.4"></path><path d="m5.6 18.4 1.4-1.4"></path><path d="m17 7 1.4-1.4"></path></svg>`,
+    dark: `<svg class="btn-ico" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z"></path></svg>`
+  };
   function setTheme(mode){
     const root = document.documentElement;
     const next = mode === 'dark' ? 'dark' : 'light';
@@ -825,14 +1019,7 @@
       const labelText = next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
       els.themeToggle.setAttribute('aria-label', labelText);
       els.themeToggle.title = labelText;
-      const iconPath = els.themeToggle.querySelector('path');
-      if(iconPath){
-        if(next === 'dark'){
-          iconPath.setAttribute('d', 'M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M16.24 7.76l1.42-1.42 M6.34 17.66l1.42-1.42 M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z');
-        } else {
-          iconPath.setAttribute('d', 'M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z');
-        }
-      }
+      els.themeToggle.innerHTML = next === 'dark' ? THEME_ICONS.dark : THEME_ICONS.light;
     }
     try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
   }
@@ -939,7 +1126,10 @@
     els.verticalLogoSection.style.display = (state.format.key==='VERT')   ? 'block' : 'none';
     els.vertSizeRow.style.display         = (state.format.key==='VERT')   ? 'flex' : 'none';
     if(state.format.key==='VERT'){
-      els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
+      if(els.vertLogoBlock){ els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none'; }
+      if(els.vertLogoGroup){ els.vertLogoGroup.style.display = els.toggleVertLogo.checked ? 'grid' : 'none'; }
+    } else {
+      if(els.vertLogoGroup){ els.vertLogoGroup.style.display = 'none'; }
     }
 
     els.bVal.textContent = state.brightness;
@@ -985,7 +1175,6 @@
     if(els.vertSizeSeg) [...els.vertSizeSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.v===state.vertVariant));
 
     els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
-    els.batchLabel.textContent = els.batchMeta.textContent;
 
     // file name at top of preview
     els.fileNameTop.textContent = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
@@ -1038,17 +1227,31 @@
     const frameTopPx = (els.stage.clientHeight - fhPx)/2;
     frameMetrics = { left: frameLeftPx, top: frameTopPx, width: fwPx, height: fhPx };
 
+    if(state.imageSrc){
+      const stageRect = els.stage.getBoundingClientRect();
+      const imgRect = els.imageLayer.getBoundingClientRect();
+      imageMetrics = {
+        left: imgRect.left - stageRect.left,
+        top: imgRect.top - stageRect.top,
+        width: imgRect.width,
+        height: imgRect.height
+      };
+    } else {
+      imageMetrics = { left:0, top:0, width:0, height:0 };
+    }
+
     if(els.resizeHandles){
       const offset = 9;
       const display = state.imageSrc ? 'block' : 'none';
+      const metrics = (imageMetrics.width>0 && imageMetrics.height>0) ? imageMetrics : frameMetrics;
       els.resizeHandles.forEach(handle=>{
         handle.style.display = display;
         if(display==='none') return;
         const corner = handle.dataset.corner;
-        let left = frameLeftPx;
-        let top = frameTopPx;
-        if(corner==='ne' || corner==='se'){ left = frameLeftPx + fwPx; }
-        if(corner==='se' || corner==='sw'){ top = frameTopPx + fhPx; }
+        let left = metrics.left;
+        let top = metrics.top;
+        if(corner==='ne' || corner==='se'){ left = metrics.left + metrics.width; }
+        if(corner==='se' || corner==='sw'){ top = metrics.top + metrics.height; }
         handle.style.left = (left - offset) + 'px';
         handle.style.top = (top - offset) + 'px';
       });
@@ -1263,15 +1466,20 @@
       item.dataset.index = idx.toString();
       item.setAttribute('role','option');
       item.setAttribute('aria-selected', idx===state.current);
-      item.title = it.name || `Image ${idx+1}`;
-      const num = document.createElement('span');
-      num.className = 'thumbNum';
-      num.textContent = `${idx+1}`;
+      const fullName = it.name || `Image ${idx+1}`;
+      item.title = fullName;
+      const badge = document.createElement('span');
+      badge.className = 'thumbBadge';
+      badge.textContent = `#${idx+1}`;
       const thumb = document.createElement('img');
       thumb.src = it.src;
-      thumb.alt = it.name || `Image ${idx+1}`;
+      thumb.alt = fullName;
       thumb.loading = 'lazy';
-      item.append(num, thumb);
+      const name = document.createElement('span');
+      name.className = 'thumbName';
+      const trimmed = fullName.length > 28 ? `${fullName.slice(0,25)}…` : fullName;
+      name.textContent = trimmed;
+      item.append(badge, thumb, name);
       item.addEventListener('click', ()=>{
         if(state.current === idx){ return; }
         serializeCurrent();
@@ -1288,6 +1496,16 @@
   function showLoading(msg, pct){ els.loadingTitle.textContent='Please wait'; els.loadingText.textContent = msg||'Working…'; els.loadingBar.style.width=(pct||0)+'%'; els.loading.style.display='flex'; }
   function hideLoading(){ els.loading.style.display='none'; els.loadingBar.style.width='0%'; }
   function setLoadingProgress(p){ els.loadingBar.style.width = Math.max(0,Math.min(100,p))+'%'; }
+
+  function setUrlFeedback(message, { error } = {}){
+    if(!els.urlFeedback) return;
+    els.urlFeedback.textContent = message || '';
+    els.urlFeedback.classList.toggle('error', !!error);
+    if(els.pasteUrlBtn){
+      if(error){ els.pasteUrlBtn.classList.add('error'); }
+      else { els.pasteUrlBtn.classList.remove('error'); }
+    }
+  }
 
   // ---------- Uploads ----------
   async function addFilesFromList(fileList, { showProgress, label } = {}){
@@ -1320,7 +1538,7 @@
 
   async function importImageFromURL(rawUrl){
     const url = (rawUrl||'').trim();
-    if(!url) return;
+    if(!url) return false;
     showLoading('Fetching image…', 10);
     let objectURL = null;
     try{
@@ -1337,13 +1555,52 @@
         im.onerror = (err)=>{ reject(err); };
         im.src = objectURL;
       });
-      els.urlInput.value = '';
+      return true;
     } catch(err){
       console.error(err);
       if(objectURL){ try{ URL.revokeObjectURL(objectURL); }catch(e){} }
-      alert('Unable to load image from URL. Please verify the link and try again.');
+      return false;
     } finally {
       hideLoading();
+    }
+  }
+
+  async function handlePasteUrl(){
+    if(!els.pasteUrlBtn) return;
+    const btn = els.pasteUrlBtn;
+    const clip = navigator.clipboard;
+    if(!clip || typeof clip.readText !== 'function'){
+      setUrlFeedback('Clipboard access is unavailable. Copy an image URL first.', { error:true });
+      return;
+    }
+    setUrlFeedback('');
+    btn.disabled = true;
+    try{
+      const text = (await clip.readText()) || '';
+      const trimmed = text.trim();
+      if(!trimmed){
+        setUrlFeedback('Clipboard is empty. Copy an image URL and try again.', { error:true });
+        return;
+      }
+      let parsed;
+      try{
+        parsed = new URL(trimmed);
+      } catch(err){
+        setUrlFeedback('Clipboard content is not a valid URL.', { error:true });
+        return;
+      }
+      if(parsed.protocol !== 'http:' && parsed.protocol !== 'https:'){
+        setUrlFeedback('Only HTTP(S) image URLs are supported.', { error:true });
+        return;
+      }
+      const ok = await importImageFromURL(parsed.toString());
+      if(ok){ setUrlFeedback('Imported image from clipboard URL.'); }
+      else { setUrlFeedback('Unable to load image from that URL. Please verify and try again.', { error:true }); }
+    } catch(err){
+      console.error('Clipboard read failed', err);
+      setUrlFeedback('Clipboard permission was denied. Allow access and try again.', { error:true });
+    } finally {
+      btn.disabled = false;
     }
   }
 
@@ -1361,11 +1618,7 @@
     await addFilesFromList(e.target.files, { showProgress:true, label:'Reading folder…' });
     e.target.value = '';
   });
-
-  els.urlImport?.addEventListener('click', ()=>{ importImageFromURL(els.urlInput?.value); });
-  els.urlInput?.addEventListener('keydown', (e)=>{
-    if(e.key==='Enter'){ e.preventDefault(); importImageFromURL(els.urlInput.value); }
-  });
+  els.pasteUrlBtn?.addEventListener('click', ()=>{ handlePasteUrl(); });
 
   window.addEventListener('dragenter', (e)=>{
     if(!hasFileType(e.dataTransfer)) return;
@@ -1411,8 +1664,9 @@
   function beginResizeInteraction(x, y){
     if(state.current<0) return;
     const stageRect = els.stage.getBoundingClientRect();
-    const centerX = stageRect.left + frameMetrics.left + frameMetrics.width/2;
-    const centerY = stageRect.top + frameMetrics.top + frameMetrics.height/2;
+    const metrics = (imageMetrics.width>0 && imageMetrics.height>0) ? imageMetrics : frameMetrics;
+    const centerX = stageRect.left + metrics.left + metrics.width/2;
+    const centerY = stageRect.top + metrics.top + metrics.height/2;
     const startDist = Math.hypot(x - centerX, y - centerY);
     if(startDist < 4) return;
     resizeState = { startZoom: state.imgZoom, startDist, centerX, centerY };
@@ -1476,7 +1730,6 @@
       state.current=-1; state.imageSrc=null; state.natural={w:0,h:0};
       els.img.removeAttribute('src'); computeCover(); render(); updateControls();
       els.batchMeta.textContent = '0 / 0';
-      els.batchLabel.textContent = '0 / 0';
       renderCarousel();
       return;
     }
@@ -1510,7 +1763,6 @@
     render();
     updateControls();
     els.batchMeta.textContent = '0 / 0';
-    els.batchLabel.textContent = '0 / 0';
   });
 
   // ---------- Batch helpers ----------
@@ -1525,7 +1777,6 @@
     const position = state.current>=0 ? state.current+1 : state.images.length;
     const text = `${position} / ${state.images.length}`;
     els.batchMeta.textContent = text;
-    els.batchLabel.textContent = text;
     els.exportAllBtn.disabled = state.images.length===0;
     renderCarousel();
   }
@@ -1550,7 +1801,6 @@
     els.img.src = it.src;
     const text = `${idx+1} / ${state.images.length}`;
     els.batchMeta.textContent = text;
-    els.batchLabel.textContent = text;
     computeCover(); fitPreviewZoomToStage(); render(); updateControls();
     renderCarousel();
   }
@@ -1577,8 +1827,10 @@
   });
 
   els.toggleVertLogo.addEventListener('change', ()=>{
-    els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
-    if(!els.toggleVertLogo.checked){
+    const show = els.toggleVertLogo.checked;
+    if(els.vertLogoGroup){ els.vertLogoGroup.style.display = show ? 'grid' : 'none'; }
+    if(els.vertLogoBlock){ els.vertLogoBlock.style.display = show ? 'grid' : 'none'; }
+    if(!show){
       state.vertLogo={src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
       els.vertLogoPrev.style.display='none';
       render(); updateControls();
@@ -1619,11 +1871,97 @@
   segSizeHandler(els.sqLogoSeg,'squareLogo', SIZE_MAP_SQ); segToneHandler(els.sqLogoToneSeg,'squareLogo');
   segSizeHandler(els.vertLogoSeg,'vertLogo', SIZE_MAP_SQ); segToneHandler(els.vertLogoToneSeg,'vertLogo');
 
+  function persistPartners(){
+    if(typeof window === 'undefined' || !window.localStorage) return;
+    try{ window.localStorage.setItem(PARTNERS_STORAGE_KEY, JSON.stringify(PARTNERS)); }
+    catch(err){ console.warn('Unable to save partner logos', err); }
+  }
+
+  function renderLogoSettingsList(){
+    if(!els.logoSettingsBody) return;
+    els.logoSettingsBody.innerHTML = '';
+    if(PARTNERS.length === 0){
+      const empty = document.createElement('div');
+      empty.className = 'logoSettingsEmpty';
+      empty.textContent = 'No partner logos yet. Use “Add logo” to create one.';
+      els.logoSettingsBody.appendChild(empty);
+      return;
+    }
+    PARTNERS.forEach((partner, idx)=>{
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.dataset.index = idx.toString();
+
+      const preview = document.createElement('img');
+      const safeUrl = (partner?.url || '').trim();
+      preview.src = safeUrl || LOGO_PLACEHOLDER;
+      preview.alt = partner?.name || `Logo ${idx+1}`;
+      preview.addEventListener('error', ()=>{ preview.src = LOGO_PLACEHOLDER; });
+
+      const fields = document.createElement('div');
+      fields.className = 'fields';
+      const nameLabel = document.createElement('label');
+      nameLabel.textContent = 'Name';
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.placeholder = 'Partner name';
+      nameInput.value = partner?.name || '';
+      nameInput.dataset.field = 'name';
+      nameLabel.appendChild(nameInput);
+
+      const urlLabel = document.createElement('label');
+      urlLabel.textContent = 'URL';
+      const urlInput = document.createElement('input');
+      urlInput.type = 'url';
+      urlInput.placeholder = 'https://example.com/logo.png';
+      urlInput.value = safeUrl;
+      urlInput.dataset.field = 'url';
+      urlLabel.appendChild(urlInput);
+
+      fields.append(nameLabel, urlLabel);
+
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+      const deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
+      deleteBtn.dataset.action = 'delete';
+      deleteBtn.textContent = 'Delete';
+      actions.appendChild(deleteBtn);
+
+      row.append(preview, fields, actions);
+      els.logoSettingsBody.appendChild(row);
+    });
+  }
+
+  function openLogoSettings(trigger){
+    if(!els.logoSettingsModal) return;
+    renderLogoSettingsList();
+    els.logoSettingsModal.classList.add('open');
+    els.logoSettingsModal.setAttribute('aria-hidden','false');
+    lastSettingsTrigger = trigger || null;
+    const focusTarget = els.logoSettingsBody?.querySelector('input') || els.logoSettingsClose;
+    focusTarget?.focus?.();
+  }
+
+  function closeLogoSettings(){
+    if(!els.logoSettingsModal) return;
+    els.logoSettingsModal.classList.remove('open');
+    els.logoSettingsModal.setAttribute('aria-hidden','true');
+    if(lastSettingsTrigger){ lastSettingsTrigger.focus?.(); lastSettingsTrigger = null; }
+  }
+
+  function refreshGalleryFilters(){
+    filterGallery(els.logo1Gallery, els.logo1Search?.value);
+    filterGallery(els.logo2Gallery, els.logo2Search?.value);
+    filterGallery(els.sqLogoGallery, els.sqLogoSearch?.value);
+    filterGallery(els.vertLogoGallery, els.vertLogoSearch?.value);
+  }
+
   function buildGallery(scroller, onPick){
     if(!scroller) return;
     scroller.innerHTML='';
-    PARTNERS.forEach(p=>{
-      const it = document.createElement('button'); it.type='button'; it.className='libItem'; it.dataset.name=p.name.toLowerCase();
+    PARTNERS.filter(p=>p && (p.url||'').trim()).forEach(p=>{
+      const it = document.createElement('button'); it.type='button'; it.className='libItem'; it.dataset.name=(p.name||'').toLowerCase();
       it.innerHTML = `<img alt="${p.name}" src="${p.url}"><div class="cap">${p.name}</div>`;
       it.addEventListener('click', async ()=>{ scroller.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); it.classList.add('active'); await onPick(p); });
       scroller.appendChild(it);
@@ -1685,11 +2023,73 @@
     buildGallery(els.logo2Gallery, p=>loadLogoURL(p.url, els.logo2Prev, state.frost.logo2, 'logo2', p.name));
     buildGallery(els.sqLogoGallery, p=>loadLogoURL(p.url, els.sqLogoPrev, state.squareLogo, 'squareLogo', p.name));
     buildGallery(els.vertLogoGallery, p=>loadLogoURL(p.url, els.vertLogoPrev, state.vertLogo, 'vertLogo', p.name));
+    refreshGalleryFilters();
   }
   els.logo1Search.addEventListener('input', e=>filterGallery(els.logo1Gallery, e.target.value));
   els.logo2Search.addEventListener('input', e=>filterGallery(els.logo2Gallery, e.target.value));
   els.sqLogoSearch?.addEventListener('input', e=>filterGallery(els.sqLogoGallery, e.target.value));
   els.vertLogoSearch?.addEventListener('input', e=>filterGallery(els.vertLogoGallery, e.target.value));
+
+  document.querySelectorAll('[data-action="open-logo-settings"]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ openLogoSettings(btn); });
+  });
+  els.logoSettingsClose?.addEventListener('click', ()=>{ closeLogoSettings(); });
+  els.logoSettingsModal?.addEventListener('click', (e)=>{
+    const target = e.target;
+    if(target instanceof HTMLElement && target.dataset.action === 'close-logo-settings'){ closeLogoSettings(); }
+  });
+  els.logoSettingsAdd?.addEventListener('click', ()=>{
+    PARTNERS.push({ name:`New partner ${PARTNERS.length+1}`, url:'' });
+    persistPartners();
+    buildAllGalleries();
+    renderLogoSettingsList();
+    const nameInput = els.logoSettingsBody?.querySelector('.row:last-of-type input[data-field="name"]');
+    nameInput?.focus?.();
+    nameInput?.select?.();
+  });
+  els.logoSettingsBody?.addEventListener('input', (e)=>{
+    const input = e.target;
+    if(!(input instanceof HTMLInputElement) || !input.dataset.field) return;
+    const row = input.closest('.row');
+    if(!row) return;
+    const idx = Number(row.dataset.index);
+    if(Number.isNaN(idx) || !PARTNERS[idx]) return;
+    if(input.dataset.field === 'url'){
+      const img = row.querySelector('img');
+      if(img) img.src = input.value || LOGO_PLACEHOLDER;
+    } else if(input.dataset.field === 'name'){
+      const img = row.querySelector('img');
+      if(img) img.alt = input.value || `Logo ${idx+1}`;
+    }
+  });
+  els.logoSettingsBody?.addEventListener('change', (e)=>{
+    const input = e.target;
+    if(!(input instanceof HTMLInputElement) || !input.dataset.field) return;
+    const row = input.closest('.row');
+    if(!row) return;
+    const idx = Number(row.dataset.index);
+    if(Number.isNaN(idx) || !PARTNERS[idx]) return;
+    const field = input.dataset.field;
+    PARTNERS[idx][field] = input.value.trim();
+    persistPartners();
+    buildAllGalleries();
+    renderLogoSettingsList();
+  });
+  els.logoSettingsBody?.addEventListener('click', (e)=>{
+    const btn = e.target instanceof HTMLElement ? e.target.closest('button[data-action="delete"]') : null;
+    if(!btn) return;
+    const row = btn.closest('.row');
+    if(!row) return;
+    const idx = Number(row.dataset.index);
+    if(Number.isNaN(idx)) return;
+    PARTNERS.splice(idx,1);
+    persistPartners();
+    buildAllGalleries();
+    renderLogoSettingsList();
+  });
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && els.logoSettingsModal?.classList.contains('open')){ closeLogoSettings(); }
+  });
 
   // ---------- Export helpers ----------
   function bytesFromDataURL(dataURL){ try{ return atob(dataURL.split(',')[1]).length; }catch(e){ return Infinity; } }
@@ -1952,7 +2352,7 @@
   buildFormatChips();
   buildAllGalleries();
   els.toggleLogo2.checked = false; els.logo2Block.style.display='none';
-  els.toggleVertLogo.checked = true; els.vertLogoBlock.style.display='grid';
+  els.toggleVertLogo.checked = true; els.vertLogoBlock.style.display='grid'; if(els.vertLogoGroup){ els.vertLogoGroup.style.display='grid'; }
   fitPreviewZoomToStage();
   render();
   updateControls();
