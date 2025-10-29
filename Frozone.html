@@ -27,7 +27,7 @@
   html,body{height:100%}
   body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color:var(--ink);
     background: linear-gradient(180deg,var(--bg1),var(--bg2) 55%, var(--bg3));
-    transition: background .25s ease, color .2s ease;}
+    transition: background .45s ease, color .35s ease;}
   .wrap{max-width:1280px; margin:0 auto; padding:16px}
 
   header{position:sticky; top:0; z-index:40; backdrop-filter: blur(12px); background:var(--headerBg); border-bottom:1px solid var(--border); transition:background .25s ease}
@@ -42,13 +42,13 @@
   .right-head .team{font-weight:600}
   .right-head .by{font-size:12px; color:var(--muted)}
   .right-head a{color:var(--muted); text-decoration:none}
-  #themeToggle{position:fixed; right:28px; bottom:32px; width:56px; height:56px; border-radius:50%; display:grid; place-items:center; padding:0; margin:0; box-shadow:0 18px 32px rgba(15,23,42,0.18); background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; z-index:60; transition:transform .18s ease, box-shadow .18s ease;}
+  #themeToggle{position:fixed; right:28px; bottom:32px; width:56px; height:56px; border-radius:50%; display:grid; place-items:center; padding:0; margin:0; box-shadow:0 18px 32px rgba(15,23,42,0.18); background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; z-index:160; transition:transform .18s ease, box-shadow .18s ease; overflow:hidden;}
   #themeToggle:hover{transform:translateY(-2px); box-shadow:0 20px 38px rgba(15,23,42,0.22);}
   #themeToggle .btn-ico{filter:none; stroke:#fff; width:24px; height:24px;}
   #themeToggle .btn-text{display:none}
   #themeToggle:focus-visible{outline:3px solid rgba(255,255,255,0.75); outline-offset:4px}
 
-  .introScreen{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#6366f1,#0ea5e9); color:#fff; z-index:120; opacity:0; pointer-events:none; transition:opacity .6s ease, transform .6s ease; transform:scale(1.02)}
+  .introScreen{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; padding:40px 20px; background:radial-gradient(110% 120% at 15% 15%, rgba(99,102,241,0.75), rgba(14,165,233,0.95) 35%, rgba(8,47,73,0.98)); color:#fff; z-index:200; opacity:0; pointer-events:none; transition:opacity .6s ease, transform .6s ease; transform:scale(1.02)}
   .introScreen.show{opacity:1; pointer-events:auto}
   .introScreen.animate{transform:scale(1)}
   .introScreen.hide{opacity:0; pointer-events:none}
@@ -58,7 +58,8 @@
   .introLogoWrap img{width:56px; height:56px; object-fit:contain; filter:drop-shadow(0 12px 28px rgba(15,23,42,0.35))}
   .introInner h2{margin:0; font-size:32px; letter-spacing:0.14em; text-transform:uppercase}
   .introTagline{margin:0; font-size:14px; letter-spacing:0.32em; text-transform:uppercase; opacity:0.88}
-  .introVersion{margin-top:12px; padding:6px 16px; border-radius:999px; background:rgba(255,255,255,0.2); font-size:12px; letter-spacing:0.24em; text-transform:uppercase}
+  .introFooter{margin-top:auto; width:100%; display:flex; justify-content:center;}
+  .introVersion{padding:6px 18px; border-radius:999px; background:rgba(255,255,255,0.16); font-size:12px; letter-spacing:0.24em; text-transform:uppercase; box-shadow:0 10px 30px rgba(15,23,42,0.3)}
 
   .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:14px; background:var(--btn-bg); color:var(--ink); cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease, background .2s ease, color .2s ease, box-shadow .2s ease}
   .btn:active{transform:translateY(1px)}
@@ -124,8 +125,6 @@
     #formatRow{grid-template-columns:1fr}
   }
   .formatCard{position:relative; border:1px solid var(--border); border-radius:20px; padding:20px; background:var(--chip-bg); text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
-  .formatCard.wide{grid-column:span 2}
-  @media (max-width: 720px){ .formatCard.wide{grid-column:auto} }
   .formatCard .formatIcon{width:52px; height:52px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(59,130,246,0.22),rgba(99,102,241,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.35)}
   .formatCard .formatIcon svg{width:34px; height:auto}
   .formatCard .formatInfo{display:grid; gap:4px}
@@ -140,8 +139,6 @@
   .chip.active{border-color:var(--brand); background:#e6f2ff}
   .chip .meta{font-size:12px; color:var(--muted)}
   .chip .chipInner{display:flex; align-items:center; gap:10px}
-
-  .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:4; ry:4}
 
   .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);}
   .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .25s ease, border-color .2s ease; cursor:grab}
@@ -176,6 +173,36 @@
 
   .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:var(--chip-bg); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); white-space:nowrap; transition:background .2s ease, border-color .2s ease}
   .chipInfo.flexible{max-width:none; white-space:normal; word-break:break-word; flex-wrap:wrap; align-items:flex-start}
+
+
+  .bgSourceSection{display:none;}
+  .bgSourceSection.active{display:block;}
+  .bgSourceTabs{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap}
+  .bgBlock{display:none; margin-top:16px}
+  .bgBlock.active{display:grid; gap:14px}
+  .bgBlock.inline{display:flex; align-items:center; gap:10px}
+  .bgBlock.inline.active{display:flex}
+  .bgUploadChip{display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:12px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:var(--shadow); font-size:13px}
+  .bgUploadChip button{all:unset; cursor:pointer; color:var(--muted); padding:4px; border-radius:50%; transition:background .2s ease, color .2s ease}
+  .bgUploadChip button:hover{color:var(--accent); background:rgba(244,63,94,0.12)}
+  .bgLinkRow{display:flex; gap:10px; flex-wrap:wrap}
+  .bgLinkRow input{flex:1 1 240px}
+  .colorPalette{display:grid; grid-template-columns:repeat(auto-fit,minmax(36px,1fr)); gap:8px}
+  .colorChip{width:36px; height:36px; border-radius:50%; border:2px solid transparent; box-shadow:inset 0 1px 3px rgba(15,23,42,0.12); cursor:pointer; transition:transform .18s ease, box-shadow .18s ease}
+  .colorChip:hover{transform:translateY(-2px); box-shadow:0 6px 14px rgba(15,23,42,0.18)}
+  .colorChip.active{border-color:var(--brand); box-shadow:0 0 0 3px rgba(14,165,233,0.25)}
+  .unsplashControls{display:grid; gap:12px}
+  .unsplashSegRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .unsplashResults{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
+  .unsplashItem{position:relative; border-radius:var(--radius-sm); overflow:hidden; border:1px solid var(--border); padding:0; background:var(--stageInner); cursor:pointer; box-shadow:0 6px 16px rgba(15,23,42,0.08); transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease}
+  .unsplashItem:hover{transform:translateY(-2px); border-color:rgba(14,165,233,0.6); box-shadow:0 12px 28px rgba(14,165,233,0.18)}
+  .unsplashItem img{display:block; width:100%; height:100%; object-fit:cover}
+  .gradientPickers{display:flex; flex-wrap:wrap; gap:10px}
+  .gradientPickers label{display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--muted)}
+  .gradientPreview{width:120px; height:120px; border-radius:16px; border:1px solid var(--border); box-shadow:var(--shadow); background:linear-gradient(135deg,#38bdf8,#6366f1);}
+  .gradientActions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .bgNote{margin-top:8px; font-size:12px; color:var(--muted)}
+  @media (max-width: 720px){ .unsplashResults{grid-template-columns:repeat(2,1fr);} }
 
   .libWrap{display:grid; gap:8px}
   .libHeader{display:flex; align-items:center; gap:10px}
@@ -258,11 +285,11 @@
   .thumbNum{font-size:12px; font-weight:700; color:var(--muted); flex:0 0 auto}
   .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
-  .previewControlRow{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px}
-  .previewZoomControl{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-  .previewZoomControl .muted{font-size:13px}
-  .previewZoomControl input[type="range"]{width:180px}
-  .previewName{flex:1; min-width:220px}
+  .previewControlRow{display:flex; flex-wrap:nowrap; align-items:center; gap:12px}
+  .previewName{flex:1 1 70%; min-width:0; max-width:70%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; direction:rtl; text-align:left;}
+  .previewZoomControl{flex:0 0 28%; display:flex; align-items:center; gap:10px; justify-content:flex-end; min-width:180px}
+  .previewZoomControl .muted{font-size:13px; white-space:nowrap}
+  .previewZoomControl input[type="range"]{flex:0 0 55%; min-width:140px}
 
   .mockupBlock{position:relative; border:1px solid var(--border); border-radius:16px; padding:18px; display:grid; gap:16px; background:linear-gradient(135deg,rgba(148,197,255,0.12),rgba(244,250,255,0.22)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
   .mockupOverlay{position:absolute; inset:0; backdrop-filter:blur(10px); background:rgba(15,23,42,0.18); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:22px; gap:10px; color:#f8fafc; font-weight:600}
@@ -272,11 +299,11 @@
   .globalDropOverlay{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:var(--brand2); background:rgba(14,165,233,0.18); backdrop-filter:blur(22px); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:50; text-align:center; padding:40px}
   .globalDropOverlay.show{opacity:1}
 
-  .theme-transition{position:fixed; inset:0; pointer-events:none; background:linear-gradient(135deg,#e0f2fe,#eef2ff); clip-path:circle(0 at var(--cx) var(--cy)); opacity:1; transition:clip-path .6s ease-out, opacity .4s ease-out; z-index:80}
-  .theme-transition[data-theme="dark"]{background:linear-gradient(135deg,#0f172a,#1f2937)}
-  .theme-transition[data-theme="light"]{background:linear-gradient(135deg,#e0f2fe,#eef2ff)}
-  .theme-transition.expand{clip-path:circle(var(--radius) at var(--cx) var(--cy))}
-  .theme-transition.fade{opacity:0}
+  .theme-transition{position:fixed; inset:0; pointer-events:none; z-index:150; opacity:1; background:var(--bg3); clip-path:circle(0 at var(--cx) var(--cy)); transition:clip-path .6s cubic-bezier(.22,.68,.29,1.11), opacity .35s ease .2s;}
+  .theme-transition.expand{clip-path:circle(var(--radius) at var(--cx) var(--cy));}
+  .theme-transition.fade{opacity:0;}
+  .theme-transition[data-theme="dark"]{background:linear-gradient(160deg,#0b1120,#0f182a 55%,#111c2f)}
+  .theme-transition[data-theme="light"]{background:linear-gradient(160deg,#ecf3ff,#f8fbff 55%,#ffffff)}
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
 
@@ -322,11 +349,112 @@
 </style>
 </head>
 <body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="icon-upload" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m7.5 11 4.5-4.5L16.5 11"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 6.5V18"/>
+      </symbol>
+      <symbol id="icon-folder-upload" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9 16.5 12 13.5l3 3"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 19.5v-6"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3.75 9v9.75A2.25 2.25 0 0 0 6 21h12a2.25 2.25 0 0 0 2.25-2.25V9A2.25 2.25 0 0 0 18 6.75h-6.62a2.25 2.25 0 0 1-1.59-.66L8.12 4.66A2.25 2.25 0 0 0 6.53 4H4.5A2.25 2.25 0 0 0 2.25 6.25v.75"/>
+      </symbol>
+      <symbol id="icon-clipboard" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9 4.5h6a2.25 2.25 0 0 1 2.25 2.25V19.5A1.5 1.5 0 0 1 15.75 21h-7.5A1.5 1.5 0 0 1 6.75 19.5V6.75"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9.75 3v2.75h4.5V3"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m9.5 11.5 2.5-2.5 2.5 2.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 9v8"/>
+      </symbol>
+      <symbol id="icon-reset" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M20 11a8 8 0 1 1-4.6-7.24"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M15.5 3.5H20v4.5"/>
+      </symbol>
+      <symbol id="icon-trash" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M6 7.5h12"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9.75 11.25v6"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M14.25 11.25v6"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5 8.25 4.5h7.5l.75 3"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v11.25A2.25 2.25 0 0 1 15.75 21h-7.5A2.25 2.25 0 0 1 6 18.75V7.5"/>
+      </symbol>
+      <symbol id="icon-adjust" viewBox="0 0 24 24" fill="none">
+        <circle cx="8.25" cy="7.5" r="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3 7.5h3.75"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9.75 7.5H21"/>
+        <circle cx="13.5" cy="12" r="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3 12h9"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M15 12H21"/>
+        <circle cx="11.25" cy="16.5" r="1.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3 16.5h6"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12.75 16.5H21"/>
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/>
+      </symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M18 6 6 18"/>
+      </symbol>
+      <symbol id="icon-format-h" viewBox="0 0 24 24" fill="none">
+        <rect x="2.75" y="5.5" width="18.5" height="13" rx="3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M6.5 9.5h6.25"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M6.5 12.5h11"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M6.5 15.5h8.5"/>
+      </symbol>
+      <symbol id="icon-format-b" viewBox="0 0 24 24" fill="none">
+        <rect x="2.75" y="8" width="18.5" height="8" rx="2.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M6.5 10.75h7.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M6.5 13.25h9.75"/>
+      </symbol>
+      <symbol id="icon-format-s" viewBox="0 0 24 24" fill="none">
+        <rect x="4.25" y="4.25" width="15.5" height="15.5" rx="3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M8.5 9.5h7"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M8.5 12h7"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M8.5 14.5h5.25"/>
+      </symbol>
+      <symbol id="icon-format-v" viewBox="0 0 24 24" fill="none">
+        <rect x="7.5" y="2.75" width="9" height="18.5" rx="2.75" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9.5 7.5h4"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9.5 12h4"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9.5 16.5h3"/>
+      </symbol>
+      <symbol id="icon-flip-h" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M4 9h11.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m12.5 5 4.5 4-4.5 4"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M20 15H8.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m11.5 19-4.5-4 4.5-4"/>
+      </symbol>
+      <symbol id="icon-flip-v" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M9 4v11.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m5 12.5 4 4.5 4-4.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M15 20V8.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m19 11.5-4-4.5-4 4.5"/>
+      </symbol>
+      <symbol id="icon-rotate" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M20 12a8 8 0 1 1-8-8"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 4h8v8"/>
+      </symbol>
+      <symbol id="icon-export" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m7.5 11.5 4.5 4.5 4.5-4.5"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M12 4v12"/>
+      </symbol>
+      <symbol id="icon-export-zip" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3 7.5A2.25 2.25 0 0 1 5.25 5.25h4.379a2.25 2.25 0 0 1 1.591.659L12.06 7.5h6.69A2.25 2.25 0 0 1 21 9.75v8.25A2.25 2.25 0 0 1 18.75 20.25H5.25A2.25 2.25 0 0 1 3 18V7.5Z"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m10.5 13.5 3 3 3-3"/>
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.5V11"/>
+      </symbol>
+    </defs>
+  </svg>
   <div id="introScreen" class="introScreen show" aria-hidden="true">
     <div class="introInner">
       <div class="introLogoWrap"><img src="https://i.postimg.cc/QMTckmdX/unnamed-1-1.png" alt=""></div>
       <h2>Frozone</h2>
       <p class="introTagline">LiveOps creative toolkit</p>
+    </div>
+    <div class="introFooter">
       <span class="introVersion">v6.18</span>
     </div>
   </div>
@@ -362,9 +490,7 @@
             <div class="uploadCell">
               <label class="btn primary uploadAction" title="Upload image">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 17V7"></path>
-                  <path d="m8.5 10.5 3.5-3.5 3.5 3.5"></path>
-                  <path d="M5 19h14"></path>
+                  <use href="#icon-upload"></use>
                 </svg>
                 <span class="btn-text">Upload image</span>
                 <input id="file" type="file" accept="image/*" style="display:none" />
@@ -373,9 +499,7 @@
             <div class="uploadCell">
               <label class="btn ghost uploadAction" title="Upload folder">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M3.5 7h5l2 2H21a1.5 1.5 0 0 1 1.5 1.5V17a2.5 2.5 0 0 1-2.5 2.5H5A3 3 0 0 1 2 16.5v-6A3 3 0 0 1 5 7"></path>
-                  <path d="M12 13V9"></path>
-                  <path d="m9.5 11.5 2.5-2.5 2.5 2.5"></path>
+                  <use href="#icon-folder-upload"></use>
                 </svg>
                 <span class="btn-text">Upload folder</span>
                 <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
@@ -384,10 +508,7 @@
             <div class="uploadCell">
               <button class="btn ghost uploadAction" type="button" id="pasteUrlBtn">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 3h6a2 2 0 0 1 2 2v16H7V5a2 2 0 0 1 2-2Z"></path>
-                  <path d="M9 3.5V5h6V3.5A1.5 1.5 0 0 0 13.5 2h-3A1.5 1.5 0 0 0 9 3.5Z"></path>
-                  <path d="M12 11v6"></path>
-                  <path d="m9.5 13.5 2.5-2.5 2.5 2.5"></path>
+                  <use href="#icon-clipboard"></use>
                 </svg>
                 <span class="btn-text">Paste image URL</span>
               </button>
@@ -395,8 +516,7 @@
             <div class="uploadCell">
               <button class="btn ghost uploadAction" id="reset">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M20 11a8 8 0 1 1-8-8"></path>
-                  <path d="M8 3v4H4"></path>
+                  <use href="#icon-reset"></use>
                 </svg>
                 <span class="btn-text">Reset current</span>
               </button>
@@ -404,11 +524,7 @@
             <div class="uploadCell">
               <button class="btn danger ghost uploadAction" id="deleteAllBtn" title="Delete all uploaded images">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M4 7h16"></path>
-                  <path d="M10 4h4l1 3"></path>
-                  <path d="M6.5 7v11.5A1.5 1.5 0 0 0 8 20h8a1.5 1.5 0 0 0 1.5-1.5V7"></path>
-                  <path d="m9 12 6 6"></path>
-                  <path d="m15 12-6 6"></path>
+                  <use href="#icon-trash"></use>
                 </svg>
                 <span class="btn-text">Delete all</span>
               </button>
@@ -416,11 +532,7 @@
             <div class="uploadCell">
               <button class="btn danger uploadAction" id="deleteBtn" title="Delete current image">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 7h14"></path>
-                  <path d="M9.5 7 10.5 4.5h3L14.5 7"></path>
-                  <path d="M9 11v6"></path>
-                  <path d="M15 11v6"></path>
-                  <path d="M7 7v11a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7"></path>
+                  <use href="#icon-trash"></use>
                 </svg>
                 <span class="btn-text">Delete current</span>
               </button>
@@ -440,6 +552,77 @@
               <button data-v="S">S 1080×1080</button>
             </div>
           </div>
+        </div>
+
+        <div class="section bgSourceSection" id="backgroundSourceSection">
+          <div class="section-title"><span class="badge">2b</span> Background source</div>
+          <div class="bgSourceTabs">
+            <div class="seg" id="bgSourceSeg">
+              <button type="button" data-mode="upload" class="active">Upload</button>
+              <button type="button" data-mode="link">Paste link</button>
+              <button type="button" data-mode="unsplash">Unsplash</button>
+              <button type="button" data-mode="gradient">Gradient</button>
+            </div>
+          </div>
+          <div class="bgBlock active" data-mode="upload" id="bgUploadBlock">
+            <label class="btn ghost">Upload image
+              <input id="bgUpload" type="file" accept="image/*" style="display:none"/>
+            </label>
+            <div id="bgUploadStatus" aria-live="polite"></div>
+          </div>
+          <div class="bgBlock inline" data-mode="link" id="bgLinkBlock">
+            <div class="bgLinkRow">
+              <input id="bgLinkInput" type="url" placeholder="Paste image link…">
+              <button class="btn small primary" id="bgLinkLoad" type="button">Load</button>
+            </div>
+          </div>
+          <div class="bgBlock" data-mode="unsplash" id="bgUnsplashBlock">
+            <div class="unsplashControls">
+              <input id="unsplashQuery" type="search" placeholder="Search Unsplash…">
+              <div class="colorPalette" id="unsplashColorPalette">
+                <button type="button" class="colorChip active" data-color="" style="background:linear-gradient(135deg,#e2e8f0,#f8fafc)" aria-label="Any color"></button>
+                <button type="button" class="colorChip" data-color="white" style="background:#f8fafc" aria-label="White"></button>
+                <button type="button" class="colorChip" data-color="black" style="background:#0f172a" aria-label="Black"></button>
+                <button type="button" class="colorChip" data-color="red" style="background:#ef4444" aria-label="Red"></button>
+                <button type="button" class="colorChip" data-color="orange" style="background:#f97316" aria-label="Orange"></button>
+                <button type="button" class="colorChip" data-color="yellow" style="background:#facc15" aria-label="Yellow"></button>
+                <button type="button" class="colorChip" data-color="green" style="background:#22c55e" aria-label="Green"></button>
+                <button type="button" class="colorChip" data-color="blue" style="background:#3b82f6" aria-label="Blue"></button>
+                <button type="button" class="colorChip" data-color="purple" style="background:#8b5cf6" aria-label="Purple"></button>
+                <button type="button" class="colorChip" data-color="pink" style="background:#ec4899" aria-label="Pink"></button>
+                <button type="button" class="colorChip" data-color="beige" style="background:#f5e6d3" aria-label="Beige"></button>
+              </div>
+              <div class="unsplashSegRow">
+                <div class="seg" id="unsplashToneSeg">
+                  <button type="button" data-tone="light" class="active">Light</button>
+                  <button type="button" data-tone="dark">Dark</button>
+                </div>
+                <div class="seg" id="unsplashStyleSeg">
+                  <button type="button" data-style="pattern" class="active">Pattern</button>
+                  <button type="button" data-style="gradient">Gradient</button>
+                  <button type="button" data-style="texture">Texture</button>
+                  <button type="button" data-style="shapes">Shapes</button>
+                  <button type="button" data-style="liquid">Liquid</button>
+                </div>
+              </div>
+              <button class="btn primary" type="button" id="unsplashSearchBtn">Search</button>
+            </div>
+            <div class="unsplashResults" id="unsplashResults" role="list"></div>
+          </div>
+          <div class="bgBlock" data-mode="gradient" id="bgGradientBlock">
+            <div class="muted">Select up to 3 colors</div>
+            <div class="gradientPickers">
+              <label>Color 1<input type="color" id="gradientColor1" value="#38bdf8"></label>
+              <label>Color 2<input type="color" id="gradientColor2" value="#6366f1"></label>
+              <label>Color 3<input type="color" id="gradientColor3" value="#f472b6"></label>
+            </div>
+            <div class="gradientActions">
+              <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
+              <button class="btn ghost" type="button" id="gradientShuffle">Generate again</button>
+              <div class="gradientPreview" id="gradientPreview" role="img" aria-label="Gradient preview"></div>
+            </div>
+          </div>
+          <div class="bgNote muted">All background sources are export-safe and compatible with canvas rendering.</div>
         </div>
 
         <!-- Step 3: Adjust -->
@@ -469,29 +652,20 @@
           </div>
           <div class="adjust-actions">
             <button class="btn" id="flipH">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14"></path>
-                <path d="M8 8l-3 3 3 3"></path>
-                <path d="M16 8l3 3-3 3"></path>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <use href="#icon-flip-h"></use>
               </svg>
               <span class="btn-text">Flip horizontal</span>
             </button>
             <button class="btn" id="flipV">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14"></path>
-                <path d="M8 8l3-3 3 3"></path>
-                <path d="M8 16l3 3 3-3"></path>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <use href="#icon-flip-v"></use>
               </svg>
               <span class="btn-text">Flip vertical</span>
             </button>
             <button class="btn" id="rotate">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7.5 9a6.5 6.5 0 0 1 10-4.9"></path>
-                <path d="M17.5 4h-3.5"></path>
-                <path d="M17.5 4v3.5"></path>
-                <path d="M16.5 15a6.5 6.5 0 0 1-10 4.9"></path>
-                <path d="M6.5 20h3.5"></path>
-                <path d="M6.5 20v-3.5"></path>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <use href="#icon-rotate"></use>
               </svg>
               <span class="btn-text">Rotate 90°</span>
             </button>
@@ -529,9 +703,7 @@
               <div class="logoSectionActions">
                 <label class="btn ghost uploadAction">
                   <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 17V6"></path>
-                    <path d="m8 10 4-4 4 4"></path>
-                    <path d="M5 19h14"></path>
+                    <use href="#icon-upload"></use>
                   </svg>
                   <span class="btn-text">Upload logo 1</span>
                   <input id="logo1Input" type="file" accept="image/*" style="display:none"/>
@@ -563,12 +735,7 @@
                   <input id="logo1Search" type="search" placeholder="Search partners…" />
                   <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
                     <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                      <path d="M5 7h14"></path>
-                      <path d="M5 12h14"></path>
-                      <path d="M5 17h14"></path>
-                      <circle cx="9" cy="7" r="1.5"></circle>
-                      <circle cx="15" cy="12" r="1.5"></circle>
-                      <circle cx="11" cy="17" r="1.5"></circle>
+                      <use href="#icon-adjust"></use>
                     </svg>
                   </button>
                 </div>
@@ -586,9 +753,7 @@
               <div class="logoSectionActions">
                 <label class="btn ghost uploadAction">
                   <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 17V6"></path>
-                    <path d="m8 10 4-4 4 4"></path>
-                    <path d="M5 19h14"></path>
+                    <use href="#icon-upload"></use>
                   </svg>
                   <span class="btn-text">Upload logo 2</span>
                   <input id="logo2Input" type="file" accept="image/*" style="display:none"/>
@@ -620,12 +785,7 @@
                   <input id="logo2Search" type="search" placeholder="Search partners…" />
                   <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
                     <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                      <path d="M5 7h14"></path>
-                      <path d="M5 12h14"></path>
-                      <path d="M5 17h14"></path>
-                      <circle cx="9" cy="7" r="1.5"></circle>
-                      <circle cx="15" cy="12" r="1.5"></circle>
-                      <circle cx="11" cy="17" r="1.5"></circle>
+                      <use href="#icon-adjust"></use>
                     </svg>
                   </button>
                 </div>
@@ -648,9 +808,7 @@
             <div class="row">
               <label class="btn ghost uploadAction">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 17V7"></path>
-                  <path d="m8.5 10.5 3.5-3.5 3.5 3.5"></path>
-                  <path d="M5 19h14"></path>
+                  <use href="#icon-upload"></use>
                 </svg>
                 <span class="btn-text">Square logo</span>
                 <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
@@ -671,13 +829,8 @@
               <div class="libHeader">
                 <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
                 <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 7h14"></path>
-                    <path d="M5 12h14"></path>
-                    <path d="M5 17h14"></path>
-                    <circle cx="9" cy="7" r="1.5"></circle>
-                    <circle cx="15" cy="12" r="1.5"></circle>
-                    <circle cx="11" cy="17" r="1.5"></circle>
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <use href="#icon-adjust"></use>
                   </svg>
                 </button>
               </div>
@@ -696,9 +849,7 @@
             <div class="row">
               <label class="btn ghost uploadAction">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 17V7"></path>
-                  <path d="m8.5 10.5 3.5-3.5 3.5 3.5"></path>
-                  <path d="M5 19h14"></path>
+                  <use href="#icon-upload"></use>
                 </svg>
                 <span class="btn-text">Vertical logo</span>
                 <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
@@ -719,13 +870,8 @@
               <div class="libHeader">
                 <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
                 <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 7h14"></path>
-                    <path d="M5 12h14"></path>
-                    <path d="M5 17h14"></path>
-                    <circle cx="9" cy="7" r="1.5"></circle>
-                    <circle cx="15" cy="12" r="1.5"></circle>
-                    <circle cx="11" cy="17" r="1.5"></circle>
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <use href="#icon-adjust"></use>
                   </svg>
                 </button>
               </div>
@@ -753,18 +899,14 @@
           <div class="section-title"><span class="badge">6</span> Export</div>
           <div class="exportActions">
             <button class="btn primary" id="exportBtn" disabled>
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 3v12"></path>
-                <path d="M7 11l5 5 5-5"></path>
-                <rect x="4" y="19" width="16" height="2" rx="1"></rect>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <use href="#icon-export"></use>
               </svg>
               <span class="btn-text">Export current</span>
             </button>
             <button class="btn ghost" id="exportAllBtn" disabled>
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 3h7l2 2h9v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3z"></path>
-                <path d="M12 12v5"></path>
-                <path d="M9 14l3 3 3-3"></path>
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                <use href="#icon-export-zip"></use>
               </svg>
               <span class="btn-text">Export all (ZIP)</span>
             </button>
@@ -850,8 +992,8 @@
       <div class="modalHeader">
         <span id="partnerSettingsTitle">Partner logo library</span>
         <button class="btn icon ghost partnerSettingsClose" type="button" aria-label="Close partner logo settings">
-          <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 6l12 12M18 6l-12 12"></path>
+          <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <use href="#icon-x"></use>
           </svg>
         </button>
       </div>
@@ -863,8 +1005,7 @@
         <div class="modalFooterStart">
           <button class="btn ghost" type="button" id="partnerSettingsAdd">
             <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-              <path d="M12 5v14"></path>
-              <path d="M5 12h14"></path>
+              <use href="#icon-plus"></use>
             </svg>
             <span class="btn-text">Add new logo</span>
           </button>
@@ -916,10 +1057,14 @@
 <script>
 (function(){
   const FORMATS = {
-    HORIZ:   { key:'HORIZ', label:'Horizontal', sub:'Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
-    SQUARE:  { key:'SQUARE',label:'Square',     sub:'Carousel / Story Exp / Co-Reg',          icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
-    VERT:    { key:'VERT',  label:'Vertical',   sub:'Interstitial',                           icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
+    HORIZ:  { key:'HORIZ',  label:'Horizontal',        sub:'Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
+    BANNER: { key:'BANNER', label:'Banner background', sub:'1120×360 px',                              icon:'B', wPreview:360, hPreview:116, wExport:1120, hExport:360 },
+    SQUARE: { key:'SQUARE', label:'Square',            sub:'Carousel / Story Exp / Co-Reg',            icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
+    VERT:   { key:'VERT',   label:'Vertical',          sub:'Interstitial',                             icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
   };
+  const FORMAT_ORDER = ['HORIZ','BANNER','SQUARE','VERT'];
+  const BG_MODES = ['upload','link','unsplash','gradient'];
+  const UNSPLASH_ACCESS_KEY = 'lS5t0PyTTNcbftZPooe7sNzTb7zLx5K82dY5UZGh6gw';
 
   const partnerDataScript = document.getElementById('partnerData');
   let partnerLibrary = [];
@@ -947,6 +1092,16 @@
     deleteBtn: document.getElementById('deleteBtn'),
 
     formatRow: document.getElementById('formatRow'),
+    backgroundSection: document.getElementById('backgroundSourceSection'),
+    bgSourceSeg: document.getElementById('bgSourceSeg'),
+    bgBlocks: Array.from(document.querySelectorAll('.bgBlock')),
+    bgUpload: document.getElementById('bgUpload'), bgUploadStatus: document.getElementById('bgUploadStatus'),
+    bgLinkInput: document.getElementById('bgLinkInput'), bgLinkLoad: document.getElementById('bgLinkLoad'),
+    unsplashQuery: document.getElementById('unsplashQuery'), unsplashColorPalette: document.getElementById('unsplashColorPalette'),
+    unsplashToneSeg: document.getElementById('unsplashToneSeg'), unsplashStyleSeg: document.getElementById('unsplashStyleSeg'),
+    unsplashSearchBtn: document.getElementById('unsplashSearchBtn'), unsplashResults: document.getElementById('unsplashResults'),
+    gradientColor1: document.getElementById('gradientColor1'), gradientColor2: document.getElementById('gradientColor2'), gradientColor3: document.getElementById('gradientColor3'),
+    gradientGenerate: document.getElementById('gradientGenerate'), gradientShuffle: document.getElementById('gradientShuffle'), gradientPreview: document.getElementById('gradientPreview'),
     vertSizeRow: document.getElementById('vertSizeRow'), vertSizeSeg: document.getElementById('vertSizeSeg'),
     brightness: document.getElementById('brightness'), bVal: document.getElementById('bVal'),
     saturation: document.getElementById('saturation'), sVal: document.getElementById('sVal'),
@@ -1000,6 +1155,7 @@
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
+    carouselWrap: document.querySelector('.carouselWrap'),
     carousel: document.getElementById('imageCarousel'), carouselEmpty: document.getElementById('carouselEmpty'),
     deleteAllBtn: document.getElementById('deleteAllBtn'),
     globalDropOverlay: document.getElementById('globalDropOverlay'),
@@ -1026,6 +1182,11 @@
 
     format: FORMATS.HORIZ,
     vertVariant: 'L',
+    backgroundMode: 'upload',
+    bannerBackground: { src:null, label:'', width:0, height:0, mode:'upload' },
+    unsplash: { color:'', tone:'light', style:'pattern', results:[] },
+    gradientColors: ['#38bdf8','#6366f1','#f472b6'],
+    lastStandard: null,
     imageSrc: null,
     natural: {w:0,h:0},
     brightness: 100, saturation: 100, contrast: 100,
@@ -1138,17 +1299,19 @@
   }
 
   function iconSVG(kind){
-    if(kind==='H'){ return `<svg width="40" height="28" viewBox="0 0 40 28" aria-hidden="true"><rect x="2" y="4" width="36" height="20" class="iconBox"/></svg>`; }
-    if(kind==='S'){ return `<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="20" height="20" class="iconBox"/></svg>`; }
-    return `<svg width="28" height="40" viewBox="0 0 28 40" aria-hidden="true"><rect x="4" y="2" width="20" height="36" class="iconBox"/></svg>`;
+    if(kind==='H'){ return `<svg width="44" height="28" viewBox="0 0 24 24" aria-hidden="true" fill="none"><use href="#icon-format-h"></use></svg>`; }
+    if(kind==='B'){ return `<svg width="44" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none"><use href="#icon-format-b"></use></svg>`; }
+    if(kind==='S'){ return `<svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true" fill="none"><use href="#icon-format-s"></use></svg>`; }
+    return `<svg width="32" height="42" viewBox="0 0 24 24" aria-hidden="true" fill="none"><use href="#icon-format-v"></use></svg>`;
   }
 
   function buildFormatChips(){
     els.formatRow.innerHTML = '';
-    Object.values(FORMATS).forEach(f => {
+    FORMAT_ORDER.forEach(key => {
+      const f = FORMATS[key];
+      if(!f) return;
       const b = document.createElement('button');
       const classes = ['formatCard'];
-      if(f.key==='HORIZ') classes.push('wide');
       if(state.format.key===f.key) classes.push('active');
       b.type = 'button'; b.className = classes.join(' ');
       b.dataset.key = f.key;
@@ -1187,10 +1350,50 @@
   }
 
   function setFormat(key){
-    if(key==='VERT'){ state.format = { ...FORMATS.VERT }; applyVerticalVariant(state.vertVariant); }
-    else { state.format = { ...(key==='HORIZ' ? FORMATS.HORIZ : FORMATS.SQUARE) }; }
+    const prevKey = state.format?.key || 'HORIZ';
+    if(key==='VERT'){
+      state.format = { ...FORMATS.VERT };
+      applyVerticalVariant(state.vertVariant);
+    } else if(FORMATS[key]){
+      state.format = { ...FORMATS[key] };
+      if(key!=='BANNER'){
+        if(prevKey==='BANNER' && state.lastStandard){
+          state.imageSrc = state.lastStandard.imageSrc;
+          state.natural = { ...state.lastStandard.natural };
+          state.current = state.lastStandard.current;
+          state.lastStandard = null;
+        }
+      }
+    } else {
+      state.format = { ...FORMATS.HORIZ };
+    }
+
+    if(key==='BANNER'){
+      if(prevKey!=='BANNER'){
+        state.lastStandard = {
+          imageSrc: state.imageSrc,
+          natural: { ...state.natural },
+          current: state.current
+        };
+      }
+      if(state.bannerBackground.src){
+        syncBannerToStage({ fit:true });
+      } else {
+        state.imageSrc = null;
+        state.natural = {w:0,h:0};
+        if(els.img){ els.img.removeAttribute('src'); }
+      }
+      state.current = -1;
+    } else if(prevKey==='BANNER' && state.lastStandard){
+      state.imageSrc = state.lastStandard.imageSrc;
+      state.natural = { ...state.lastStandard.natural };
+      state.current = state.lastStandard.current;
+      state.lastStandard = null;
+      if(state.imageSrc && els.img){ els.img.src = state.imageSrc; }
+    }
+
     updateFormatChipActive();
-    if(state.imageSrc){ computeCover(); render(); updateControls(); }
+    if(state.imageSrc){ computeCover(); render(); updateControls(); } else { updateControls(); render(); }
   }
   function variantDims(){
     if(state.vertVariant==='L') return { wPrev:300, hPrev:533, wExp:1080, hExp:1920 };
@@ -1205,31 +1408,317 @@
     updateFormatChipActive();
   }
 
-  function effectiveDims(){
-    const rot = ((state.rotation % 360)+360)%360;
-    return (rot===90 || rot===270) ? { w: state.natural.h, h: state.natural.w } : { w: state.natural.w, h: state.natural.h };
+  function shortenLabel(text){
+    const value = (text || '').trim();
+    if(!value) return '—';
+    if(value.length <= 48) return value;
+    return `${value.slice(0,18)}…${value.slice(-20)}`;
   }
-  function computeCover(){
-    const {wPreview:fw,hPreview:fh} = state.format; const eff = effectiveDims();
-    const w = eff.w, h = eff.h;
-    if(!w||!h){ state.coverScale=1; state.limits={x:0,y:0,imgW:0,imgH:0}; return; }
-    const scaleCover = Math.max(fw/w, fh/h);
-    state.coverScale = scaleCover;
-    const imgW = (state.rotation%180===0 ? state.natural.w : state.natural.h) * scaleCover * state.imgZoom;
-    const imgH = (state.rotation%180===0 ? state.natural.h : state.natural.w) * scaleCover * state.imgZoom;
-    state.limits = { x:(imgW - fw)/2, y:(imgH - fh)/2, imgW, imgH };
-    state.offset.x = Math.max(-state.limits.x, Math.min(state.offset.x, state.limits.x));
-    state.offset.y = Math.max(-state.limits.y, Math.min(state.offset.y, state.limits.y));
+
+  function getPreviewLabel(){
+    if(state.format.key==='BANNER'){
+      if(state.bannerBackground.src){
+        return shortenLabel(state.bannerBackground.label || 'Banner background');
+      }
+      return 'Select a background';
+    }
+    if(state.current>=0){
+      return shortenLabel(state.images[state.current].name || 'image');
+    }
+    return state.imageSrc ? 'image' : '—';
+  }
+
+  function renderBackgroundStatus(active){
+    const wrap = els.bgUploadStatus;
+    if(!wrap) return;
+    wrap.innerHTML = '';
+    if(!active){
+      return;
+    }
+    if(state.bannerBackground.src){
+      const chip = document.createElement('div');
+      chip.className = 'bgUploadChip';
+      const label = document.createElement('span');
+      label.textContent = shortenLabel(state.bannerBackground.label || 'Banner background');
+      chip.appendChild(label);
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.setAttribute('aria-label','Remove background image');
+      remove.textContent = '×';
+      remove.addEventListener('click', clearBannerBackground);
+      chip.appendChild(remove);
+      wrap.appendChild(chip);
+    } else {
+      const note = document.createElement('div');
+      note.className = 'muted';
+      note.textContent = 'No background selected yet.';
+      wrap.appendChild(note);
+    }
+  }
+
+  function setBackgroundMode(mode){
+    const next = BG_MODES.includes(mode) ? mode : 'upload';
+    state.backgroundMode = next;
+    if(els.bgSourceSeg){
+      els.bgSourceSeg.querySelectorAll('button').forEach(btn=>{
+        const isActive = btn.dataset.mode === next;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+      });
+    }
+    if(els.bgBlocks){
+      els.bgBlocks.forEach(block=>{
+        const isActive = block.dataset.mode === next;
+        block.classList.toggle('active', isActive);
+        if(isActive){
+          if(block.classList.contains('inline')){ block.style.display = 'flex'; }
+          else { block.style.display = 'grid'; }
+        } else {
+          block.style.display = 'none';
+        }
+      });
+    }
+  }
+
+  function syncBannerToStage(opts = {}){
+    if(!state.bannerBackground.src) return;
+    state.imageSrc = state.bannerBackground.src;
+    state.natural = { w: state.bannerBackground.width || 0, h: state.bannerBackground.height || 0 };
+    if(els.img){
+      els.img.crossOrigin = 'anonymous';
+      els.img.src = state.bannerBackground.src;
+    }
+    if(opts.fit){ fitPreviewZoomToStage(); }
+  }
+
+  async function applyBannerBackground(src, label, opts = {}){
+    if(!src) return;
+    try{
+      const image = await loadImageCORS(src);
+      const width = image?.naturalWidth || image?.width || 0;
+      const height = image?.naturalHeight || image?.height || 0;
+      state.bannerBackground = {
+        src,
+        label: label || state.bannerBackground.label || 'Banner background',
+        width,
+        height,
+        mode: opts.mode || state.backgroundMode
+      };
+      if(els.img){
+        els.img.crossOrigin = 'anonymous';
+        els.img.src = src;
+      }
+      state.imageSrc = src;
+      state.natural = { w: width, h: height };
+      state.current = -1;
+      computeCover();
+      if(opts.fit){ fitPreviewZoomToStage(); }
+      render();
+      updateControls();
+    }catch(err){
+      console.error('Failed to load background', err);
+      alert('Unable to load this image. Please try another source.');
+    }
+    renderBackgroundStatus(state.format.key==='BANNER');
+  }
+
+  function clearBannerBackground(){
+    state.bannerBackground = { src:null, label:'', width:0, height:0, mode: state.backgroundMode };
+    if(els.bgUpload) els.bgUpload.value = '';
+    if(els.bgLinkInput) els.bgLinkInput.value = '';
+    if(els.gradientPreview) els.gradientPreview.style.backgroundImage = '';
+    renderBackgroundStatus(state.format.key==='BANNER');
+    if(state.format.key==='BANNER'){
+      state.imageSrc = null;
+      state.natural = {w:0,h:0};
+      if(els.img){ els.img.removeAttribute('src'); }
+      render();
+      updateControls();
+    }
+  }
+
+  async function loadBackgroundFromURL(url, label){
+    if(!url) return;
+    return applyBannerBackground(url, label, { mode:'link', fit:true });
+  }
+
+  function updateUnsplashControls(){
+    if(els.unsplashColorPalette){
+      els.unsplashColorPalette.querySelectorAll('button').forEach(btn=>{
+        btn.classList.toggle('active', btn.dataset.color === state.unsplash.color);
+      });
+    }
+    if(els.unsplashToneSeg){
+      els.unsplashToneSeg.querySelectorAll('button').forEach(btn=>{
+        const isActive = btn.dataset.tone === state.unsplash.tone;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+      });
+    }
+    if(els.unsplashStyleSeg){
+      els.unsplashStyleSeg.querySelectorAll('button').forEach(btn=>{
+        const isActive = btn.dataset.style === state.unsplash.style;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive);
+      });
+    }
+  }
+
+  function renderUnsplashResults(){
+    if(!els.unsplashResults) return;
+    els.unsplashResults.innerHTML = '';
+    if(!state.unsplash.results.length){
+      const note = document.createElement('div');
+      note.className = 'muted';
+      note.style.gridColumn = '1 / -1';
+      note.textContent = 'Use filters above and search Unsplash backgrounds.';
+      els.unsplashResults.appendChild(note);
+      return;
+    }
+    state.unsplash.results.slice(0,6).forEach(photo=>{
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'unsplashItem';
+      const author = photo?.user?.name || 'Unsplash';
+      btn.title = `Photo by ${author} on Unsplash`;
+      const img = document.createElement('img');
+      img.src = photo.urls?.small || photo.urls?.thumb || photo.urls?.regular;
+      img.alt = author ? `Photo by ${author}` : 'Unsplash preview';
+      img.loading = 'lazy';
+      btn.appendChild(img);
+      btn.addEventListener('click', ()=>{
+        applyBannerBackground(photo.urls?.full || photo.urls?.regular, `Unsplash – ${author}`, { mode:'unsplash', fit:true });
+      });
+      els.unsplashResults.appendChild(btn);
+    });
+  }
+
+  async function searchUnsplash(){
+    if(!els.unsplashResults) return;
+    const btn = els.unsplashSearchBtn;
+    const original = btn?.textContent;
+    if(btn){ btn.disabled = true; btn.textContent = 'Searching…'; }
+    try{
+      const queryRaw = (els.unsplashQuery?.value || '').trim();
+      const terms = [];
+      if(queryRaw){ terms.push(queryRaw); }
+      if(state.unsplash.style && (!queryRaw || !queryRaw.toLowerCase().includes(state.unsplash.style.toLowerCase()))){ terms.push(state.unsplash.style); }
+      if(state.unsplash.tone){ terms.push(state.unsplash.tone); }
+      const searchTerm = terms.join(' ').trim() || 'abstract liquid background';
+      const url = new URL('https://api.unsplash.com/search/photos');
+      url.searchParams.set('query', searchTerm);
+      if(state.unsplash.color){ url.searchParams.set('color', state.unsplash.color); }
+      url.searchParams.set('orientation', 'landscape');
+      url.searchParams.set('per_page', '6');
+      url.searchParams.set('client_id', UNSPLASH_ACCESS_KEY);
+      const res = await fetch(url.toString());
+      if(!res.ok) throw new Error(`Unsplash request failed: ${res.status}`);
+      const data = await res.json();
+      state.unsplash.results = Array.isArray(data?.results) ? data.results : [];
+      renderUnsplashResults();
+    }catch(err){
+      console.error('Unsplash search failed', err);
+      state.unsplash.results = [];
+      els.unsplashResults.innerHTML = '';
+      const note = document.createElement('div');
+      note.className = 'muted';
+      note.style.gridColumn = '1 / -1';
+      note.textContent = 'Unable to load Unsplash images right now.';
+      els.unsplashResults.appendChild(note);
+    }finally{
+      if(btn){ btn.disabled = false; btn.textContent = original || 'Search'; }
+    }
+  }
+
+  function hexToRgba(hex, alpha){
+    const raw = (hex || '').replace('#','').trim();
+    if(!raw) return `rgba(148,197,255,${alpha})`;
+    const normalized = raw.length === 3 ? raw.split('').map(ch=>ch+ch).join('') : raw.padEnd(6,'0');
+    const r = parseInt(normalized.slice(0,2),16);
+    const g = parseInt(normalized.slice(2,4),16);
+    const b = parseInt(normalized.slice(4,6),16);
+    if(Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)){ return `rgba(148,197,255,${alpha})`; }
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  function createGradientTexture(colors){
+    const canvas = document.createElement('canvas');
+    const size = 600;
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = hexToRgba(colors[0] || '#38bdf8', 1);
+    ctx.fillRect(0,0,size,size);
+    const blobs = Math.max(3, colors.length * 4);
+    ctx.globalCompositeOperation = 'lighter';
+    for(let i=0;i<blobs;i++){
+      const color = colors[i % colors.length] || colors[0];
+      const radius = size * (0.3 + Math.random() * 0.4);
+      const x = Math.random() * size;
+      const y = Math.random() * size;
+      const grad = ctx.createRadialGradient(x,y,0,x,y,radius);
+      grad.addColorStop(0, hexToRgba(color, 0.8));
+      grad.addColorStop(0.6, hexToRgba(color, 0.18));
+      grad.addColorStop(1, hexToRgba(color, 0));
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x,y,radius,0,Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    const overlay = ctx.createLinearGradient(0,0,size,size);
+    overlay.addColorStop(0, 'rgba(255,255,255,0.08)');
+    overlay.addColorStop(1, 'rgba(15,23,42,0.12)');
+    ctx.fillStyle = overlay;
+    ctx.fillRect(0,0,size,size);
+    return canvas.toDataURL('image/png');
+  }
+
+  function generateGradient(){
+    const colors = state.gradientColors.filter(Boolean);
+    if(colors.length === 0){
+      alert('Please pick at least one color for the gradient.');
+      return;
+    }
+    const dataUrl = createGradientTexture(colors);
+    if(els.gradientPreview){
+      els.gradientPreview.style.backgroundImage = `url(${dataUrl})`;
+      els.gradientPreview.style.backgroundSize = 'cover';
+    }
+    applyBannerBackground(dataUrl, 'Liquid gradient', { mode:'gradient', fit:true });
+  }
+
+  function randomizeGradient(){
+    generateGradient();
   }
 
   function updateControls(){
-    els.squareLogoSection.style.display   = (state.format.key==='SQUARE') ? 'block' : 'none';
-    els.frostSection.style.display        = (state.format.key==='HORIZ')  ? 'block' : 'none';
-    els.verticalLogoSection.style.display = (state.format.key==='VERT')   ? 'block' : 'none';
-    els.vertSizeRow.style.display         = (state.format.key==='VERT')   ? 'flex' : 'none';
-    if(state.format.key==='VERT'){
+    const isBanner = state.format.key==='BANNER';
+
+    if(els.squareLogoSection) els.squareLogoSection.style.display   = (state.format.key==='SQUARE') ? 'block' : 'none';
+    if(els.frostSection) els.frostSection.style.display        = (state.format.key==='HORIZ')  ? 'block' : 'none';
+    if(els.verticalLogoSection) els.verticalLogoSection.style.display = (state.format.key==='VERT')   ? 'block' : 'none';
+    if(els.vertSizeRow) els.vertSizeRow.style.display         = (state.format.key==='VERT')   ? 'flex' : 'none';
+    if(state.format.key==='VERT' && els.vertLogoBlock){
       els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
+    } else if(els.vertLogoBlock && state.format.key!=='VERT'){
+      els.vertLogoBlock.style.display = 'none';
     }
+
+    if(els.backgroundSection){
+      els.backgroundSection.classList.toggle('active', isBanner);
+      els.backgroundSection.style.display = isBanner ? 'block' : 'none';
+      if(isBanner){ setBackgroundMode(state.backgroundMode); }
+    }
+    if(els.carouselWrap){
+      els.carouselWrap.style.display = isBanner ? 'none' : '';
+    }
+    if(isBanner && els.carousel){
+      els.carousel.style.display = 'none';
+      els.carousel.setAttribute('aria-hidden','true');
+    }
+    if(isBanner && els.carouselEmpty){ els.carouselEmpty.style.display = 'none'; }
+
+    renderBackgroundStatus(isBanner);
 
     els.bVal.textContent = state.brightness;
     els.sVal.textContent = state.saturation;
@@ -1250,7 +1739,7 @@
       els.deleteAllBtn.disabled = state.images.length === 0;
       if(state.images.length === 0){ resetDeleteAllPrompt(); }
     }
-    if(els.deleteBtn){ els.deleteBtn.disabled = state.current < 0; }
+    if(els.deleteBtn){ els.deleteBtn.disabled = (!state.imageSrc || (state.current < 0 && !isBanner)); }
 
     const anyLogos = !!(state.frost.logo1.src || state.frost.logo2.src);
     const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || anyLogos);
@@ -1275,12 +1764,12 @@
 
     els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
 
-    // file name at top of preview
+    const label = getPreviewLabel();
     if(els.currentFileName){
-      els.currentFileName.textContent = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
+      els.currentFileName.textContent = label;
+      els.currentFileName.title = label;
     }
   }
-
   function fitPreviewZoomToStage(){
     const stageRect = els.stage.getBoundingClientRect();
     const margin = 40;
@@ -1548,6 +2037,12 @@
   function renderCarousel(){
     if(!els.carousel) return;
     els.carousel.innerHTML = '';
+    if(state.format.key==='BANNER'){
+      if(els.carouselEmpty) els.carouselEmpty.style.display = 'none';
+      els.carousel.setAttribute('aria-hidden', 'true');
+      els.carousel.style.display = 'none';
+      return;
+    }
     if(state.images.length === 0){
       if(els.carouselEmpty) els.carouselEmpty.style.display = 'block';
       els.carousel.setAttribute('aria-hidden', 'true');
@@ -1763,7 +2258,7 @@
     removeBtn.type = 'button';
     removeBtn.className = 'btn danger ghost small partnerRowRemove';
     removeBtn.setAttribute('aria-label', 'Delete logo');
-    removeBtn.innerHTML = '<svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M6 8h12"></path><path d="M10.2 8 11 5.5h2l.8 2.5"></path><path d="M10 11v5"></path><path d="M14 11v5"></path><path d="M8.5 8v9a1.5 1.5 0 0 0 1.5 1.5h4a1.5 1.5 0 0 0 1.5-1.5V8"></path></svg><span class="btn-text">Delete</span>';
+    removeBtn.innerHTML = '<svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none"><use href="#icon-trash"></use></svg><span class="btn-text">Delete</span>';
     removeBtn.addEventListener('click', ()=>{ row.remove(); });
 
     row.append(preview, fields, removeBtn);
@@ -1893,6 +2388,69 @@
   window.addEventListener('touchend', ()=>{ if(!resizeState) return; endResizeInteraction(); });
   window.addEventListener('touchcancel', ()=>{ if(!resizeState) return; endResizeInteraction(); });
 
+  els.bgSourceSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const mode = btn.dataset.mode;
+    if(!mode) return;
+    setBackgroundMode(mode);
+    if(mode==='unsplash'){ updateUnsplashControls(); }
+  });
+
+  els.bgUpload?.addEventListener('change', e=>{
+    const file = e.target.files?.[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = async ()=>{
+      await applyBannerBackground(reader.result, file.name, { mode:'upload', fit:true });
+      setBackgroundMode('upload');
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  });
+
+  els.bgLinkLoad?.addEventListener('click', async ()=>{
+    const url = (els.bgLinkInput?.value || '').trim();
+    if(!url) return;
+    try{ new URL(url); }catch(err){ alert('Please enter a valid image URL.'); return; }
+    await applyBannerBackground(url, url, { mode:'link', fit:true });
+  });
+  els.bgLinkInput?.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); els.bgLinkLoad?.click(); } });
+
+  els.unsplashColorPalette?.addEventListener('click', e=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    state.unsplash.color = btn.dataset.color || '';
+    updateUnsplashControls();
+  });
+  els.unsplashToneSeg?.addEventListener('click', e=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const tone = btn.dataset.tone;
+    if(!tone) return;
+    state.unsplash.tone = tone;
+    updateUnsplashControls();
+  });
+  els.unsplashStyleSeg?.addEventListener('click', e=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const style = btn.dataset.style;
+    if(!style) return;
+    state.unsplash.style = style;
+    updateUnsplashControls();
+  });
+  els.unsplashSearchBtn?.addEventListener('click', ()=>{ searchUnsplash(); });
+  els.unsplashQuery?.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); searchUnsplash(); } });
+
+  [els.gradientColor1, els.gradientColor2, els.gradientColor3].forEach((input, idx)=>{
+    input?.addEventListener('input', e=>{
+      const val = e.target.value;
+      if(val){ state.gradientColors[idx] = val; }
+    });
+  });
+  els.gradientGenerate?.addEventListener('click', ()=>{ generateGradient(); });
+  els.gradientShuffle?.addEventListener('click', ()=>{ randomizeGradient(); });
+
   // ---------- Delete / Reset ----------
   let deleteAllArmed = false;
   let deleteAllTimer = null;
@@ -1907,17 +2465,19 @@
   }
 
   els.reset.addEventListener('click', ()=>{
-    if(state.current<0) return;
-    Object.assign(state, {
-      ...state,
-      brightness:100, saturation:100, contrast:100,
-      flipH:false, flipV:false, rotation:0,
-      imgZoom:1, offset:{x:0,y:0}
-    });
-    computeCover(); render(); updateControls(); serializeCurrent();
+    if(!state.imageSrc) return;
+    state.brightness = 100; state.saturation = 100; state.contrast = 100;
+    state.flipH = false; state.flipV = false; state.rotation = 0;
+    state.imgZoom = 1; state.offset = {x:0,y:0};
+    computeCover(); render(); updateControls();
+    if(state.current>=0){ serializeCurrent(); }
   });
 
   els.deleteBtn.addEventListener('click', ()=>{
+    if(state.format.key==='BANNER'){
+      if(state.bannerBackground.src){ clearBannerBackground(); }
+      return;
+    }
     if(state.current<0) return;
     const removed = state.images.splice(state.current,1)[0];
     try{ if(removed && removed.src && removed.src.startsWith('blob:')) URL.revokeObjectURL(removed.src); }catch(e){}
@@ -2462,6 +3022,9 @@
   syncHeaderHeight();
   buildFormatChips();
   buildAllGalleries();
+  setBackgroundMode(state.backgroundMode);
+  updateUnsplashControls();
+  renderUnsplashResults();
   els.toggleLogo2.checked = false; els.logo2Block.style.display='none';
   els.toggleVertLogo.checked = true; els.vertLogoBlock.style.display='grid';
   fitPreviewZoomToStage();
