@@ -47,6 +47,20 @@
   #themeToggle .btn-ico{filter:none; stroke:#fff; width:24px; height:24px;}
   #themeToggle .btn-text{display:none}
   #themeToggle:focus-visible{outline:3px solid rgba(255,255,255,0.75); outline-offset:4px}
+  .themeTransition{position:fixed; inset:0; pointer-events:none; z-index:80; background:var(--themeTransitionBg, linear-gradient(135deg,#e0f2fe,#eef2ff)); clip-path:circle(0 at var(--cx,50%) var(--cy,50%)); opacity:0; transition:clip-path .55s ease, opacity .3s ease}
+  .themeTransition.show{opacity:1}
+  .themeTransition.animate{clip-path:circle(var(--radius,0px) at var(--cx,50%) var(--cy,50%))}
+  .themeTransition[data-mode="dark"]{--themeTransitionBg:radial-gradient(circle at center,#0f172a,#1f2937)}
+  .themeTransition[data-mode="light"]{--themeTransitionBg:radial-gradient(circle at center,#e0f2fe,#f8fafc)}
+
+  .introSplash{position:fixed; inset:0; z-index:120; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; text-align:center; background:radial-gradient(circle at 20% 20%, rgba(56,189,248,0.75), transparent 55%), radial-gradient(circle at 80% 80%, rgba(99,102,241,0.75), transparent 55%), linear-gradient(135deg,#0f172a,#312e81); color:#f8fafc; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; opacity:1; transition:opacity .6s ease, visibility 0s linear .6s}
+  .introSplash.hide{opacity:0; visibility:hidden; pointer-events:none}
+  .introSplash .introMark{display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center}
+  .introSplash .introMark img{width:72px; height:72px; border-radius:24px; box-shadow:0 20px 40px rgba(15,23,42,0.45)}
+  .introSplash .introTitle{font-size:32px; letter-spacing:0.24em; animation:introFloat 1.1s ease-out}
+  .introSplash .introSubtitle{font-size:13px; opacity:0.8}
+  .introSplash .introVersion{font-size:11px; opacity:0.65; letter-spacing:0.28em}
+  @keyframes introFloat{0%{transform:translateY(20px); opacity:0;}60%{transform:translateY(-6px); opacity:1;}100%{transform:translateY(0); opacity:1;}}
 
   .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:14px; background:var(--btn-bg); color:var(--ink); cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease, background .2s ease, color .2s ease, box-shadow .2s ease}
   .btn:active{transform:translateY(1px)}
@@ -61,7 +75,7 @@
   .btn.danger.armed{background:rgba(248,113,113,0.18); border-color:#fca5a5; color:#7f1d1d}
   .btn:disabled{opacity:.6; cursor:not-allowed}
 
-  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2.2; flex-shrink:0; filter:drop-shadow(0 2px 4px rgba(15,23,42,0.08))}
+  .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; filter:drop-shadow(0 2px 4px rgba(15,23,42,0.08))}
   .btn.primary .btn-ico{stroke:#fff}
   .btn .btn-text{display:inline}
 
@@ -132,14 +146,13 @@
   .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:4; ry:4}
 
   .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);}
-  .preview-head{display:flex; align-items:flex-end; justify-content:space-between; padding:16px; gap:16px}
-  .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .25s ease, border-color .2s ease}
+  .preview-head{display:grid; gap:16px; padding:16px; align-items:start}
+  .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .25s ease, border-color .2s ease; cursor:grab}
+  .stage.dragging{cursor:grabbing}
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .dropOverlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; color:var(--brand2); background:rgba(14,165,233,0.14); backdrop-filter:blur(18px); opacity:0; transition:opacity .2s ease; pointer-events:none; text-align:center; padding:24px; z-index:20}
   .stage-inner.drag-over .dropOverlay{opacity:1}
-
-  .fileBadge{position:absolute; top:10px; left:10px; z-index:6; max-width:calc(100% - 20px)}
 
   .image-layer{position:absolute; left:50%; top:50%; transform-origin:center center; cursor:grab;}
   .image-layer.dragging{cursor:grabbing}
@@ -179,27 +192,49 @@
   .libItem .cap{font-size:11px; color:var(--muted)}
   .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
 
-  .switchGroup{display:grid; gap:14px; align-items:flex-start; margin-bottom:20px}
-  .logoSection{border:1px solid var(--border); border-radius:16px; padding:18px; background:linear-gradient(135deg,rgba(148,197,255,0.18),rgba(244,250,255,0.35)); box-shadow:0 10px 26px rgba(15,23,42,0.08); display:grid; gap:16px}
-  .logoSection + .logoSection{margin-top:18px}
-  .logoSectionTitle{display:flex; align-items:center; justify-content:space-between; font-weight:700; font-size:14px; color:var(--ink)}
-  .logoSectionTitle .meta{font-size:12px; color:var(--muted)}
+  .switchGroup{display:flex; gap:14px; align-items:center; margin-bottom:20px; flex-wrap:nowrap; overflow-x:auto; padding-bottom:4px}
+  .switchGroup .switch{background:var(--chip-bg); padding:10px 14px; border-radius:16px; box-shadow:0 8px 20px rgba(15,23,42,0.06); border:1px solid var(--border); flex:0 0 auto; white-space:nowrap}
+  .logoSection{position:relative; border:1px solid rgba(203,213,225,0.7); border-radius:22px; padding:24px; background:linear-gradient(135deg,rgba(253,249,241,0.95),rgba(255,255,255,0.82)); box-shadow:0 18px 34px rgba(15,23,42,0.08); display:grid; gap:20px; overflow:hidden}
+  .logoSection::before{content:""; position:absolute; inset:0; background:linear-gradient(155deg, rgba(253,224,171,0.28), rgba(254,226,226,0.24) 45%, transparent 68%); pointer-events:none}
+  .logoSection::after{content:""; position:absolute; inset-inline-start:-60px; inset-block-start:-80px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle at center, rgba(244,114,182,0.28), transparent 68%); opacity:0.65; pointer-events:none; filter:blur(0.4px)}
+  .logoSection > *{position:relative; z-index:1}
+  .logoSection + .logoSection{margin-top:20px}
+  .logoSectionTitle{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding-bottom:12px; border-bottom:1px dashed rgba(148,163,184,0.4)}
+  .logoSectionHeading{display:flex; flex-direction:column; gap:4px}
+  .logoSectionHeading .title{font-weight:700; font-size:15px; letter-spacing:0.01em}
+  .logoSectionHeading .meta{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
+  .logoSectionBadge{display:grid; place-items:center; width:36px; height:36px; border-radius:12px; background:rgba(255,255,255,0.7); color:var(--ink); font-weight:700; box-shadow:0 6px 14px rgba(15,23,42,0.08)}
+  .logoSectionBody{display:grid; gap:18px; padding-top:6px}
+  .logoControls{display:flex; flex-wrap:wrap; gap:16px; align-items:center}
+  .logoControls .logoClear{margin-left:auto}
+  .logoVariants{display:flex; flex-wrap:wrap; gap:12px; align-items:center; flex:1 1 auto; min-width:220px}
+  .logoVariants .seg{flex:0 0 auto}
+  .logoToneGroup{display:flex; flex-wrap:nowrap; gap:10px; align-items:center}
+  .logoToneGroup .label{font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted)}
+  .logoToneGroup .seg{flex:0 0 auto; display:inline-flex; gap:6px}
 
   .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:24px; background:rgba(15,23,42,0.45); backdrop-filter:blur(14px); z-index:70}
   .modal.show{display:flex}
-  .modal-card{position:relative; width:100%; max-width:540px; max-height:80vh; background:var(--stageInner); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); display:grid; grid-template-rows:auto 1fr auto; overflow:hidden}
-  .modalHeader{padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:12px; font-weight:700}
-  .modalBody{padding:0 24px 24px; display:grid; gap:12px; overflow:auto}
-  .modalFooter{padding:16px 24px; display:flex; gap:10px; justify-content:flex-end}
-  .partnerRows{display:grid; gap:12px}
-  .partnerRow{display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:flex-start; padding:12px; border:1px solid var(--border); border-radius:12px; background:var(--chip-bg)}
-  .partnerRow img{width:44px; height:44px; object-fit:contain; border-radius:12px; background:#fff; box-shadow:inset 0 1px 2px rgba(15,23,42,0.08)}
-  .partnerRowFields{display:grid; gap:8px}
-  .partnerRowFields label{display:grid; gap:4px; font-size:12px; font-weight:600; color:var(--muted)}
-  .partnerRowFields input{width:100%; padding:9px 10px; border:1px solid var(--border); border-radius:8px; background:var(--stageInner); color:var(--ink); font-size:13px; transition:border-color .2s ease}
+  .modal-card{position:relative; width:100%; max-width:880px; max-height:82vh; background:var(--stageInner); border:1px solid rgba(203,213,225,0.7); border-radius:26px; box-shadow:0 36px 72px rgba(15,23,42,0.16); display:grid; grid-template-rows:auto 1fr auto; overflow:hidden}
+  .modalHeader{position:sticky; top:0; padding:24px 30px; display:flex; align-items:flex-start; justify-content:space-between; gap:18px; background:linear-gradient(135deg,rgba(238,242,255,0.9),rgba(248,250,252,0.94)); border-bottom:1px solid rgba(203,213,225,0.7); box-shadow:0 10px 24px rgba(15,23,42,0.08); z-index:2}
+  .modalHeaderText{display:flex; flex-direction:column; gap:6px}
+  .modalHeaderText .modalTitle{font-size:18px; font-weight:700; letter-spacing:0.01em}
+  .modalHeaderText .modalSubtitle{font-size:13px; color:var(--muted); max-width:460px}
+  .modalHeaderActions{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+  .modalBody{padding:6px 30px 26px; display:grid; gap:18px; overflow:auto; background:var(--stageInner)}
+  .modalBodyIntro{position:sticky; top:0; padding:14px 16px; border-radius:16px; background:linear-gradient(135deg,rgba(226,232,240,0.4),rgba(226,232,240,0.22)); color:var(--muted); font-size:12px; line-height:1.6; box-shadow:inset 0 1px 0 rgba(255,255,255,0.7); z-index:1}
+  .modalFooter{position:sticky; bottom:0; padding:20px 30px; display:flex; gap:12px; justify-content:flex-end; border-top:1px solid rgba(203,213,225,0.7); background:linear-gradient(135deg,rgba(238,242,255,0.92),rgba(248,250,252,0.9)); box-shadow:0 -10px 24px rgba(15,23,42,0.08); z-index:2}
+  .partnerRows{display:grid; gap:18px; padding-bottom:8px}
+  .partnerRow{display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:18px; align-items:center; padding:18px 20px; border:1px solid rgba(203,213,225,0.7); border-radius:20px; background:linear-gradient(135deg,rgba(248,250,252,0.96),rgba(255,255,255,0.82)); box-shadow:0 14px 32px rgba(15,23,42,0.08)}
+  .partnerRowPreview{width:64px; height:64px; border-radius:18px; background:var(--chip-bg); border:1px solid rgba(203,213,225,0.7); display:grid; place-items:center; box-shadow:inset 0 1px 0 rgba(255,255,255,0.7)}
+  .partnerRowPreview img{width:100%; height:100%; object-fit:contain; padding:6px; mix-blend-mode:normal; transition:opacity .2s ease}
+  .partnerRowFields{display:grid; gap:10px}
+  .partnerRowFields label{display:grid; gap:6px; font-size:12px; font-weight:600; color:var(--muted)}
+  .partnerRowFields input{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); color:var(--ink); font-size:13px; transition:border-color .2s ease}
+  .partnerRowActions{display:flex; align-items:center; gap:10px}
   .partnerRow.invalid{border-color:#fca5a5; box-shadow:0 0 0 1px rgba(248,113,113,0.35)}
   .partnerRow.invalid input{border-color:#fca5a5}
-  .partnerRowRemove{align-self:flex-start}
+  .partnerRowRemove{align-self:center}
 
   .tone-note{font-size:12px; color:var(--muted); margin-top:6px}
 
@@ -223,7 +258,7 @@
   .exportActions{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
   .exportMeta{margin-top:10px; display:flex; width:100%; justify-content:space-between}
 
-  .carouselWrap{flex:1; padding:0 16px; display:flex; flex-direction:column; justify-content:flex-start; gap:10px; min-width:0;}
+  .carouselWrap{display:flex; flex-direction:column; gap:12px; width:100%; min-width:0;}
   .imageCarousel{display:flex; gap:12px; overflow-x:auto; padding:10px 0 6px; scroll-snap-type:x mandatory; flex-wrap:nowrap;}
   .imageCarousel::-webkit-scrollbar{height:6px}
   .imageCarousel::-webkit-scrollbar-thumb{background:rgba(148,163,184,0.5); border-radius:999px}
@@ -235,6 +270,15 @@
   .thumbNum{font-size:12px; font-weight:700; color:var(--muted); flex:0 0 auto}
   .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
+  .previewControls{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:flex-start}
+  .previewControls .zoomGroup{display:flex; align-items:center; gap:12px; flex:1 1 280px; min-width:260px}
+  .previewControls .zoomGroup label{font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted)}
+  .previewControls .zoomGroup input{flex:1}
+  .previewControls .zoomValue{font-weight:600; color:var(--ink)}
+  .currentImageName{padding:10px 16px; border-radius:14px; background:linear-gradient(135deg,rgba(148,163,184,0.16),rgba(226,232,240,0.32)); color:var(--ink); font-size:13px; font-weight:600; letter-spacing:0.01em; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6); display:inline-flex; align-items:center; gap:8px; flex:0 0 auto}
+  .currentImageName .dot{width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  .currentImageName.empty{opacity:0.65}
+  .currentImageName.empty .dot{background:rgba(148,163,184,0.8)}
 
   .mockupBlock{position:relative; border:1px solid var(--border); border-radius:16px; padding:18px; display:grid; gap:16px; background:linear-gradient(135deg,rgba(148,197,255,0.12),rgba(244,250,255,0.22)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
   .mockupOverlay{position:absolute; inset:0; backdrop-filter:blur(10px); background:rgba(15,23,42,0.18); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:22px; gap:10px; color:#f8fafc; font-weight:600}
@@ -257,7 +301,11 @@
   :root[data-theme="dark"] .chip.active{background:rgba(59,130,246,0.22)}
   :root[data-theme="dark"] .libItem{box-shadow:0 4px 12px rgba(2,6,23,0.45)}
   :root[data-theme="dark"] .partnerSettingsBtn{background:rgba(30,41,59,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 10px 24px rgba(2,6,23,0.6)}
-  :root[data-theme="dark"] .logoSection{background:linear-gradient(135deg,rgba(30,64,175,0.25),rgba(15,23,42,0.55)); border-color:rgba(71,85,105,0.75); box-shadow:0 18px 40px rgba(2,6,23,0.55)}
+  :root[data-theme="dark"] .logoSection{background:linear-gradient(135deg,rgba(30,38,58,0.92),rgba(15,23,42,0.88)); border-color:rgba(71,85,105,0.75); box-shadow:0 22px 44px rgba(2,6,23,0.65)}
+  :root[data-theme="dark"] .logoSection::before{background:linear-gradient(150deg, rgba(120,53,15,0.32), rgba(190,24,93,0.28) 46%, transparent 70%)}
+  :root[data-theme="dark"] .logoSection::after{background:radial-gradient(circle at center, rgba(14,165,233,0.28), transparent 68%)}
+  :root[data-theme="dark"] .switchGroup .switch{background:rgba(30,41,59,0.85); border-color:rgba(71,85,105,0.75); box-shadow:0 12px 28px rgba(2,6,23,0.55)}
+  :root[data-theme="dark"] .currentImageName{background:linear-gradient(135deg,rgba(30,41,59,0.82),rgba(15,23,42,0.78)); color:var(--ink); box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);}
   :root[data-theme="dark"] .seg{background:linear-gradient(135deg,rgba(30,64,175,0.55),rgba(17,94,205,0.28)); border:1px solid rgba(96,165,250,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
@@ -272,14 +320,26 @@
   :root[data-theme="dark"] .versionTag{background:rgba(15,23,42,0.7); color:rgba(226,232,240,0.7); box-shadow:0 16px 30px rgba(2,6,23,0.55);}
   :root[data-theme="dark"] #themeToggle{box-shadow:0 20px 40px rgba(0,0,0,0.55);}
   :root[data-theme="dark"] .modal{background:rgba(2,6,23,0.68)}
-  :root[data-theme="dark"] .modal-card{background:var(--stageInner); border-color:rgba(71,85,105,0.75)}
-  :root[data-theme="dark"] .partnerRow{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.75)}
-  :root[data-theme="dark"] .partnerRowFields input{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.75)}
+  :root[data-theme="dark"] .modal-card{background:var(--stageInner); border-color:rgba(71,85,105,0.75); box-shadow:0 36px 72px rgba(2,6,23,0.7)}
+  :root[data-theme="dark"] .modalHeader{background:linear-gradient(135deg,rgba(15,23,42,0.88),rgba(30,41,59,0.88)); border-bottom-color:rgba(71,85,105,0.75); box-shadow:0 12px 26px rgba(2,6,23,0.65)}
+  :root[data-theme="dark"] .modalFooter{background:linear-gradient(135deg,rgba(15,23,42,0.86),rgba(30,41,59,0.86)); border-top-color:rgba(71,85,105,0.75); box-shadow:0 -12px 26px rgba(2,6,23,0.6)}
+  :root[data-theme="dark"] .modalBodyIntro{background:linear-gradient(135deg,rgba(30,41,59,0.7),rgba(15,23,42,0.68)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
+  :root[data-theme="dark"] .partnerRow{background:linear-gradient(135deg,rgba(15,23,42,0.9),rgba(30,41,59,0.9)); border-color:rgba(71,85,105,0.75); box-shadow:0 20px 40px rgba(2,6,23,0.65)}
+  :root[data-theme="dark"] .partnerRowPreview{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:inset 0 1px 0 rgba(255,255,255,0.04)}
+  :root[data-theme="dark"] .partnerRowFields input{background:rgba(15,23,42,0.6); border-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .btn.feedback-success{border-color:#4ade80; color:#bbf7d0; background:rgba(34,197,94,0.25)}
   :root[data-theme="dark"] .btn.feedback-error{border-color:#fca5a5; color:#fecaca; background:rgba(248,113,113,0.3)}
 </style>
 </head>
 <body>
+  <div class="introSplash" id="introSplash" aria-hidden="true">
+    <div class="introMark">
+      <img src="https://i.postimg.cc/QMTckmdX/unnamed-1-1.png" alt="Frozone mark" />
+      <div class="introTitle">FROZONE</div>
+    </div>
+    <div class="introSubtitle">LiveOps creative toolkit</div>
+    <div class="introVersion">v6.18</div>
+  </div>
   <header id="appHeader">
     <div class="wrap inner">
       <div class="brand">
@@ -311,10 +371,10 @@
           <div class="uploadGrid">
             <div class="uploadCell">
               <label class="btn primary uploadAction" title="Upload image">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 17V5"></path>
-                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
-                  <path d="M5 19h14"></path>
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                  <path d="M12 12V4" />
+                  <path d="m8 8 4-4 4 4" />
                 </svg>
                 <span class="btn-text">Upload image</span>
                 <input id="file" type="file" accept="image/*" style="display:none" />
@@ -322,10 +382,11 @@
             </div>
             <div class="uploadCell">
               <label class="btn ghost uploadAction" title="Upload folder">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 6h5l2 2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path>
-                  <path d="M12 13V7"></path>
-                  <path d="m8.5 10.5 3.5-3.5 3.5 3.5"></path>
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 7h5l2 2h11v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
+                  <path d="M3 7V6a2 2 0 0 1 2-2h3.5l2 2H19" />
+                  <path d="M12 12V4" />
+                  <path d="m8 8 4-4 4 4" />
                 </svg>
                 <span class="btn-text">Upload folder</span>
                 <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
@@ -333,44 +394,46 @@
             </div>
             <div class="uploadCell">
               <button class="btn ghost uploadAction" type="button" id="pasteUrlBtn">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M15 3h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"></path>
-                  <rect x="9" y="2" width="6" height="4" rx="1"></rect>
-                  <path d="M12 11v6"></path>
-                  <path d="m9.5 13.5 2.5-2.5 2.5 2.5"></path>
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M16 4h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                  <rect x="9" y="2" width="6" height="4" rx="1" />
+                  <path d="M12 11v6" />
+                  <path d="m9 14 3 3 3-3" />
                 </svg>
                 <span class="btn-text">Paste image URL</span>
               </button>
             </div>
             <div class="uploadCell">
               <button class="btn ghost uploadAction" id="reset">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 5a7 7 0 1 1-4.95 2.05"></path>
-                  <path d="M7 3v4h4"></path>
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 3v6h6" />
+                  <path d="M21 21v-6h-6" />
+                  <path d="M21 9A9 9 0 0 0 12 3" />
+                  <path d="M3 15a9 9 0 0 0 9 6" />
                 </svg>
                 <span class="btn-text">Reset current</span>
               </button>
             </div>
             <div class="uploadCell">
               <button class="btn danger ghost uploadAction" id="deleteAllBtn" title="Delete all uploaded images">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 7h16"></path>
-                  <path d="M10 4h4l1 3"></path>
-                  <path d="M6 7v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"></path>
-                  <path d="m9 12 6 6"></path>
-                  <path d="m15 12-6 6"></path>
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 6h18" />
+                  <path d="M19 6v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                  <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+                  <path d="m9 11 6 6" />
+                  <path d="m15 11-6 6" />
                 </svg>
                 <span class="btn-text">Delete all</span>
               </button>
             </div>
             <div class="uploadCell">
               <button class="btn danger uploadAction" id="deleteBtn" title="Delete current image">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 7h16"></path>
-                  <path d="M10 4h4l1 3"></path>
-                  <path d="M7 7v11a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7"></path>
-                  <path d="M10 11v6"></path>
-                  <path d="M14 11v6"></path>
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 6h18" />
+                  <path d="M19 6v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                  <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+                  <path d="M10 11v6" />
+                  <path d="M14 11v6" />
                 </svg>
                 <span class="btn-text">Delete current</span>
               </button>
@@ -464,85 +527,125 @@
         <!-- Step 4: Frosted bar -->
         <div class="section" id="frostSection">
           <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
-          <div class="switchGroup">
+          <div class="switchGroup" role="group" aria-label="Frosted bar options">
             <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
             <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
             <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
           </div>
 
           <div class="logoSection" id="logo1Section">
-            <div class="logoSectionTitle"><span>Logo 1</span><span class="meta">Primary placement</span></div>
-            <div class="row">
-              <label class="btn ghost uploadAction"> 
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 17V5"></path>
-                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
-                  <path d="M5 19h14"></path>
-                </svg>
-                <span class="btn-text">Upload logo 1</span>
-                <input id="logo1Input" type="file" accept="image/*" style="display:none"/>
-              </label>
-              <div class="seg" id="logo1Seg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+            <div class="logoSectionTitle">
+              <div class="logoSectionHeading">
+                <span class="title">Logo 1</span>
+                <span class="meta">Primary placement</span>
               </div>
-              <div class="seg" id="logo1ToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
+              <div class="logoSectionBadge">1</div>
             </div>
-            <div class="tone-note">Check partner brand rules before changing logo colors.</div>
-            <div class="libWrap">
-              <div class="libHeader">
-                <input id="logo1Search" type="search" placeholder="Search partners…" />
-                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="2.5"></circle>
-                    <path d="M19.4 15a2 2 0 0 1 .3 2.2l-.3.6a2 2 0 0 1-2.2 1.1l-.7-.2a2 2 0 0 0-1.9.5l-.5.5a2 2 0 0 1-2.8 0l-.5-.5a2 2 0 0 0-1.9-.5l-.7.2a2 2 0 0 1-2.2-1.1l-.3-.6a2 2 0 0 1 .3-2.2l.4-.6a2 2 0 0 0 0-2.2l-.4-.6a2 2 0 0 1-.3-2.2l.3-.6a2 2 0 0 1 2.2-1.1l.7.2a2 2 0 0 0 1.9-.5l.5-.5a2 2 0 0 1 2.8 0l.5.5a2 2 0 0 0 1.9.5l.7-.2a2 2 0 0 1 2.2 1.1l.3.6a2 2 0 0 1-.3 2.2l-.4.6a2 2 0 0 0 0 2.2z"></path>
+            <div class="logoSectionBody">
+              <div class="logoControls">
+                <label class="btn ghost uploadAction logoUpload">
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 20v-9" />
+                    <path d="m7 12 5-5 5 5" />
+                    <path d="M5 20h14" />
                   </svg>
-                </button>
+                  <span class="btn-text">Upload logo 1</span>
+                  <input id="logo1Input" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="logoVariants">
+                  <div class="seg" id="logo1Seg">
+                    <button data-size="S" class="active">S</button>
+                    <button data-size="M">M</button>
+                    <button data-size="L">L</button>
+                  </div>
+                  <div class="logoToneGroup">
+                    <span class="label">Tone</span>
+                    <div class="seg" id="logo1ToneSeg">
+                      <button data-tone="orig" class="active">Original</button>
+                      <button data-tone="white">White</button>
+                      <button data-tone="black">Black</button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
+              <div class="tone-note">Check partner brand rules before changing logo colors.</div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="logo1Search" type="search" placeholder="Search partners…" />
+                  <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                    <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="3.2" />
+                      <path d="M12 4.5V3" />
+                      <path d="M12 21v-1.5" />
+                      <path d="m5.47 5.47 1.06 1.06" />
+                      <path d="m17.47 17.47 1.06 1.06" />
+                      <path d="M4.5 12H3" />
+                      <path d="M21 12h-1.5" />
+                      <path d="m5.47 18.53 1.06-1.06" />
+                      <path d="m17.47 6.53 1.06-1.06" />
+                    </svg>
+                  </button>
+                </div>
+                <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
 
           <div id="logo2Block" class="logoSection" style="display:none">
-            <div class="logoSectionTitle"><span>Logo 2</span><span class="meta">Optional partner</span></div>
-            <div class="row">
-              <label class="btn ghost uploadAction">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 17V5"></path>
-                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
-                  <path d="M5 19h14"></path>
-                </svg>
-                <span class="btn-text">Upload logo 2</span>
-                <input id="logo2Input" type="file" accept="image/*" style="display:none"/>
-              </label>
-              <div class="seg" id="logo2Seg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+            <div class="logoSectionTitle">
+              <div class="logoSectionHeading">
+                <span class="title">Logo 2</span>
+                <span class="meta">Optional partner</span>
               </div>
-              <div class="seg" id="logo2ToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
-              <button class="btn small ghost" id="removeLogo2">Remove Logo 2</button>
+              <div class="logoSectionBadge">2</div>
             </div>
-            <div class="libWrap">
-              <div class="libHeader">
-                <input id="logo2Search" type="search" placeholder="Search partners…" />
-                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="2.5"></circle>
-                    <path d="M19.4 15a2 2 0 0 1 .3 2.2l-.3.6a2 2 0 0 1-2.2 1.1l-.7-.2a2 2 0 0 0-1.9.5l-.5.5a2 2 0 0 1-2.8 0l-.5-.5a2 2 0 0 0-1.9-.5l-.7.2a2 2 0 0 1-2.2-1.1l-.3-.6a2 2 0 0 1 .3-2.2l.4-.6a2 2 0 0 0 0-2.2l-.4-.6a2 2 0 0 1-.3-2.2l.3-.6a2 2 0 0 1 2.2-1.1l.7.2a2 2 0 0 0 1.9-.5l.5-.5a2 2 0 0 1 2.8 0l.5.5a2 2 0 0 0 1.9.5l.7-.2a2 2 0 0 1 2.2 1.1l.3.6a2 2 0 0 1-.3 2.2l-.4.6a2 2 0 0 0 0 2.2z"></path>
+            <div class="logoSectionBody">
+              <div class="logoControls">
+                <label class="btn ghost uploadAction logoUpload">
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 20v-9" />
+                    <path d="m7 12 5-5 5 5" />
+                    <path d="M5 20h14" />
                   </svg>
-                </button>
+                  <span class="btn-text">Upload logo 2</span>
+                  <input id="logo2Input" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="logoVariants">
+                  <div class="seg" id="logo2Seg">
+                    <button data-size="S" class="active">S</button>
+                    <button data-size="M">M</button>
+                    <button data-size="L">L</button>
+                  </div>
+                  <div class="logoToneGroup">
+                    <span class="label">Tone</span>
+                    <div class="seg" id="logo2ToneSeg">
+                      <button data-tone="orig" class="active">Original</button>
+                      <button data-tone="white">White</button>
+                      <button data-tone="black">Black</button>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn small ghost logoClear" id="removeLogo2">Remove logo 2</button>
               </div>
-              <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="logo2Search" type="search" placeholder="Search partners…" />
+                  <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                    <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="3.2" />
+                      <path d="M12 4.5V3" />
+                      <path d="M12 21v-1.5" />
+                      <path d="m5.47 5.47 1.06 1.06" />
+                      <path d="m17.47 17.47 1.06 1.06" />
+                      <path d="M4.5 12H3" />
+                      <path d="M21 12h-1.5" />
+                      <path d="m5.47 18.53 1.06-1.06" />
+                      <path d="m17.47 6.53 1.06-1.06" />
+                    </svg>
+                  </button>
+                </div>
+                <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
 
@@ -557,35 +660,47 @@
         <div class="section" id="squareLogoSection" style="display:none">
           <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
           <div class="stack">
-            <div class="row">
-              <label class="btn ghost uploadAction"> 
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 17V5"></path>
-                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
-                  <path d="M5 19h14"></path>
+            <div class="logoControls">
+              <label class="btn ghost uploadAction">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 20v-9" />
+                  <path d="m7 12 5-5 5 5" />
+                  <path d="M5 20h14" />
                 </svg>
                 <span class="btn-text">Square logo</span>
                 <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
               </label>
-              <div class="seg" id="sqLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+              <div class="logoVariants">
+                <div class="seg" id="sqLogoSeg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
+                <div class="logoToneGroup">
+                  <span class="label">Tone</span>
+                  <div class="seg" id="sqLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                </div>
               </div>
-              <div class="seg" id="sqLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
-              <button class="btn small ghost" id="removeSqLogo">Remove</button>
+              <button class="btn small ghost logoClear" id="removeSqLogo">Remove</button>
             </div>
             <div class="libWrap">
               <div class="libHeader">
                 <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
                 <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="2.5"></circle>
-                    <path d="M19.4 15a2 2 0 0 1 .3 2.2l-.3.6a2 2 0 0 1-2.2 1.1l-.7-.2a2 2 0 0 0-1.9.5l-.5.5a2 2 0 0 1-2.8 0l-.5-.5a2 2 0 0 0-1.9-.5l-.7.2a2 2 0 0 1-2.2-1.1l-.3-.6a2 2 0 0 1 .3-2.2l.4-.6a2 2 0 0 0 0-2.2l-.4-.6a2 2 0 0 1-.3-2.2l.3-.6a2 2 0 0 1 2.2-1.1l.7.2a2 2 0 0 0 1.9-.5l.5-.5a2 2 0 0 1 2.8 0l.5.5a2 2 0 0 0 1.9.5l.7-.2a2 2 0 0 1 2.2 1.1l.3.6a2 2 0 0 1-.3 2.2l-.4.6a2 2 0 0 0 0 2.2z"></path>
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="3.2" />
+                    <path d="M12 4.5V3" />
+                    <path d="M12 21v-1.5" />
+                    <path d="m5.47 5.47 1.06 1.06" />
+                    <path d="m17.47 17.47 1.06 1.06" />
+                    <path d="M4.5 12H3" />
+                    <path d="M21 12h-1.5" />
+                    <path d="m5.47 18.53 1.06-1.06" />
+                    <path d="m17.47 6.53 1.06-1.06" />
                   </svg>
                 </button>
               </div>
@@ -601,35 +716,47 @@
             <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
           </div>
           <div id="vertLogoBlock" class="stack" style="display:none; margin-top:10px">
-            <div class="row">
+            <div class="logoControls">
               <label class="btn ghost uploadAction">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 17V5"></path>
-                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
-                  <path d="M5 19h14"></path>
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 20v-9" />
+                  <path d="m7 12 5-5 5 5" />
+                  <path d="M5 20h14" />
                 </svg>
                 <span class="btn-text">Vertical logo</span>
                 <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
               </label>
-              <div class="seg" id="vertLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+              <div class="logoVariants">
+                <div class="seg" id="vertLogoSeg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
+                <div class="logoToneGroup">
+                  <span class="label">Tone</span>
+                  <div class="seg" id="vertLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                </div>
               </div>
-              <div class="seg" id="vertLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
-              <button class="btn small ghost" id="removeVertLogo">Remove</button>
+              <button class="btn small ghost logoClear" id="removeVertLogo">Remove</button>
             </div>
             <div class="libWrap">
               <div class="libHeader">
                 <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
                 <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="2.5"></circle>
-                    <path d="M19.4 15a2 2 0 0 1 .3 2.2l-.3.6a2 2 0 0 1-2.2 1.1l-.7-.2a2 2 0 0 0-1.9.5l-.5.5a2 2 0 0 1-2.8 0l-.5-.5a2 2 0 0 0-1.9-.5l-.7.2a2 2 0 0 1-2.2-1.1l-.3-.6a2 2 0 0 1 .3-2.2l.4-.6a2 2 0 0 0 0-2.2l-.4-.6a2 2 0 0 1-.3-2.2l.3-.6a2 2 0 0 1 2.2-1.1l.7.2a2 2 0 0 0 1.9-.5l.5-.5a2 2 0 0 1 2.8 0l.5.5a2 2 0 0 0 1.9.5l.7-.2a2 2 0 0 1 2.2 1.1l.3.6a2 2 0 0 1-.3 2.2l-.4.6a2 2 0 0 0 0 2.2z"></path>
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="3.2" />
+                    <path d="M12 4.5V3" />
+                    <path d="M12 21v-1.5" />
+                    <path d="m5.47 5.47 1.06 1.06" />
+                    <path d="m17.47 17.47 1.06 1.06" />
+                    <path d="M4.5 12H3" />
+                    <path d="M21 12h-1.5" />
+                    <path d="m5.47 18.53 1.06-1.06" />
+                    <path d="m17.47 6.53 1.06-1.06" />
                   </svg>
                 </button>
               </div>
@@ -686,16 +813,20 @@
           <div id="carouselEmpty" class="carouselEmpty">Upload images to start your carousel.</div>
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
         </div>
-        <div class="row" style="gap:12px; justify-content:flex-end">
-          <span class="muted">Preview Zoom</span>
-          <span class="muted"><span id="zoomLabel">1.00</span>×</span>
-          <input id="previewZoom" type="range" min="0.5" max="3" step="0.1" value="1" style="width:160px">
+        <div class="previewControls">
+          <div class="zoomGroup">
+            <label for="previewZoom">Preview zoom</label>
+            <input id="previewZoom" type="range" min="0.5" max="3" step="0.1" value="1">
+            <span class="zoomValue"><span id="zoomLabel">1.00</span>×</span>
+          </div>
+          <div class="currentImageName empty" id="currentImageName" aria-live="polite">
+            <span class="dot" aria-hidden="true"></span>
+            <span id="currentImageLabel">No image selected</span>
+          </div>
         </div>
       </div>
       <div class="stage">
         <div class="stage-inner" id="stage">
-          <div id="fileNameTop" class="chipInfo flexible fileBadge">—</div>
-
           <div class="image-layer" id="imageLayer">
             <img id="img" alt="uploaded" />
           </div>
@@ -743,6 +874,7 @@
   </div>
 
   <div class="globalDropOverlay" id="globalDropOverlay">Drop images anywhere to upload</div>
+  <div id="themeTransition" class="themeTransition" aria-hidden="true"></div>
   <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">
     <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12.5 3A8.5 8.5 0 1 0 20.9 15a6.5 6.5 0 0 1-8.4-12Z"></path>
@@ -751,23 +883,29 @@
   <div class="modal" id="partnerSettingsModal" role="dialog" aria-modal="true" aria-labelledby="partnerSettingsTitle">
     <div class="modal-card">
       <div class="modalHeader">
-        <span id="partnerSettingsTitle">Partner logo library</span>
-        <button class="btn icon ghost partnerSettingsClose" type="button" aria-label="Close partner logo settings">
-          <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 6l12 12M18 6l-12 12"></path>
-          </svg>
-        </button>
+        <div class="modalHeaderText">
+          <span class="modalTitle" id="partnerSettingsTitle">Partner logo library</span>
+          <span class="modalSubtitle">Keep this library tidy to speed up creative work. Rename partners, refresh links, or remove entries in a single place.</span>
+        </div>
+        <div class="modalHeaderActions">
+          <button class="btn primary" type="button" id="partnerSettingsAdd">
+            <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5v14" />
+              <path d="M5 12h14" />
+            </svg>
+            <span class="btn-text">Add new logo</span>
+          </button>
+          <button class="btn icon ghost partnerSettingsClose" type="button" aria-label="Close partner logo settings">
+            <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M6 6l12 12" />
+              <path d="M18 6l-12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
       <div class="modalBody">
-        <div class="muted" style="font-size:12px">Edit partner logos, update links, or add new partners. Changes are saved to this file.</div>
+        <div class="modalBodyIntro">Edit partner logos, update links, or add new partners. Changes are written directly to this file so keep entries polished.</div>
         <div id="partnerSettingsList" class="partnerRows"></div>
-        <button class="btn ghost" type="button" id="partnerSettingsAdd">
-          <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 5v14"></path>
-            <path d="M5 12h14"></path>
-          </svg>
-          <span class="btn-text">Add new logo</span>
-        </button>
       </div>
       <div class="modalFooter">
         <button class="btn ghost" type="button" id="partnerSettingsCancel">Cancel</button>
@@ -859,10 +997,12 @@
     outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
     batchMeta: document.getElementById('batchMeta'),
 
+    stageShell: document.querySelector('.stage'),
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
     frame: document.getElementById('frame'),
-    fileNameTop: document.getElementById('fileNameTop'),
+    currentImageName: document.getElementById('currentImageName'),
+    currentImageLabel: document.getElementById('currentImageLabel'),
 
     frostSection: document.getElementById('frostSection'),
     frostBar: document.getElementById('frostBar'), frostBg: document.getElementById('frostBg'), frostVeil: document.getElementById('frostVeil'),
@@ -904,6 +1044,9 @@
     resizeHandles: Array.from(document.querySelectorAll('.resizeHandle')),
 
     loading: document.getElementById('loading'), loadingText: document.getElementById('loadingText'), loadingBar: document.getElementById('loadingBar'), loadingTitle: document.getElementById('loadingTitle'),
+
+    themeTransition: document.getElementById('themeTransition'),
+    introSplash: document.getElementById('introSplash'),
 
     partnerSettingsModal: document.getElementById('partnerSettingsModal'),
     partnerSettingsList: document.getElementById('partnerSettingsList'),
@@ -980,6 +1123,30 @@
     }
     try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
   }
+  function playThemeTransition(next){
+    if(!els.themeTransition || !els.themeToggle) return;
+    const overlay = els.themeTransition;
+    const rect = els.themeToggle.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = Math.max(cx, window.innerWidth - cx);
+    const dy = Math.max(cy, window.innerHeight - cy);
+    const radius = Math.sqrt(dx * dx + dy * dy);
+    overlay.dataset.mode = next;
+    overlay.style.setProperty('--cx', `${cx}px`);
+    overlay.style.setProperty('--cy', `${cy}px`);
+    overlay.style.setProperty('--radius', `${radius}px`);
+    overlay.classList.add('show');
+    overlay.classList.remove('animate');
+    void overlay.offsetWidth;
+    overlay.classList.add('animate');
+    const cleanup = (ev)=>{
+      if(ev.propertyName !== 'clip-path') return;
+      overlay.classList.remove('show', 'animate');
+      overlay.removeEventListener('transitionend', cleanup);
+    };
+    overlay.addEventListener('transitionend', cleanup);
+  }
   function initTheme(){
     if(!els.themeToggle) return;
     let stored = null;
@@ -988,6 +1155,7 @@
     setTheme(stored || (prefersDark ? 'dark' : 'light'));
     els.themeToggle.addEventListener('click', ()=>{
       const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      playThemeTransition(next);
       setTheme(next);
     });
   }
@@ -1131,7 +1299,9 @@
     els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
 
     // file name at top of preview
-    els.fileNameTop.textContent = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
+    const currentName = state.current>=0 ? (state.images[state.current].name || 'image') : 'No image selected';
+    if(els.currentImageLabel){ els.currentImageLabel.textContent = currentName; }
+    if(els.currentImageName){ els.currentImageName.classList.toggle('empty', state.current<0); }
   }
 
   function fitPreviewZoomToStage(){
@@ -1577,9 +1747,12 @@
     const row = document.createElement('div');
     row.className = 'partnerRow';
 
+    const previewWrap = document.createElement('div');
+    previewWrap.className = 'partnerRowPreview';
     const preview = document.createElement('img');
     preview.alt = entry.name ? `${entry.name} logo` : 'Logo preview';
     updatePartnerPreview(preview, entry.url);
+    previewWrap.appendChild(preview);
 
     const fields = document.createElement('div');
     fields.className = 'partnerRowFields';
@@ -1612,14 +1785,20 @@
 
     fields.append(nameLabel, urlLabel);
 
+    const actions = document.createElement('div');
+    actions.className = 'partnerRowActions';
+
     const removeBtn = document.createElement('button');
     removeBtn.type = 'button';
-    removeBtn.className = 'btn icon ghost partnerRowRemove';
-    removeBtn.setAttribute('aria-label', 'Remove logo');
-    removeBtn.innerHTML = '<svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg>';
+    removeBtn.className = 'btn danger ghost partnerRowRemove';
+    removeBtn.setAttribute('aria-label', 'Delete partner logo');
+    removeBtn.title = 'Delete partner logo';
+    removeBtn.innerHTML = '<svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5.5 7h13" /><path d="M9 7V5.8A2.8 2.8 0 0 1 11.8 3h0.4A2.8 2.8 0 0 1 15 5.8V7" /><path d="M18 7v10.2A2.8 2.8 0 0 1 15.2 20h-6.4A2.8 2.8 0 0 1 6 17.2V7" /><path d="M10 11.5v5" /><path d="M14 11.5v5" /></svg><span class="btn-text">Remove</span>';
     removeBtn.addEventListener('click', ()=>{ row.remove(); });
 
-    row.append(preview, fields, removeBtn);
+    actions.appendChild(removeBtn);
+
+    row.append(previewWrap, fields, actions);
     return row;
   }
 
@@ -1650,6 +1829,22 @@
       partnerSettingsRestoreFocus.focus();
     }
     partnerSettingsRestoreFocus = null;
+  }
+
+  function playIntroSplash(){
+    if(!els.introSplash) return;
+    const overlay = els.introSplash;
+    let dismissed = false;
+    const dismiss = ()=>{
+      if(dismissed) return;
+      dismissed = true;
+      overlay.classList.add('hide');
+      overlay.removeEventListener('click', dismiss);
+      overlay.addEventListener('transitionend', ()=>{ overlay.remove(); }, { once:true });
+      window.setTimeout(()=>{ if(overlay.parentNode){ overlay.remove(); } }, 900);
+    };
+    window.setTimeout(dismiss, 1200);
+    overlay.addEventListener('click', dismiss, { once:true });
   }
 
   const hasFileType = (dt)=>!!(dt && Array.from(dt.types||[]).includes('Files'));
@@ -2277,25 +2472,55 @@
   });
 
   // Drag move
-  els.stage.addEventListener('mousedown', (e)=>{
-    const rect = els.stage.getBoundingClientRect();
-    const fwPx = state.format.wPreview * state.previewZoom;
-    const fhPx = state.format.hPreview * state.previewZoom;
-    const fx = rect.left + (rect.width - fwPx)/2;
-    const fy = rect.top + (rect.height - fhPx)/2;
-    if(e.clientX<fx || e.clientX>fx+fwPx || e.clientY<fy || e.clientY>fy+fhPx) return;
-    state.dragging = { startX:e.clientX, startY:e.clientY, ox:state.offset.x, oy:state.offset.y };
+  function shouldStartDrag(e){
+    if(state.dragging) return false;
+    if(!state.imageSrc) return false;
+    if(e.pointerType === 'mouse' && e.button !== 0) return false;
+    if(e.target && e.target.closest('.resizeHandle')) return false;
+    return true;
+  }
+  function beginDrag(e){
+    if(!shouldStartDrag(e)) return;
+    state.dragging = {
+      startX: e.clientX,
+      startY: e.clientY,
+      ox: state.offset.x,
+      oy: state.offset.y,
+      pointerId: e.pointerId,
+      capture: e.currentTarget instanceof HTMLElement ? e.currentTarget : null
+    };
+    if(state.dragging.capture && typeof state.dragging.capture.setPointerCapture === 'function'){
+      try{ state.dragging.capture.setPointerCapture(e.pointerId); }catch(err){}
+    }
     els.imageLayer.classList.add('dragging');
-  });
-  window.addEventListener('mousemove', (e)=>{
+    if(dragSurface && 'classList' in dragSurface){ dragSurface.classList.add('dragging'); }
+    e.preventDefault();
+  }
+  function updateDrag(e){
     if(!state.dragging) return;
+    if(typeof e.pointerId === 'number' && state.dragging.pointerId !== e.pointerId) return;
     const dx = (e.clientX - state.dragging.startX)/state.previewZoom;
     const dy = (e.clientY - state.dragging.startY)/state.previewZoom;
     state.offset.x = Math.max(-state.limits.x, Math.min(state.dragging.ox + dx, state.limits.x));
     state.offset.y = Math.max(-state.limits.y, Math.min(state.dragging.oy + dy, state.limits.y));
     render();
-  });
-  window.addEventListener('mouseup', ()=>{ if(state.dragging){ state.dragging=null; els.imageLayer.classList.remove('dragging'); serializeCurrent(); } });
+  }
+  function endDrag(e){
+    if(!state.dragging) return;
+    if(e && typeof e.pointerId === 'number' && state.dragging.pointerId !== e.pointerId) return;
+    if(state.dragging.capture && e && typeof state.dragging.capture.releasePointerCapture === 'function'){
+      try{ state.dragging.capture.releasePointerCapture(e.pointerId); }catch(err){}
+    }
+    state.dragging = null;
+    els.imageLayer.classList.remove('dragging');
+    if(dragSurface && 'classList' in dragSurface){ dragSurface.classList.remove('dragging'); }
+    serializeCurrent();
+  }
+  const dragSurface = els.stageShell || els.stage;
+  dragSurface?.addEventListener('pointerdown', beginDrag);
+  window.addEventListener('pointermove', updateDrag);
+  window.addEventListener('pointerup', endDrag);
+  window.addEventListener('pointercancel', endDrag);
 
   const ro = new ResizeObserver(()=>{ fitPreviewZoomToStage(); render(); });
   ro.observe(els.stage);
@@ -2312,6 +2537,7 @@
   render();
   updateControls();
   renderCarousel();
+  playIntroSplash();
 })();
 </script>
 </body>
