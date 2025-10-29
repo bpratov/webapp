@@ -86,6 +86,7 @@
   .switch input:disabled ~ .lbl{opacity:0.5}
 
   main{display:grid; grid-template-columns: 1fr 1.25fr; gap:18px; padding:16px}
+  main > *{min-width:0}
   @media (max-width: 1000px){ main{grid-template-columns:1fr} .right-head{align-items:flex-start; text-align:left} }
 
   .panel{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); display:flex; flex-direction:column;}
@@ -99,16 +100,12 @@
   .badge{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; font-size:13px; box-shadow:var(--shadow)}
 
   .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-  .uploadGrid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); align-items:stretch}
+  .uploadGrid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); align-items:stretch}
   .uploadCell{display:flex; width:100%}
   .uploadCell .btn{flex:1; justify-content:center}
-  .uploadActions{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-  .urlUpload{display:flex; gap:10px; align-items:stretch; width:100%; flex:1 1 280px;}
-  .urlUpload .urlField{flex:1; display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:14px; background:var(--stageInner); box-shadow:inset 0 1px 2px rgba(15,23,42,0.08); transition:background .2s ease, border-color .2s ease}
-  .urlUpload .urlField svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8; flex-shrink:0}
-  .urlUpload .urlField input{flex:1; border:none; outline:none; background:transparent; color:var(--ink); font-size:13px}
-  .urlUpload .urlField input::placeholder{color:var(--muted)}
-  .urlUpload button{display:inline-flex; align-items:center; justify-content:center; white-space:nowrap; height:100%}
+  .uploadAction{width:100%; padding:12px 18px}
+  .btn.feedback-success{border-color:#34d399; color:#166534; background:rgba(16,185,129,0.14)}
+  .btn.feedback-error{border-color:#fca5a5; color:#b91c1c; background:rgba(248,113,113,0.16)}
   .stack{display:grid; gap:16px; text-align:left}
   #formatRow{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
   @media (max-width: 720px){
@@ -132,7 +129,7 @@
   .chip .meta{font-size:12px; color:var(--muted)}
   .chip .chipInner{display:flex; align-items:center; gap:10px}
 
-  .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:8; ry:8}
+  .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:4; ry:4}
 
   .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);}
   .preview-head{display:flex; align-items:flex-end; justify-content:space-between; padding:16px; gap:16px}
@@ -172,11 +169,37 @@
   .chipInfo.flexible{max-width:none; white-space:normal; word-break:break-word; flex-wrap:wrap; align-items:flex-start}
 
   .libWrap{display:grid; gap:8px}
+  .libHeader{display:flex; align-items:center; gap:10px}
+  .libHeader input{flex:1}
+  .partnerSettingsBtn{width:34px; height:34px; padding:0; border-radius:12px; box-shadow:0 4px 12px rgba(2,6,23,0.08)}
+  .partnerSettingsBtn .btn-ico{width:16px; height:16px}
   .libScroller{display:flex; gap:10px; overflow-x:auto; padding:8px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); transition:background .2s ease, border-color .2s ease}
   .libItem{flex:0 0 auto; display:grid; gap:6px; justify-items:center; padding:8px 10px; border:1px solid var(--border); border-radius:12px; background:var(--chip-bg); box-shadow:0 1px 6px rgba(2,6,23,.04); cursor:pointer; transition:background .2s ease, border-color .2s ease, box-shadow .2s ease}
   .libItem img{height:18px; width:auto; object-fit:contain}
   .libItem .cap{font-size:11px; color:var(--muted)}
   .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
+
+  .switchGroup{display:grid; gap:14px; align-items:flex-start; margin-bottom:20px}
+  .logoSection{border:1px solid var(--border); border-radius:16px; padding:18px; background:linear-gradient(135deg,rgba(148,197,255,0.18),rgba(244,250,255,0.35)); box-shadow:0 10px 26px rgba(15,23,42,0.08); display:grid; gap:16px}
+  .logoSection + .logoSection{margin-top:18px}
+  .logoSectionTitle{display:flex; align-items:center; justify-content:space-between; font-weight:700; font-size:14px; color:var(--ink)}
+  .logoSectionTitle .meta{font-size:12px; color:var(--muted)}
+
+  .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:24px; background:rgba(15,23,42,0.45); backdrop-filter:blur(14px); z-index:70}
+  .modal.show{display:flex}
+  .modal-card{position:relative; width:100%; max-width:540px; max-height:80vh; background:var(--stageInner); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); display:grid; grid-template-rows:auto 1fr auto; overflow:hidden}
+  .modalHeader{padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:12px; font-weight:700}
+  .modalBody{padding:0 24px 24px; display:grid; gap:12px; overflow:auto}
+  .modalFooter{padding:16px 24px; display:flex; gap:10px; justify-content:flex-end}
+  .partnerRows{display:grid; gap:12px}
+  .partnerRow{display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:flex-start; padding:12px; border:1px solid var(--border); border-radius:12px; background:var(--chip-bg)}
+  .partnerRow img{width:44px; height:44px; object-fit:contain; border-radius:12px; background:#fff; box-shadow:inset 0 1px 2px rgba(15,23,42,0.08)}
+  .partnerRowFields{display:grid; gap:8px}
+  .partnerRowFields label{display:grid; gap:4px; font-size:12px; font-weight:600; color:var(--muted)}
+  .partnerRowFields input{width:100%; padding:9px 10px; border:1px solid var(--border); border-radius:8px; background:var(--stageInner); color:var(--ink); font-size:13px; transition:border-color .2s ease}
+  .partnerRow.invalid{border-color:#fca5a5; box-shadow:0 0 0 1px rgba(248,113,113,0.35)}
+  .partnerRow.invalid input{border-color:#fca5a5}
+  .partnerRowRemove{align-self:flex-start}
 
   .tone-note{font-size:12px; color:var(--muted); margin-top:6px}
 
@@ -200,15 +223,17 @@
   .exportActions{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
   .exportMeta{margin-top:10px; display:flex; width:100%; justify-content:space-between}
 
-  .carouselWrap{flex:1; padding:0 16px 0 16px; display:flex; flex-direction:column; justify-content:flex-start;}
-  .imageCarousel{display:flex; gap:12px; overflow-x:auto; padding:10px 0 4px 0; scroll-snap-type:x mandatory;}
+  .carouselWrap{flex:1; padding:0 16px; display:flex; flex-direction:column; justify-content:flex-start; gap:10px; min-width:0;}
+  .imageCarousel{display:flex; gap:12px; overflow-x:auto; padding:10px 0 6px; scroll-snap-type:x mandatory; flex-wrap:nowrap;}
   .imageCarousel::-webkit-scrollbar{height:6px}
   .imageCarousel::-webkit-scrollbar-thumb{background:rgba(148,163,184,0.5); border-radius:999px}
-  .thumbItem{flex:0 0 auto; scroll-snap-align:start; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 14px rgba(2,6,23,0.08); padding:6px; display:grid; gap:6px; width:88px; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; text-align:center}
+  .thumbItem{flex:0 0 auto; scroll-snap-align:start; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 14px rgba(2,6,23,0.08); padding:10px 12px; display:grid; gap:8px; width:132px; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; text-align:left; align-content:start}
   .thumbItem:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(2,6,23,0.12)}
   .thumbItem.active{border-color:rgba(14,165,233,0.6); box-shadow:0 14px 30px rgba(14,165,233,0.18); transform:translateY(-3px)}
-  .thumbItem img{width:100%; height:60px; object-fit:cover; border-radius:10px; box-shadow:inset 0 1px 2px rgba(255,255,255,0.25)}
-  .thumbNum{font-size:12px; font-weight:600; color:var(--muted)}
+  .thumbItem img{width:100%; height:72px; object-fit:cover; border-radius:10px; box-shadow:inset 0 1px 2px rgba(255,255,255,0.25)}
+  .thumbMeta{display:flex; align-items:center; gap:8px; min-width:0}
+  .thumbNum{font-size:12px; font-weight:700; color:var(--muted); flex:0 0 auto}
+  .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
 
   .mockupBlock{position:relative; border:1px solid var(--border); border-radius:16px; padding:18px; display:grid; gap:16px; background:linear-gradient(135deg,rgba(148,197,255,0.12),rgba(244,250,255,0.22)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
@@ -231,10 +256,11 @@
   :root[data-theme="dark"] .chip{box-shadow:0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .chip.active{background:rgba(59,130,246,0.22)}
   :root[data-theme="dark"] .libItem{box-shadow:0 4px 12px rgba(2,6,23,0.45)}
+  :root[data-theme="dark"] .partnerSettingsBtn{background:rgba(30,41,59,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 10px 24px rgba(2,6,23,0.6)}
+  :root[data-theme="dark"] .logoSection{background:linear-gradient(135deg,rgba(30,64,175,0.25),rgba(15,23,42,0.55)); border-color:rgba(71,85,105,0.75); box-shadow:0 18px 40px rgba(2,6,23,0.55)}
   :root[data-theme="dark"] .seg{background:linear-gradient(135deg,rgba(30,64,175,0.55),rgba(17,94,205,0.28)); border:1px solid rgba(96,165,250,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
-  :root[data-theme="dark"] .urlUpload .urlField{box-shadow:inset 0 1px 2px rgba(2,6,23,0.6)}
   :root[data-theme="dark"] .dropOverlay{background:rgba(14,165,233,0.22); color:#e0f2fe}
   :root[data-theme="dark"] .veil{box-shadow:inset 0 2px 6px rgba(2,6,23,0.5)}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
@@ -245,6 +271,12 @@
   :root[data-theme="dark"] .mockupOverlay{background:rgba(15,23,42,0.5); color:#e2e8f0;}
   :root[data-theme="dark"] .versionTag{background:rgba(15,23,42,0.7); color:rgba(226,232,240,0.7); box-shadow:0 16px 30px rgba(2,6,23,0.55);}
   :root[data-theme="dark"] #themeToggle{box-shadow:0 20px 40px rgba(0,0,0,0.55);}
+  :root[data-theme="dark"] .modal{background:rgba(2,6,23,0.68)}
+  :root[data-theme="dark"] .modal-card{background:var(--stageInner); border-color:rgba(71,85,105,0.75)}
+  :root[data-theme="dark"] .partnerRow{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.75)}
+  :root[data-theme="dark"] .partnerRowFields input{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.75)}
+  :root[data-theme="dark"] .btn.feedback-success{border-color:#4ade80; color:#bbf7d0; background:rgba(34,197,94,0.25)}
+  :root[data-theme="dark"] .btn.feedback-error{border-color:#fca5a5; color:#fecaca; background:rgba(248,113,113,0.3)}
 </style>
 </head>
 <body>
@@ -278,75 +310,71 @@
           <div class="section-title"><span class="badge">1</span> Upload image(s)</div>
           <div class="uploadGrid">
             <div class="uploadCell">
-              <label class="btn primary" title="Upload image">
+              <label class="btn primary uploadAction" title="Upload image">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 4v10"></path>
-                  <path d="M8.5 8.5L12 5l3.5 3.5"></path>
-                  <path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"></path>
+                  <path d="M12 17V5"></path>
+                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
+                  <path d="M5 19h14"></path>
                 </svg>
                 <span class="btn-text">Upload image</span>
                 <input id="file" type="file" accept="image/*" style="display:none" />
               </label>
             </div>
             <div class="uploadCell">
-              <label class="btn ghost" title="Upload folder">
+              <label class="btn ghost uploadAction" title="Upload folder">
                 <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4.5 6.5h4l2 2H19a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 1.5-2"></path>
-                  <path d="M12 11v5.5"></path>
-                  <path d="M9.5 13.5L12 11l2.5 2.5"></path>
+                  <path d="M4 6h5l2 2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path>
+                  <path d="M12 13V7"></path>
+                  <path d="m8.5 10.5 3.5-3.5 3.5 3.5"></path>
                 </svg>
                 <span class="btn-text">Upload folder</span>
                 <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
               </label>
             </div>
             <div class="uploadCell">
-              <div class="urlUpload">
-                <div class="urlField">
-                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1">
-                    <path d="M9.5 14.5L7 17a4 4 0 0 0 0 5.66 4 4 0 0 0 5.66 0L17 18.34"></path>
-                    <path d="M14.5 9.5L17 7a4 4 0 0 0 0-5.66 4 4 0 0 0-5.66 0L7 5.66"></path>
-                    <path d="M8.5 15.5l7-7"></path>
-                  </svg>
-                  <input id="urlInput" type="url" placeholder="Paste image URL" autocomplete="off" spellcheck="false" />
-                </div>
-                <button class="btn ghost" type="button" id="urlImport">
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 4v13"></path>
-                    <path d="M7.5 12.5L12 17l4.5-4.5"></path>
-                    <path d="M5 20h14"></path>
-                  </svg>
-                  <span class="btn-text">Import URL</span>
-                </button>
-              </div>
+              <button class="btn ghost uploadAction" type="button" id="pasteUrlBtn">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 3h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2"></path>
+                  <rect x="9" y="2" width="6" height="4" rx="1"></rect>
+                  <path d="M12 11v6"></path>
+                  <path d="m9.5 13.5 2.5-2.5 2.5 2.5"></path>
+                </svg>
+                <span class="btn-text">Paste image URL</span>
+              </button>
             </div>
-          </div>
-          <div class="uploadActions" style="margin-top:12px">
-            <button class="btn ghost" id="reset">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 9a7 7 0 1 1-2 5"></path>
-                <path d="M5 9h4.5"></path>
-                <path d="M5 9v4.5"></path>
-              </svg>
-              <span class="btn-text">Reset current</span>
-            </button>
-            <button class="btn danger" id="deleteBtn" title="Delete current image">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 7h14"></path>
-                <path d="M9 4.5h6l.8 2.5"></path>
-                <path d="M8 9v9a1.8 1.8 0 0 0 1.8 1.8h4.4A1.8 1.8 0 0 0 16 18V9"></path>
-                <path d="M10 12.5v4"></path>
-                <path d="M14 12.5v4"></path>
-              </svg>
-              <span class="btn-text">Delete current</span>
-            </button>
-            <button class="btn danger ghost" id="deleteAllBtn" title="Delete all uploaded images">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 6h6l1.8 2H19a2 2 0 0 1 2 2v8.5A1.5 1.5 0 0 1 19.5 20h-15A1.5 1.5 0 0 1 3 18.5V7.5A1.5 1.5 0 0 1 4.5 6z"></path>
-                <path d="M9 12.5l2.5 2.5L14 12.5"></path>
-                <path d="M12 15v-5"></path>
-              </svg>
-              <span class="btn-text">Delete all</span>
-            </button>
+            <div class="uploadCell">
+              <button class="btn ghost uploadAction" id="reset">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 5a7 7 0 1 1-4.95 2.05"></path>
+                  <path d="M7 3v4h4"></path>
+                </svg>
+                <span class="btn-text">Reset current</span>
+              </button>
+            </div>
+            <div class="uploadCell">
+              <button class="btn danger ghost uploadAction" id="deleteAllBtn" title="Delete all uploaded images">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 7h16"></path>
+                  <path d="M10 4h4l1 3"></path>
+                  <path d="M6 7v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7"></path>
+                  <path d="m9 12 6 6"></path>
+                  <path d="m15 12-6 6"></path>
+                </svg>
+                <span class="btn-text">Delete all</span>
+              </button>
+            </div>
+            <div class="uploadCell">
+              <button class="btn danger uploadAction" id="deleteBtn" title="Delete current image">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 7h16"></path>
+                  <path d="M10 4h4l1 3"></path>
+                  <path d="M7 7v11a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7"></path>
+                  <path d="M10 11v6"></path>
+                  <path d="M14 11v6"></path>
+                </svg>
+                <span class="btn-text">Delete current</span>
+              </button>
+            </div>
           </div>
           <div class="muted" style="margin-top:12px">PNG/JPEG supported. Drop anywhere, zoom with scroll or pinch, and drag corners to resize.</div>
         </div>
@@ -436,15 +464,24 @@
         <!-- Step 4: Frosted bar -->
         <div class="section" id="frostSection">
           <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
-          <div class="row" style="gap:16px">
+          <div class="switchGroup">
             <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
             <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
-            <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add second logo</span></label>
+            <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
           </div>
 
-          <div class="stack" style="margin-top:10px">
+          <div class="logoSection" id="logo1Section">
+            <div class="logoSectionTitle"><span>Logo 1</span><span class="meta">Primary placement</span></div>
             <div class="row">
-              <label class="btn ghost">Upload Logo 1<input id="logo1Input" type="file" accept="image/*" style="display:none"/></label>
+              <label class="btn ghost uploadAction"> 
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 17V5"></path>
+                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
+                  <path d="M5 19h14"></path>
+                </svg>
+                <span class="btn-text">Upload logo 1</span>
+                <input id="logo1Input" type="file" accept="image/*" style="display:none"/>
+              </label>
               <div class="seg" id="logo1Seg">
                 <button data-size="S" class="active">S</button>
                 <button data-size="M">M</button>
@@ -456,16 +493,33 @@
                 <button data-tone="black">Black</button>
               </div>
             </div>
-            <div class="tone-note">Please double-check partner branding guidelines permit recoloring before switching logo colors.</div>
+            <div class="tone-note">Check partner brand rules before changing logo colors.</div>
             <div class="libWrap">
-              <input id="logo1Search" type="search" placeholder="Search partners…" />
+              <div class="libHeader">
+                <input id="logo1Search" type="search" placeholder="Search partners…" />
+                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="2.5"></circle>
+                    <path d="M19.4 15a2 2 0 0 1 .3 2.2l-.3.6a2 2 0 0 1-2.2 1.1l-.7-.2a2 2 0 0 0-1.9.5l-.5.5a2 2 0 0 1-2.8 0l-.5-.5a2 2 0 0 0-1.9-.5l-.7.2a2 2 0 0 1-2.2-1.1l-.3-.6a2 2 0 0 1 .3-2.2l.4-.6a2 2 0 0 0 0-2.2l-.4-.6a2 2 0 0 1-.3-2.2l.3-.6a2 2 0 0 1 2.2-1.1l.7.2a2 2 0 0 0 1.9-.5l.5-.5a2 2 0 0 1 2.8 0l.5.5a2 2 0 0 0 1.9.5l.7-.2a2 2 0 0 1 2.2 1.1l.3.6a2 2 0 0 1-.3 2.2l-.4.6a2 2 0 0 0 0 2.2z"></path>
+                  </svg>
+                </button>
+              </div>
               <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
             </div>
           </div>
 
-          <div id="logo2Block" class="stack" style="display:none; margin-top:14px">
+          <div id="logo2Block" class="logoSection" style="display:none">
+            <div class="logoSectionTitle"><span>Logo 2</span><span class="meta">Optional partner</span></div>
             <div class="row">
-              <label class="btn ghost">Upload Logo 2<input id="logo2Input" type="file" accept="image/*" style="display:none"/></label>
+              <label class="btn ghost uploadAction">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 17V5"></path>
+                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
+                  <path d="M5 19h14"></path>
+                </svg>
+                <span class="btn-text">Upload logo 2</span>
+                <input id="logo2Input" type="file" accept="image/*" style="display:none"/>
+              </label>
               <div class="seg" id="logo2Seg">
                 <button data-size="S" class="active">S</button>
                 <button data-size="M">M</button>
@@ -479,7 +533,15 @@
               <button class="btn small ghost" id="removeLogo2">Remove Logo 2</button>
             </div>
             <div class="libWrap">
-              <input id="logo2Search" type="search" placeholder="Search partners…" />
+              <div class="libHeader">
+                <input id="logo2Search" type="search" placeholder="Search partners…" />
+                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="2.5"></circle>
+                    <path d="M19.4 15a2 2 0 0 1 .3 2.2l-.3.6a2 2 0 0 1-2.2 1.1l-.7-.2a2 2 0 0 0-1.9.5l-.5.5a2 2 0 0 1-2.8 0l-.5-.5a2 2 0 0 0-1.9-.5l-.7.2a2 2 0 0 1-2.2-1.1l-.3-.6a2 2 0 0 1 .3-2.2l.4-.6a2 2 0 0 0 0-2.2l-.4-.6a2 2 0 0 1-.3-2.2l.3-.6a2 2 0 0 1 2.2-1.1l.7.2a2 2 0 0 0 1.9-.5l.5-.5a2 2 0 0 1 2.8 0l.5.5a2 2 0 0 0 1.9.5l.7-.2a2 2 0 0 1 2.2 1.1l.3.6a2 2 0 0 1-.3 2.2l-.4.6a2 2 0 0 0 0 2.2z"></path>
+                  </svg>
+                </button>
+              </div>
               <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
             </div>
           </div>
@@ -496,7 +558,15 @@
           <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
           <div class="stack">
             <div class="row">
-              <label class="btn ghost">Square logo<input id="sqLogoInput" type="file" accept="image/*" style="display:none"/></label>
+              <label class="btn ghost uploadAction"> 
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 17V5"></path>
+                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
+                  <path d="M5 19h14"></path>
+                </svg>
+                <span class="btn-text">Square logo</span>
+                <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
+              </label>
               <div class="seg" id="sqLogoSeg">
                 <button data-size="S" class="active">S</button>
                 <button data-size="M">M</button>
@@ -510,7 +580,15 @@
               <button class="btn small ghost" id="removeSqLogo">Remove</button>
             </div>
             <div class="libWrap">
-              <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
+              <div class="libHeader">
+                <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
+                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="2.5"></circle>
+                    <path d="M19.4 15a2 2 0 0 1 .3 2.2l-.3.6a2 2 0 0 1-2.2 1.1l-.7-.2a2 2 0 0 0-1.9.5l-.5.5a2 2 0 0 1-2.8 0l-.5-.5a2 2 0 0 0-1.9-.5l-.7.2a2 2 0 0 1-2.2-1.1l-.3-.6a2 2 0 0 1 .3-2.2l.4-.6a2 2 0 0 0 0-2.2l-.4-.6a2 2 0 0 1-.3-2.2l.3-.6a2 2 0 0 1 2.2-1.1l.7.2a2 2 0 0 0 1.9-.5l.5-.5a2 2 0 0 1 2.8 0l.5.5a2 2 0 0 0 1.9.5l.7-.2a2 2 0 0 1 2.2 1.1l.3.6a2 2 0 0 1-.3 2.2l-.4.6a2 2 0 0 0 0 2.2z"></path>
+                  </svg>
+                </button>
+              </div>
               <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
             </div>
           </div>
@@ -524,7 +602,15 @@
           </div>
           <div id="vertLogoBlock" class="stack" style="display:none; margin-top:10px">
             <div class="row">
-              <label class="btn ghost">Vertical logo<input id="vertLogoInput" type="file" accept="image/*" style="display:none"/></label>
+              <label class="btn ghost uploadAction">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 17V5"></path>
+                  <path d="m7.5 9.5 4.5-4.5 4.5 4.5"></path>
+                  <path d="M5 19h14"></path>
+                </svg>
+                <span class="btn-text">Vertical logo</span>
+                <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
+              </label>
               <div class="seg" id="vertLogoSeg">
                 <button data-size="S" class="active">S</button>
                 <button data-size="M">M</button>
@@ -538,7 +624,15 @@
               <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
             <div class="libWrap">
-              <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+              <div class="libHeader">
+                <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="2.5"></circle>
+                    <path d="M19.4 15a2 2 0 0 1 .3 2.2l-.3.6a2 2 0 0 1-2.2 1.1l-.7-.2a2 2 0 0 0-1.9.5l-.5.5a2 2 0 0 1-2.8 0l-.5-.5a2 2 0 0 0-1.9-.5l-.7.2a2 2 0 0 1-2.2-1.1l-.3-.6a2 2 0 0 1 .3-2.2l.4-.6a2 2 0 0 0 0-2.2l-.4-.6a2 2 0 0 1-.3-2.2l.3-.6a2 2 0 0 1 2.2-1.1l.7.2a2 2 0 0 0 1.9-.5l.5-.5a2 2 0 0 1 2.8 0l.5.5a2 2 0 0 0 1.9.5l.7-.2a2 2 0 0 1 2.2 1.1l.3.6a2 2 0 0 1-.3 2.2l-.4.6a2 2 0 0 0 0 2.2z"></path>
+                  </svg>
+                </button>
+              </div>
               <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
             </div>
           </div>
@@ -591,7 +685,6 @@
         <div class="carouselWrap">
           <div id="carouselEmpty" class="carouselEmpty">Upload images to start your carousel.</div>
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
-          <div class="chipInfo" id="batchLabel" style="margin-top:8px; width:max-content">0 / 0</div>
         </div>
         <div class="row" style="gap:12px; justify-content:flex-end">
           <span class="muted">Preview Zoom</span>
@@ -652,12 +745,72 @@
   <div class="globalDropOverlay" id="globalDropOverlay">Drop images anywhere to upload</div>
   <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">
     <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z"></path>
+      <path d="M12.5 3A8.5 8.5 0 1 0 20.9 15a6.5 6.5 0 0 1-8.4-12Z"></path>
     </svg>
   </button>
-  <div class="versionTag">version 6.18</div>
+  <div class="modal" id="partnerSettingsModal" role="dialog" aria-modal="true" aria-labelledby="partnerSettingsTitle">
+    <div class="modal-card">
+      <div class="modalHeader">
+        <span id="partnerSettingsTitle">Partner logo library</span>
+        <button class="btn icon ghost partnerSettingsClose" type="button" aria-label="Close partner logo settings">
+          <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 6l12 12M18 6l-12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="modalBody">
+        <div class="muted" style="font-size:12px">Edit partner logos, update links, or add new partners. Changes are saved to this file.</div>
+        <div id="partnerSettingsList" class="partnerRows"></div>
+        <button class="btn ghost" type="button" id="partnerSettingsAdd">
+          <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14"></path>
+            <path d="M5 12h14"></path>
+          </svg>
+          <span class="btn-text">Add new logo</span>
+        </button>
+      </div>
+      <div class="modalFooter">
+        <button class="btn ghost" type="button" id="partnerSettingsCancel">Cancel</button>
+        <button class="btn primary" type="button" id="partnerSettingsSave">Save changes</button>
+      </div>
+    </div>
+  </div>
+  <div class="versionTag">V6.18</div>
 
   <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
+
+  <script type="application/json" id="partnerData">
+[
+  {"name":"Amazon","url":"https://i.imghippo.com/files/KHpN4511hII.png"},
+  {"name":"Babylist","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Babylist_Logo_02.png"},
+  {"name":"Babies “R” Us","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Babies_%22R%22_Us_logo.svg?width=1000"},
+  {"name":"Bayer Bepanthen","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Bayer_Logo.svg?width=1000"},
+  {"name":"C&A","url":"https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg"},
+  {"name":"Doctolib","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Doctolib_Logo.svg?width=1000"},
+  {"name":"El Corte Inglés","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Corte_Ingl%C3%A9s.svg?width=1000"},
+  {"name":"Fisher-Price","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Fisher-Price_logo.svg?width=1000"},
+  {"name":"Groupe Mutuel","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Gm_logo_hor_rvb_bicol.png"},
+  {"name":"GSK","url":"https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png"},
+  {"name":"H&M","url":"https://commons.wikimedia.org/wiki/Special:FilePath/H%26M-Logo.svg?width=1000"},
+  {"name":"HiPP","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png"},
+  {"name":"Kruidvat","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Kruidvat-New.png"},
+  {"name":"LEGO","url":"https://commons.wikimedia.org/wiki/Special:FilePath/LEGO_logo.svg?width=1000"},
+  {"name":"Lemonade","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Logo_of_Lemonade%2C_Inc.svg?width=1000"},
+  {"name":"Livi","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Kry_logo.svg?width=800"},
+  {"name":"Mattel","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png"},
+  {"name":"Monoprix","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Monoprix_logo_2013.png"},
+  {"name":"NAIF","url":"https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png"},
+  {"name":"Nuna","url":"https://i.imghippo.com/files/sbJA8488Sbo.png"},
+  {"name":"Petite Amelie","url":"https://i.imghippo.com/files/KpIL9265gYA.png"},
+  {"name":"Pfizer","url":"https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg"},
+  {"name":"Philips","url":"https://cdn.worldvectorlogo.com/logos/philips-6.svg"},
+  {"name":"Sanofi","url":"https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png"},
+  {"name":"Target","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Target_Logo.svg?width=1000"},
+  {"name":"Versuni","url":"https://i.imghippo.com/files/tWvR4051Aws.png"},
+  {"name":"Walmart","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Walmart_Logo.png"},
+  {"name":"Zocdoc","url":"https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png"}
+]
+  </script>
 
 <script>
 (function(){
@@ -667,44 +820,27 @@
     VERT:    { key:'VERT',  label:'Vertical',   sub:'Interstitial',                           icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
   };
 
-  const PARTNERS = [
-    {name:'Amazon', url:'https://i.imghippo.com/files/KHpN4511hII.png'},
-    {name:'Babylist', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babylist_Logo_02.png'},
-    {name:'Babies “R” Us', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babies_%22R%22_Us_logo.svg?width=1000'},
-    {name:'Bayer Bepanthen', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Bayer_Logo.svg?width=1000'},
-    {name:'C&A', url:'https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg'},
-    {name:'Doctolib', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Doctolib_Logo.svg?width=1000'},
-    {name:'El Corte Inglés', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Corte_Ingl%C3%A9s.svg?width=1000'},
-    {name:'Fisher-Price', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Fisher-Price_logo.svg?width=1000'},
-    {name:'Groupe Mutuel', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Gm_logo_hor_rvb_bicol.png'},
-    {name:'GSK', url:'https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png'},
-    {name:'H&M', url:'https://commons.wikimedia.org/wiki/Special:FilePath/H%26M-Logo.svg?width=1000'},
-    {name:'HiPP', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png'},
-    {name:'Kruidvat', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Kruidvat-New.png'},
-    {name:'LEGO', url:'https://commons.wikimedia.org/wiki/Special:FilePath/LEGO_logo.svg?width=1000'},
-    {name:'Lemonade', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_of_Lemonade%2C_Inc.svg?width=1000'},
-    {name:'Livi', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Kry_logo.svg?width=800'},
-    {name:'Mattel', url:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png'},
-    {name:'Monoprix', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Monoprix_logo_2013.png'},
-    {name:'NAIF', url:'https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png'},
-    {name:'Nuna', url:'https://i.imghippo.com/files/sbJA8488Sbo.png'},
-    {name:'Petite Amelie', url:'https://i.imghippo.com/files/KpIL9265gYA.png'},
-    {name:'Pfizer', url:'https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg'},
-    {name:'Philips', url:'https://cdn.worldvectorlogo.com/logos/philips-6.svg'},
-    {name:'Sanofi', url:'https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png'},
-    {name:'Target', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Target_Logo.svg?width=1000'},
-    {name:'Versuni', url:'https://i.imghippo.com/files/tWvR4051Aws.png'},
-    {name:'Walmart', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Walmart_Logo.png'},
-    {name:'Zocdoc', url:'https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png'}
-  ];
+  const partnerDataScript = document.getElementById('partnerData');
+  let partnerLibrary = [];
+  try {
+    partnerLibrary = JSON.parse(partnerDataScript?.textContent || '[]');
+  } catch (err) {
+    console.warn('Unable to parse partner data', err);
+    partnerLibrary = [];
+  }
+  if(!Array.isArray(partnerLibrary)) partnerLibrary = [];
+  partnerLibrary = partnerLibrary
+    .map(entry => ({ name: String(entry?.name || '').trim(), url: String(entry?.url || '').trim() }))
+    .filter(entry => entry.name && entry.url);
+  const PARTNER_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+  let partnerSettingsRestoreFocus = null;
 
   const els = {
     header: document.getElementById('appHeader'),
     themeToggle: document.getElementById('themeToggle'),
     file: document.getElementById('file'),
     folder: document.getElementById('folder'),
-    urlInput: document.getElementById('urlInput'),
-    urlImport: document.getElementById('urlImport'),
+    pasteUrlBtn: document.getElementById('pasteUrlBtn'),
     reset: document.getElementById('reset'),
     deleteBtn: document.getElementById('deleteBtn'),
 
@@ -721,7 +857,7 @@
     previewZoom: document.getElementById('previewZoom'), zoomLabel: document.getElementById('zoomLabel'),
     exportBtn: document.getElementById('exportBtn'), exportAllBtn: document.getElementById('exportAllBtn'),
     outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
-    batchMeta: document.getElementById('batchMeta'), batchLabel: document.getElementById('batchLabel'),
+    batchMeta: document.getElementById('batchMeta'),
 
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
@@ -768,6 +904,14 @@
     resizeHandles: Array.from(document.querySelectorAll('.resizeHandle')),
 
     loading: document.getElementById('loading'), loadingText: document.getElementById('loadingText'), loadingBar: document.getElementById('loadingBar'), loadingTitle: document.getElementById('loadingTitle'),
+
+    partnerSettingsModal: document.getElementById('partnerSettingsModal'),
+    partnerSettingsList: document.getElementById('partnerSettingsList'),
+    partnerSettingsAdd: document.getElementById('partnerSettingsAdd'),
+    partnerSettingsSave: document.getElementById('partnerSettingsSave'),
+    partnerSettingsCancel: document.getElementById('partnerSettingsCancel'),
+    partnerSettingsClose: document.querySelector('.partnerSettingsClose'),
+    partnerSettingsTriggers: Array.from(document.querySelectorAll('[data-partner-settings]')),
   };
 
 
@@ -828,9 +972,9 @@
       const iconPath = els.themeToggle.querySelector('path');
       if(iconPath){
         if(next === 'dark'){
-          iconPath.setAttribute('d', 'M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M16.24 7.76l1.42-1.42 M6.34 17.66l1.42-1.42 M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z');
+          iconPath.setAttribute('d', 'M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm0-4v2.5M12 19.5V22M4.5 12H7M17 12h2.5M6.34 6.34 8.1 8.1M15.9 15.9l1.76 1.76M15.9 8.1l1.76-1.76M8.1 15.9 6.34 17.66');
         } else {
-          iconPath.setAttribute('d', 'M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z');
+          iconPath.setAttribute('d', 'M12.5 3A8.5 8.5 0 1 0 20.9 15a6.5 6.5 0 0 1-8.4-12Z');
         }
       }
     }
@@ -985,7 +1129,6 @@
     if(els.vertSizeSeg) [...els.vertSizeSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.v===state.vertVariant));
 
     els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
-    els.batchLabel.textContent = els.batchMeta.textContent;
 
     // file name at top of preview
     els.fileNameTop.textContent = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
@@ -1039,16 +1182,27 @@
     frameMetrics = { left: frameLeftPx, top: frameTopPx, width: fwPx, height: fhPx };
 
     if(els.resizeHandles){
-      const offset = 9;
+      const offset = (els.resizeHandles[0]?.offsetWidth || 18) / 2;
       const display = state.imageSrc ? 'block' : 'none';
+      const stageW = els.stage.clientWidth;
+      const stageH = els.stage.clientHeight;
+      const baseW = state.natural.w * state.coverScale * state.imgZoom * state.previewZoom;
+      const baseH = state.natural.h * state.coverScale * state.imgZoom * state.previewZoom;
+      const rotated = Math.abs(state.rotation % 180) === 90;
+      const dispW = rotated ? baseH : baseW;
+      const dispH = rotated ? baseW : baseH;
+      const centerX = stageW / 2 + (state.offset.x * state.previewZoom);
+      const centerY = stageH / 2 + (state.offset.y * state.previewZoom);
+      const imgLeft = centerX - dispW / 2;
+      const imgTop = centerY - dispH / 2;
       els.resizeHandles.forEach(handle=>{
         handle.style.display = display;
         if(display==='none') return;
         const corner = handle.dataset.corner;
-        let left = frameLeftPx;
-        let top = frameTopPx;
-        if(corner==='ne' || corner==='se'){ left = frameLeftPx + fwPx; }
-        if(corner==='se' || corner==='sw'){ top = frameTopPx + fhPx; }
+        let left = imgLeft;
+        let top = imgTop;
+        if(corner==='ne' || corner==='se'){ left = imgLeft + dispW; }
+        if(corner==='se' || corner==='sw'){ top = imgTop + dispH; }
         handle.style.left = (left - offset) + 'px';
         handle.style.top = (top - offset) + 'px';
       });
@@ -1263,15 +1417,23 @@
       item.dataset.index = idx.toString();
       item.setAttribute('role','option');
       item.setAttribute('aria-selected', idx===state.current);
-      item.title = it.name || `Image ${idx+1}`;
+      const baseName = (it.name || `Image ${idx+1}`).trim();
+      item.title = baseName;
+      const thumb = document.createElement('img');
+      thumb.src = it.src;
+      thumb.alt = baseName;
+      thumb.loading = 'lazy';
+      const meta = document.createElement('div');
+      meta.className = 'thumbMeta';
       const num = document.createElement('span');
       num.className = 'thumbNum';
       num.textContent = `${idx+1}`;
-      const thumb = document.createElement('img');
-      thumb.src = it.src;
-      thumb.alt = it.name || `Image ${idx+1}`;
-      thumb.loading = 'lazy';
-      item.append(num, thumb);
+      const name = document.createElement('span');
+      name.className = 'thumbName';
+      const cleanName = baseName.replace(/\.[^/.]+$/, '');
+      name.textContent = cleanName.length > 20 ? `${cleanName.slice(0,19)}…` : cleanName;
+      meta.append(num, name);
+      item.append(thumb, meta);
       item.addEventListener('click', ()=>{
         if(state.current === idx){ return; }
         serializeCurrent();
@@ -1320,9 +1482,10 @@
 
   async function importImageFromURL(rawUrl){
     const url = (rawUrl||'').trim();
-    if(!url) return;
+    if(!url) return false;
     showLoading('Fetching image…', 10);
     let objectURL = null;
+    let success = false;
     try{
       const response = await fetch(url, {mode:'cors'});
       if(!response.ok) throw new Error('Network error');
@@ -1333,11 +1496,10 @@
       try{ fileName = decodeURIComponent((new URL(url)).pathname.split('/').pop() || 'remote_image'); }catch(err){ fileName = 'remote_image'; }
       await new Promise((resolve, reject)=>{
         const im = new Image();
-        im.onload = ()=>{ pushImage(objectURL, fileName, {w:im.width, h:im.height}); loadImageAt(state.images.length-1); resolve(); };
+        im.onload = ()=>{ pushImage(objectURL, fileName, {w:im.width, h:im.height}); loadImageAt(state.images.length-1); success = true; resolve(); };
         im.onerror = (err)=>{ reject(err); };
         im.src = objectURL;
       });
-      els.urlInput.value = '';
     } catch(err){
       console.error(err);
       if(objectURL){ try{ URL.revokeObjectURL(objectURL); }catch(e){} }
@@ -1345,6 +1507,149 @@
     } finally {
       hideLoading();
     }
+    return success;
+  }
+
+  let pasteFeedbackTimeout = null;
+  function showPasteFeedback(type, message){
+    if(!els.pasteUrlBtn) return;
+    els.pasteUrlBtn.classList.remove('feedback-success','feedback-error');
+    if(type === 'success'){ els.pasteUrlBtn.classList.add('feedback-success'); }
+    else if(type === 'error'){ els.pasteUrlBtn.classList.add('feedback-error'); }
+    if(message){ els.pasteUrlBtn.title = message; }
+    else { els.pasteUrlBtn.removeAttribute('title'); }
+    if(pasteFeedbackTimeout){ clearTimeout(pasteFeedbackTimeout); }
+    pasteFeedbackTimeout = window.setTimeout(()=>{
+      els.pasteUrlBtn?.classList.remove('feedback-success','feedback-error');
+      if(type !== 'success'){ els.pasteUrlBtn?.removeAttribute('title'); }
+    }, 2200);
+  }
+
+  async function handlePasteImageUrl(){
+    if(!els.pasteUrlBtn) return;
+    const fallbackPrompt = ()=>{
+      const manual = window.prompt('Paste image URL');
+      return (manual||'').trim();
+    };
+    let clipboardText = '';
+    try{
+      if(navigator.clipboard && navigator.clipboard.readText){
+        clipboardText = (await navigator.clipboard.readText()) || '';
+      } else {
+        clipboardText = fallbackPrompt();
+      }
+    }catch(err){
+      console.warn('Clipboard read failed', err);
+      clipboardText = fallbackPrompt();
+    }
+    clipboardText = (clipboardText||'').trim();
+    if(!clipboardText){
+      showPasteFeedback('error', 'Clipboard was empty');
+      return;
+    }
+    if(!/^https?:\/\//i.test(clipboardText)){
+      showPasteFeedback('error', 'Last clipboard item was not a URL');
+      return;
+    }
+    const ok = await importImageFromURL(clipboardText);
+    showPasteFeedback(ok ? 'success' : 'error', ok ? 'Image imported' : 'Import failed');
+  }
+
+  function persistPartnerLibrary(){
+    if(partnerDataScript){
+      partnerDataScript.textContent = JSON.stringify(partnerLibrary, null, 2);
+    }
+  }
+
+  function updatePartnerPreview(img, url){
+    if(!img) return;
+    const clean = (url||'').trim();
+    if(clean){
+      img.src = clean;
+      img.style.opacity = 1;
+    } else {
+      img.src = PARTNER_PLACEHOLDER;
+      img.style.opacity = 0.35;
+    }
+  }
+
+  function createPartnerRow(entry = {name:'', url:''}){
+    const row = document.createElement('div');
+    row.className = 'partnerRow';
+
+    const preview = document.createElement('img');
+    preview.alt = entry.name ? `${entry.name} logo` : 'Logo preview';
+    updatePartnerPreview(preview, entry.url);
+
+    const fields = document.createElement('div');
+    fields.className = 'partnerRowFields';
+
+    const nameLabel = document.createElement('label');
+    nameLabel.textContent = 'Name';
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.value = entry.name || '';
+    nameInput.placeholder = 'Brand name';
+    nameInput.className = 'partnerName';
+    nameInput.addEventListener('input', ()=>{
+      row.classList.remove('invalid');
+      preview.alt = nameInput.value ? `${nameInput.value} logo` : 'Logo preview';
+    });
+    nameLabel.appendChild(nameInput);
+
+    const urlLabel = document.createElement('label');
+    urlLabel.textContent = 'Link';
+    const urlInput = document.createElement('input');
+    urlInput.type = 'url';
+    urlInput.value = entry.url || '';
+    urlInput.placeholder = 'https://…';
+    urlInput.className = 'partnerUrl';
+    urlInput.addEventListener('input', ()=>{
+      row.classList.remove('invalid');
+      updatePartnerPreview(preview, urlInput.value);
+    });
+    urlLabel.appendChild(urlInput);
+
+    fields.append(nameLabel, urlLabel);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'btn icon ghost partnerRowRemove';
+    removeBtn.setAttribute('aria-label', 'Remove logo');
+    removeBtn.innerHTML = '<svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg>';
+    removeBtn.addEventListener('click', ()=>{ row.remove(); });
+
+    row.append(preview, fields, removeBtn);
+    return row;
+  }
+
+  function renderPartnerSettings(){
+    if(!els.partnerSettingsList) return;
+    els.partnerSettingsList.innerHTML = '';
+    const data = partnerLibrary.length ? partnerLibrary : [{name:'', url:''}];
+    data.forEach(entry=>{
+      els.partnerSettingsList.appendChild(createPartnerRow(entry));
+    });
+  }
+
+  function openPartnerSettings(){
+    if(!els.partnerSettingsModal) return;
+    partnerSettingsRestoreFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    renderPartnerSettings();
+    els.partnerSettingsModal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+    const focusTarget = els.partnerSettingsList?.querySelector('input');
+    focusTarget?.focus();
+  }
+
+  function closePartnerSettings(){
+    if(!els.partnerSettingsModal) return;
+    els.partnerSettingsModal.classList.remove('show');
+    document.body.style.overflow = '';
+    if(partnerSettingsRestoreFocus && typeof partnerSettingsRestoreFocus.focus === 'function'){
+      partnerSettingsRestoreFocus.focus();
+    }
+    partnerSettingsRestoreFocus = null;
   }
 
   const hasFileType = (dt)=>!!(dt && Array.from(dt.types||[]).includes('Files'));
@@ -1362,10 +1667,7 @@
     e.target.value = '';
   });
 
-  els.urlImport?.addEventListener('click', ()=>{ importImageFromURL(els.urlInput?.value); });
-  els.urlInput?.addEventListener('keydown', (e)=>{
-    if(e.key==='Enter'){ e.preventDefault(); importImageFromURL(els.urlInput.value); }
-  });
+  els.pasteUrlBtn?.addEventListener('click', handlePasteImageUrl);
 
   window.addEventListener('dragenter', (e)=>{
     if(!hasFileType(e.dataTransfer)) return;
@@ -1476,7 +1778,6 @@
       state.current=-1; state.imageSrc=null; state.natural={w:0,h:0};
       els.img.removeAttribute('src'); computeCover(); render(); updateControls();
       els.batchMeta.textContent = '0 / 0';
-      els.batchLabel.textContent = '0 / 0';
       renderCarousel();
       return;
     }
@@ -1510,7 +1811,6 @@
     render();
     updateControls();
     els.batchMeta.textContent = '0 / 0';
-    els.batchLabel.textContent = '0 / 0';
   });
 
   // ---------- Batch helpers ----------
@@ -1525,7 +1825,6 @@
     const position = state.current>=0 ? state.current+1 : state.images.length;
     const text = `${position} / ${state.images.length}`;
     els.batchMeta.textContent = text;
-    els.batchLabel.textContent = text;
     els.exportAllBtn.disabled = state.images.length===0;
     renderCarousel();
   }
@@ -1550,7 +1849,6 @@
     els.img.src = it.src;
     const text = `${idx+1} / ${state.images.length}`;
     els.batchMeta.textContent = text;
-    els.batchLabel.textContent = text;
     computeCover(); fitPreviewZoomToStage(); render(); updateControls();
     renderCarousel();
   }
@@ -1619,13 +1917,30 @@
   segSizeHandler(els.sqLogoSeg,'squareLogo', SIZE_MAP_SQ); segToneHandler(els.sqLogoToneSeg,'squareLogo');
   segSizeHandler(els.vertLogoSeg,'vertLogo', SIZE_MAP_SQ); segToneHandler(els.vertLogoToneSeg,'vertLogo');
 
-  function buildGallery(scroller, onPick){
+  function buildGallery(scroller, onPick, getStore){
     if(!scroller) return;
     scroller.innerHTML='';
-    PARTNERS.forEach(p=>{
+    const store = typeof getStore === 'function' ? getStore() : null;
+    if(partnerLibrary.length === 0){
+      const msg = document.createElement('div');
+      msg.className = 'muted';
+      msg.style.padding = '6px';
+      msg.style.fontSize = '12px';
+      msg.style.whiteSpace = 'nowrap';
+      msg.textContent = 'Add partners from settings.';
+      scroller.appendChild(msg);
+      return;
+    }
+    partnerLibrary.forEach(p=>{
       const it = document.createElement('button'); it.type='button'; it.className='libItem'; it.dataset.name=p.name.toLowerCase();
-      it.innerHTML = `<img alt="${p.name}" src="${p.url}"><div class="cap">${p.name}</div>`;
-      it.addEventListener('click', async ()=>{ scroller.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); it.classList.add('active'); await onPick(p); });
+      it.innerHTML = `<img alt="${p.name}" src="${p.url}"><div class=\"cap\">${p.name}</div>`;
+      const isActive = !!(store && store.source==='partner' && store.chosen === p.name);
+      if(isActive) it.classList.add('active');
+      it.addEventListener('click', async ()=>{
+        scroller.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active'));
+        it.classList.add('active');
+        await onPick(p);
+      });
       scroller.appendChild(it);
     });
   }
@@ -1681,15 +1996,55 @@
   els.removeVertLogo?.addEventListener('click', ()=>{ state.vertLogo = {src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.vertLogoPrev.style.display='none'; render(); updateControls(); });
 
   function buildAllGalleries(){
-    buildGallery(els.logo1Gallery, p=>loadLogoURL(p.url, els.logo1Prev, state.frost.logo1, 'logo1', p.name));
-    buildGallery(els.logo2Gallery, p=>loadLogoURL(p.url, els.logo2Prev, state.frost.logo2, 'logo2', p.name));
-    buildGallery(els.sqLogoGallery, p=>loadLogoURL(p.url, els.sqLogoPrev, state.squareLogo, 'squareLogo', p.name));
-    buildGallery(els.vertLogoGallery, p=>loadLogoURL(p.url, els.vertLogoPrev, state.vertLogo, 'vertLogo', p.name));
+    buildGallery(els.logo1Gallery, p=>loadLogoURL(p.url, els.logo1Prev, state.frost.logo1, 'logo1', p.name), ()=>state.frost.logo1);
+    buildGallery(els.logo2Gallery, p=>loadLogoURL(p.url, els.logo2Prev, state.frost.logo2, 'logo2', p.name), ()=>state.frost.logo2);
+    buildGallery(els.sqLogoGallery, p=>loadLogoURL(p.url, els.sqLogoPrev, state.squareLogo, 'squareLogo', p.name), ()=>state.squareLogo);
+    buildGallery(els.vertLogoGallery, p=>loadLogoURL(p.url, els.vertLogoPrev, state.vertLogo, 'vertLogo', p.name), ()=>state.vertLogo);
+    if(els.logo1Search?.value) filterGallery(els.logo1Gallery, els.logo1Search.value);
+    if(els.logo2Search?.value) filterGallery(els.logo2Gallery, els.logo2Search.value);
+    if(els.sqLogoSearch?.value) filterGallery(els.sqLogoGallery, els.sqLogoSearch.value);
+    if(els.vertLogoSearch?.value) filterGallery(els.vertLogoGallery, els.vertLogoSearch.value);
   }
   els.logo1Search.addEventListener('input', e=>filterGallery(els.logo1Gallery, e.target.value));
   els.logo2Search.addEventListener('input', e=>filterGallery(els.logo2Gallery, e.target.value));
   els.sqLogoSearch?.addEventListener('input', e=>filterGallery(els.sqLogoGallery, e.target.value));
   els.vertLogoSearch?.addEventListener('input', e=>filterGallery(els.vertLogoGallery, e.target.value));
+
+  els.partnerSettingsTriggers?.forEach(btn=>btn.addEventListener('click', openPartnerSettings));
+  els.partnerSettingsAdd?.addEventListener('click', ()=>{
+    const row = createPartnerRow();
+    els.partnerSettingsList?.appendChild(row);
+    row.querySelector('input')?.focus();
+  });
+  const closeSettings = ()=>closePartnerSettings();
+  els.partnerSettingsCancel?.addEventListener('click', closeSettings);
+  els.partnerSettingsClose?.addEventListener('click', closeSettings);
+  els.partnerSettingsModal?.addEventListener('click', (e)=>{ if(e.target === els.partnerSettingsModal){ closePartnerSettings(); } });
+  window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && els.partnerSettingsModal?.classList.contains('show')){ closePartnerSettings(); } });
+  els.partnerSettingsSave?.addEventListener('click', ()=>{
+    if(!els.partnerSettingsList) return;
+    const rows = Array.from(els.partnerSettingsList.querySelectorAll('.partnerRow'));
+    const next = [];
+    let hasError = false;
+    rows.forEach(row=>{
+      const nameInput = row.querySelector('.partnerName');
+      const urlInput = row.querySelector('.partnerUrl');
+      const name = (nameInput?.value || '').trim();
+      const url = (urlInput?.value || '').trim();
+      if(!name || !url){
+        row.classList.add('invalid');
+        if(!hasError){ nameInput?.focus(); }
+        hasError = true;
+        return;
+      }
+      next.push({ name, url });
+    });
+    if(hasError){ return; }
+    partnerLibrary = next;
+    persistPartnerLibrary();
+    buildAllGalleries();
+    closePartnerSettings();
+  });
 
   // ---------- Export helpers ----------
   function bytesFromDataURL(dataURL){ try{ return atob(dataURL.split(',')[1]).length; }catch(e){ return Infinity; } }
