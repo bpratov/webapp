@@ -48,7 +48,7 @@
   #themeToggle .btn-text{display:none}
   #themeToggle:focus-visible{outline:3px solid rgba(255,255,255,0.75); outline-offset:4px}
 
-  .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:14px; background:var(--btn-bg); color:var(--ink); cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease, background .2s ease, color .2s ease, box-shadow .2s ease}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:14px 20px; border:1px solid var(--border); border-radius:14px; background:var(--btn-bg); color:var(--ink); cursor:pointer; font-size:14px; box-shadow:var(--shadow); transition:transform .06s ease, background .2s ease, color .2s ease, box-shadow .2s ease; min-height:48px; font-weight:600}
   .btn:active{transform:translateY(1px)}
   .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; border-color:transparent}
   .btn.ghost{background:var(--btn-ghost-bg); border-color:var(--border)}
@@ -59,6 +59,8 @@
   .btn.danger.ghost{background:rgba(254,226,226,0.22)}
   .btn.danger.ghost:hover{background:rgba(254,202,202,0.32)}
   .btn.danger.armed{background:rgba(248,113,113,0.18); border-color:#fca5a5; color:#7f1d1d}
+  .btn.state-error{border-color:#fca5a5; color:#b91c1c; background:rgba(254,226,226,0.28)}
+  .btn.state-success{border-color:#4ade80; color:#166534; background:rgba(187,247,208,0.25)}
   .btn:disabled{opacity:.6; cursor:not-allowed}
 
   .btn .btn-ico{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2.2; flex-shrink:0; filter:drop-shadow(0 2px 4px rgba(15,23,42,0.08))}
@@ -99,16 +101,16 @@
   .badge{display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; font-size:13px; box-shadow:var(--shadow)}
 
   .row{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-  .uploadGrid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); align-items:stretch}
-  .uploadCell{display:flex; width:100%}
-  .uploadCell .btn{flex:1; justify-content:center}
-  .uploadActions{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
-  .urlUpload{display:flex; gap:10px; align-items:stretch; width:100%; flex:1 1 280px;}
-  .urlUpload .urlField{flex:1; display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:14px; background:var(--stageInner); box-shadow:inset 0 1px 2px rgba(15,23,42,0.08); transition:background .2s ease, border-color .2s ease}
-  .urlUpload .urlField svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8; flex-shrink:0}
-  .urlUpload .urlField input{flex:1; border:none; outline:none; background:transparent; color:var(--ink); font-size:13px}
-  .urlUpload .urlField input::placeholder{color:var(--muted)}
-  .urlUpload button{display:inline-flex; align-items:center; justify-content:center; white-space:nowrap; height:100%}
+  .row.tight{gap:10px}
+  .uploadButtons{display:grid; gap:14px; grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch}
+  .uploadButtons .btn{width:100%}
+  .uploadButtons .btn .btn-text{flex:1; text-align:center}
+  @media (max-width: 680px){
+    .uploadButtons{grid-template-columns:1fr}
+  }
+  .urlStatus{font-size:12px; color:var(--muted); margin-top:6px; min-height:18px}
+  .urlStatus.error{color:#b91c1c}
+  .urlStatus.success{color:#166534}
   .stack{display:grid; gap:16px; text-align:left}
   #formatRow{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
   @media (max-width: 720px){
@@ -117,7 +119,7 @@
   .formatCard{position:relative; border:1px solid var(--border); border-radius:20px; padding:20px; background:var(--chip-bg); text-align:left; display:flex; flex-direction:column; gap:12px; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; box-shadow:0 6px 20px rgba(15,23,42,0.06); min-height:170px}
   .formatCard.wide{grid-column:span 2}
   @media (max-width: 720px){ .formatCard.wide{grid-column:auto} }
-  .formatCard .formatIcon{width:52px; height:52px; border-radius:10px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(59,130,246,0.22),rgba(99,102,241,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.35)}
+  .formatCard .formatIcon{width:52px; height:52px; border-radius:8px; display:grid; place-items:center; background:linear-gradient(135deg,rgba(59,130,246,0.22),rgba(99,102,241,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.35)}
   .formatCard .formatIcon svg{width:34px; height:auto}
   .formatCard .formatInfo{display:grid; gap:4px}
   .formatCard .formatTitle{font-size:15px; font-weight:700; line-height:1.3}
@@ -132,7 +134,7 @@
   .chip .meta{font-size:12px; color:var(--muted)}
   .chip .chipInner{display:flex; align-items:center; gap:10px}
 
-  .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:8; ry:8}
+  .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:2.2; ry:2.2}
 
   .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);}
   .preview-head{display:flex; align-items:flex-end; justify-content:space-between; padding:16px; gap:16px}
@@ -179,6 +181,25 @@
   .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
 
   .tone-note{font-size:12px; color:var(--muted); margin-top:6px}
+  .segLabel{font-size:12px; font-weight:600; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em}
+
+  .frostSwitchRow{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); align-items:flex-start; margin-bottom:20px}
+  .logoCluster{display:grid; gap:24px; margin-top:18px}
+  .logoCard{border:1px solid var(--border); border-radius:18px; padding:18px 20px; background:var(--chip-bg); box-shadow:0 10px 22px rgba(15,23,42,0.08); display:grid; gap:18px}
+  .logoCard .row{align-items:flex-end}
+  .logoSectionHeader{display:flex; align-items:flex-end; justify-content:space-between; gap:12px}
+  .logoSectionText{display:flex; flex-direction:column; gap:4px}
+  .logoSectionTitle{font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted)}
+  .logoSectionHint{font-size:12px; color:var(--muted)}
+  .logoDivider{height:1px; background:linear-gradient(90deg,rgba(99,102,241,0),rgba(99,102,241,0.35),rgba(99,102,241,0)); opacity:0.6; margin:4px 0 -8px 0}
+  .segGroup{display:grid; gap:8px; min-width:120px}
+
+  .libHeader{display:flex; gap:10px; align-items:center}
+  .libHeader input{flex:1}
+  .libHeader .partnerSettingsBtn{flex:0 0 auto}
+  .partnerSettingsBtn{border-radius:50%; width:38px; height:38px; display:inline-grid; place-items:center; border:1px solid var(--border); background:var(--btn-bg); color:var(--muted); box-shadow:var(--shadow); cursor:pointer; transition:background .2s ease, color .2s ease}
+  .partnerSettingsBtn:hover{background:rgba(14,165,233,0.08); color:var(--brand2)}
+  .partnerSettingsBtn svg{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2}
 
   .loading{position:fixed; inset:0; background:rgba(15,23,42,.35); display:none; align-items:center; justify-content:center; z-index:1000}
   .loading .card{min-width:280px; max-width:420px; background:var(--stageInner); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; text-align:center; transition:background .2s ease, border-color .2s ease}
@@ -200,15 +221,42 @@
   .exportActions{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
   .exportMeta{margin-top:10px; display:flex; width:100%; justify-content:space-between}
 
-  .carouselWrap{flex:1; padding:0 16px 0 16px; display:flex; flex-direction:column; justify-content:flex-start;}
-  .imageCarousel{display:flex; gap:12px; overflow-x:auto; padding:10px 0 4px 0; scroll-snap-type:x mandatory;}
+  .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:90}
+  .modal.show{display:flex}
+  .modal::before{content:""; position:absolute; inset:0; background:rgba(15,23,42,0.55); backdrop-filter:blur(10px)}
+  .modalCard{position:relative; z-index:1; width:min(640px, 92vw); max-height:80vh; overflow:hidden; background:var(--stageInner); border-radius:20px; border:1px solid var(--border); box-shadow:0 28px 60px rgba(2,6,23,0.4); display:flex; flex-direction:column}
+  .modalHeader{padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .modalHeader h3{margin:0; font-size:18px}
+  .modalBody{padding:0 24px 20px 24px; display:flex; flex-direction:column; gap:16px; overflow:hidden}
+  .modalList{flex:1; overflow:auto; display:grid; gap:14px; padding:12px 0}
+  .modalRow{display:grid; gap:12px; border:1px solid var(--border); border-radius:14px; padding:14px; background:var(--chip-bg); box-shadow:0 4px 14px rgba(15,23,42,0.06)}
+  .modalRowHeader{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .modalRowHeader strong{font-size:14px}
+  .modalRowControls{display:grid; gap:10px}
+  .modalRowControls label{font-size:12px; font-weight:600; color:var(--muted)}
+  .modalRowControls input{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); color:var(--ink); font-size:14px}
+  .modalRowPreview{display:flex; align-items:center; gap:12px}
+  .modalRowPreview img{width:56px; height:56px; object-fit:contain; border-radius:12px; background:rgba(148,197,255,0.16); border:1px solid var(--border)}
+  .modalFooter{padding:16px 24px 22px; border-top:1px solid var(--border); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  .modalFooter .btn{min-width:120px}
+  .badge.new{background:linear-gradient(135deg,#34d399,#10b981)}
+
+  .modalRow.invalid input{border-color:#fca5a5}
+  .modalRow.invalid .modalRowPreview img{border-color:#fca5a5}
+
+  .carouselWrap{flex:1; padding:0 16px 0 16px; display:flex; flex-direction:column; justify-content:flex-start; min-width:0;}
+  .imageCarousel{display:flex; gap:12px; overflow-x:auto; padding:12px 4px 6px 4px; scroll-snap-type:x mandatory; width:100%;}
   .imageCarousel::-webkit-scrollbar{height:6px}
   .imageCarousel::-webkit-scrollbar-thumb{background:rgba(148,163,184,0.5); border-radius:999px}
-  .thumbItem{flex:0 0 auto; scroll-snap-align:start; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 14px rgba(2,6,23,0.08); padding:6px; display:grid; gap:6px; width:88px; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; text-align:center}
+  .thumbItem{flex:0 0 auto; scroll-snap-align:start; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 14px rgba(2,6,23,0.08); padding:8px 10px; display:grid; gap:8px; width:132px; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; text-align:left; min-height:136px}
   .thumbItem:hover{transform:translateY(-2px); box-shadow:0 12px 26px rgba(2,6,23,0.12)}
   .thumbItem.active{border-color:rgba(14,165,233,0.6); box-shadow:0 14px 30px rgba(14,165,233,0.18); transform:translateY(-3px)}
-  .thumbItem img{width:100%; height:60px; object-fit:cover; border-radius:10px; box-shadow:inset 0 1px 2px rgba(255,255,255,0.25)}
-  .thumbNum{font-size:12px; font-weight:600; color:var(--muted)}
+  .thumbPreview{position:relative; border-radius:12px; overflow:hidden; background:rgba(148,197,255,0.18);}
+  .thumbPreview img{width:100%; height:68px; object-fit:cover; display:block}
+  .thumbIndex{position:absolute; top:6px; left:6px; display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:10px; background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; font-size:12px; font-weight:700; box-shadow:0 6px 16px rgba(14,165,233,0.3)}
+  .thumbInfo{display:grid; gap:2px}
+  .thumbName{font-size:12px; font-weight:600; color:var(--ink); line-height:1.2; word-break:break-word}
+  .thumbMeta{font-size:11px; color:var(--muted)}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
 
   .mockupBlock{position:relative; border:1px solid var(--border); border-radius:16px; padding:18px; display:grid; gap:16px; background:linear-gradient(135deg,rgba(148,197,255,0.12),rgba(244,250,255,0.22)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
@@ -221,7 +269,7 @@
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
 
-  .resizeHandle{position:absolute; width:18px; height:18px; border-radius:50%; border:2px solid rgba(255,255,255,0.9); background:rgba(14,165,233,0.75); box-shadow:0 6px 16px rgba(14,165,233,0.25); cursor:nwse-resize; z-index:30; transition:transform .12s ease}
+  .resizeHandle{position:absolute; width:18px; height:18px; border-radius:50%; border:2px solid rgba(255,255,255,0.9); background:linear-gradient(135deg,var(--brand),var(--brand2)); box-shadow:0 6px 16px rgba(14,165,233,0.25); cursor:nwse-resize; z-index:30; transition:transform .12s ease}
   .resizeHandle:hover{transform:scale(1.1)}
   .resizeHandle[data-corner="ne"], .resizeHandle[data-corner="sw"]{cursor:nesw-resize}
 
@@ -234,13 +282,13 @@
   :root[data-theme="dark"] .seg{background:linear-gradient(135deg,rgba(30,64,175,0.55),rgba(17,94,205,0.28)); border:1px solid rgba(96,165,250,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
-  :root[data-theme="dark"] .urlUpload .urlField{box-shadow:inset 0 1px 2px rgba(2,6,23,0.6)}
   :root[data-theme="dark"] .dropOverlay{background:rgba(14,165,233,0.22); color:#e0f2fe}
   :root[data-theme="dark"] .veil{box-shadow:inset 0 2px 6px rgba(2,6,23,0.5)}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
   :root[data-theme="dark"] input[type="search"], :root[data-theme="dark"] select{border-color:rgba(148,163,184,0.45)}
   :root[data-theme="dark"] .thumbItem{border-color:rgba(71,85,105,0.75); box-shadow:0 12px 30px rgba(2,6,23,0.55);}
   :root[data-theme="dark"] .thumbItem.active{border-color:rgba(56,189,248,0.75);}
+  :root[data-theme="dark"] .logoDivider{background:linear-gradient(90deg,rgba(129,140,248,0),rgba(129,140,248,0.55),rgba(129,140,248,0)); opacity:0.9;}
   :root[data-theme="dark"] .mockupBlock{background:linear-gradient(135deg,rgba(30,64,175,0.22),rgba(15,23,42,0.55)); border-color:rgba(71,85,105,0.75); box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);}
   :root[data-theme="dark"] .mockupOverlay{background:rgba(15,23,42,0.5); color:#e2e8f0;}
   :root[data-theme="dark"] .versionTag{background:rgba(15,23,42,0.7); color:rgba(226,232,240,0.7); box-shadow:0 16px 30px rgba(2,6,23,0.55);}
@@ -269,86 +317,72 @@
     <section class="panel sticky">
       <div class="pad">
         <div class="kv"><div class="k">Output</div><div class="v" id="outMeta">—</div></div>
-        <div class="kv"><div class="k">Batch</div><div class="v" id="batchMeta">0 / 0</div></div>
+        <div class="kv"><div class="k">Batch</div><div class="v" id="batchMeta">—</div></div>
       </div>
 
       <div class="scroll">
         <!-- Step 1: Upload -->
         <div class="section">
           <div class="section-title"><span class="badge">1</span> Upload image(s)</div>
-          <div class="uploadGrid">
-            <div class="uploadCell">
-              <label class="btn primary" title="Upload image">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 4v10"></path>
-                  <path d="M8.5 8.5L12 5l3.5 3.5"></path>
-                  <path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"></path>
-                </svg>
-                <span class="btn-text">Upload image</span>
-                <input id="file" type="file" accept="image/*" style="display:none" />
-              </label>
-            </div>
-            <div class="uploadCell">
-              <label class="btn ghost" title="Upload folder">
-                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4.5 6.5h4l2 2H19a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8.5a2 2 0 0 1 1.5-2"></path>
-                  <path d="M12 11v5.5"></path>
-                  <path d="M9.5 13.5L12 11l2.5 2.5"></path>
-                </svg>
-                <span class="btn-text">Upload folder</span>
-                <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
-              </label>
-            </div>
-            <div class="uploadCell">
-              <div class="urlUpload">
-                <div class="urlField">
-                  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1">
-                    <path d="M9.5 14.5L7 17a4 4 0 0 0 0 5.66 4 4 0 0 0 5.66 0L17 18.34"></path>
-                    <path d="M14.5 9.5L17 7a4 4 0 0 0 0-5.66 4 4 0 0 0-5.66 0L7 5.66"></path>
-                    <path d="M8.5 15.5l7-7"></path>
-                  </svg>
-                  <input id="urlInput" type="url" placeholder="Paste image URL" autocomplete="off" spellcheck="false" />
-                </div>
-                <button class="btn ghost" type="button" id="urlImport">
-                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 4v13"></path>
-                    <path d="M7.5 12.5L12 17l4.5-4.5"></path>
-                    <path d="M5 20h14"></path>
-                  </svg>
-                  <span class="btn-text">Import URL</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="uploadActions" style="margin-top:12px">
+          <div class="uploadButtons">
+            <label class="btn primary" title="Upload image">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v10.5"></path>
+                <path d="M7.5 8.5L12 4l4.5 4.5"></path>
+                <path d="M4 17.5v1A2.5 2.5 0 0 0 6.5 21h11A2.5 2.5 0 0 0 20 18.5v-1"></path>
+              </svg>
+              <span class="btn-text">Upload image</span>
+              <input id="file" type="file" accept="image/*" style="display:none" />
+            </label>
+            <label class="btn ghost" title="Upload folder">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3.5 6.5h4.6l1.8 2H20a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 20 20H4a1.5 1.5 0 0 1-1.5-1.5V8a1.5 1.5 0 0 1 1.5-1.5Z"></path>
+                <path d="M12 11v4.5"></path>
+                <path d="M9.5 13.5L12 11l2.5 2.5"></path>
+              </svg>
+              <span class="btn-text">Upload folder</span>
+              <input id="folder" type="file" webkitdirectory multiple accept="image/*" style="display:none" />
+            </label>
+            <button class="btn ghost" type="button" id="pasteUrlBtn">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16.5 4h-9A2.5 2.5 0 0 0 5 6.5v11A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 16.5 4z"></path>
+                <path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"></path>
+                <path d="M9 12h6"></path>
+                <path d="M9 15h4"></path>
+              </svg>
+              <span class="btn-text">Paste image URL</span>
+            </button>
             <button class="btn ghost" id="reset">
               <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 9a7 7 0 1 1-2 5"></path>
-                <path d="M5 9h4.5"></path>
-                <path d="M5 9v4.5"></path>
+                <path d="M4.5 10A7.5 7.5 0 1 1 7 16.9"></path>
+                <path d="M3.5 6.5V11h4.5"></path>
               </svg>
               <span class="btn-text">Reset current</span>
             </button>
-            <button class="btn danger" id="deleteBtn" title="Delete current image">
-              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 7h14"></path>
-                <path d="M9 4.5h6l.8 2.5"></path>
-                <path d="M8 9v9a1.8 1.8 0 0 0 1.8 1.8h4.4A1.8 1.8 0 0 0 16 18V9"></path>
-                <path d="M10 12.5v4"></path>
-                <path d="M14 12.5v4"></path>
-              </svg>
-              <span class="btn-text">Delete current</span>
-            </button>
             <button class="btn danger ghost" id="deleteAllBtn" title="Delete all uploaded images">
               <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 6h6l1.8 2H19a2 2 0 0 1 2 2v8.5A1.5 1.5 0 0 1 19.5 20h-15A1.5 1.5 0 0 1 3 18.5V7.5A1.5 1.5 0 0 1 4.5 6z"></path>
-                <path d="M9 12.5l2.5 2.5L14 12.5"></path>
-                <path d="M12 15v-5"></path>
+                <path d="M4 6h16"></path>
+                <path d="M8 6l1-2h6l1 2"></path>
+                <path d="M6.5 6v12A2.5 2.5 0 0 0 9 20h6a2.5 2.5 0 0 0 2.5-2.5V6"></path>
+                <path d="M9.5 11v6"></path>
+                <path d="M14.5 11v6"></path>
               </svg>
               <span class="btn-text">Delete all</span>
             </button>
+            <button class="btn danger" id="deleteBtn" title="Delete current image">
+              <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 6h14"></path>
+                <path d="M9 6l1-2h4l1 2"></path>
+                <path d="M9.5 10.5v6.5"></path>
+                <path d="M14.5 10.5v6.5"></path>
+                <path d="M7 6v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6"></path>
+              </svg>
+              <span class="btn-text">Delete current</span>
+            </button>
           </div>
-          <div class="muted" style="margin-top:12px">PNG/JPEG supported. Drop anywhere, zoom with scroll or pinch, and drag corners to resize.</div>
+          <input id="urlInput" type="hidden" />
+          <div class="urlStatus" id="urlStatus" aria-live="polite"></div>
+          <div class="muted" style="margin-top:6px">PNG/JPEG supported. Drop anywhere, zoom with scroll or pinch, and drag corners to resize.</div>
         </div>
 
         <!-- Step 2: Format -->
@@ -436,51 +470,111 @@
         <!-- Step 4: Frosted bar -->
         <div class="section" id="frostSection">
           <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
-          <div class="row" style="gap:16px">
-            <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
+          <div class="frostSwitchRow">
+            <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted bar</span></label>
             <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
-            <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add second logo</span></label>
+            <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
           </div>
 
-          <div class="stack" style="margin-top:10px">
-            <div class="row">
-              <label class="btn ghost">Upload Logo 1<input id="logo1Input" type="file" accept="image/*" style="display:none"/></label>
-              <div class="seg" id="logo1Seg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+          <div class="logoCluster">
+            <div class="logoCard" id="logo1Card">
+              <div class="logoSectionHeader">
+                <div class="logoSectionText">
+                  <span class="logoSectionTitle">Logo slot 1</span>
+                  <span class="logoSectionHint">Frosted bar</span>
+                </div>
               </div>
-              <div class="seg" id="logo1ToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
+              <div class="row tight">
+                <label class="btn ghost" style="flex:1 1 180px">
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v10.5"></path>
+                    <path d="M7.5 8.5L12 4l4.5 4.5"></path>
+                    <path d="M4 17.5v1A2.5 2.5 0 0 0 6.5 21h11A2.5 2.5 0 0 0 20 18.5v-1"></path>
+                  </svg>
+                  <span class="btn-text">Upload logo</span>
+                  <input id="logo1Input" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="segGroup">
+                  <div class="segLabel">Size</div>
+                  <div class="seg" id="logo1Seg">
+                    <button data-size="S" class="active">S</button>
+                    <button data-size="M">M</button>
+                    <button data-size="L">L</button>
+                  </div>
+                </div>
+                <div class="segGroup">
+                  <div class="segLabel">Tone</div>
+                  <div class="seg" id="logo1ToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                </div>
+              </div>
+              <div class="tone-note">Respect partner palettes.</div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="logo1Search" type="search" placeholder="Search partners…" />
+                  <button class="partnerSettingsBtn" type="button" data-source="logo1" aria-label="Open partner logo settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
               </div>
             </div>
-            <div class="tone-note">Please double-check partner branding guidelines permit recoloring before switching logo colors.</div>
-            <div class="libWrap">
-              <input id="logo1Search" type="search" placeholder="Search partners…" />
-              <div id="logo1Gallery" class="libScroller" aria-label="Logo library"></div>
-            </div>
-          </div>
 
-          <div id="logo2Block" class="stack" style="display:none; margin-top:14px">
-            <div class="row">
-              <label class="btn ghost">Upload Logo 2<input id="logo2Input" type="file" accept="image/*" style="display:none"/></label>
-              <div class="seg" id="logo2Seg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+            <div class="logoDivider" id="logo2Divider" style="display:none" aria-hidden="true"></div>
+
+            <div id="logo2Block" class="logoCard" style="display:none">
+              <div class="logoSectionHeader">
+                <div class="logoSectionText">
+                  <span class="logoSectionTitle">Logo slot 2</span>
+                  <span class="logoSectionHint">Optional partner</span>
+                </div>
+                <button class="btn small ghost" id="removeLogo2">Remove</button>
               </div>
-              <div class="seg" id="logo2ToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
+              <div class="row tight">
+                <label class="btn ghost" style="flex:1 1 180px">
+                  <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v10.5"></path>
+                    <path d="M7.5 8.5L12 4l4.5 4.5"></path>
+                    <path d="M4 17.5v1A2.5 2.5 0 0 0 6.5 21h11A2.5 2.5 0 0 0 20 18.5v-1"></path>
+                  </svg>
+                  <span class="btn-text">Upload logo</span>
+                  <input id="logo2Input" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="segGroup">
+                  <div class="segLabel">Size</div>
+                  <div class="seg" id="logo2Seg">
+                    <button data-size="S" class="active">S</button>
+                    <button data-size="M">M</button>
+                    <button data-size="L">L</button>
+                  </div>
+                </div>
+                <div class="segGroup">
+                  <div class="segLabel">Tone</div>
+                  <div class="seg" id="logo2ToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                </div>
               </div>
-              <button class="btn small ghost" id="removeLogo2">Remove Logo 2</button>
-            </div>
-            <div class="libWrap">
-              <input id="logo2Search" type="search" placeholder="Search partners…" />
-              <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="logo2Search" type="search" placeholder="Search partners…" />
+                  <button class="partnerSettingsBtn" type="button" data-source="logo2" aria-label="Open partner logo settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div id="logo2Gallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
 
@@ -495,22 +589,44 @@
         <div class="section" id="squareLogoSection" style="display:none">
           <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
           <div class="stack">
-            <div class="row">
-              <label class="btn ghost">Square logo<input id="sqLogoInput" type="file" accept="image/*" style="display:none"/></label>
-              <div class="seg" id="sqLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+            <div class="row tight">
+              <label class="btn ghost" style="flex:1 1 180px">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v10.5"></path>
+                  <path d="M7.5 8.5L12 4l4.5 4.5"></path>
+                  <path d="M4 17.5v1A2.5 2.5 0 0 0 6.5 21h11A2.5 2.5 0 0 0 20 18.5v-1"></path>
+                </svg>
+                <span class="btn-text">Upload logo</span>
+                <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
+              </label>
+              <div class="segGroup">
+                <div class="segLabel">Size</div>
+                <div class="seg" id="sqLogoSeg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
               </div>
-              <div class="seg" id="sqLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
+              <div class="segGroup">
+                <div class="segLabel">Tone</div>
+                <div class="seg" id="sqLogoToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
               </div>
               <button class="btn small ghost" id="removeSqLogo">Remove</button>
             </div>
             <div class="libWrap">
-              <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
+              <div class="libHeader">
+                <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
+                <button class="partnerSettingsBtn" type="button" data-source="square" aria-label="Open partner logo settings">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                  </svg>
+                </button>
+              </div>
               <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
             </div>
           </div>
@@ -523,22 +639,44 @@
             <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
           </div>
           <div id="vertLogoBlock" class="stack" style="display:none; margin-top:10px">
-            <div class="row">
-              <label class="btn ghost">Vertical logo<input id="vertLogoInput" type="file" accept="image/*" style="display:none"/></label>
-              <div class="seg" id="vertLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+            <div class="row tight">
+              <label class="btn ghost" style="flex:1 1 180px">
+                <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v10.5"></path>
+                  <path d="M7.5 8.5L12 4l4.5 4.5"></path>
+                  <path d="M4 17.5v1A2.5 2.5 0 0 0 6.5 21h11A2.5 2.5 0 0 0 20 18.5v-1"></path>
+                </svg>
+                <span class="btn-text">Upload logo</span>
+                <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
+              </label>
+              <div class="segGroup">
+                <div class="segLabel">Size</div>
+                <div class="seg" id="vertLogoSeg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
               </div>
-              <div class="seg" id="vertLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
+              <div class="segGroup">
+                <div class="segLabel">Tone</div>
+                <div class="seg" id="vertLogoToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
               </div>
               <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
             <div class="libWrap">
-              <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+              <div class="libHeader">
+                <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+                <button class="partnerSettingsBtn" type="button" data-source="vertical" aria-label="Open partner logo settings">
+                  <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                  </svg>
+                </button>
+              </div>
               <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
             </div>
           </div>
@@ -591,7 +729,6 @@
         <div class="carouselWrap">
           <div id="carouselEmpty" class="carouselEmpty">Upload images to start your carousel.</div>
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
-          <div class="chipInfo" id="batchLabel" style="margin-top:8px; width:max-content">0 / 0</div>
         </div>
         <div class="row" style="gap:12px; justify-content:flex-end">
           <span class="muted">Preview Zoom</span>
@@ -649,13 +786,38 @@
     </div>
   </div>
 
+  <div class="modal" id="partnerSettingsModal" aria-hidden="true">
+    <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="partnerSettingsTitle">
+      <div class="modalHeader">
+        <h3 id="partnerSettingsTitle">Partner logo library</h3>
+        <button class="btn icon ghost" type="button" id="closePartnerSettings" aria-label="Close settings">
+          <svg class="btn-ico" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+        </button>
+      </div>
+      <div class="modalBody">
+        <div class="modalList" id="partnerSettingsList"></div>
+        <button class="btn ghost" type="button" id="addPartnerLogo">
+          <svg class="btn-ico" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+          <span class="btn-text">Add new logo</span>
+        </button>
+      </div>
+      <div class="modalFooter">
+        <button class="btn ghost" type="button" id="resetPartnerLogos">Reset to defaults</button>
+        <div class="row tight" style="justify-content:flex-end; flex:1">
+          <button class="btn ghost" type="button" id="cancelPartnerSettings">Cancel</button>
+          <button class="btn primary" type="button" id="savePartnerSettings">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="globalDropOverlay" id="globalDropOverlay">Drop images anywhere to upload</div>
   <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">
     <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z"></path>
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
     </svg>
   </button>
-  <div class="versionTag">version 6.18</div>
+  <div class="versionTag">V6.18</div>
 
   <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
 
@@ -667,7 +829,8 @@
     VERT:    { key:'VERT',  label:'Vertical',   sub:'Interstitial',                           icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
   };
 
-  const PARTNERS = [
+  const PARTNER_STORAGE_KEY = 'frozone-partners-v2';
+  const DEFAULT_PARTNERS = [
     {name:'Amazon', url:'https://i.imghippo.com/files/KHpN4511hII.png'},
     {name:'Babylist', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babylist_Logo_02.png'},
     {name:'Babies “R” Us', url:'https://commons.wikimedia.org/wiki/Special:FilePath/Babies_%22R%22_Us_logo.svg?width=1000'},
@@ -698,13 +861,19 @@
     {name:'Zocdoc', url:'https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png'}
   ];
 
+  let partnerLogos = loadPartnerLogos();
+  const PARTNER_PREVIEW_PLACEHOLDER = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56"><rect width="100%" height="100%" rx="12" ry="12" fill="%23e2e8f0"/><path d="M16 28h24M28 16v24" stroke="%2394a3b8" stroke-width="4" stroke-linecap="round"/></svg>';
+  let partnerSettingsDraft = [];
+  let partnerSettingsTrigger = null;
+
   const els = {
     header: document.getElementById('appHeader'),
     themeToggle: document.getElementById('themeToggle'),
     file: document.getElementById('file'),
     folder: document.getElementById('folder'),
     urlInput: document.getElementById('urlInput'),
-    urlImport: document.getElementById('urlImport'),
+    pasteUrlBtn: document.getElementById('pasteUrlBtn'),
+    urlStatus: document.getElementById('urlStatus'),
     reset: document.getElementById('reset'),
     deleteBtn: document.getElementById('deleteBtn'),
 
@@ -721,7 +890,7 @@
     previewZoom: document.getElementById('previewZoom'), zoomLabel: document.getElementById('zoomLabel'),
     exportBtn: document.getElementById('exportBtn'), exportAllBtn: document.getElementById('exportAllBtn'),
     outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
-    batchMeta: document.getElementById('batchMeta'), batchLabel: document.getElementById('batchLabel'),
+    batchMeta: document.getElementById('batchMeta'),
 
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
@@ -740,7 +909,7 @@
     logo1Seg: document.getElementById('logo1Seg'), logo2Seg: document.getElementById('logo2Seg'),
     logo1ToneSeg: document.getElementById('logo1ToneSeg'), logo2ToneSeg: document.getElementById('logo2ToneSeg'),
     removeLogo2: document.getElementById('removeLogo2'),
-    toggleLogo2: document.getElementById('toggleLogo2'), logo2Block: document.getElementById('logo2Block'),
+    toggleLogo2: document.getElementById('toggleLogo2'), logo2Block: document.getElementById('logo2Block'), logo2Divider: document.getElementById('logo2Divider'),
     logo1Search: document.getElementById('logo1Search'), logo2Search: document.getElementById('logo2Search'),
     logo1Gallery: document.getElementById('logo1Gallery'), logo2Gallery: document.getElementById('logo2Gallery'),
 
@@ -768,6 +937,15 @@
     resizeHandles: Array.from(document.querySelectorAll('.resizeHandle')),
 
     loading: document.getElementById('loading'), loadingText: document.getElementById('loadingText'), loadingBar: document.getElementById('loadingBar'), loadingTitle: document.getElementById('loadingTitle'),
+
+    partnerSettingsModal: document.getElementById('partnerSettingsModal'),
+    partnerSettingsList: document.getElementById('partnerSettingsList'),
+    addPartnerLogo: document.getElementById('addPartnerLogo'),
+    savePartnerSettings: document.getElementById('savePartnerSettings'),
+    cancelPartnerSettings: document.getElementById('cancelPartnerSettings'),
+    resetPartnerLogosBtn: document.getElementById('resetPartnerLogos'),
+    closePartnerSettings: document.getElementById('closePartnerSettings'),
+    partnerSettingsBtns: Array.from(document.querySelectorAll('.partnerSettingsBtn')),
   };
 
 
@@ -805,6 +983,7 @@
   let frameMetrics = { left:0, top:0, width:0, height:0 };
   let frostPreviewCache = { key:null, data:null };
   let resizeState = null;
+  let handlePositionRaf = null;
 
   if(els.img){
     els.img.addEventListener('load', ()=>{ frostPreviewCache.key = null; render(); });
@@ -828,9 +1007,9 @@
       const iconPath = els.themeToggle.querySelector('path');
       if(iconPath){
         if(next === 'dark'){
-          iconPath.setAttribute('d', 'M12 4v2 M12 18v2 M4 12h2 M18 12h2 M6.34 6.34l1.42 1.42 M16.24 16.24l1.42 1.42 M16.24 7.76l1.42-1.42 M6.34 17.66l1.42-1.42 M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z');
+          iconPath.setAttribute('d', 'M12 4.75a7.25 7.25 0 1 0 0 14.5 7.25 7.25 0 0 0 0-14.5ZM12 1v2.5M12 20.5V23M4.22 4.22l1.77 1.77M18.01 18.01l1.77 1.77M1 12h2.5M20.5 12H23M4.22 19.78l1.77-1.77M18.01 5.99l1.77-1.77');
         } else {
-          iconPath.setAttribute('d', 'M21 12.79A9 9 0 0 1 11.21 3 7 7 0 1 0 21 12.79Z');
+          iconPath.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z');
         }
       }
     }
@@ -942,6 +1121,11 @@
       els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
     }
 
+    if(els.logo2Divider){
+      const showDivider = (state.format.key==='HORIZ') && !!els.toggleLogo2?.checked;
+      els.logo2Divider.style.display = showDivider ? 'block' : 'none';
+    }
+
     els.bVal.textContent = state.brightness;
     els.sVal.textContent = state.saturation;
     els.cVal.textContent = state.contrast;
@@ -984,11 +1168,20 @@
     if(els.vertLogoToneSeg) [...els.vertLogoToneSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.tone===state.vertLogo.tone));
     if(els.vertSizeSeg) [...els.vertSizeSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.v===state.vertVariant));
 
-    els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
-    els.batchLabel.textContent = els.batchMeta.textContent;
+    setBatchMeta();
 
     // file name at top of preview
     els.fileNameTop.textContent = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
+  }
+
+  function batchMetaLabel(){
+    const total = state.images.length;
+    if(total <= 0) return '—';
+    return total === 1 ? '1 image' : `${total} images`;
+  }
+
+  function setBatchMeta(){
+    if(els.batchMeta){ els.batchMeta.textContent = batchMetaLabel(); }
   }
 
   function fitPreviewZoomToStage(){
@@ -1039,19 +1232,9 @@
     frameMetrics = { left: frameLeftPx, top: frameTopPx, width: fwPx, height: fhPx };
 
     if(els.resizeHandles){
-      const offset = 9;
       const display = state.imageSrc ? 'block' : 'none';
-      els.resizeHandles.forEach(handle=>{
-        handle.style.display = display;
-        if(display==='none') return;
-        const corner = handle.dataset.corner;
-        let left = frameLeftPx;
-        let top = frameTopPx;
-        if(corner==='ne' || corner==='se'){ left = frameLeftPx + fwPx; }
-        if(corner==='se' || corner==='sw'){ top = frameTopPx + fhPx; }
-        handle.style.left = (left - offset) + 'px';
-        handle.style.top = (top - offset) + 'px';
-      });
+      els.resizeHandles.forEach(handle=>{ handle.style.display = display; });
+      if(display === 'block'){ scheduleHandlePosition(); }
     }
 
     if(state.format.key==='HORIZ'){
@@ -1103,6 +1286,34 @@
       els.vertLogoPrev.style.top = top + 'px';
       applyLogoPreviewTone(els.vertLogoPrev, state.vertLogo.tone);
     } else { els.vertLogoPrev.style.display='none'; }
+  }
+
+  function scheduleHandlePosition(){
+    if(handlePositionRaf){ cancelAnimationFrame(handlePositionRaf); }
+    handlePositionRaf = requestAnimationFrame(()=>{
+      handlePositionRaf = null;
+      if(!els.resizeHandles || !els.stage || !els.img){ return; }
+      if(!state.imageSrc){
+        els.resizeHandles.forEach(handle=>{ handle.style.display = 'none'; });
+        return;
+      }
+      const stageRect = els.stage.getBoundingClientRect();
+      const imgRect = els.img.getBoundingClientRect();
+      if(!imgRect.width || !imgRect.height){
+        els.resizeHandles.forEach(handle=>{ handle.style.display = 'none'; });
+        return;
+      }
+      els.resizeHandles.forEach(handle=>{
+        const half = (handle.offsetWidth || 18) / 2;
+        let left = imgRect.left;
+        let top = imgRect.top;
+        const corner = handle.dataset.corner;
+        if(corner === 'ne' || corner === 'se'){ left = imgRect.right; }
+        if(corner === 'se' || corner === 'sw'){ top = imgRect.bottom; }
+        handle.style.left = (left - stageRect.left - half) + 'px';
+        handle.style.top = (top - stageRect.top - half) + 'px';
+      });
+    });
   }
 
   function updateFrostPreviewTexture(){
@@ -1244,6 +1455,18 @@
     return frostCanvas;
   }
 
+  function formatThumbName(raw, index){
+    const base = (raw && raw.trim()) ? raw.trim() : `Image ${index}`;
+    if(base.length <= 24) return base;
+    const dot = base.lastIndexOf('.');
+    if(dot > 0 && dot >= base.length - 6){
+      const ext = base.slice(dot);
+      const stem = base.slice(0, 24 - ext.length - 1);
+      return `${stem.trimEnd()}…${ext}`;
+    }
+    return `${base.slice(0, 23)}…`;
+  }
+
   function renderCarousel(){
     if(!els.carousel) return;
     els.carousel.innerHTML = '';
@@ -1263,15 +1486,32 @@
       item.dataset.index = idx.toString();
       item.setAttribute('role','option');
       item.setAttribute('aria-selected', idx===state.current);
-      item.title = it.name || `Image ${idx+1}`;
-      const num = document.createElement('span');
-      num.className = 'thumbNum';
-      num.textContent = `${idx+1}`;
-      const thumb = document.createElement('img');
-      thumb.src = it.src;
-      thumb.alt = it.name || `Image ${idx+1}`;
-      thumb.loading = 'lazy';
-      item.append(num, thumb);
+      const name = it.name || `Image ${idx+1}`;
+      item.title = name;
+
+      const preview = document.createElement('div');
+      preview.className = 'thumbPreview';
+      const thumbImg = document.createElement('img');
+      thumbImg.src = it.src;
+      thumbImg.alt = name;
+      thumbImg.loading = 'lazy';
+      const badge = document.createElement('span');
+      badge.className = 'thumbIndex';
+      badge.textContent = `${idx+1}`;
+      preview.append(thumbImg, badge);
+
+      const info = document.createElement('div');
+      info.className = 'thumbInfo';
+      const titleEl = document.createElement('div');
+      titleEl.className = 'thumbName';
+      titleEl.textContent = formatThumbName(name, idx+1);
+      const metaEl = document.createElement('div');
+      metaEl.className = 'thumbMeta';
+      const dims = it.natural && it.natural.w && it.natural.h ? `${it.natural.w}×${it.natural.h}` : '—';
+      metaEl.textContent = dims;
+      info.append(titleEl, metaEl);
+
+      item.append(preview, info);
       item.addEventListener('click', ()=>{
         if(state.current === idx){ return; }
         serializeCurrent();
@@ -1320,30 +1560,107 @@
 
   async function importImageFromURL(rawUrl){
     const url = (rawUrl||'').trim();
-    if(!url) return;
+    if(!url) throw new Error('Provide an image URL to import.');
     showLoading('Fetching image…', 10);
     let objectURL = null;
     try{
-      const response = await fetch(url, {mode:'cors'});
-      if(!response.ok) throw new Error('Network error');
+      let response;
+      try{
+        response = await fetch(url, { mode:'cors' });
+      } catch(fetchErr){
+        throw new Error('Unable to reach that link. Check your network or CORS policy.');
+      }
+      if(!response || !response.ok){
+        throw new Error('Unable to download image. Please verify the link.');
+      }
       const blob = await response.blob();
-      if(!/^image\//.test(blob.type)) throw new Error('Not an image');
+      if(!/^image\//.test(blob.type)){
+        throw new Error('The copied link does not point to an image file.');
+      }
       objectURL = URL.createObjectURL(blob);
       let fileName = 'remote_image';
-      try{ fileName = decodeURIComponent((new URL(url)).pathname.split('/').pop() || 'remote_image'); }catch(err){ fileName = 'remote_image'; }
+      try{
+        fileName = decodeURIComponent((new URL(url)).pathname.split('/').pop() || 'remote_image');
+      }catch(err){ fileName = 'remote_image'; }
       await new Promise((resolve, reject)=>{
         const im = new Image();
         im.onload = ()=>{ pushImage(objectURL, fileName, {w:im.width, h:im.height}); loadImageAt(state.images.length-1); resolve(); };
-        im.onerror = (err)=>{ reject(err); };
+        im.onerror = ()=>{ reject(new Error('The image could not be loaded.')); };
         im.src = objectURL;
       });
       els.urlInput.value = '';
+      return true;
     } catch(err){
-      console.error(err);
       if(objectURL){ try{ URL.revokeObjectURL(objectURL); }catch(e){} }
-      alert('Unable to load image from URL. Please verify the link and try again.');
+      throw err;
     } finally {
       hideLoading();
+    }
+  }
+
+  function setUrlStatus(mode, message){
+    if(!els.urlStatus) return;
+    els.urlStatus.textContent = message || '';
+    els.urlStatus.classList.remove('error', 'success');
+    if(mode === 'error'){ els.urlStatus.classList.add('error'); }
+    else if(mode === 'success'){ els.urlStatus.classList.add('success'); }
+  }
+
+  let pasteBtnStateTimer = null;
+  function pulsePasteButton(state){
+    if(!els.pasteUrlBtn) return;
+    els.pasteUrlBtn.classList.remove('state-error','state-success');
+    if(pasteBtnStateTimer){ clearTimeout(pasteBtnStateTimer); pasteBtnStateTimer = null; }
+    if(state){
+      els.pasteUrlBtn.classList.add(state);
+      pasteBtnStateTimer = setTimeout(()=>{
+        els.pasteUrlBtn.classList.remove(state);
+        pasteBtnStateTimer = null;
+      }, 1600);
+    }
+  }
+
+  function looksLikeURL(raw){
+    try{
+      const parsed = new URL(raw);
+      return parsed.protocol === 'https:' || parsed.protocol === 'http:';
+    }catch(_){
+      return false;
+    }
+  }
+
+  async function handlePasteUrlClick(){
+    if(!els.pasteUrlBtn) return;
+    if(!navigator.clipboard || typeof navigator.clipboard.readText !== 'function'){
+      setUrlStatus('error','Clipboard access is unavailable in this browser.');
+      pulsePasteButton('state-error');
+      return;
+    }
+    try{
+      setUrlStatus(null,'Reading clipboard…');
+      pulsePasteButton(null);
+      const text = (await navigator.clipboard.readText()).trim();
+      if(!text){
+        setUrlStatus('error','Clipboard is empty.');
+        pulsePasteButton('state-error');
+        return;
+      }
+      if(!looksLikeURL(text)){
+        setUrlStatus('error','Clipboard content is not a valid URL.');
+        pulsePasteButton('state-error');
+        return;
+      }
+      els.urlInput.value = text;
+      const ok = await importImageFromURL(text);
+      if(ok){
+        setUrlStatus('success','Image imported from clipboard link.');
+        pulsePasteButton('state-success');
+      }
+    }catch(err){
+      console.error('Clipboard paste failed', err);
+      const msg = err && err.message ? err.message : 'Unable to import from that link.';
+      setUrlStatus('error', msg);
+      pulsePasteButton('state-error');
     }
   }
 
@@ -1362,10 +1679,8 @@
     e.target.value = '';
   });
 
-  els.urlImport?.addEventListener('click', ()=>{ importImageFromURL(els.urlInput?.value); });
-  els.urlInput?.addEventListener('keydown', (e)=>{
-    if(e.key==='Enter'){ e.preventDefault(); importImageFromURL(els.urlInput.value); }
-  });
+  els.pasteUrlBtn?.addEventListener('click', handlePasteUrlClick);
+  setUrlStatus(null, '');
 
   window.addEventListener('dragenter', (e)=>{
     if(!hasFileType(e.dataTransfer)) return;
@@ -1475,8 +1790,7 @@
     if(state.images.length===0){
       state.current=-1; state.imageSrc=null; state.natural={w:0,h:0};
       els.img.removeAttribute('src'); computeCover(); render(); updateControls();
-      els.batchMeta.textContent = '0 / 0';
-      els.batchLabel.textContent = '0 / 0';
+      setBatchMeta();
       renderCarousel();
       return;
     }
@@ -1509,8 +1823,7 @@
     computeCover();
     render();
     updateControls();
-    els.batchMeta.textContent = '0 / 0';
-    els.batchLabel.textContent = '0 / 0';
+    setBatchMeta();
   });
 
   // ---------- Batch helpers ----------
@@ -1522,10 +1835,7 @@
       imgZoom:1, offset:{x:0,y:0}
     });
     resetDeleteAllPrompt();
-    const position = state.current>=0 ? state.current+1 : state.images.length;
-    const text = `${position} / ${state.images.length}`;
-    els.batchMeta.textContent = text;
-    els.batchLabel.textContent = text;
+    setBatchMeta();
     els.exportAllBtn.disabled = state.images.length===0;
     renderCarousel();
   }
@@ -1548,9 +1858,7 @@
     state.flipH = it.flipH; state.flipV = it.flipV; state.rotation = it.rotation;
     state.imgZoom = it.imgZoom; state.offset = {x:it.offset.x, y:it.offset.y};
     els.img.src = it.src;
-    const text = `${idx+1} / ${state.images.length}`;
-    els.batchMeta.textContent = text;
-    els.batchLabel.textContent = text;
+    setBatchMeta();
     computeCover(); fitPreviewZoomToStage(); render(); updateControls();
     renderCarousel();
   }
@@ -1569,7 +1877,9 @@
   els.toggleFrost.addEventListener('change', ()=>{ state.frost.enabled = els.toggleFrost.checked; updateControls(); render(); });
   els.togglePlay.addEventListener('change', ()=>{ state.play.enabled = els.togglePlay.checked; updateControls(); render(); });
   els.toggleLogo2.addEventListener('change', ()=>{
-    els.logo2Block.style.display = els.toggleLogo2.checked?'grid':'none';
+    const show = !!els.toggleLogo2.checked;
+    els.logo2Block.style.display = show ? 'grid' : 'none';
+    if(els.logo2Divider){ els.logo2Divider.style.display = show ? 'block' : 'none'; }
     if(!els.toggleLogo2.checked){
       state.frost.logo2={src:null,w:0,h:0,sizeKey:state.frost.logo2.sizeKey||'M', tone: state.frost.logo2.tone||'orig', source:'none', chosen:""}; els.logo2Prev.style.display='none';
     }
@@ -1619,17 +1929,223 @@
   segSizeHandler(els.sqLogoSeg,'squareLogo', SIZE_MAP_SQ); segToneHandler(els.sqLogoToneSeg,'squareLogo');
   segSizeHandler(els.vertLogoSeg,'vertLogo', SIZE_MAP_SQ); segToneHandler(els.vertLogoToneSeg,'vertLogo');
 
-  function buildGallery(scroller, onPick){
+  function sanitizePartnerEntry(entry){
+    if(!entry) return null;
+    const name = (entry.name || '').trim();
+    const url = (entry.url || '').trim();
+    if(!name || !url) return null;
+    return { name, url };
+  }
+
+  function loadPartnerLogos(){
+    try{
+      const raw = localStorage.getItem(PARTNER_STORAGE_KEY);
+      if(raw){
+        const parsed = JSON.parse(raw);
+        if(Array.isArray(parsed)){
+          const cleaned = parsed.map(sanitizePartnerEntry).filter(Boolean);
+          if(cleaned.length){ return cleaned; }
+        }
+      }
+    }catch(err){ console.warn('Failed to load partner library', err); }
+    return DEFAULT_PARTNERS.map(p=>({ ...p }));
+  }
+
+  function persistPartnerLogos(){
+    try{ localStorage.setItem(PARTNER_STORAGE_KEY, JSON.stringify(partnerLogos)); }
+    catch(err){ console.warn('Failed to persist partner library', err); }
+  }
+
+  function buildGallery(scroller, onPick, opts={}){
     if(!scroller) return;
     scroller.innerHTML='';
-    PARTNERS.forEach(p=>{
-      const it = document.createElement('button'); it.type='button'; it.className='libItem'; it.dataset.name=p.name.toLowerCase();
+    const activeName = (opts.activeName || '').toLowerCase();
+    partnerLogos.forEach(p=>{
+      const it = document.createElement('button');
+      it.type='button';
+      it.className='libItem';
+      it.dataset.name=p.name.toLowerCase();
       it.innerHTML = `<img alt="${p.name}" src="${p.url}"><div class="cap">${p.name}</div>`;
-      it.addEventListener('click', async ()=>{ scroller.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); it.classList.add('active'); await onPick(p); });
+      if(activeName && p.name.toLowerCase() === activeName){ it.classList.add('active'); }
+      it.addEventListener('click', async ()=>{
+        scroller.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active'));
+        it.classList.add('active');
+        await onPick(p);
+      });
       scroller.appendChild(it);
     });
   }
   function filterGallery(scroller, q){ const qq=(q||'').trim().toLowerCase(); scroller?.querySelectorAll('.libItem').forEach(it=>{ it.style.display = (!qq || it.dataset.name.includes(qq)) ? '' : 'none'; }); }
+
+  function renderPartnerSettingsList(){
+    if(!els.partnerSettingsList) return;
+    els.partnerSettingsList.innerHTML = '';
+    if(partnerSettingsDraft.length === 0){
+      const empty = document.createElement('div');
+      empty.className = 'muted';
+      empty.textContent = 'No partner logos yet. Add one to get started.';
+      els.partnerSettingsList.appendChild(empty);
+      return;
+    }
+    partnerSettingsDraft.forEach((entry, idx)=>{
+      const row = document.createElement('div');
+      row.className = 'modalRow';
+      row.dataset.index = String(idx);
+
+      const header = document.createElement('div');
+      header.className = 'modalRowHeader';
+      const title = document.createElement('strong');
+      title.textContent = entry.name || `Logo ${idx+1}`;
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'btn small danger ghost';
+      removeBtn.dataset.action = 'remove';
+      removeBtn.textContent = 'Remove';
+      header.append(title, removeBtn);
+
+      const preview = document.createElement('div');
+      preview.className = 'modalRowPreview';
+      const img = document.createElement('img');
+      img.src = entry.url ? entry.url : PARTNER_PREVIEW_PLACEHOLDER;
+      img.alt = entry.name || `Logo ${idx+1}`;
+      img.addEventListener('error', ()=>{ img.src = PARTNER_PREVIEW_PLACEHOLDER; });
+      preview.appendChild(img);
+
+      const controls = document.createElement('div');
+      controls.className = 'modalRowControls';
+      const nameLabel = document.createElement('label');
+      nameLabel.textContent = 'Name';
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.value = entry.name || '';
+      nameInput.dataset.field = 'name';
+      nameInput.autocomplete = 'off';
+      nameLabel.appendChild(nameInput);
+      const urlLabel = document.createElement('label');
+      urlLabel.textContent = 'Image URL';
+      const urlInput = document.createElement('input');
+      urlInput.type = 'url';
+      urlInput.placeholder = 'https://…';
+      urlInput.value = entry.url || '';
+      urlInput.dataset.field = 'url';
+      urlLabel.appendChild(urlInput);
+      controls.append(nameLabel, urlLabel);
+
+      row.append(header, preview, controls);
+      els.partnerSettingsList.appendChild(row);
+    });
+  }
+
+  let previousBodyOverflow = '';
+
+  function openPartnerSettings(ev){
+    partnerSettingsTrigger = ev?.currentTarget || null;
+    partnerSettingsDraft = partnerLogos.map(p=>({ ...p }));
+    renderPartnerSettingsList();
+    if(els.partnerSettingsModal){
+      els.partnerSettingsModal.classList.add('show');
+      els.partnerSettingsModal.setAttribute('aria-hidden','false');
+    }
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(()=>{
+      const firstInput = els.partnerSettingsList?.querySelector('input');
+      firstInput?.focus();
+    });
+  }
+
+  function closePartnerSettings(){
+    if(els.partnerSettingsModal){
+      els.partnerSettingsModal.classList.remove('show');
+      els.partnerSettingsModal.setAttribute('aria-hidden','true');
+    }
+    els.partnerSettingsList?.querySelectorAll('.modalRow').forEach(row=>row.classList.remove('invalid'));
+    document.body.style.overflow = previousBodyOverflow || '';
+    if(partnerSettingsTrigger){
+      try{ partnerSettingsTrigger.focus(); }catch(err){}
+    }
+    partnerSettingsTrigger = null;
+    partnerSettingsDraft = partnerLogos.map(p=>({ ...p }));
+  }
+
+  function handlePartnerSettingsInput(e){
+    const target = e.target;
+    if(!(target instanceof HTMLInputElement)) return;
+    const row = target.closest('.modalRow');
+    if(!row) return;
+    const index = Number(row.dataset.index);
+    if(Number.isNaN(index) || !partnerSettingsDraft[index]) return;
+    const field = target.dataset.field;
+    if(field === 'name'){
+      partnerSettingsDraft[index].name = target.value;
+      const header = row.querySelector('strong');
+      if(header) header.textContent = target.value || `Logo ${index+1}`;
+      const img = row.querySelector('img');
+      if(img) img.alt = target.value || `Logo ${index+1}`;
+      row.classList.remove('invalid');
+    } else if(field === 'url'){
+      partnerSettingsDraft[index].url = target.value;
+      const img = row.querySelector('img');
+      if(img){ img.src = target.value.trim() || PARTNER_PREVIEW_PLACEHOLDER; }
+      row.classList.remove('invalid');
+    }
+  }
+
+  function handlePartnerSettingsClick(e){
+    const removeBtn = e.target.closest('[data-action="remove"]');
+    if(removeBtn){
+      const row = removeBtn.closest('.modalRow');
+      if(!row) return;
+      const index = Number(row.dataset.index);
+      if(Number.isNaN(index)) return;
+      partnerSettingsDraft.splice(index,1);
+      renderPartnerSettingsList();
+    }
+  }
+
+  function handleAddPartnerLogo(){
+    const newIndex = partnerSettingsDraft.length + 1;
+    partnerSettingsDraft.push({ name: `New partner ${newIndex}`, url: '' });
+    renderPartnerSettingsList();
+    requestAnimationFrame(()=>{
+      const input = els.partnerSettingsList?.querySelector(`.modalRow[data-index="${partnerSettingsDraft.length-1}"] input[data-field="name"]`);
+      input?.focus();
+      input?.select();
+    });
+  }
+
+  function handleResetPartnerLogos(){
+    partnerSettingsDraft = DEFAULT_PARTNERS.map(p=>({ ...p }));
+    renderPartnerSettingsList();
+  }
+
+  function handleSavePartnerSettings(){
+    const cleaned = [];
+    let hasInvalid = false;
+    partnerSettingsDraft.forEach((entry, idx)=>{
+      const sanitized = sanitizePartnerEntry(entry);
+      if(sanitized){
+        cleaned.push(sanitized);
+      } else {
+        hasInvalid = true;
+        const row = els.partnerSettingsList?.querySelector(`.modalRow[data-index="${idx}"]`);
+        row?.classList.add('invalid');
+      }
+    });
+    if(hasInvalid){
+      const firstInvalid = els.partnerSettingsList?.querySelector('.modalRow.invalid input');
+      firstInvalid?.focus();
+      return;
+    }
+    partnerLogos = cleaned;
+    persistPartnerLogos();
+    buildAllGalleries();
+    closePartnerSettings();
+  }
+
+  function handleCancelPartnerSettings(){
+    closePartnerSettings();
+  }
 
   function loadImageCORS(src){ return new Promise((res,rej)=>{ if(!src) return res(null); const im=new Image(); im.crossOrigin='anonymous'; im.onload=()=>res(im); im.onerror=(e)=>rej(e); im.src=src; }); }
 
@@ -1681,15 +2197,34 @@
   els.removeVertLogo?.addEventListener('click', ()=>{ state.vertLogo = {src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.vertLogoPrev.style.display='none'; render(); updateControls(); });
 
   function buildAllGalleries(){
-    buildGallery(els.logo1Gallery, p=>loadLogoURL(p.url, els.logo1Prev, state.frost.logo1, 'logo1', p.name));
-    buildGallery(els.logo2Gallery, p=>loadLogoURL(p.url, els.logo2Prev, state.frost.logo2, 'logo2', p.name));
-    buildGallery(els.sqLogoGallery, p=>loadLogoURL(p.url, els.sqLogoPrev, state.squareLogo, 'squareLogo', p.name));
-    buildGallery(els.vertLogoGallery, p=>loadLogoURL(p.url, els.vertLogoPrev, state.vertLogo, 'vertLogo', p.name));
+    const logo1Active = (state.frost.logo1.source === 'partner') ? state.frost.logo1.chosen : '';
+    const logo2Active = (state.frost.logo2.source === 'partner') ? state.frost.logo2.chosen : '';
+    const sqActive = (state.squareLogo.source === 'partner') ? state.squareLogo.chosen : '';
+    const vertActive = (state.vertLogo.source === 'partner') ? state.vertLogo.chosen : '';
+    buildGallery(els.logo1Gallery, p=>loadLogoURL(p.url, els.logo1Prev, state.frost.logo1, 'logo1', p.name), { activeName: logo1Active });
+    buildGallery(els.logo2Gallery, p=>loadLogoURL(p.url, els.logo2Prev, state.frost.logo2, 'logo2', p.name), { activeName: logo2Active });
+    buildGallery(els.sqLogoGallery, p=>loadLogoURL(p.url, els.sqLogoPrev, state.squareLogo, 'squareLogo', p.name), { activeName: sqActive });
+    buildGallery(els.vertLogoGallery, p=>loadLogoURL(p.url, els.vertLogoPrev, state.vertLogo, 'vertLogo', p.name), { activeName: vertActive });
+    filterGallery(els.logo1Gallery, els.logo1Search?.value);
+    filterGallery(els.logo2Gallery, els.logo2Search?.value);
+    filterGallery(els.sqLogoGallery, els.sqLogoSearch?.value);
+    filterGallery(els.vertLogoGallery, els.vertLogoSearch?.value);
   }
   els.logo1Search.addEventListener('input', e=>filterGallery(els.logo1Gallery, e.target.value));
   els.logo2Search.addEventListener('input', e=>filterGallery(els.logo2Gallery, e.target.value));
   els.sqLogoSearch?.addEventListener('input', e=>filterGallery(els.sqLogoGallery, e.target.value));
   els.vertLogoSearch?.addEventListener('input', e=>filterGallery(els.vertLogoGallery, e.target.value));
+
+  els.partnerSettingsList?.addEventListener('input', handlePartnerSettingsInput);
+  els.partnerSettingsList?.addEventListener('click', handlePartnerSettingsClick);
+  els.partnerSettingsBtns?.forEach(btn=>btn.addEventListener('click', openPartnerSettings));
+  els.addPartnerLogo?.addEventListener('click', handleAddPartnerLogo);
+  els.resetPartnerLogosBtn?.addEventListener('click', handleResetPartnerLogos);
+  els.savePartnerSettings?.addEventListener('click', handleSavePartnerSettings);
+  els.cancelPartnerSettings?.addEventListener('click', handleCancelPartnerSettings);
+  els.closePartnerSettings?.addEventListener('click', closePartnerSettings);
+  els.partnerSettingsModal?.addEventListener('click', (e)=>{ if(e.target === els.partnerSettingsModal){ closePartnerSettings(); } });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && els.partnerSettingsModal?.classList.contains('show')){ closePartnerSettings(); } });
 
   // ---------- Export helpers ----------
   function bytesFromDataURL(dataURL){ try{ return atob(dataURL.split(',')[1]).length; }catch(e){ return Infinity; } }
@@ -1951,7 +2486,7 @@
   syncHeaderHeight();
   buildFormatChips();
   buildAllGalleries();
-  els.toggleLogo2.checked = false; els.logo2Block.style.display='none';
+  els.toggleLogo2.checked = false; els.logo2Block.style.display='none'; if(els.logo2Divider){ els.logo2Divider.style.display='none'; }
   els.toggleVertLogo.checked = true; els.vertLogoBlock.style.display='grid';
   fitPreviewZoomToStage();
   render();
