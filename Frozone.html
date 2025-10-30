@@ -42,10 +42,13 @@
   .right-head .team{font-weight:600}
   .right-head .by{font-size:12px; color:var(--muted)}
   .right-head a{color:var(--muted); text-decoration:none}
-  #themeToggle{position:fixed; right:28px; bottom:32px; width:56px; height:56px; border-radius:50%; display:grid; place-items:center; padding:0; margin:0; box-shadow:0 18px 32px rgba(15,23,42,0.18); background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; z-index:60; transition:transform .18s ease, box-shadow .18s ease;}
+  #themeToggle{position:fixed; right:28px; bottom:32px; width:56px; height:56px; border-radius:50%; display:grid; place-items:center; padding:0; margin:0; box-shadow:0 18px 32px rgba(15,23,42,0.18); background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; z-index:60; transition:transform .18s ease, box-shadow .18s ease; color:#fff;}
   #themeToggle:hover{transform:translateY(-2px); box-shadow:0 20px 38px rgba(15,23,42,0.22);}
-  #themeToggle .btn-ico{filter:none; stroke:#fff; width:24px; height:24px;}
-  #themeToggle .btn-text{display:none}
+  #themeToggle svg{width:24px; height:24px; stroke:currentColor; fill:none; stroke-width:1.8;}
+  #themeToggle .icon-sun,#themeToggle .icon-moon{display:none;}
+  #themeToggle[data-theme="light"] .icon-moon{display:block;}
+  #themeToggle[data-theme="dark"]{color:#f8fafc;}
+  #themeToggle[data-theme="dark"] .icon-sun{display:block;}
   #themeToggle:focus-visible{outline:3px solid rgba(255,255,255,0.75); outline-offset:4px}
 
   .introScreen{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0b1120,#1f2750); color:#fff; z-index:120; opacity:0; pointer-events:none; transition:opacity .6s ease, transform .6s ease; transform:scale(1.02)}
@@ -149,6 +152,8 @@
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .dropOverlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; color:var(--brand2); background:rgba(14,165,233,0.14); backdrop-filter:blur(18px); opacity:0; transition:opacity .2s ease; pointer-events:none; text-align:center; padding:24px; z-index:20}
   .stage-inner.drag-over .dropOverlay{opacity:1}
+  .stageEmpty{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:32px; font-size:15px; font-weight:500; color:var(--muted); pointer-events:none; opacity:0; transition:opacity .25s ease;}
+  .stageEmpty.show{opacity:1}
 
   .image-layer{position:absolute; left:50%; top:50%; transform-origin:center center; cursor:grab;}
   .image-layer.dragging{cursor:grabbing}
@@ -170,8 +175,9 @@
 
   .sqLogo,.vertLogo{position:absolute; display:none; pointer-events:none}
 
+  .kvRow{display:flex; gap:18px; align-items:center; flex-wrap:wrap}
   .kv{display:flex; gap:8px; align-items:center}
-  .kv .k{width:120px; color:var(--muted)}
+  .kv .k{min-width:72px; color:var(--muted); font-weight:600; letter-spacing:0.04em; text-transform:uppercase; font-size:12px}
   .kv .v{font-weight:600}
 
   .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:var(--chip-bg); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); white-space:nowrap; transition:background .2s ease, border-color .2s ease}
@@ -200,11 +206,25 @@
   .unsplashResults button:hover{transform:translateY(-3px); box-shadow:0 16px 30px rgba(15,23,42,0.18)}
   .unsplashResults button img{width:100%; height:100%; object-fit:cover; display:block}
   .unsplashResults button.active{border-color:rgba(14,165,233,0.55); box-shadow:0 18px 36px rgba(14,165,233,0.22)}
-  .gradientControls{display:grid; gap:12px}
-  .gradientColorRow{display:flex; gap:10px; flex-wrap:wrap}
-  .gradientColorRow label{display:flex; align-items:center; gap:8px; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted)}
-  .gradientColorRow input[type="color"]{appearance:none; border:none; width:44px; height:32px; border-radius:10px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
-  .gradientPreview{width:100%; aspect-ratio:1; border-radius:16px; border:1px solid var(--border); background:linear-gradient(135deg,#38bdf8,#6366f1); box-shadow:0 10px 24px rgba(15,23,42,0.12)}
+  .gradientControls{display:grid; gap:16px; background:var(--chip-bg); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:0 10px 24px rgba(15,23,42,0.08)}
+  .gradientPalette{display:flex; flex-direction:column; gap:12px}
+  .gradientColorList{display:flex; flex-wrap:wrap; gap:12px}
+  .gradientColorChip{display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+  .gradientColorChip input[type="color"]{appearance:none; border:none; width:40px; height:28px; border-radius:10px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
+  .gradientPaletteControls{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  .gradientPaletteControls .countControls{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:10px; background:rgba(148,163,184,0.12); font-size:12px; font-weight:600; letter-spacing:0.06em; color:var(--muted)}
+  .gradientPaletteControls .countControls button{all:unset; display:grid; place-items:center; width:24px; height:24px; border-radius:8px; background:var(--stageInner); border:1px solid var(--border); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease}
+  .gradientPaletteControls .countControls button:hover{transform:translateY(-1px); box-shadow:0 6px 12px rgba(15,23,42,0.08)}
+  .gradientPaletteControls .countControls span{min-width:48px; text-align:center; color:var(--ink)}
+  .gradientPaletteControls .uploadHint{font-size:12px; color:var(--muted); display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:10px; border:1px dashed var(--border); background:var(--stageInner); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, border-color .2s ease}
+  .gradientPaletteControls .uploadHint:hover{transform:translateY(-1px); box-shadow:0 8px 18px rgba(15,23,42,0.08); border-color:rgba(14,165,233,0.45); color:var(--ink)}
+  .gradientPaletteControls .uploadHint .btn-ico{width:16px; height:16px; stroke:currentColor}
+  .gradientPaletteControls input[type="file"]{display:none}
+  .gradientActions{display:flex; flex-wrap:wrap; gap:10px}
+  .gradientSwatch{height:36px; border-radius:10px; border:1px dashed var(--border); background:linear-gradient(90deg,#38bdf8,#6366f1,#f472b6); box-shadow:inset 0 1px 0 rgba(255,255,255,0.4)}
+  .gradientStatus{font-size:12px; color:var(--muted)}
+  .gradientStatus.success{color:#16a34a}
+  .gradientStatus.error{color:#b91c1c}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
   .bgSourceNote.error{color:#b91c1c}
@@ -220,7 +240,11 @@
   .libItem .cap{font-size:11px; color:var(--muted)}
   .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
 
-  .switchGroup{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:20px; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
+  .switchGroup{display:flex; flex-direction:column; gap:12px; align-items:flex-start; margin-bottom:20px; padding:14px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
+  .switchGroup .switchRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center; width:100%;}
+  .switchGroup .overlaySlider{display:flex; flex-direction:column; gap:6px; width:100%; font-size:13px; color:var(--muted);}
+  .switchGroup .overlaySlider span{font-weight:600; color:var(--ink);}
+  .switchGroup .overlaySlider input{width:100%;}
   .logoSection{position:relative; border:1px solid var(--border); border-radius:20px; background:var(--stageInner); box-shadow:0 14px 32px rgba(15,23,42,0.08); overflow:hidden; display:flex; flex-direction:column; gap:0}
   .logoSection::before{content:""; position:absolute; inset:0 0 auto 0; height:6px; background:linear-gradient(90deg,var(--brand),var(--brand2)); opacity:0.8}
   .logoSection + .logoSection{margin-top:18px}
@@ -291,16 +315,11 @@
   .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
   .previewControlRow{display:flex; flex-wrap:wrap; align-items:center; gap:16px}
-  .previewName{display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:14px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:var(--shadow); flex:0 0 68%; max-width:75%; min-width:0; text-align:left; direction:rtl}
-  .previewName .fileLabel{font-size:11px; color:var(--muted); letter-spacing:0.12em; text-transform:uppercase; direction:ltr}
-  .previewName .fileNameTail{direction:ltr; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:right; font-weight:600; color:var(--ink)}
   .previewZoomControl{display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:1 1 25%; min-width:220px; flex-wrap:nowrap}
   .previewZoomControl .muted{font-size:13px; white-space:nowrap}
   .previewZoomControl input[type="range"]{flex:1 1 auto; min-width:120px; width:auto}
   @media (max-width: 960px){
     .previewControlRow{flex-direction:column; align-items:stretch}
-    .previewName{flex:1; max-width:100%; direction:ltr}
-    .previewName .fileNameTail{text-align:left}
     .previewZoomControl{width:100%; justify-content:space-between}
   }
   @media (max-width: 560px){
@@ -315,11 +334,6 @@
   .globalDropOverlay{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:var(--brand2); background:rgba(14,165,233,0.18); backdrop-filter:blur(22px); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:50; text-align:center; padding:40px}
   .globalDropOverlay.show{opacity:1}
 
-  .theme-transition{position:fixed; inset:0; pointer-events:none; background:linear-gradient(135deg,#e0f2fe,#eef2ff); clip-path:circle(0% at var(--cx) var(--cy)); opacity:1; transition:clip-path .9s cubic-bezier(0.22,1,0.36,1), opacity .5s ease-out; z-index:120}
-  .theme-transition[data-theme="dark"]{background:linear-gradient(135deg,#0b1120,#1e293b)}
-  .theme-transition[data-theme="light"]{background:linear-gradient(135deg,#e0f2fe,#eef2ff)}
-  .theme-transition.expand{clip-path:circle(var(--radius) at var(--cx) var(--cy))}
-  .theme-transition.fade{opacity:0}
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
 
@@ -349,7 +363,8 @@
   :root[data-theme="dark"] .bgUploadChip{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); color:rgba(226,232,240,0.78)}
   :root[data-theme="dark"] .colorChip{box-shadow:0 8px 18px rgba(2,6,23,0.55)}
   :root[data-theme="dark"] .unsplashResults button{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.75)}
-  :root[data-theme="dark"] .gradientPreview{border-color:rgba(71,85,105,0.75)}
+  :root[data-theme="dark"] .gradientControls{background:rgba(15,23,42,0.72); border-color:rgba(71,85,105,0.75); box-shadow:0 20px 38px rgba(2,6,23,0.6)}
+  :root[data-theme="dark"] .gradientSwatch{border-color:rgba(71,85,105,0.75); box-shadow:inset 0 1px 0 rgba(148,163,184,0.16)}
   :root[data-theme="dark"] .thumbItem{border-color:rgba(71,85,105,0.75); box-shadow:0 12px 30px rgba(2,6,23,0.55);}
   :root[data-theme="dark"] .thumbItem.active{border-color:rgba(56,189,248,0.75);}
   :root[data-theme="dark"] .mockupBlock{background:linear-gradient(135deg,rgba(30,64,175,0.22),rgba(15,23,42,0.55)); border-color:rgba(71,85,105,0.75); box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);}
@@ -398,8 +413,10 @@
     <!-- Left: SETTINGS -->
     <section class="panel sticky">
       <div class="pad">
-        <div class="kv"><div class="k">Output</div><div class="v" id="outMeta">—</div></div>
-        <div class="kv"><div class="k">Batch</div><div class="v" id="batchMeta">0 / 0</div></div>
+        <div class="kvRow">
+          <div class="kv"><div class="k">Output</div><div class="v" id="outMeta">—</div></div>
+          <div class="kv"><div class="k">Batch</div><div class="v" id="batchMeta">0 / 0</div></div>
+        </div>
       </div>
 
       <div class="scroll">
@@ -434,15 +451,15 @@
               </button>
             </div>
             <div class="uploadCell">
-              <button class="btn danger ghost uploadAction" id="deleteAllBtn" title="Delete all uploaded images">
-                <i data-lucide="trash-2" class="btn-ico" aria-hidden="true"></i>
-                <span class="btn-text">Delete all</span>
-              </button>
-            </div>
-            <div class="uploadCell">
               <button class="btn danger uploadAction" id="deleteBtn" title="Delete current image">
                 <i data-lucide="trash" class="btn-ico" aria-hidden="true"></i>
                 <span class="btn-text">Delete current</span>
+              </button>
+            </div>
+            <div class="uploadCell">
+              <button class="btn danger ghost uploadAction" id="deleteAllBtn" title="Delete all uploaded images">
+                <i data-lucide="trash-2" class="btn-ico" aria-hidden="true"></i>
+                <span class="btn-text">Delete all</span>
               </button>
             </div>
           </div>
@@ -500,7 +517,7 @@
               <div class="unsplashFilters">
                 <input id="unsplashQuery" type="search" placeholder="Search Unsplash…">
                 <div class="unsplashPalette" id="unsplashPalette" role="list">
-                  <button type="button" class="colorChip active" data-color="" title="All colors" aria-label="All colors" aria-pressed="true" style="background:linear-gradient(135deg,#e2e8f0,#f8fafc);"></button>
+                  <button type="button" class="colorChip active" data-color="all" title="All colors" aria-label="All colors" aria-pressed="true" style="background:linear-gradient(135deg,#e2e8f0,#f8fafc);"></button>
                   <button type="button" class="colorChip" data-color="white" title="White" aria-pressed="false" style="background:#ffffff"></button>
                   <button type="button" class="colorChip" data-color="black" title="Black" aria-pressed="false" style="background:#0f172a"></button>
                   <button type="button" class="colorChip" data-color="red" title="Red" aria-pressed="false" style="background:#ef4444"></button>
@@ -514,17 +531,19 @@
                 </div>
                 <div class="toneToggle">
                   <div class="seg" id="unsplashToneSeg" role="group" aria-label="Tone preference">
-                    <button type="button" class="active" data-tone="light">Light</button>
-                    <button type="button" data-tone="dark">Dark</button>
+                    <button type="button" class="active" data-tone="all" aria-pressed="true">All</button>
+                    <button type="button" data-tone="light" aria-pressed="false">Light</button>
+                    <button type="button" data-tone="dark" aria-pressed="false">Dark</button>
                   </div>
                 </div>
                 <div class="styleToggle">
                   <div class="seg" id="unsplashStyleSeg" role="group" aria-label="Style preference">
-                    <button type="button" class="active" data-style="pattern">Pattern</button>
-                    <button type="button" data-style="gradient">Gradient</button>
-                    <button type="button" data-style="texture">Texture</button>
-                    <button type="button" data-style="shapes">Shapes</button>
-                    <button type="button" data-style="liquid">Liquid</button>
+                    <button type="button" class="active" data-style="all" aria-pressed="true">All</button>
+                    <button type="button" data-style="pattern" aria-pressed="false">Pattern</button>
+                    <button type="button" data-style="gradient" aria-pressed="false">Gradient</button>
+                    <button type="button" data-style="texture" aria-pressed="false">Texture</button>
+                    <button type="button" data-style="shapes" aria-pressed="false">Shapes</button>
+                    <button type="button" data-style="liquid" aria-pressed="false">Liquid</button>
                   </div>
                 </div>
                 <div class="bgInputRow">
@@ -536,16 +555,27 @@
 
             <div class="bg-source-block" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" hidden aria-hidden="true">
               <div class="gradientControls">
-                <div class="gradientColorRow">
-                  <label>Color 1 <input type="color" value="#38bdf8" data-index="0"></label>
-                  <label>Color 2 <input type="color" value="#6366f1" data-index="1"></label>
-                  <label>Color 3 <input type="color" value="#f472b6" data-index="2"></label>
+                <div class="gradientPalette">
+                  <div class="gradientColorList" id="gradientColorList" role="list"></div>
+                  <div class="gradientPaletteControls">
+                    <div class="countControls" aria-live="polite">
+                      <button type="button" id="gradientRemoveColor" aria-label="Remove color stop">−</button>
+                      <span id="gradientColorCount">3 colors</span>
+                      <button type="button" id="gradientAddColor" aria-label="Add color stop">+</button>
+                    </div>
+                    <label class="uploadHint">
+                      <i data-lucide="image-up" class="btn-ico" aria-hidden="true"></i>
+                      <span>Extract from image</span>
+                      <input type="file" id="gradientSampleInput" accept="image/*">
+                    </label>
+                  </div>
                 </div>
-                <div class="bgInputRow">
-                  <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
-                  <button class="btn ghost" type="button" id="gradientRandomize">Generate again</button>
+                <div class="gradientActions">
+                  <button class="btn primary" type="button" id="gradientGenerate">Apply gradient</button>
+                  <button class="btn ghost" type="button" id="gradientRandomize">Shuffle colors</button>
                 </div>
-                <div class="gradientPreview" id="gradientPreview" aria-label="Gradient preview"></div>
+                <div class="gradientSwatch" id="gradientSwatch" aria-hidden="true"></div>
+                <div class="gradientStatus" id="gradientStatus" aria-live="polite"></div>
               </div>
             </div>
 
@@ -611,9 +641,15 @@
         <div class="section" id="frostSection">
           <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
           <div class="switchGroup">
-            <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
-            <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
-            <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
+            <div class="switchRow">
+              <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
+              <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
+              <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
+            </div>
+            <label id="overlayLabel" class="overlaySlider">
+              <span>Overlay opacity <strong id="overlayAlphaVal">30</strong>%</span>
+              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
+            </label>
           </div>
 
           <div class="logoSection" id="logo1Section">
@@ -708,11 +744,6 @@
             </div>
           </div>
 
-          <div class="stack" style="margin-top:12px">
-            <label id="overlayLabel">White overlay opacity: <span id="overlayAlphaVal">30</span>%<br/>
-              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
-            </label>
-          </div>
         </div>
 
         <!-- Step 4b: Square logo -->
@@ -827,10 +858,6 @@
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
         </div>
         <div class="previewControlRow">
-          <div id="currentFileName" class="previewName" aria-live="polite">
-            <span class="fileLabel">Current file</span>
-            <span class="fileNameTail" id="currentFileNameText">—</span>
-          </div>
           <div class="previewZoomControl">
             <span class="muted">Preview zoom</span>
             <span class="muted"><span id="zoomLabel">1.00</span>×</span>
@@ -844,6 +871,7 @@
             <img id="img" alt="uploaded" />
           </div>
           <div class="frame" id="frame"></div>
+          <div class="stageEmpty" id="stageEmpty">Upload or Drop your images here to start.</div>
           <div class="resizeHandle" data-corner="nw" aria-hidden="true"></div>
           <div class="resizeHandle" data-corner="ne" aria-hidden="true"></div>
           <div class="resizeHandle" data-corner="se" aria-hidden="true"></div>
@@ -887,9 +915,20 @@
   </div>
 
   <div class="globalDropOverlay" id="globalDropOverlay">Drop images anywhere to upload</div>
-  <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">
-    <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12.5 3A8.5 8.5 0 1 0 20.9 15a6.5 6.5 0 0 1-8.4-12Z"></path>
+  <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode" data-theme="light">
+    <svg aria-hidden="true" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <g class="icon-sun">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </g>
+      <path class="icon-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path>
     </svg>
   </button>
   <div class="modal" id="partnerSettingsModal" role="dialog" aria-modal="true" aria-labelledby="partnerSettingsTitle">
@@ -960,7 +999,7 @@
 (function(){
   const FORMATS = {
     HORIZ:   { key:'HORIZ',  label:'Horizontal',         sub:'Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
-    BANNER:  { key:'BANNER', label:'Banner background',  sub:'1120×360 hero',                            icon:'B', wPreview:420, hPreview:135, wExport:1120, hExport:360 },
+    BANNER:  { key:'BANNER', label:'Banner background',  sub:'3D Info Banner',                           icon:'B', wPreview:420, hPreview:135, wExport:1120, hExport:360 },
     SQUARE:  { key:'SQUARE', label:'Square',             sub:'Carousel / Story Exp / Co-Reg',            icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
     VERT:    { key:'VERT',   label:'Vertical',           sub:'Interstitial',                             icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
   };
@@ -1008,8 +1047,7 @@
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
     frame: document.getElementById('frame'),
-    currentFileName: document.getElementById('currentFileName'),
-    currentFileNameText: document.getElementById('currentFileNameText'),
+    stageEmpty: document.getElementById('stageEmpty'),
 
     bgSourceSection: document.getElementById('bgSourceSection'),
     bgSourceTabs: document.getElementById('bgSourceTabs'),
@@ -1027,10 +1065,15 @@
     unsplashQuery: document.getElementById('unsplashQuery'),
     unsplashSearchBtn: document.getElementById('unsplashSearchBtn'),
     unsplashResults: document.getElementById('unsplashResults'),
+    gradientColorList: document.getElementById('gradientColorList'),
+    gradientColorCount: document.getElementById('gradientColorCount'),
+    gradientAddColor: document.getElementById('gradientAddColor'),
+    gradientRemoveColor: document.getElementById('gradientRemoveColor'),
+    gradientSampleInput: document.getElementById('gradientSampleInput'),
+    gradientSwatch: document.getElementById('gradientSwatch'),
+    gradientStatus: document.getElementById('gradientStatus'),
     gradientGenerate: document.getElementById('gradientGenerate'),
     gradientRandomize: document.getElementById('gradientRandomize'),
-    gradientPreview: document.getElementById('gradientPreview'),
-    gradientColorInputs: Array.from(document.querySelectorAll('#gradientBlock input[type="color"]')),
 
     frostSection: document.getElementById('frostSection'),
     frostBar: document.getElementById('frostBar'), frostBg: document.getElementById('frostBg'), frostVeil: document.getElementById('frostVeil'),
@@ -1092,6 +1135,9 @@
   const SIZE_MAP = { S:23, M:30, L:53 };
   const SIZE_MAP_SQ = { S:35, M:55, L:75 };
   const BANNER_MODES = ['upload','link','unsplash','gradient'];
+  const DEFAULT_GRADIENT_COLORS = ['#38bdf8','#6366f1','#f472b6'];
+  const GRADIENT_MIN_COLORS = 2;
+  const GRADIENT_MAX_COLORS = 6;
   const UNSPLASH_COLOR_PARAM_MAP = {
     pink: 'magenta',
     beige: 'orange'
@@ -1129,7 +1175,7 @@
       mode:'upload',
       uploadName:'',
       link:'',
-      unsplash:{ color:'', tone:'light', style:'pattern', results:[] },
+      unsplash:{ colors:[], tone:'all', style:'all', results:[] },
       gradient:{ colors:['#38bdf8','#6366f1','#f472b6'], dataUrl:null },
       lastSelection:null
     },
@@ -1150,52 +1196,17 @@
   }
 
   const THEME_KEY = 'frozone-theme';
-  function triggerThemeTransition(nextTheme){
-    if(!els.themeToggle) return;
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce) return;
-    const rect = els.themeToggle.getBoundingClientRect();
-    const cx = rect.left + rect.width/2;
-    const cy = rect.top + rect.height/2;
-    const maxX = Math.max(cx, window.innerWidth - cx);
-    const maxY = Math.max(cy, window.innerHeight - cy);
-    const radius = Math.hypot(maxX, maxY) + 40;
-    const overlay = document.createElement('div');
-    overlay.className = 'theme-transition';
-    overlay.dataset.theme = nextTheme;
-    overlay.style.setProperty('--cx', `${cx}px`);
-    overlay.style.setProperty('--cy', `${cy}px`);
-    overlay.style.setProperty('--radius', `${radius}px`);
-    document.body.appendChild(overlay);
-    requestAnimationFrame(()=>{
-      overlay.classList.add('expand');
-      window.setTimeout(()=> overlay.classList.add('fade'), 680);
-    });
-    overlay.addEventListener('transitionend', (e)=>{
-      if(e.propertyName === 'opacity' && overlay.classList.contains('fade')){
-        overlay.remove();
-      }
-    });
-  }
 
-  function setTheme(mode, opts = {}){
+  function setTheme(mode){
     const root = document.documentElement;
     const next = mode === 'dark' ? 'dark' : 'light';
-    if(opts.animate) triggerThemeTransition(next);
     root.dataset.theme = next;
     if(els.themeToggle){
       els.themeToggle.setAttribute('aria-pressed', next === 'dark');
       const labelText = next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
       els.themeToggle.setAttribute('aria-label', labelText);
       els.themeToggle.title = labelText;
-      const iconPath = els.themeToggle.querySelector('path');
-      if(iconPath){
-        if(next === 'dark'){
-          iconPath.setAttribute('d', 'M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm0-4v2.5M12 19.5V22M4.5 12H7M17 12h2.5M6.34 6.34 8.1 8.1M15.9 15.9l1.76 1.76M15.9 8.1l1.76-1.76M8.1 15.9 6.34 17.66');
-        } else {
-          iconPath.setAttribute('d', 'M12.5 3A8.5 8.5 0 1 0 20.9 15a6.5 6.5 0 0 1-8.4-12Z');
-        }
-      }
+      els.themeToggle.dataset.theme = next;
     }
     try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
   }
@@ -1207,7 +1218,7 @@
     setTheme(stored || (prefersDark ? 'dark' : 'light'));
     els.themeToggle.addEventListener('click', ()=>{
       const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-      setTheme(next, { animate:true });
+      setTheme(next);
     });
   }
 
@@ -1325,7 +1336,7 @@
     if(isBanner){
       updateBannerUploadChip();
       updateUnsplashPaletteActive();
-      updateGradientPreview(state.banner.gradient.dataUrl);
+      updateGradientControls();
     }
     els.squareLogoSection.style.display   = (state.format.key==='SQUARE') ? 'block' : 'none';
     els.frostSection.style.display        = (state.format.key==='HORIZ')  ? 'block' : 'none';
@@ -1378,17 +1389,9 @@
     if(els.vertSizeSeg) [...els.vertSizeSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.v===state.vertVariant));
 
     els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
-
-    // file name at top of preview
-    if(els.currentFileName){
-      const name = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
-      if(els.currentFileNameText){
-        els.currentFileNameText.textContent = name;
-        els.currentFileName.setAttribute('title', name);
-      } else {
-        els.currentFileName.textContent = name;
-        els.currentFileName.setAttribute('title', name);
-      }
+    const shouldShowEmpty = !state.imageSrc;
+    if(els.stageEmpty){
+      els.stageEmpty.classList.toggle('show', shouldShowEmpty);
     }
   }
 
@@ -1725,6 +1728,7 @@
       });
     }
     refreshIcons();
+    if(next === 'gradient'){ updateGradientControls(); setGradientStatus('', ''); }
   }
 
   function updateBannerUploadChip(){
@@ -1815,9 +1819,11 @@
 
   function updateUnsplashPaletteActive(){
     if(!els.unsplashPalette) return;
+    const palette = state.banner.unsplash.colors || [];
     [...els.unsplashPalette.querySelectorAll('.colorChip')].forEach(chip=>{
       const val = chip.dataset.color || '';
-      const active = val === state.banner.unsplash.color;
+      const isAll = val === 'all';
+      const active = isAll ? palette.length === 0 : palette.includes(val);
       chip.classList.toggle('active', active);
       chip.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
@@ -1826,7 +1832,10 @@
   function buildUnsplashQuery(){
     const base = (els.unsplashQuery?.value || '').trim() || 'abstract background';
     const parts = [base];
-    if(state.banner.unsplash.style && state.banner.unsplash.style !== 'pattern'){
+    if(Array.isArray(state.banner.unsplash.colors) && state.banner.unsplash.colors.length){
+      parts.push(state.banner.unsplash.colors.join(' '));
+    }
+    if(state.banner.unsplash.style && state.banner.unsplash.style !== 'all'){
       parts.push(state.banner.unsplash.style);
     }
     if(state.banner.unsplash.tone === 'dark'){ parts.push('dark'); }
@@ -1838,9 +1847,12 @@
     if(!els.unsplashResults || !UNSPLASH_KEY) return;
     const query = buildUnsplashQuery();
     const params = new URLSearchParams({ query, orientation:'landscape', per_page:'6', client_id:UNSPLASH_KEY });
-    const colorKey = state.banner.unsplash.color;
-    const colorParam = UNSPLASH_COLOR_PARAM_MAP[colorKey] || colorKey;
-    if(colorParam){ params.set('color', colorParam); }
+    const colors = state.banner.unsplash.colors || [];
+    if(colors.length === 1){
+      const colorKey = colors[0];
+      const colorParam = UNSPLASH_COLOR_PARAM_MAP[colorKey] || colorKey;
+      if(colorParam){ params.set('color', colorParam); }
+    }
     try{
       if(els.unsplashSearchBtn) els.unsplashSearchBtn.disabled = true;
       els.unsplashResults.innerHTML = '<div class="bgSourceNote">Searching Unsplash…</div>';
@@ -1902,50 +1914,259 @@
     return { r:(num>>16)&255, g:(num>>8)&255, b:num&255 };
   }
 
+  function rgbToHex({ r, g, b }){
+    const clamp = (v)=>Math.max(0, Math.min(255, Math.round(v)));
+    const toHex = (v)=>clamp(v).toString(16).padStart(2, '0');
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  }
+
+  function mixHexColors(a, b, ratio = 0.5){
+    const mix = Math.max(0, Math.min(1, ratio));
+    const c1 = hexToRgb(a);
+    const c2 = hexToRgb(b);
+    return rgbToHex({
+      r: c1.r + (c2.r - c1.r) * mix,
+      g: c1.g + (c2.g - c1.g) * mix,
+      b: c1.b + (c2.b - c1.b) * mix,
+    });
+  }
+
+  function adjustHexLightness(hex, delta){
+    const amount = Math.max(-0.6, Math.min(0.6, delta));
+    if(amount >= 0){
+      return mixHexColors(hex, '#f1f5f9', amount);
+    }
+    return mixHexColors(hex, '#0f172a', -amount * 0.9);
+  }
+
+  function withAlpha(hex, alpha){
+    const { r, g, b } = hexToRgb(hex);
+    const a = Math.max(0, Math.min(1, alpha));
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  function normalizeGradientColors(){
+    if(!Array.isArray(state.banner.gradient.colors)){
+      state.banner.gradient.colors = [...DEFAULT_GRADIENT_COLORS];
+    }
+    state.banner.gradient.colors = state.banner.gradient.colors.filter(Boolean);
+    if(state.banner.gradient.colors.length < GRADIENT_MIN_COLORS){
+      const base = [...DEFAULT_GRADIENT_COLORS];
+      let idx = 0;
+      while(state.banner.gradient.colors.length < GRADIENT_MIN_COLORS){
+        state.banner.gradient.colors.push(base[idx % base.length]);
+        idx++;
+      }
+    }
+    if(state.banner.gradient.colors.length > GRADIENT_MAX_COLORS){
+      state.banner.gradient.colors.length = GRADIENT_MAX_COLORS;
+    }
+  }
+
+  function updateGradientControls(){
+    if(!els.gradientColorList) return;
+    normalizeGradientColors();
+    els.gradientColorList.innerHTML = '';
+    state.banner.gradient.colors.forEach((color, idx)=>{
+      const chip = document.createElement('label');
+      chip.className = 'gradientColorChip';
+      chip.setAttribute('role', 'listitem');
+      const title = document.createElement('span');
+      title.textContent = `Color ${idx + 1}`;
+      const input = document.createElement('input');
+      input.type = 'color';
+      input.value = color;
+      input.dataset.index = String(idx);
+      input.addEventListener('input', ()=>{
+        state.banner.gradient.colors[idx] = input.value;
+        updateGradientPreview();
+      });
+      chip.appendChild(title);
+      chip.appendChild(input);
+      els.gradientColorList.appendChild(chip);
+    });
+    if(els.gradientColorCount){
+      const count = state.banner.gradient.colors.length;
+      els.gradientColorCount.textContent = `${count} ${count === 1 ? 'color' : 'colors'}`;
+    }
+    if(els.gradientAddColor){
+      els.gradientAddColor.disabled = state.banner.gradient.colors.length >= GRADIENT_MAX_COLORS;
+    }
+    if(els.gradientRemoveColor){
+      els.gradientRemoveColor.disabled = state.banner.gradient.colors.length <= GRADIENT_MIN_COLORS;
+    }
+    updateGradientPreview();
+  }
+
+  function setGradientStatus(message, tone){
+    if(!els.gradientStatus) return;
+    els.gradientStatus.textContent = message || '';
+    els.gradientStatus.classList.remove('success','error');
+    if(tone === 'success'){ els.gradientStatus.classList.add('success'); }
+    if(tone === 'error'){ els.gradientStatus.classList.add('error'); }
+  }
+
+  function addGradientColor(){
+    normalizeGradientColors();
+    if(state.banner.gradient.colors.length >= GRADIENT_MAX_COLORS) return false;
+    const palette = state.banner.gradient.colors;
+    const first = palette[0] || DEFAULT_GRADIENT_COLORS[0];
+    const last = palette[palette.length - 1] || DEFAULT_GRADIENT_COLORS[DEFAULT_GRADIENT_COLORS.length - 1];
+    const mixRatio = 0.35 + Math.random() * 0.3;
+    const nextColor = adjustHexLightness(mixHexColors(first, last, mixRatio), (Math.random() - 0.5) * 0.2);
+    palette.push(nextColor);
+    return true;
+  }
+
+  function removeGradientColor(){
+    normalizeGradientColors();
+    if(state.banner.gradient.colors.length <= GRADIENT_MIN_COLORS) return false;
+    state.banner.gradient.colors.pop();
+    return true;
+  }
+
+  function shuffleGradientColors(){
+    normalizeGradientColors();
+    const palette = [...state.banner.gradient.colors];
+    for(let i = palette.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [palette[i], palette[j]] = [palette[j], palette[i]];
+    }
+    state.banner.gradient.colors = palette.map((hex, idx)=>{
+      const spread = (idx - (palette.length - 1) / 2) * 0.15;
+      return adjustHexLightness(hex, spread);
+    });
+    updateGradientControls();
+  }
+
+  async function extractColorsFromImage(file, desired){
+    const targetCount = Math.max(GRADIENT_MIN_COLORS, Math.min(GRADIENT_MAX_COLORS, desired));
+    const url = URL.createObjectURL(file);
+    try{
+      const img = await new Promise((resolve, reject)=>{
+        const image = new Image();
+        image.crossOrigin = 'anonymous';
+        image.onload = ()=>resolve(image);
+        image.onerror = reject;
+        image.src = url;
+      });
+      const maxSide = 220;
+      const ratio = Math.min(1, maxSide / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(img.width * ratio));
+      canvas.height = Math.max(1, Math.round(img.height * ratio));
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      const buckets = new Map();
+      const totalPixels = canvas.width * canvas.height;
+      const step = Math.max(1, Math.floor(totalPixels / 5000));
+      for(let i = 0; i < totalPixels; i += step){
+        const idx = i * 4;
+        const a = data[idx + 3];
+        if(a < 200) continue;
+        const r = data[idx];
+        const g = data[idx + 1];
+        const b = data[idx + 2];
+        const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        if(brightness > 245 || brightness < 18) continue;
+        const key = `${Math.round(r/24)}|${Math.round(g/24)}|${Math.round(b/24)}`;
+        if(!buckets.has(key)){
+          buckets.set(key, { r:0, g:0, b:0, count:0 });
+        }
+        const bucket = buckets.get(key);
+        bucket.r += r;
+        bucket.g += g;
+        bucket.b += b;
+        bucket.count++;
+      }
+      const palette = Array.from(buckets.values())
+        .filter(bucket => bucket.count > 0)
+        .map(bucket => ({
+          count: bucket.count,
+          color: rgbToHex({ r: bucket.r / bucket.count, g: bucket.g / bucket.count, b: bucket.b / bucket.count })
+        }))
+        .sort((a,b)=>b.count - a.count)
+        .slice(0, targetCount)
+        .map(entry => adjustHexLightness(entry.color, -0.1 + Math.random()*0.2));
+      if(palette.length === 0){
+        return [];
+      }
+      while(palette.length < targetCount){
+        palette.push(adjustHexLightness(palette[palette.length-1], 0.12));
+      }
+      return palette.slice(0, targetCount);
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  }
+
+  async function handleGradientSampleInput(file){
+    if(!file) return;
+    try{
+      setGradientStatus('Analyzing image colors…');
+      const desired = state.banner.gradient.colors?.length || DEFAULT_GRADIENT_COLORS.length;
+      const palette = await extractColorsFromImage(file, desired);
+      if(palette.length){
+        state.banner.gradient.colors = palette;
+        updateGradientControls();
+        setGradientStatus('Accent colors extracted from image.', 'success');
+      } else {
+        setGradientStatus('Unable to detect strong accent colors from that image.', 'error');
+      }
+    } catch(err){
+      console.error(err);
+      setGradientStatus('Unable to read that image.', 'error');
+    }
+  }
+
   function createLiquidGradient(colors){
     const palette = colors.filter(Boolean);
-    if(palette.length === 0){ palette.push('#38bdf8','#6366f1'); }
-    const size = 640;
+    if(palette.length === 0){ palette.push(...DEFAULT_GRADIENT_COLORS); }
+    const size = 720;
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = size;
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#0f172a';
+    ctx.fillStyle = '#0b1220';
     ctx.fillRect(0, 0, size, size);
-    const blobs = Math.max(6, palette.length * 6);
-    ctx.globalCompositeOperation = 'lighter';
-    for(let i=0;i<blobs;i++){
-      const color = palette[i % palette.length];
-      const {r,g,b} = hexToRgb(color);
-      const x = Math.random() * size;
-      const y = Math.random() * size;
-      const radius = size * (0.25 + Math.random()*0.35);
-      const gradient = ctx.createRadialGradient(x, y, radius*0.1, x, y, radius);
-      gradient.addColorStop(0, `rgba(${r},${g},${b},0.9)`);
-      gradient.addColorStop(1, `rgba(${r},${g},${b},0)`);
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, Math.PI*2);
-      ctx.fill();
+    const layers = Math.max(5, palette.length * 4);
+    for(let layer = 0; layer < layers; layer++){
+      const color = adjustHexLightness(palette[layer % palette.length], (Math.random() - 0.5) * 0.25);
+      const angle = (layer / layers) * Math.PI * 2;
+      const radius = size * (0.25 + Math.random()*0.25);
+      const cx = size / 2 + Math.cos(angle) * size * 0.25 + (Math.random() - 0.5) * size * 0.1;
+      const cy = size / 2 + Math.sin(angle) * size * 0.25 + (Math.random() - 0.5) * size * 0.1;
+      const grad = ctx.createRadialGradient(cx, cy, radius * 0.2, cx, cy, radius * 1.4);
+      grad.addColorStop(0, withAlpha(color, 0.85));
+      grad.addColorStop(0.55, withAlpha(color, 0.18));
+      grad.addColorStop(1, 'rgba(8,15,32,0)');
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
     }
     ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.fillStyle = 'rgba(10,16,35,0.45)';
+    ctx.fillRect(0, 0, size, size);
+    const sheen = ctx.createLinearGradient(0, 0, size, size);
+    sheen.addColorStop(0, 'rgba(255,255,255,0.08)');
+    sheen.addColorStop(1, 'rgba(11,17,32,0.1)');
+    ctx.fillStyle = sheen;
     ctx.fillRect(0, 0, size, size);
     return canvas.toDataURL('image/png');
   }
 
-  function updateGradientPreview(dataUrl){
-    if(!els.gradientPreview) return;
-    if(dataUrl){
-      els.gradientPreview.style.backgroundImage = `url(${dataUrl})`;
-    } else {
-      els.gradientPreview.style.backgroundImage = 'linear-gradient(135deg,#38bdf8,#6366f1)';
+  function updateGradientPreview(){
+    if(els.gradientSwatch){
+      const palette = Array.isArray(state.banner.gradient.colors) && state.banner.gradient.colors.length ? state.banner.gradient.colors : DEFAULT_GRADIENT_COLORS;
+      els.gradientSwatch.style.background = `linear-gradient(90deg, ${palette.join(', ')})`;
     }
   }
 
   async function generateGradientBackground(){
     const dataUrl = createLiquidGradient(state.banner.gradient.colors);
     state.banner.gradient.dataUrl = dataUrl;
-    updateGradientPreview(dataUrl);
+    updateGradientPreview();
+    setGradientStatus('Gradient applied to the banner preview.', 'success');
     await applyBannerBackground(dataUrl, 'Generated gradient');
   }
 
@@ -2177,7 +2398,16 @@
     els.unsplashPalette.addEventListener('click', (e)=>{
       const chip = e.target.closest('.colorChip');
       if(!chip) return;
-      state.banner.unsplash.color = chip.dataset.color || '';
+      const val = chip.dataset.color || '';
+      const palette = Array.isArray(state.banner.unsplash.colors) ? [...state.banner.unsplash.colors] : [];
+      if(val === 'all'){
+        state.banner.unsplash.colors = [];
+      } else {
+        const idx = palette.indexOf(val);
+        if(idx >= 0){ palette.splice(idx, 1); }
+        else { palette.push(val); }
+        state.banner.unsplash.colors = palette;
+      }
       updateUnsplashPaletteActive();
       if(state.banner.mode === 'unsplash' && state.banner.unsplash.results.length > 0){
         handleUnsplashSearch();
@@ -2187,9 +2417,13 @@
   if(els.unsplashToneSeg){
     els.unsplashToneSeg.addEventListener('click', (e)=>{
       const btn = e.target.closest('button'); if(!btn) return;
-      const tone = btn.dataset.tone || 'light';
+      const tone = btn.dataset.tone || 'all';
       state.banner.unsplash.tone = tone;
-      [...els.unsplashToneSeg.querySelectorAll('button')].forEach(b=>b.classList.toggle('active', b.dataset.tone===tone));
+      [...els.unsplashToneSeg.querySelectorAll('button')].forEach(b=>{
+        const isActive = b.dataset.tone===tone;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
       if(state.banner.mode === 'unsplash' && state.banner.unsplash.results.length > 0){
         handleUnsplashSearch();
       }
@@ -2198,9 +2432,13 @@
   if(els.unsplashStyleSeg){
     els.unsplashStyleSeg.addEventListener('click', (e)=>{
       const btn = e.target.closest('button'); if(!btn) return;
-      const style = btn.dataset.style || 'pattern';
+      const style = btn.dataset.style || 'all';
       state.banner.unsplash.style = style;
-      [...els.unsplashStyleSeg.querySelectorAll('button')].forEach(b=>b.classList.toggle('active', b.dataset.style===style));
+      [...els.unsplashStyleSeg.querySelectorAll('button')].forEach(b=>{
+        const isActive = b.dataset.style===style;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
       if(state.banner.mode === 'unsplash' && state.banner.unsplash.results.length > 0){
         handleUnsplashSearch();
       }
@@ -2213,16 +2451,21 @@
       handleUnsplashSearch();
     }
   });
-  if(els.gradientColorInputs){
-    els.gradientColorInputs.forEach(input=>{
-      input.addEventListener('input', ()=>{
-        const idx = Number(input.dataset.index || 0);
-        state.banner.gradient.colors[idx] = input.value;
-      });
-    });
-  }
   els.gradientGenerate?.addEventListener('click', ()=>{ generateGradientBackground(); });
-  els.gradientRandomize?.addEventListener('click', ()=>{ generateGradientBackground(); });
+  els.gradientRandomize?.addEventListener('click', ()=>{ shuffleGradientColors(); generateGradientBackground(); });
+  els.gradientAddColor?.addEventListener('click', ()=>{
+    if(addGradientColor()){ updateGradientControls(); setGradientStatus('Added a new color stop.', 'success'); }
+    else { setGradientStatus(`You can use up to ${GRADIENT_MAX_COLORS} colors.`, 'error'); }
+  });
+  els.gradientRemoveColor?.addEventListener('click', ()=>{
+    if(removeGradientColor()){ updateGradientControls(); setGradientStatus('Removed the last color stop.', ''); }
+    else { setGradientStatus('At least two colors are required.', 'error'); }
+  });
+  els.gradientSampleInput?.addEventListener('change', (e)=>{
+    const file = e.target.files?.[0];
+    if(file){ handleGradientSampleInput(file); }
+    e.target.value = '';
+  });
 
   els.file.addEventListener('change', async (e)=>{
     if(!e.target.files || e.target.files.length===0) return;
@@ -2886,7 +3129,7 @@
   setBannerMode(state.banner.mode);
   updateBannerUploadChip();
   updateUnsplashPaletteActive();
-  updateGradientPreview(state.banner.gradient.dataUrl);
+  updateGradientControls();
   refreshIcons();
   buildAllGalleries();
   els.toggleLogo2.checked = false; els.logo2Block.style.display='none';
