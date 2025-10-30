@@ -44,7 +44,8 @@
   .right-head a{color:var(--muted); text-decoration:none}
   #themeToggle{position:fixed; right:28px; bottom:32px; width:56px; height:56px; border-radius:50%; display:grid; place-items:center; padding:0; margin:0; box-shadow:0 18px 32px rgba(15,23,42,0.18); background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; z-index:60; transition:transform .18s ease, box-shadow .18s ease;}
   #themeToggle:hover{transform:translateY(-2px); box-shadow:0 20px 38px rgba(15,23,42,0.22);}
-  #themeToggle .btn-ico{filter:none; stroke:#fff; width:24px; height:24px;}
+  #themeToggle .btn-ico{filter:none; width:24px; height:24px; display:flex; align-items:center; justify-content:center;}
+  #themeToggle .btn-ico svg{width:100%; height:100%; stroke:#fff; fill:none;}
   #themeToggle .btn-text{display:none}
   #themeToggle:focus-visible{outline:3px solid rgba(255,255,255,0.75); outline-offset:4px}
 
@@ -147,6 +148,7 @@
   .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .25s ease, border-color .2s ease; cursor:grab}
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
+  .stageEmpty{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); color:var(--muted); font-size:15px; text-align:center; line-height:1.4; letter-spacing:0.02em; max-width:65%; pointer-events:none; opacity:0.88; z-index:5}
   .dropOverlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; color:var(--brand2); background:rgba(14,165,233,0.14); backdrop-filter:blur(18px); opacity:0; transition:opacity .2s ease; pointer-events:none; text-align:center; padding:24px; z-index:20}
   .stage-inner.drag-over .dropOverlay{opacity:1}
 
@@ -173,6 +175,7 @@
   .kv{display:flex; gap:8px; align-items:center}
   .kv .k{width:120px; color:var(--muted)}
   .kv .v{font-weight:600}
+  .pad-meta .kvRow{display:flex; gap:18px; flex-wrap:wrap; align-items:center}
 
   .chipInfo{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; background:var(--chip-bg); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); white-space:nowrap; transition:background .2s ease, border-color .2s ease}
   .chipInfo.flexible{max-width:none; white-space:normal; word-break:break-word; flex-wrap:wrap; align-items:flex-start}
@@ -200,11 +203,16 @@
   .unsplashResults button:hover{transform:translateY(-3px); box-shadow:0 16px 30px rgba(15,23,42,0.18)}
   .unsplashResults button img{width:100%; height:100%; object-fit:cover; display:block}
   .unsplashResults button.active{border-color:rgba(14,165,233,0.55); box-shadow:0 18px 36px rgba(14,165,233,0.22)}
-  .gradientControls{display:grid; gap:12px}
-  .gradientColorRow{display:flex; gap:10px; flex-wrap:wrap}
-  .gradientColorRow label{display:flex; align-items:center; gap:8px; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted)}
-  .gradientColorRow input[type="color"]{appearance:none; border:none; width:44px; height:32px; border-radius:10px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
-  .gradientPreview{width:100%; aspect-ratio:1; border-radius:16px; border:1px solid var(--border); background:linear-gradient(135deg,#38bdf8,#6366f1); box-shadow:0 10px 24px rgba(15,23,42,0.12)}
+  .gradientControls{display:grid; gap:18px; padding:18px; border-radius:18px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:0 14px 32px rgba(15,23,42,0.08)}
+  .gradientPaletteHeader{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; justify-content:space-between}
+  .gradientPalette{display:flex; flex-wrap:wrap; gap:12px; flex:1 1 auto}
+  .gradientColorItem{display:flex; flex-direction:column; gap:8px; padding:12px 14px; border-radius:14px; border:1px solid var(--border); background:var(--stageInner); min-width:120px; box-shadow:0 6px 16px rgba(15,23,42,0.06)}
+  .gradientColorItem label{display:flex; align-items:center; justify-content:space-between; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted)}
+  .gradientColorItem .colorValue{font-weight:600; font-size:13px; letter-spacing:0.02em}
+  .gradientColorItem input[type="color"]{appearance:none; border:none; width:100%; height:44px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
+  .gradientColorActions{display:flex; gap:10px; flex:0 0 auto}
+  .gradientActions{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  .gradientNote{font-size:12px; color:var(--muted); margin:0}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
   .bgSourceNote.error{color:#b91c1c}
@@ -221,6 +229,10 @@
   .libItem.active{outline:2px solid var(--brand); outline-offset:1px}
 
   .switchGroup{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:20px; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
+  .overlaySlider{flex:1 1 100%; display:flex; flex-direction:column; gap:8px; padding-top:12px; margin-top:4px; border-top:1px dashed var(--border); transition:opacity .2s ease}
+  .overlaySlider.dim{opacity:0.45}
+  .overlaySliderHeader{display:flex; justify-content:space-between; align-items:center; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted)}
+  .overlaySliderValue{font-weight:600; font-size:13px; color:var(--ink)}
   .logoSection{position:relative; border:1px solid var(--border); border-radius:20px; background:var(--stageInner); box-shadow:0 14px 32px rgba(15,23,42,0.08); overflow:hidden; display:flex; flex-direction:column; gap:0}
   .logoSection::before{content:""; position:absolute; inset:0 0 auto 0; height:6px; background:linear-gradient(90deg,var(--brand),var(--brand2)); opacity:0.8}
   .logoSection + .logoSection{margin-top:18px}
@@ -291,16 +303,11 @@
   .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
   .previewControlRow{display:flex; flex-wrap:wrap; align-items:center; gap:16px}
-  .previewName{display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:14px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:var(--shadow); flex:0 0 68%; max-width:75%; min-width:0; text-align:left; direction:rtl}
-  .previewName .fileLabel{font-size:11px; color:var(--muted); letter-spacing:0.12em; text-transform:uppercase; direction:ltr}
-  .previewName .fileNameTail{direction:ltr; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:right; font-weight:600; color:var(--ink)}
   .previewZoomControl{display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:1 1 25%; min-width:220px; flex-wrap:nowrap}
   .previewZoomControl .muted{font-size:13px; white-space:nowrap}
   .previewZoomControl input[type="range"]{flex:1 1 auto; min-width:120px; width:auto}
   @media (max-width: 960px){
     .previewControlRow{flex-direction:column; align-items:stretch}
-    .previewName{flex:1; max-width:100%; direction:ltr}
-    .previewName .fileNameTail{text-align:left}
     .previewZoomControl{width:100%; justify-content:space-between}
   }
   @media (max-width: 560px){
@@ -315,11 +322,6 @@
   .globalDropOverlay{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:var(--brand2); background:rgba(14,165,233,0.18); backdrop-filter:blur(22px); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:50; text-align:center; padding:40px}
   .globalDropOverlay.show{opacity:1}
 
-  .theme-transition{position:fixed; inset:0; pointer-events:none; background:linear-gradient(135deg,#e0f2fe,#eef2ff); clip-path:circle(0% at var(--cx) var(--cy)); opacity:1; transition:clip-path .9s cubic-bezier(0.22,1,0.36,1), opacity .5s ease-out; z-index:120}
-  .theme-transition[data-theme="dark"]{background:linear-gradient(135deg,#0b1120,#1e293b)}
-  .theme-transition[data-theme="light"]{background:linear-gradient(135deg,#e0f2fe,#eef2ff)}
-  .theme-transition.expand{clip-path:circle(var(--radius) at var(--cx) var(--cy))}
-  .theme-transition.fade{opacity:0}
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
 
@@ -340,6 +342,7 @@
   :root[data-theme="dark"] .seg{background:linear-gradient(135deg,rgba(30,64,175,0.55),rgba(17,94,205,0.28)); border:1px solid rgba(96,165,250,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
+  :root[data-theme="dark"] .stageEmpty{color:rgba(226,232,240,0.75)}
   :root[data-theme="dark"] .dropOverlay{background:rgba(14,165,233,0.22); color:#e0f2fe}
   :root[data-theme="dark"] .veil{box-shadow:inset 0 2px 6px rgba(2,6,23,0.5)}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
@@ -349,7 +352,9 @@
   :root[data-theme="dark"] .bgUploadChip{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); color:rgba(226,232,240,0.78)}
   :root[data-theme="dark"] .colorChip{box-shadow:0 8px 18px rgba(2,6,23,0.55)}
   :root[data-theme="dark"] .unsplashResults button{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.75)}
-  :root[data-theme="dark"] .gradientPreview{border-color:rgba(71,85,105,0.75)}
+  :root[data-theme="dark"] .gradientControls{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 24px 48px rgba(2,6,23,0.65)}
+  :root[data-theme="dark"] .gradientColorItem{background:rgba(15,23,42,0.6); border-color:rgba(71,85,105,0.75); box-shadow:0 18px 36px rgba(2,6,23,0.6)}
+  :root[data-theme="dark"] .overlaySlider{border-top-color:rgba(71,85,105,0.65)}
   :root[data-theme="dark"] .thumbItem{border-color:rgba(71,85,105,0.75); box-shadow:0 12px 30px rgba(2,6,23,0.55);}
   :root[data-theme="dark"] .thumbItem.active{border-color:rgba(56,189,248,0.75);}
   :root[data-theme="dark"] .mockupBlock{background:linear-gradient(135deg,rgba(30,64,175,0.22),rgba(15,23,42,0.55)); border-color:rgba(71,85,105,0.75); box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);}
@@ -397,9 +402,11 @@
   <main class="wrap">
     <!-- Left: SETTINGS -->
     <section class="panel sticky">
-      <div class="pad">
-        <div class="kv"><div class="k">Output</div><div class="v" id="outMeta">—</div></div>
-        <div class="kv"><div class="k">Batch</div><div class="v" id="batchMeta">0 / 0</div></div>
+      <div class="pad pad-meta">
+        <div class="kvRow">
+          <div class="kv"><div class="k">Output</div><div class="v" id="outMeta">—</div></div>
+          <div class="kv"><div class="k">Batch</div><div class="v" id="batchMeta">0 / 0</div></div>
+        </div>
       </div>
 
       <div class="scroll">
@@ -434,15 +441,15 @@
               </button>
             </div>
             <div class="uploadCell">
-              <button class="btn danger ghost uploadAction" id="deleteAllBtn" title="Delete all uploaded images">
-                <i data-lucide="trash-2" class="btn-ico" aria-hidden="true"></i>
-                <span class="btn-text">Delete all</span>
-              </button>
-            </div>
-            <div class="uploadCell">
               <button class="btn danger uploadAction" id="deleteBtn" title="Delete current image">
                 <i data-lucide="trash" class="btn-ico" aria-hidden="true"></i>
                 <span class="btn-text">Delete current</span>
+              </button>
+            </div>
+            <div class="uploadCell">
+              <button class="btn danger ghost uploadAction" id="deleteAllBtn" title="Delete all uploaded images">
+                <i data-lucide="trash-2" class="btn-ico" aria-hidden="true"></i>
+                <span class="btn-text">Delete all</span>
               </button>
             </div>
           </div>
@@ -514,13 +521,15 @@
                 </div>
                 <div class="toneToggle">
                   <div class="seg" id="unsplashToneSeg" role="group" aria-label="Tone preference">
-                    <button type="button" class="active" data-tone="light">Light</button>
+                    <button type="button" class="active" data-tone="all">All</button>
+                    <button type="button" data-tone="light">Light</button>
                     <button type="button" data-tone="dark">Dark</button>
                   </div>
                 </div>
                 <div class="styleToggle">
                   <div class="seg" id="unsplashStyleSeg" role="group" aria-label="Style preference">
-                    <button type="button" class="active" data-style="pattern">Pattern</button>
+                    <button type="button" class="active" data-style="all">All</button>
+                    <button type="button" data-style="pattern">Pattern</button>
                     <button type="button" data-style="gradient">Gradient</button>
                     <button type="button" data-style="texture">Texture</button>
                     <button type="button" data-style="shapes">Shapes</button>
@@ -536,16 +545,27 @@
 
             <div class="bg-source-block" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" hidden aria-hidden="true">
               <div class="gradientControls">
-                <div class="gradientColorRow">
-                  <label>Color 1 <input type="color" value="#38bdf8" data-index="0"></label>
-                  <label>Color 2 <input type="color" value="#6366f1" data-index="1"></label>
-                  <label>Color 3 <input type="color" value="#f472b6" data-index="2"></label>
+                <div class="gradientPaletteHeader">
+                  <div class="gradientPalette" id="gradientPalette" aria-live="polite"></div>
+                  <div class="gradientColorActions">
+                    <button class="btn ghost icon" type="button" id="gradientRemoveColor" title="Remove color stop" aria-label="Remove color stop">
+                      <i data-lucide="minus" class="btn-ico" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn ghost icon" type="button" id="gradientAddColor" title="Add color stop" aria-label="Add color stop">
+                      <i data-lucide="plus" class="btn-ico" aria-hidden="true"></i>
+                    </button>
+                  </div>
                 </div>
-                <div class="bgInputRow">
-                  <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
-                  <button class="btn ghost" type="button" id="gradientRandomize">Generate again</button>
+                <div class="gradientActions">
+                  <label class="btn ghost uploadAction gradientUpload">
+                    <i data-lucide="image-up" class="btn-ico" aria-hidden="true"></i>
+                    <span class="btn-text">Use image colors</span>
+                    <input id="gradientImageUpload" type="file" accept="image/*" style="display:none" />
+                  </label>
+                  <button class="btn primary" type="button" id="gradientGenerate">Apply gradient</button>
+                  <button class="btn ghost" type="button" id="gradientRandomize">Shuffle palette</button>
                 </div>
-                <div class="gradientPreview" id="gradientPreview" aria-label="Gradient preview"></div>
+                <p class="gradientNote">Tip: adjust color stops or sample from artwork to craft a richer banner background.</p>
               </div>
             </div>
 
@@ -608,12 +628,19 @@
         </div>
 
         <!-- Step 4: Frosted bar -->
-        <div class="section" id="frostSection">
+          <div class="section" id="frostSection">
           <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
           <div class="switchGroup">
             <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
             <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
             <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
+            <div class="overlaySlider" id="overlayLabel">
+              <div class="overlaySliderHeader">
+                <span class="overlaySliderLabel">Overlay opacity</span>
+                <span class="overlaySliderValue"><span id="overlayAlphaVal">30</span>%</span>
+              </div>
+              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
+            </div>
           </div>
 
           <div class="logoSection" id="logo1Section">
@@ -708,11 +735,6 @@
             </div>
           </div>
 
-          <div class="stack" style="margin-top:12px">
-            <label id="overlayLabel">White overlay opacity: <span id="overlayAlphaVal">30</span>%<br/>
-              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
-            </label>
-          </div>
         </div>
 
         <!-- Step 4b: Square logo -->
@@ -827,10 +849,6 @@
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
         </div>
         <div class="previewControlRow">
-          <div id="currentFileName" class="previewName" aria-live="polite">
-            <span class="fileLabel">Current file</span>
-            <span class="fileNameTail" id="currentFileNameText">—</span>
-          </div>
           <div class="previewZoomControl">
             <span class="muted">Preview zoom</span>
             <span class="muted"><span id="zoomLabel">1.00</span>×</span>
@@ -840,6 +858,7 @@
       </div>
       <div class="stage">
         <div class="stage-inner" id="stage">
+          <div class="stageEmpty" id="stageEmpty">Upload or drop your images here to start.</div>
           <div class="image-layer" id="imageLayer">
             <img id="img" alt="uploaded" />
           </div>
@@ -888,9 +907,7 @@
 
   <div class="globalDropOverlay" id="globalDropOverlay">Drop images anywhere to upload</div>
   <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">
-    <svg class="btn-ico" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12.5 3A8.5 8.5 0 1 0 20.9 15a6.5 6.5 0 0 1-8.4-12Z"></path>
-    </svg>
+    <span id="themeIcon" class="btn-ico" aria-hidden="true"></span>
   </button>
   <div class="modal" id="partnerSettingsModal" role="dialog" aria-modal="true" aria-labelledby="partnerSettingsTitle">
     <div class="modal-card">
@@ -960,7 +977,7 @@
 (function(){
   const FORMATS = {
     HORIZ:   { key:'HORIZ',  label:'Horizontal',         sub:'Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
-    BANNER:  { key:'BANNER', label:'Banner background',  sub:'1120×360 hero',                            icon:'B', wPreview:420, hPreview:135, wExport:1120, hExport:360 },
+    BANNER:  { key:'BANNER', label:'Banner background',  sub:'3D Info Banner',                           icon:'B', wPreview:420, hPreview:135, wExport:1120, hExport:360 },
     SQUARE:  { key:'SQUARE', label:'Square',             sub:'Carousel / Story Exp / Co-Reg',            icon:'S', wPreview:375, hPreview:375, wExport:1080, hExport:1080 },
     VERT:    { key:'VERT',   label:'Vertical',           sub:'Interstitial',                             icon:'V', wPreview:300, hPreview:533, wExport:1080, hExport:1920 }
   };
@@ -984,6 +1001,7 @@
     header: document.getElementById('appHeader'),
     introScreen: document.getElementById('introScreen'),
     themeToggle: document.getElementById('themeToggle'),
+    themeIcon: document.getElementById('themeIcon'),
     file: document.getElementById('file'),
     folder: document.getElementById('folder'),
     pasteUrlBtn: document.getElementById('pasteUrlBtn'),
@@ -1005,11 +1023,9 @@
     outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
     batchMeta: document.getElementById('batchMeta'),
 
-    stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
+    stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'), stageEmpty: document.getElementById('stageEmpty'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
     frame: document.getElementById('frame'),
-    currentFileName: document.getElementById('currentFileName'),
-    currentFileNameText: document.getElementById('currentFileNameText'),
 
     bgSourceSection: document.getElementById('bgSourceSection'),
     bgSourceTabs: document.getElementById('bgSourceTabs'),
@@ -1030,7 +1046,10 @@
     gradientGenerate: document.getElementById('gradientGenerate'),
     gradientRandomize: document.getElementById('gradientRandomize'),
     gradientPreview: document.getElementById('gradientPreview'),
-    gradientColorInputs: Array.from(document.querySelectorAll('#gradientBlock input[type="color"]')),
+    gradientPalette: document.getElementById('gradientPalette'),
+    gradientAddColor: document.getElementById('gradientAddColor'),
+    gradientRemoveColor: document.getElementById('gradientRemoveColor'),
+    gradientImageUpload: document.getElementById('gradientImageUpload'),
 
     frostSection: document.getElementById('frostSection'),
     frostBar: document.getElementById('frostBar'), frostBg: document.getElementById('frostBg'), frostVeil: document.getElementById('frostVeil'),
@@ -1097,6 +1116,8 @@
     beige: 'orange'
   };
   const UNSPLASH_KEY = 'lS5t0PyTTNcbftZPooe7sNzTb7zLx5K82dY5UZGh6gw';
+  const GRADIENT_MIN_COLORS = 2;
+  const GRADIENT_MAX_COLORS = 6;
 
   const state = {
     images: [],
@@ -1129,8 +1150,8 @@
       mode:'upload',
       uploadName:'',
       link:'',
-      unsplash:{ color:'', tone:'light', style:'pattern', results:[] },
-      gradient:{ colors:['#38bdf8','#6366f1','#f472b6'], dataUrl:null },
+      unsplash:{ colors:[], tone:'all', style:'all', results:[] },
+      gradient:{ colors:['#1e293b','#2563eb','#9333ea'], dataUrl:null },
       lastSelection:null
     },
   };
@@ -1150,51 +1171,22 @@
   }
 
   const THEME_KEY = 'frozone-theme';
-  function triggerThemeTransition(nextTheme){
-    if(!els.themeToggle) return;
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce) return;
-    const rect = els.themeToggle.getBoundingClientRect();
-    const cx = rect.left + rect.width/2;
-    const cy = rect.top + rect.height/2;
-    const maxX = Math.max(cx, window.innerWidth - cx);
-    const maxY = Math.max(cy, window.innerHeight - cy);
-    const radius = Math.hypot(maxX, maxY) + 40;
-    const overlay = document.createElement('div');
-    overlay.className = 'theme-transition';
-    overlay.dataset.theme = nextTheme;
-    overlay.style.setProperty('--cx', `${cx}px`);
-    overlay.style.setProperty('--cy', `${cy}px`);
-    overlay.style.setProperty('--radius', `${radius}px`);
-    document.body.appendChild(overlay);
-    requestAnimationFrame(()=>{
-      overlay.classList.add('expand');
-      window.setTimeout(()=> overlay.classList.add('fade'), 680);
-    });
-    overlay.addEventListener('transitionend', (e)=>{
-      if(e.propertyName === 'opacity' && overlay.classList.contains('fade')){
-        overlay.remove();
-      }
-    });
-  }
-
-  function setTheme(mode, opts = {}){
+  function setTheme(mode){
     const root = document.documentElement;
     const next = mode === 'dark' ? 'dark' : 'light';
-    if(opts.animate) triggerThemeTransition(next);
     root.dataset.theme = next;
     if(els.themeToggle){
       els.themeToggle.setAttribute('aria-pressed', next === 'dark');
       const labelText = next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
       els.themeToggle.setAttribute('aria-label', labelText);
       els.themeToggle.title = labelText;
-      const iconPath = els.themeToggle.querySelector('path');
-      if(iconPath){
-        if(next === 'dark'){
-          iconPath.setAttribute('d', 'M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm0-4v2.5M12 19.5V22M4.5 12H7M17 12h2.5M6.34 6.34 8.1 8.1M15.9 15.9l1.76 1.76M15.9 8.1l1.76-1.76M8.1 15.9 6.34 17.66');
-        } else {
-          iconPath.setAttribute('d', 'M12.5 3A8.5 8.5 0 1 0 20.9 15a6.5 6.5 0 0 1-8.4-12Z');
-        }
+    }
+    if(els.themeIcon){
+      const iconName = next === 'dark' ? 'sun' : 'moon';
+      if(window.lucide && window.lucide.icons && window.lucide.icons[iconName]){
+        els.themeIcon.innerHTML = window.lucide.icons[iconName].toSvg({ 'stroke-width': 1.8 });
+      } else {
+        els.themeIcon.textContent = next === 'dark' ? '☀' : '☾';
       }
     }
     try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
@@ -1207,7 +1199,7 @@
     setTheme(stored || (prefersDark ? 'dark' : 'light'));
     els.themeToggle.addEventListener('click', ()=>{
       const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-      setTheme(next, { animate:true });
+      setTheme(next);
     });
   }
 
@@ -1355,6 +1347,9 @@
       if(state.images.length === 0){ resetDeleteAllPrompt(); }
     }
     if(els.deleteBtn){ els.deleteBtn.disabled = state.current < 0; }
+    if(els.stageEmpty){
+      els.stageEmpty.style.display = state.images.length === 0 ? 'block' : 'none';
+    }
 
     const anyLogos = !!(state.frost.logo1.src || state.frost.logo2.src);
     const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || anyLogos);
@@ -1379,17 +1374,6 @@
 
     els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
 
-    // file name at top of preview
-    if(els.currentFileName){
-      const name = state.current>=0 ? (state.images[state.current].name || 'image') : '—';
-      if(els.currentFileNameText){
-        els.currentFileNameText.textContent = name;
-        els.currentFileName.setAttribute('title', name);
-      } else {
-        els.currentFileName.textContent = name;
-        els.currentFileName.setAttribute('title', name);
-      }
-    }
   }
 
   function fitPreviewZoomToStage(){
@@ -1815,31 +1799,36 @@
 
   function updateUnsplashPaletteActive(){
     if(!els.unsplashPalette) return;
+    const activeColors = Array.isArray(state.banner.unsplash.colors) ? state.banner.unsplash.colors : [];
+    const isAll = activeColors.length === 0;
     [...els.unsplashPalette.querySelectorAll('.colorChip')].forEach(chip=>{
       const val = chip.dataset.color || '';
-      const active = val === state.banner.unsplash.color;
+      const active = val ? activeColors.includes(val) : isAll;
       chip.classList.toggle('active', active);
       chip.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
   }
 
   function buildUnsplashQuery(){
-    const base = (els.unsplashQuery?.value || '').trim() || 'abstract background';
+    const fallback = '3d info banner background';
+    const raw = (els.unsplashQuery?.value || '').trim();
+    const base = raw || fallback;
     const parts = [base];
-    if(state.banner.unsplash.style && state.banner.unsplash.style !== 'pattern'){
-      parts.push(state.banner.unsplash.style);
-    }
-    if(state.banner.unsplash.tone === 'dark'){ parts.push('dark'); }
-    else if(state.banner.unsplash.tone === 'light'){ parts.push('bright'); }
-    return parts.join(' ').trim();
+    const style = state.banner.unsplash.style;
+    if(style && style !== 'all'){ parts.push(style); }
+    const tone = state.banner.unsplash.tone;
+    if(tone === 'dark'){ parts.push('dark background'); }
+    else if(tone === 'light'){ parts.push('bright background'); }
+    const colors = Array.isArray(state.banner.unsplash.colors) ? state.banner.unsplash.colors : [];
+    if(colors.length){ parts.push(colors.join(' ')); }
+    const colorParam = colors.length === 1 ? (UNSPLASH_COLOR_PARAM_MAP[colors[0]] || colors[0]) : '';
+    return { query: parts.join(' ').trim(), colorParam };
   }
 
   async function handleUnsplashSearch(){
     if(!els.unsplashResults || !UNSPLASH_KEY) return;
-    const query = buildUnsplashQuery();
+    const { query, colorParam } = buildUnsplashQuery();
     const params = new URLSearchParams({ query, orientation:'landscape', per_page:'6', client_id:UNSPLASH_KEY });
-    const colorKey = state.banner.unsplash.color;
-    const colorParam = UNSPLASH_COLOR_PARAM_MAP[colorKey] || colorKey;
     if(colorParam){ params.set('color', colorParam); }
     try{
       if(els.unsplashSearchBtn) els.unsplashSearchBtn.disabled = true;
@@ -1902,34 +1891,231 @@
     return { r:(num>>16)&255, g:(num>>8)&255, b:num&255 };
   }
 
+  function rgbToHex(r, g, b){
+    const toHex = (v)=> Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0');
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  }
+
+  function hslToHex(h, s, l){
+    s /= 100; l /= 100;
+    const k = (n)=> (n + h / 30) % 12;
+    const a = s * Math.min(l, 1 - l);
+    const f = (n)=> l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+    return rgbToHex(f(0) * 255, f(8) * 255, f(4) * 255);
+  }
+
+  function colorDistance(hexA, hexB){
+    const a = hexToRgb(hexA);
+    const b = hexToRgb(hexB);
+    const dr = a.r - b.r;
+    const dg = a.g - b.g;
+    const db = a.b - b.b;
+    return Math.sqrt(dr*dr + dg*dg + db*db);
+  }
+
+  function ensureGradientPalette(){
+    if(!Array.isArray(state.banner.gradient.colors)){
+      state.banner.gradient.colors = ['#1e293b', '#2563eb', '#9333ea'];
+    }
+    state.banner.gradient.colors = state.banner.gradient.colors
+      .map(col => (typeof col === 'string' && col.trim()) ? col.trim().toLowerCase() : '')
+      .filter(Boolean);
+    const fallback = ['#1e293b','#2563eb','#9333ea','#0ea5e9'];
+    while(state.banner.gradient.colors.length < GRADIENT_MIN_COLORS){
+      const next = fallback[state.banner.gradient.colors.length % fallback.length];
+      state.banner.gradient.colors.push(next);
+    }
+    if(state.banner.gradient.colors.length > GRADIENT_MAX_COLORS){
+      state.banner.gradient.colors = state.banner.gradient.colors.slice(0, GRADIENT_MAX_COLORS);
+    }
+  }
+
+  function updateGradientControlButtons(){
+    if(els.gradientAddColor){
+      els.gradientAddColor.disabled = state.banner.gradient.colors.length >= GRADIENT_MAX_COLORS;
+    }
+    if(els.gradientRemoveColor){
+      els.gradientRemoveColor.disabled = state.banner.gradient.colors.length <= GRADIENT_MIN_COLORS;
+    }
+  }
+
+  function renderGradientPalette(){
+    if(!els.gradientPalette) return;
+    ensureGradientPalette();
+    els.gradientPalette.innerHTML = '';
+    state.banner.gradient.colors.forEach((color, idx)=>{
+      const item = document.createElement('div');
+      item.className = 'gradientColorItem';
+      const label = document.createElement('label');
+      label.textContent = `Color ${idx + 1}`;
+      const valueSpan = document.createElement('span');
+      valueSpan.className = 'colorValue';
+      valueSpan.textContent = color.toUpperCase();
+      label.appendChild(valueSpan);
+      const input = document.createElement('input');
+      input.type = 'color';
+      input.value = color;
+      input.dataset.index = String(idx);
+      input.addEventListener('input', (event)=>{
+        const next = (event.target.value || '#000000').toLowerCase();
+        state.banner.gradient.colors[idx] = next;
+        valueSpan.textContent = next.toUpperCase();
+      });
+      item.appendChild(label);
+      item.appendChild(input);
+      els.gradientPalette.appendChild(item);
+    });
+    updateGradientControlButtons();
+  }
+
+  function addGradientColor(){
+    ensureGradientPalette();
+    if(state.banner.gradient.colors.length >= GRADIENT_MAX_COLORS) return;
+    const last = state.banner.gradient.colors[state.banner.gradient.colors.length - 1] || '#2563eb';
+    state.banner.gradient.colors.push(last);
+    renderGradientPalette();
+  }
+
+  function removeGradientColor(){
+    ensureGradientPalette();
+    if(state.banner.gradient.colors.length <= GRADIENT_MIN_COLORS) return;
+    state.banner.gradient.colors.pop();
+    renderGradientPalette();
+  }
+
+  function randomizeGradientPalette(){
+    ensureGradientPalette();
+    const count = Math.max(GRADIENT_MIN_COLORS, Math.min(GRADIENT_MAX_COLORS, state.banner.gradient.colors.length || GRADIENT_MIN_COLORS));
+    const hueStart = Math.random() * 360;
+    const palette = [];
+    for(let i=0;i<count;i++){
+      const hue = (hueStart + i * (24 + Math.random()*16)) % 360;
+      const saturation = 55 + Math.random()*25;
+      const lightness = 32 + Math.random()*18;
+      palette.push(hslToHex(hue, saturation, lightness).toLowerCase());
+    }
+    state.banner.gradient.colors = palette;
+    renderGradientPalette();
+  }
+
+  async function extractAccentColorsFromFile(file, count){
+    return new Promise((resolve, reject)=>{
+      const url = URL.createObjectURL(file);
+      const image = new Image();
+      image.onload = ()=>{
+        try {
+          const maxDim = 160;
+          const scale = Math.min(maxDim / image.width, maxDim / image.height, 1);
+          const width = Math.max(1, Math.round(image.width * scale));
+          const height = Math.max(1, Math.round(image.height * scale));
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d', { willReadFrequently:true });
+          ctx.drawImage(image, 0, 0, width, height);
+          const data = ctx.getImageData(0, 0, width, height).data;
+          const buckets = new Map();
+          for(let i=0;i<data.length;i+=4){
+            const alpha = data[i+3];
+            if(alpha < 200) continue;
+            const r = data[i];
+            const g = data[i+1];
+            const b = data[i+2];
+            const key = `${r>>3}_${g>>3}_${b>>3}`;
+            let bucket = buckets.get(key);
+            if(!bucket){ bucket = { count:0, r:0, g:0, b:0 }; buckets.set(key, bucket); }
+            bucket.count += 1;
+            bucket.r += r;
+            bucket.g += g;
+            bucket.b += b;
+          }
+          const sorted = [...buckets.values()]
+            .map(bucket => {
+              const denom = bucket.count || 1;
+              return {
+                count: bucket.count,
+                color: rgbToHex(bucket.r / denom, bucket.g / denom, bucket.b / denom)
+              };
+            })
+            .filter(entry => {
+              const { r, g, b } = hexToRgb(entry.color);
+              const brightness = (r + g + b) / 3;
+              return brightness > 25 && brightness < 235;
+            })
+            .sort((a,b)=>b.count - a.count);
+          const palette = [];
+          for(const entry of sorted){
+            const hex = entry.color.toUpperCase();
+            if(palette.every(existing => colorDistance(existing, hex) > 36)){
+              palette.push(hex);
+            }
+            if(palette.length >= count){ break; }
+          }
+          if(palette.length === 0){ palette.push('#2563EB','#0F172A','#9333EA'); }
+          resolve(palette.slice(0, Math.min(count, GRADIENT_MAX_COLORS)));
+        } catch(err){
+          reject(err);
+        } finally {
+          URL.revokeObjectURL(url);
+        }
+      };
+      image.onerror = (err)=>{
+        URL.revokeObjectURL(url);
+        reject(err);
+      };
+      image.src = url;
+    });
+  }
+
+  async function applyGradientImagePalette(file){
+    try {
+      const desired = Math.max(GRADIENT_MIN_COLORS, Math.min(GRADIENT_MAX_COLORS, state.banner.gradient.colors.length || GRADIENT_MIN_COLORS));
+      const palette = await extractAccentColorsFromFile(file, desired);
+      state.banner.gradient.colors = palette.map(col => col.toLowerCase());
+      renderGradientPalette();
+      await generateGradientBackground();
+    } catch(err){
+      console.error('Unable to sample colors from image', err);
+      alert('We could not read colors from that image. Please try a different file.');
+    }
+  }
+
   function createLiquidGradient(colors){
     const palette = colors.filter(Boolean);
-    if(palette.length === 0){ palette.push('#38bdf8','#6366f1'); }
+    if(palette.length === 0){ palette.push('#1e293b','#2563eb','#9333ea'); }
     const size = 640;
     const canvas = document.createElement('canvas');
     canvas.width = canvas.height = size;
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#0f172a';
+    const baseGradient = ctx.createLinearGradient(0, 0, size, size);
+    baseGradient.addColorStop(0, palette[0]);
+    baseGradient.addColorStop(1, palette[palette.length - 1]);
+    ctx.fillStyle = baseGradient;
     ctx.fillRect(0, 0, size, size);
-    const blobs = Math.max(6, palette.length * 6);
-    ctx.globalCompositeOperation = 'lighter';
+    const blobs = Math.max(5, palette.length * 4);
     for(let i=0;i<blobs;i++){
       const color = palette[i % palette.length];
       const {r,g,b} = hexToRgb(color);
       const x = Math.random() * size;
       const y = Math.random() * size;
-      const radius = size * (0.25 + Math.random()*0.35);
-      const gradient = ctx.createRadialGradient(x, y, radius*0.1, x, y, radius);
-      gradient.addColorStop(0, `rgba(${r},${g},${b},0.9)`);
+      const radius = size * (0.32 + Math.random()*0.28);
+      const gradient = ctx.createRadialGradient(x, y, radius*0.05, x, y, radius);
+      gradient.addColorStop(0, `rgba(${r},${g},${b},0.55)`);
+      gradient.addColorStop(0.65, `rgba(${r},${g},${b},0.12)`);
       gradient.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.globalCompositeOperation = 'lighter';
       ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI*2);
       ctx.fill();
     }
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.fillStyle = 'rgba(12,18,32,0.32)';
     ctx.fillRect(0, 0, size, size);
+    ctx.globalCompositeOperation = 'screen';
+    ctx.fillStyle = 'rgba(255,255,255,0.04)';
+    ctx.fillRect(0, 0, size, size);
+    ctx.globalCompositeOperation = 'source-over';
     return canvas.toDataURL('image/png');
   }
 
@@ -1938,11 +2124,12 @@
     if(dataUrl){
       els.gradientPreview.style.backgroundImage = `url(${dataUrl})`;
     } else {
-      els.gradientPreview.style.backgroundImage = 'linear-gradient(135deg,#38bdf8,#6366f1)';
+      els.gradientPreview.style.backgroundImage = 'linear-gradient(135deg,#1e293b,#2563eb)';
     }
   }
 
   async function generateGradientBackground(){
+    ensureGradientPalette();
     const dataUrl = createLiquidGradient(state.banner.gradient.colors);
     state.banner.gradient.dataUrl = dataUrl;
     updateGradientPreview(dataUrl);
@@ -2177,7 +2364,17 @@
     els.unsplashPalette.addEventListener('click', (e)=>{
       const chip = e.target.closest('.colorChip');
       if(!chip) return;
-      state.banner.unsplash.color = chip.dataset.color || '';
+      const color = chip.dataset.color || '';
+      if(!state.banner.unsplash.colors){ state.banner.unsplash.colors = []; }
+      if(!color){
+        state.banner.unsplash.colors = [];
+      } else {
+        const next = [...state.banner.unsplash.colors];
+        const idx = next.indexOf(color);
+        if(idx >= 0){ next.splice(idx, 1); }
+        else { next.push(color); }
+        state.banner.unsplash.colors = next;
+      }
       updateUnsplashPaletteActive();
       if(state.banner.mode === 'unsplash' && state.banner.unsplash.results.length > 0){
         handleUnsplashSearch();
@@ -2187,7 +2384,7 @@
   if(els.unsplashToneSeg){
     els.unsplashToneSeg.addEventListener('click', (e)=>{
       const btn = e.target.closest('button'); if(!btn) return;
-      const tone = btn.dataset.tone || 'light';
+      const tone = btn.dataset.tone || 'all';
       state.banner.unsplash.tone = tone;
       [...els.unsplashToneSeg.querySelectorAll('button')].forEach(b=>b.classList.toggle('active', b.dataset.tone===tone));
       if(state.banner.mode === 'unsplash' && state.banner.unsplash.results.length > 0){
@@ -2198,7 +2395,7 @@
   if(els.unsplashStyleSeg){
     els.unsplashStyleSeg.addEventListener('click', (e)=>{
       const btn = e.target.closest('button'); if(!btn) return;
-      const style = btn.dataset.style || 'pattern';
+      const style = btn.dataset.style || 'all';
       state.banner.unsplash.style = style;
       [...els.unsplashStyleSeg.querySelectorAll('button')].forEach(b=>b.classList.toggle('active', b.dataset.style===style));
       if(state.banner.mode === 'unsplash' && state.banner.unsplash.results.length > 0){
@@ -2213,16 +2410,15 @@
       handleUnsplashSearch();
     }
   });
-  if(els.gradientColorInputs){
-    els.gradientColorInputs.forEach(input=>{
-      input.addEventListener('input', ()=>{
-        const idx = Number(input.dataset.index || 0);
-        state.banner.gradient.colors[idx] = input.value;
-      });
-    });
-  }
-  els.gradientGenerate?.addEventListener('click', ()=>{ generateGradientBackground(); });
-  els.gradientRandomize?.addEventListener('click', ()=>{ generateGradientBackground(); });
+  els.gradientGenerate?.addEventListener('click', ()=>{ ensureGradientPalette(); generateGradientBackground(); });
+  els.gradientRandomize?.addEventListener('click', ()=>{ randomizeGradientPalette(); generateGradientBackground(); });
+  els.gradientAddColor?.addEventListener('click', ()=>{ addGradientColor(); });
+  els.gradientRemoveColor?.addEventListener('click', ()=>{ removeGradientColor(); });
+  els.gradientImageUpload?.addEventListener('change', async (e)=>{
+    const file = e.target.files?.[0];
+    if(file){ await applyGradientImagePalette(file); }
+    if(e.target){ e.target.value = ''; }
+  });
 
   els.file.addEventListener('change', async (e)=>{
     if(!e.target.files || e.target.files.length===0) return;
@@ -2886,6 +3082,7 @@
   setBannerMode(state.banner.mode);
   updateBannerUploadChip();
   updateUnsplashPaletteActive();
+  renderGradientPalette();
   updateGradientPreview(state.banner.gradient.dataUrl);
   refreshIcons();
   buildAllGalleries();
