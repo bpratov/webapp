@@ -16,12 +16,12 @@
   }
   :root[data-theme="dark"]{
     color-scheme:dark;
-    --bg1:#0b1120; --bg2:#0f182a; --bg3:#0b1424;
-    --ink:#e2e8f0; --muted:#94a3b8;
-    --brand:#38bdf8; --brand2:#818cf8; --accent:#f472b6;
-    --card:#1f2937d9; --border:#2b3a52; --shadow:0 18px 36px rgba(3,8,23,0.55);
-    --btn-bg:#1f2937; --btn-ghost-bg:rgba(15,23,42,0.55); --chip-bg:#1e293b;
-    --stageBg:#0a1526; --stageInner:#0f172a; --headerBg:rgba(15,23,42,0.9);
+    --bg1:#040a16; --bg2:#071021; --bg3:#0b1424;
+    --ink:#e2e8f0; --muted:#9caec8;
+    --brand:#38bdf8; --brand2:#6366f1; --accent:#fca5a5;
+    --card:rgba(9,15,27,0.92); --border:#1d2738; --shadow:0 24px 52px rgba(2,10,25,0.65);
+    --btn-bg:#111b2b; --btn-ghost-bg:rgba(9,15,27,0.72); --chip-bg:#101a2a;
+    --stageBg:#050d1a; --stageInner:#0c182c; --headerBg:rgba(9,15,27,0.88);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -141,7 +141,7 @@
   .iconBox{stroke:rgba(99,102,241,0.65); fill:rgba(148,197,255,0.2); stroke-width:1.8; stroke-dasharray:6 6; rx:4; ry:4}
 
   .preview-panel{position:sticky; top:calc(var(--headerH) + 12px); height:calc(100vh - var(--headerH) - 24px);}
-  .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .25s ease, border-color .2s ease; cursor:grab}
+  .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .25s ease, border-color .2s ease; cursor:grab; overflow:hidden}
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .dropOverlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; color:var(--brand2); background:rgba(14,165,233,0.14); backdrop-filter:blur(18px); opacity:0; transition:opacity .2s ease; pointer-events:none; text-align:center; padding:24px; z-index:20}
@@ -204,22 +204,41 @@
   .unsplashResults button:hover{transform:translateY(-3px); box-shadow:0 16px 30px rgba(15,23,42,0.18)}
   .unsplashResults button img{width:100%; height:100%; object-fit:cover; display:block}
   .unsplashResults button.active{border-color:rgba(14,165,233,0.55); box-shadow:0 18px 36px rgba(14,165,233,0.22)}
-  .gradientControls{display:grid; gap:16px}
+  .unsplashResultsWrap{display:grid; gap:12px}
+  .unsplashPager{display:flex; align-items:center; justify-content:center; gap:12px; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted);}
+  .unsplashPager button{all:unset; display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:12px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:0 8px 18px rgba(15,23,42,0.08); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
+  .unsplashPager button:disabled{opacity:0.45; cursor:not-allowed; transform:none; box-shadow:none}
+  .unsplashPager button:not(:disabled):hover{transform:translateY(-2px); box-shadow:0 14px 26px rgba(15,23,42,0.16); border-color:rgba(14,165,233,0.45)}
+  .unsplashPager .pageLabel{min-width:88px; text-align:center;}
+  .gradientControls{display:grid; gap:18px}
   .gradientIntro{font-size:13px; color:var(--muted); line-height:1.5}
-  .gradientColorRow{display:flex; flex-wrap:wrap; gap:12px}
-  .gradientSwatch{display:grid; gap:6px; align-items:center; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); padding:12px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 6px 18px rgba(15,23,42,0.06)}
-  .gradientSwatch span{font-size:11px; letter-spacing:0.12em}
-  .gradientSwatch input[type="color"]{appearance:none; border:none; width:48px; height:34px; border-radius:10px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
-  .gradientActions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
-  .gradientCountControls{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:12px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:0 6px 16px rgba(15,23,42,0.05); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
-  .gradientCountControls button{all:unset; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--stageInner); cursor:pointer; color:var(--ink); box-shadow:0 4px 12px rgba(15,23,42,0.08); transition:transform .12s ease, box-shadow .12s ease}
+  .gradientLayout{display:grid; gap:18px; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); align-items:start}
+  @media (max-width: 1024px){ .gradientLayout{grid-template-columns:1fr} }
+  .gradientPaletteCard{display:grid; gap:14px; padding:16px 18px; border:1px solid var(--border); border-radius:16px; background:var(--chip-bg); box-shadow:0 10px 28px rgba(15,23,42,0.08);}
+  .gradientSectionLabel{font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);}
+  .gradientPaletteHeader{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+  .gradientColorGrid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(160px,1fr));}
+  .gradientSwatch{display:grid; gap:10px; padding:12px 14px; border-radius:14px; border:1px solid var(--border); background:var(--stageInner); box-shadow:0 8px 20px rgba(15,23,42,0.06); transition:border-color .2s ease, box-shadow .2s ease}
+  .gradientSwatchHeader{display:flex; align-items:center; justify-content:space-between; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+  .gradientSwatchHex{font-size:11px; letter-spacing:0.08em; color:var(--brand2)}
+  .gradientSwatchControl{display:flex; align-items:center; gap:10px}
+  .gradientSwatchControl input[type="color"]{appearance:none; border:none; width:52px; height:40px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border); cursor:pointer}
+  .gradientSwatchPreview{flex:1; height:40px; border-radius:12px; box-shadow:inset 0 0 0 1px rgba(15,23,42,0.08); background:linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0));}
+  .gradientCountControls{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:12px; border:1px solid var(--border); background:var(--stageInner); box-shadow:0 6px 16px rgba(15,23,42,0.05); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+  .gradientCountControls button{all:unset; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--chip-bg); cursor:pointer; color:var(--ink); box-shadow:0 4px 12px rgba(15,23,42,0.08); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
   .gradientCountControls button:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(15,23,42,0.12)}
   .gradientCountControls button:active{transform:translateY(1px)}
   .gradientCountLabel{font-size:11px; letter-spacing:0.12em}
-  .gradientUpload{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; border:1px dashed var(--border); background:var(--stageInner); font-size:13px; color:var(--muted); cursor:pointer; box-shadow:0 6px 16px rgba(15,23,42,0.05); transition:background .18s ease, border-color .18s ease, color .18s ease}
+  .gradientToolbox{display:grid; gap:16px; padding:16px 18px; border:1px solid var(--border); border-radius:16px; background:var(--stageInner); box-shadow:0 10px 28px rgba(15,23,42,0.08)}
+  .gradientTypeSeg{width:100%}
+  .gradientTypeSeg .seg{width:100%}
+  .gradientTypeSeg .seg button{flex:1 1 0}
+  .gradientUpload{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; border:1px dashed var(--border); background:var(--chip-bg); font-size:13px; color:var(--muted); cursor:pointer; box-shadow:0 6px 16px rgba(15,23,42,0.05); transition:background .18s ease, border-color .18s ease, color .18s ease}
   .gradientUpload:hover{background:rgba(148,163,184,0.12); color:var(--ink); border-color:rgba(14,165,233,0.4)}
   .gradientUpload input{display:none}
   .gradientUpload i{width:18px; height:18px; stroke:currentColor}
+  .gradientActionButtons{display:flex; gap:10px; flex-wrap:wrap}
+  .gradientActionButtons .btn{flex:1 1 140px; justify-content:center}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
   .bgSourceNote.error{color:#b91c1c}
@@ -237,8 +256,9 @@
 
   .switchGroup{display:flex; flex-direction:column; gap:12px; align-items:stretch; margin-bottom:20px; padding:14px 16px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
   .switchGroupRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
-  .overlaySliderLabel{display:flex; flex-direction:column; gap:6px; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
-  .overlaySliderLabel span{font-size:13px; color:var(--ink); letter-spacing:normal; text-transform:none}
+  .overlaySliderLabel{display:flex; align-items:center; gap:12px; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+  .overlaySliderLabel input{flex:1; min-width:160px}
+  .overlayValue{font-size:13px; color:var(--ink); letter-spacing:normal; text-transform:none; min-width:48px; text-align:right}
   .logoSection{position:relative; border:1px solid var(--border); border-radius:20px; background:var(--stageInner); box-shadow:0 14px 32px rgba(15,23,42,0.08); overflow:hidden; display:flex; flex-direction:column; gap:0}
   .logoSection::before{content:""; position:absolute; inset:0 0 auto 0; height:6px; background:linear-gradient(90deg,var(--brand),var(--brand2)); opacity:0.8}
   .logoSection + .logoSection{margin-top:18px}
@@ -319,6 +339,16 @@
   @media (max-width: 560px){
     .unsplashResults{grid-template-columns:repeat(1, minmax(0,1fr));}
   }
+  .stage-inner.gradient-active::before,
+  .stage-inner.gradient-active::after{content:""; position:absolute; inset:-18%; pointer-events:none; opacity:0; transition:opacity .4s ease;}
+  .stage-inner.gradient-active::before{background:conic-gradient(from 180deg, rgba(255,255,255,0.12), rgba(148,197,255,0.18), rgba(255,255,255,0.05)); filter:blur(48px); mix-blend-mode:screen; animation:gradientDrift 22s ease-in-out infinite; opacity:0.58;}
+  .stage-inner.gradient-active::after{background:radial-gradient(circle at 25% 25%, rgba(148,197,255,0.22), transparent 55%), radial-gradient(circle at 75% 65%, rgba(99,102,241,0.2), transparent 58%), repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 6px, rgba(99,102,241,0.05) 6px, rgba(99,102,241,0.05) 14px); mix-blend-mode:overlay; filter:blur(18px); animation:gradientShiver 18s linear infinite; opacity:0.42;}
+  .stage-inner.gradient-active[data-gradient-type="radial"]::before{background:radial-gradient(circle, rgba(190,220,255,0.35), rgba(45,64,120,0)); animation-duration:26s;}
+  .stage-inner.gradient-active[data-gradient-type="multi"]::after{background:radial-gradient(circle at 18% 32%, rgba(124,197,255,0.28), transparent 60%), radial-gradient(circle at 72% 68%, rgba(255,180,220,0.24), transparent 62%), radial-gradient(circle at 42% 82%, rgba(99,102,241,0.32), transparent 58%); animation-duration:16s;}
+  .stage-inner.gradient-active[data-gradient-type="wavy"]::after{background:radial-gradient(circle at 25% 25%, rgba(148,197,255,0.22), transparent 55%), radial-gradient(circle at 75% 65%, rgba(99,102,241,0.2), transparent 58%), repeating-linear-gradient(115deg, rgba(255,255,255,0.12) 0, rgba(255,255,255,0.12) 4px, rgba(148,197,255,0.05) 4px, rgba(148,197,255,0.05) 16px); animation:gradientWave 14s ease-in-out infinite;}
+  @keyframes gradientDrift{0%{transform:rotate(0deg) scale(1);}50%{transform:rotate(180deg) scale(1.08);}100%{transform:rotate(360deg) scale(1);}}
+  @keyframes gradientShiver{0%{transform:translate3d(-4%, -2%, 0);}50%{transform:translate3d(4%,3%,0);}100%{transform:translate3d(-4%,-2%,0);}}
+  @keyframes gradientWave{0%{transform:translateX(-6%) skewX(-4deg);}50%{transform:translateX(6%) skewX(4deg);}100%{transform:translateX(-6%) skewX(-4deg);}}
 
   .mockupBlock{position:relative; border:1px solid var(--border); border-radius:16px; padding:18px; display:grid; gap:16px; background:linear-gradient(135deg,rgba(148,197,255,0.12),rgba(244,250,255,0.22)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
   .mockupOverlay{position:absolute; inset:0; backdrop-filter:blur(10px); background:rgba(15,23,42,0.18); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:22px; gap:10px; color:#f8fafc; font-weight:600}
@@ -334,9 +364,13 @@
   #themeToggle .btn-ico{width:26px; height:26px; stroke:#fff}
   #themeToggle .btn-text{display:none}
   #themeToggle .sunIcon,#themeToggle .moonIcon{position:absolute; opacity:0; transform:scale(0.7); transition:opacity .18s ease, transform .18s ease}
-  #themeToggle[data-mode="light"] .sunIcon{opacity:1; transform:scale(1)}
-  #themeToggle[data-mode="dark"] .moonIcon{opacity:1; transform:scale(1)}
-
+  #themeToggle[data-mode="light"] .moonIcon{opacity:1; transform:scale(1)}
+  #themeToggle[data-mode="dark"] .sunIcon{opacity:1; transform:scale(1)}
+  #downloadApp{position:fixed; right:28px; bottom:104px; display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:18px; border:none; background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; font-weight:600; font-size:14px; cursor:pointer; box-shadow:0 22px 38px rgba(15,23,42,0.22); z-index:60; transition:transform .18s ease, box-shadow .18s ease;}
+  #downloadApp .btn-ico{width:20px; height:20px; stroke:#fff}
+  #downloadApp:hover{transform:translateY(-2px); box-shadow:0 28px 46px rgba(15,23,42,0.28);}
+  #downloadApp:active{transform:translateY(1px);}
+  :root[data-theme="dark"] #downloadApp{box-shadow:0 28px 56px rgba(0,0,0,0.55);}
   .resizeHandle{position:absolute; width:18px; height:18px; border-radius:50%; border:2px solid rgba(255,255,255,0.9); background:rgba(14,165,233,0.75); box-shadow:0 6px 16px rgba(14,165,233,0.25); cursor:nwse-resize; z-index:30; transition:transform .12s ease}
   .resizeHandle:hover{transform:scale(1.1)}
   .resizeHandle[data-corner="ne"], .resizeHandle[data-corner="sw"]{cursor:nesw-resize}
@@ -527,7 +561,6 @@
                   <button type="button" class="colorChip" data-color="blue" title="Blue" aria-pressed="false" style="background:#3b82f6"></button>
                   <button type="button" class="colorChip" data-color="purple" title="Purple" aria-pressed="false" style="background:#a855f7"></button>
                   <button type="button" class="colorChip" data-color="pink" title="Pink" aria-pressed="false" style="background:#ec4899"></button>
-                  <button type="button" class="colorChip" data-color="beige" title="Beige" aria-pressed="false" style="background:#f5e5d5"></button>
                 </div>
                 <div class="toneToggle">
                   <div class="seg" id="unsplashToneSeg" role="group" aria-label="Tone preference">
@@ -550,26 +583,55 @@
                   <button class="btn primary" type="button" id="unsplashSearchBtn">Search</button>
                 </div>
               </div>
-              <div class="unsplashResults" id="unsplashResults" aria-live="polite"></div>
+              <div class="unsplashResultsWrap">
+                <div class="unsplashResults" id="unsplashResults" aria-live="polite"></div>
+                <div class="unsplashPager" id="unsplashPager" aria-label="Unsplash results pagination" hidden>
+                  <button type="button" id="unsplashPrev" aria-label="Previous results" disabled>
+                    <i data-lucide="chevron-left" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                  <span class="pageLabel" id="unsplashPageLabel">1 / 5</span>
+                  <button type="button" id="unsplashNext" aria-label="Next results" disabled>
+                    <i data-lucide="chevron-right" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div class="bg-source-block" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" hidden aria-hidden="true">
               <div class="gradientControls">
                 <p class="gradientIntro">Craft fluid gradients from curated palettes or pull accent colors from reference art in seconds.</p>
-                <div class="gradientColorRow" id="gradientColorContainer" aria-live="polite"></div>
-                <div class="gradientActions">
-                  <div class="gradientCountControls" role="group" aria-label="Gradient color count">
-                    <button type="button" id="gradientRemoveColor" aria-label="Remove color">−</button>
-                    <span class="gradientCountLabel">Colors: <span id="gradientColorCount">3</span></span>
-                    <button type="button" id="gradientAddColor" aria-label="Add color">+</button>
+                <div class="gradientLayout">
+                  <div class="gradientPaletteCard">
+                    <div class="gradientPaletteHeader">
+                      <span class="gradientSectionLabel">Palette</span>
+                      <div class="gradientCountControls" role="group" aria-label="Gradient color count">
+                        <button type="button" id="gradientRemoveColor" aria-label="Remove color">−</button>
+                        <span class="gradientCountLabel">Colors: <span id="gradientColorCount">3</span></span>
+                        <button type="button" id="gradientAddColor" aria-label="Add color">+</button>
+                      </div>
+                    </div>
+                    <div class="gradientColorGrid" id="gradientColorContainer" aria-live="polite"></div>
                   </div>
-                  <label class="gradientUpload" id="gradientImageUploadLabel">
-                    <i data-lucide="image" aria-hidden="true"></i>
-                    <span id="gradientUploadCopy">Extract from image</span>
-                    <input type="file" id="gradientImageUpload" accept="image/*">
-                  </label>
-                  <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
-                  <button class="btn ghost" type="button" id="gradientRandomize">Surprise me</button>
+                  <div class="gradientToolbox">
+                    <div class="gradientTypeSeg">
+                      <span class="gradientSectionLabel">Gradient type</span>
+                      <div class="seg" id="gradientTypeSeg" role="group" aria-label="Gradient type">
+                        <button type="button" class="active" data-type="linear">Linear</button>
+                        <button type="button" data-type="radial">Radial</button>
+                        <button type="button" data-type="multi">Multi-point</button>
+                        <button type="button" data-type="wavy">Wavy</button>
+                      </div>
+                    </div>
+                    <label class="gradientUpload" id="gradientImageUploadLabel">
+                      <i data-lucide="image" aria-hidden="true"></i>
+                      <span id="gradientUploadCopy">Extract from image</span>
+                      <input type="file" id="gradientImageUpload" accept="image/*">
+                    </label>
+                    <div class="gradientActionButtons">
+                      <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
+                      <button class="btn ghost" type="button" id="gradientRandomize">Surprise me</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -641,8 +703,10 @@
               <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
               <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
             </div>
-            <label id="overlayLabel" class="overlaySliderLabel">Overlay opacity <span><span id="overlayAlphaVal">30</span>%</span>
+            <label id="overlayLabel" class="overlaySliderLabel">
+              <span class="overlayLabelText">Overlay opacity</span>
               <input id="overlayAlpha" type="range" min="0" max="100" value="30">
+              <span class="overlayValue"><span id="overlayAlphaVal">30</span>%</span>
             </label>
           </div>
 
@@ -910,6 +974,10 @@
   </div>
 
   <div class="globalDropOverlay" id="globalDropOverlay">Drop images anywhere to upload</div>
+  <button id="downloadApp" type="button">
+    <i data-lucide="hard-drive-download" class="btn-ico" aria-hidden="true"></i>
+    <span class="btn-text">Download Web App</span>
+  </button>
   <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode" data-mode="light">
     <i data-lucide="sun" class="btn-ico sunIcon" aria-hidden="true"></i>
     <i data-lucide="moon" class="btn-ico moonIcon" aria-hidden="true"></i>
@@ -1047,12 +1115,17 @@
     unsplashQuery: document.getElementById('unsplashQuery'),
     unsplashSearchBtn: document.getElementById('unsplashSearchBtn'),
     unsplashResults: document.getElementById('unsplashResults'),
+    unsplashPager: document.getElementById('unsplashPager'),
+    unsplashPrev: document.getElementById('unsplashPrev'),
+    unsplashNext: document.getElementById('unsplashNext'),
+    unsplashPageLabel: document.getElementById('unsplashPageLabel'),
     gradientGenerate: document.getElementById('gradientGenerate'),
     gradientRandomize: document.getElementById('gradientRandomize'),
     gradientColorContainer: document.getElementById('gradientColorContainer'),
     gradientAddColor: document.getElementById('gradientAddColor'),
     gradientRemoveColor: document.getElementById('gradientRemoveColor'),
     gradientColorCount: document.getElementById('gradientColorCount'),
+    gradientTypeSeg: document.getElementById('gradientTypeSeg'),
     gradientImageUpload: document.getElementById('gradientImageUpload'),
     gradientImageUploadLabel: document.getElementById('gradientImageUploadLabel'),
     gradientUploadCopy: document.getElementById('gradientUploadCopy'),
@@ -1105,6 +1178,7 @@
     partnerSettingsCancel: document.getElementById('partnerSettingsCancel'),
     partnerSettingsClose: document.querySelector('.partnerSettingsClose'),
     partnerSettingsTriggers: Array.from(document.querySelectorAll('[data-partner-settings]')),
+    downloadApp: document.getElementById('downloadApp'),
   };
 
   function refreshIcons(){
@@ -1118,8 +1192,7 @@
   const SIZE_MAP_SQ = { S:35, M:55, L:75 };
   const BANNER_MODES = ['upload','link','unsplash','gradient'];
   const UNSPLASH_COLOR_PARAM_MAP = {
-    pink: 'magenta',
-    beige: 'orange'
+    pink: 'magenta'
   };
   const UNSPLASH_KEY = 'lS5t0PyTTNcbftZPooe7sNzTb7zLx5K82dY5UZGh6gw';
 
@@ -1154,8 +1227,8 @@
       mode:'upload',
       uploadName:'',
       link:'',
-      unsplash:{ colors:[], tone:'all', style:'all', results:[] },
-      gradient:{ colors:['#38bdf8','#6366f1','#f472b6'], dataUrl:null, sourceName:'' },
+      unsplash:{ colors:[], tone:'all', style:'all', results:[], page:1, totalPages:1, selectedId:null },
+      gradient:{ colors:['#38bdf8','#6366f1','#f472b6'], dataUrl:null, sourceName:'', type:'linear' },
       lastSelection:null
     },
   };
@@ -1315,6 +1388,7 @@
     if(isBanner){
       updateBannerUploadChip();
       updateUnsplashPaletteActive();
+      updateUnsplashPager();
       if(els.unsplashToneSeg){
         const tone = state.banner.unsplash.tone || 'all';
         [...els.unsplashToneSeg.querySelectorAll('button')].forEach(btn=>{
@@ -1333,6 +1407,14 @@
       }
       renderGradientSwatches();
       formatGradientSourceLabel();
+      if(els.gradientTypeSeg){
+        const type = state.banner.gradient.type || 'linear';
+        [...els.gradientTypeSeg.querySelectorAll('button')].forEach(btn=>{
+          const isActive = (btn.dataset.type || 'linear') === type;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
     }
     els.squareLogoSection.style.display   = (state.format.key==='SQUARE') ? 'block' : 'none';
     els.frostSection.style.display        = (state.format.key==='HORIZ')  ? 'block' : 'none';
@@ -1417,6 +1499,31 @@
     els.previewZoom.value = state.previewZoom;
     els.zoomLabel.textContent = state.previewZoom.toFixed(2);
     if(!opts.skipRender){ render(); }
+  }
+
+  function setGradientPreviewState(isGradient, type){
+    if(!els.stage) return;
+    if(isGradient){
+      const activeType = type || state.banner.gradient.type || 'linear';
+      els.stage.classList.add('gradient-active');
+      els.stage.dataset.gradientType = activeType;
+    } else {
+      els.stage.classList.remove('gradient-active');
+      delete els.stage.dataset.gradientType;
+    }
+  }
+
+  function clampPreviewToStage(){
+    if(!els.stage) return;
+    const stageRect = els.stage.getBoundingClientRect();
+    if(!stageRect.width || !stageRect.height) return;
+    const margin = 40;
+    const fitByW = (stageRect.width - margin) / state.format.wPreview;
+    const fitByH = (stageRect.height - margin) / state.format.hPreview;
+    const maxZoom = Math.max(0.5, Math.min(3, Math.min(fitByW, fitByH)));
+    if(state.previewZoom > maxZoom){
+      setPreviewZoom(maxZoom, {force:true});
+    }
   }
 
   function applyLogoPreviewTone(el, tone){
@@ -1734,6 +1841,7 @@
       });
     }
     refreshIcons();
+    requestAnimationFrame(()=>{ clampPreviewToStage(); });
   }
 
   function updateBannerUploadChip(){
@@ -1778,15 +1886,19 @@
     }
   }
 
-  async function applyBannerBackground(src, name){
+  async function applyBannerBackground(src, name, options = {}){
     if(!src) return false;
     try{
       const image = await loadImageCORS(src);
       if(!image || !(image.naturalWidth || image.width)){ throw new Error('invalid image'); }
       const natural = { w: image.naturalWidth || image.width, h: image.naturalHeight || image.height };
-      pushImage(src, name || 'Background', natural);
+      if(options.kind === 'gradient' && options.gradientType){
+        state.banner.gradient.type = options.gradientType;
+      }
+      pushImage(src, name || 'Background', natural, options);
       loadImageAt(state.images.length - 1);
-      state.banner.lastSelection = { src, name };
+      state.banner.lastSelection = { src, name, kind: options.kind || 'image', gradientType: options.gradientType || null };
+      setGradientPreviewState(options.kind === 'gradient', options.gradientType);
       if(state.banner.mode !== 'upload'){
         state.banner.uploadName = '';
         state.banner.link = '';
@@ -1843,51 +1955,91 @@
     else if(state.banner.unsplash.tone === 'light'){ parts.push('bright'); }
     const colors = state.banner.unsplash.colors || [];
     colors.forEach(color=>{ parts.push(color); });
+    if(!parts.some(part=>/abstract/i.test(part))){
+      parts.push('abstract');
+    }
     return parts.join(' ').trim();
   }
 
   async function handleUnsplashSearch(){
     if(!els.unsplashResults || !UNSPLASH_KEY) return;
     const query = buildUnsplashQuery();
-    const params = new URLSearchParams({ query, orientation:'landscape', per_page:'6', client_id:UNSPLASH_KEY });
+    const baseParams = new URLSearchParams({ query, per_page:'30', client_id:UNSPLASH_KEY, order_by:'relevant', content_filter:'high' });
     const colors = state.banner.unsplash.colors || [];
     if(colors.length === 1){
       const single = colors[0];
       const colorParam = UNSPLASH_COLOR_PARAM_MAP[single] || single;
-      if(colorParam){ params.set('color', colorParam); }
+      if(colorParam){ baseParams.set('color', colorParam); }
     }
     try{
       if(els.unsplashSearchBtn) els.unsplashSearchBtn.disabled = true;
       els.unsplashResults.innerHTML = '<div class="bgSourceNote">Searching Unsplash…</div>';
-      const response = await fetch(`https://api.unsplash.com/search/photos?${params.toString()}`);
-      if(!response.ok) throw new Error('Network error');
-      const data = await response.json();
-      const photos = Array.isArray(data?.results) ? data.results.slice(0,6) : [];
-      state.banner.unsplash.results = photos;
-      renderUnsplashResults(photos);
+      const orientations = ['all','landscape','portrait','squarish'];
+      const aggregated = [];
+      const seen = new Set();
+      let lastError = null;
+      for(const mode of orientations){
+        const searchParams = new URLSearchParams(baseParams);
+        if(mode !== 'all'){ searchParams.set('orientation', mode); }
+        try{
+          const response = await fetch(`https://api.unsplash.com/search/photos?${searchParams.toString()}`);
+          if(!response.ok){ throw new Error(`Unsplash responded with ${response.status}`); }
+          const data = await response.json();
+          const raw = Array.isArray(data?.results) ? data.results : [];
+          raw.forEach(photo=>{
+            if(!photo || photo?.premium || photo?.plus || photo?.sponsorship){ return; }
+            if(!photo.id || seen.has(photo.id)){ return; }
+            seen.add(photo.id);
+            aggregated.push(photo);
+          });
+          if(aggregated.length >= 30){ break; }
+        } catch(errFetch){
+          lastError = errFetch;
+        }
+      }
+      if(aggregated.length === 0){
+        throw lastError || new Error('No results available right now.');
+      }
+      state.banner.unsplash.results = aggregated.slice(0, 30);
+      state.banner.unsplash.totalPages = Math.max(1, Math.ceil(state.banner.unsplash.results.length / 6));
+      if(state.banner.unsplash.selectedId && !state.banner.unsplash.results.some(p=>p.id === state.banner.unsplash.selectedId)){
+        state.banner.unsplash.selectedId = null;
+      }
+      state.banner.unsplash.page = 1;
+      renderUnsplashResults();
     } catch(err){
       console.error(err);
       state.banner.unsplash.results = [];
+      state.banner.unsplash.totalPages = 1;
+      state.banner.unsplash.page = 1;
       els.unsplashResults.innerHTML = '<div class="bgSourceNote error">Unable to fetch Unsplash photos right now.</div>';
     } finally {
       if(els.unsplashSearchBtn) els.unsplashSearchBtn.disabled = false;
+      updateUnsplashPager();
     }
   }
 
-  function renderUnsplashResults(photos){
+  function renderUnsplashResults(){
     if(!els.unsplashResults) return;
+    const results = state.banner.unsplash.results || [];
+    const totalPages = Math.max(1, Math.ceil(results.length / 6));
+    const currentPage = Math.min(Math.max(1, state.banner.unsplash.page || 1), totalPages);
+    state.banner.unsplash.page = currentPage;
     els.unsplashResults.innerHTML = '';
-    if(!photos || photos.length === 0){
+    if(results.length === 0){
       const empty = document.createElement('div');
       empty.className = 'bgSourceNote';
       empty.textContent = 'No results yet. Try adjusting your filters.';
       els.unsplashResults.appendChild(empty);
+      updateUnsplashPager();
       return;
     }
-    photos.forEach((photo, idx)=>{
+    const start = (currentPage - 1) * 6;
+    const pageItems = results.slice(start, start + 6);
+    pageItems.forEach((photo, idx)=>{
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-pressed', photo?.id === state.banner.unsplash.selectedId ? 'true' : 'false');
       const thumb = document.createElement('img');
       thumb.loading = 'lazy';
       thumb.src = photo?.urls?.small || photo?.urls?.thumb || photo?.urls?.regular;
@@ -1904,10 +2056,34 @@
         const base = photo?.urls?.full || photo?.urls?.regular || thumb.src;
         const separator = base.includes('?') ? '&' : '?';
         const chosenSrc = `${base}${separator}w=1600&fit=max`;
+        state.banner.unsplash.selectedId = photo?.id || null;
         await applyBannerBackground(chosenSrc, photo?.user ? `Unsplash - ${photo.user.name}` : 'Unsplash background');
+        renderUnsplashResults();
       });
+      if(photo?.id && photo.id === state.banner.unsplash.selectedId){
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed','true');
+      }
       els.unsplashResults.appendChild(btn);
     });
+    updateUnsplashPager();
+    requestAnimationFrame(()=>{ clampPreviewToStage(); });
+  }
+
+  function updateUnsplashPager(){
+    if(!els.unsplashPager) return;
+    const results = state.banner.unsplash.results || [];
+    const totalPages = Math.max(1, Math.ceil(results.length / 6));
+    const currentPage = Math.min(Math.max(1, state.banner.unsplash.page || 1), totalPages);
+    const showPager = totalPages > 1;
+    els.unsplashPager.hidden = !showPager;
+    els.unsplashPager.setAttribute('aria-hidden', showPager ? 'false' : 'true');
+    if(!showPager){
+      return;
+    }
+    if(els.unsplashPageLabel){ els.unsplashPageLabel.textContent = `${currentPage} / ${totalPages}`; }
+    if(els.unsplashPrev){ els.unsplashPrev.disabled = currentPage <= 1; }
+    if(els.unsplashNext){ els.unsplashNext.disabled = currentPage >= totalPages; }
   }
 
   function hexToRgb(hex){
@@ -1917,7 +2093,7 @@
     return { r:(num>>16)&255, g:(num>>8)&255, b:num&255 };
   }
 
-  function createLiquidGradient(colors){
+  function createLiquidGradient(colors, type = 'linear'){
     const palette = colors.filter(Boolean);
     if(palette.length === 0){ palette.push('#38bdf8','#6366f1'); }
     const size = 720;
@@ -1925,7 +2101,16 @@
     canvas.width = canvas.height = size;
     const ctx = canvas.getContext('2d');
 
-    const gradient = ctx.createLinearGradient(0, 0, size, size);
+    const mode = type || 'linear';
+    let gradient;
+    if(mode === 'radial'){
+      gradient = ctx.createRadialGradient(size/2, size/2, size*0.15, size/2, size/2, size*0.85);
+    } else if(mode === 'wavy'){
+      gradient = ctx.createLinearGradient(0, size, size, 0);
+    } else {
+      gradient = ctx.createLinearGradient(0, 0, size, size);
+    }
+
     const denom = Math.max(1, palette.length - 1);
     palette.forEach((color, idx)=>{
       let stop = denom === 0 ? 0.5 : idx/denom;
@@ -1937,8 +2122,32 @@
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, size, size);
 
+    if(mode === 'wavy'){
+      ctx.save();
+      ctx.globalAlpha = 0.25;
+      ctx.globalCompositeOperation = 'screen';
+      for(let i=0;i<6;i++){
+        const amplitude = size * (0.04 + Math.random()*0.06);
+        const wavelength = size * (0.18 + Math.random()*0.2);
+        const phase = Math.random() * Math.PI * 2;
+        const color = palette[i % palette.length];
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0, size/2);
+        for(let x=0;x<=size;x+=4){
+          const y = size/2 + Math.sin((x/wavelength)*Math.PI*2 + phase) * amplitude;
+          ctx.lineTo(x, y + (i - 2) * amplitude * 0.3);
+        }
+        ctx.lineTo(size, size + 20);
+        ctx.lineTo(0, size + 20);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
     ctx.globalCompositeOperation = 'soft-light';
-    ctx.globalAlpha = 0.45;
+    ctx.globalAlpha = mode === 'radial' ? 0.5 : 0.45;
     const layers = Math.max(6, palette.length * 4);
     for(let i=0;i<layers;i++){
       const color = palette[i % palette.length];
@@ -1947,7 +2156,7 @@
       const x = Math.random() * size;
       const y = Math.random() * size;
       const radial = ctx.createRadialGradient(x, y, radius*0.1, x, y, radius);
-      radial.addColorStop(0, `rgba(${r},${g},${b},0.85)`);
+      radial.addColorStop(0, `rgba(${r},${g},${b},${mode==='multi'?0.9:0.85})`);
       radial.addColorStop(1, `rgba(${r},${g},${b},0)`);
       ctx.fillStyle = radial;
       ctx.beginPath();
@@ -1955,7 +2164,23 @@
       ctx.fill();
     }
 
-    ctx.globalCompositeOperation = 'source-over';
+    if(mode === 'multi'){
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = 0.18;
+      for(let i=0;i<palette.length;i++){
+        const gradientArc = ctx.createRadialGradient(size*Math.random(), size*Math.random(), size*0.05, size*Math.random(), size*Math.random(), size*0.4);
+        gradientArc.addColorStop(0, palette[i]);
+        gradientArc.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = gradientArc;
+        ctx.beginPath();
+        ctx.arc(Math.random()*size, Math.random()*size, size*(0.15+Math.random()*0.2), 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    } else {
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
     ctx.globalAlpha = 0.08;
     for(let i=0;i<1200;i++){
       const w = 2 + Math.random()*4;
@@ -1976,24 +2201,37 @@
 
   function renderGradientSwatches(){
     if(!els.gradientColorContainer) return;
-    const colors = state.banner.gradient.colors;
-    if(!Array.isArray(colors) || colors.length === 0){
+    if(!Array.isArray(state.banner.gradient.colors) || state.banner.gradient.colors.length === 0){
       state.banner.gradient.colors = ['#38bdf8','#6366f1','#f472b6'];
     }
     els.gradientColorContainer.innerHTML = '';
     state.banner.gradient.colors.forEach((color, idx)=>{
-      const swatch = document.createElement('label');
+      const swatch = document.createElement('div');
       swatch.className = 'gradientSwatch';
-      const label = document.createElement('span');
-      label.textContent = `Color ${idx+1}`;
+      const header = document.createElement('div');
+      header.className = 'gradientSwatchHeader';
+      const title = document.createElement('span');
+      title.textContent = `Color ${idx+1}`;
+      const hex = document.createElement('span');
+      hex.className = 'gradientSwatchHex';
+      hex.textContent = color.toUpperCase();
+      header.append(title, hex);
+      const control = document.createElement('div');
+      control.className = 'gradientSwatchControl';
       const input = document.createElement('input');
       input.type = 'color';
       input.value = color;
       input.dataset.index = idx.toString();
+      const preview = document.createElement('div');
+      preview.className = 'gradientSwatchPreview';
+      preview.style.background = color;
       input.addEventListener('input', ()=>{
         state.banner.gradient.colors[idx] = input.value;
+        hex.textContent = input.value.toUpperCase();
+        preview.style.background = input.value;
       });
-      swatch.append(label, input);
+      control.append(input, preview);
+      swatch.append(header, control);
       els.gradientColorContainer.appendChild(swatch);
     });
     if(els.gradientColorCount){
@@ -2034,6 +2272,28 @@
     return `#${hexComponentToHex(r)}${hexComponentToHex(g)}${hexComponentToHex(b)}`;
   }
 
+  function rgbToHsl(r,g,b){
+    const rn = Math.max(0, Math.min(255, r)) / 255;
+    const gn = Math.max(0, Math.min(255, g)) / 255;
+    const bn = Math.max(0, Math.min(255, b)) / 255;
+    const max = Math.max(rn, gn, bn);
+    const min = Math.min(rn, gn, bn);
+    let h = 0;
+    let s = 0;
+    const l = (max + min) / 2;
+    if(max !== min){
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch(max){
+        case rn: h = (gn - bn) / d + (gn < bn ? 6 : 0); break;
+        case gn: h = (bn - rn) / d + 2; break;
+        default: h = (rn - gn) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return { h, s, l };
+  }
+
   async function extractGradientColors(file){
     if(!file) return null;
     const blobUrl = URL.createObjectURL(file);
@@ -2065,12 +2325,16 @@
       }
       const palette = Array.from(buckets.values())
         .filter(entry=>entry.count > 8)
-        .map(entry=>({
-          count: entry.count,
-          color: rgbToHex(entry.r/entry.count, entry.g/entry.count, entry.b/entry.count)
-        }))
-        .sort((a,b)=>b.count - a.count)
-        .map(entry=>entry.color);
+        .map(entry=>{
+          const rAvg = entry.r/entry.count;
+          const gAvg = entry.g/entry.count;
+          const bAvg = entry.b/entry.count;
+          const color = rgbToHex(rAvg, gAvg, bAvg);
+          const {s, l} = rgbToHsl(rAvg, gAvg, bAvg);
+          const vibrancy = s * (1 - Math.abs(l - 0.45));
+          return { color, weight: entry.count, vibrancy, saturation: s, lightness: l };
+        })
+        .sort((a,b)=> (b.weight * (0.6 + b.vibrancy)) - (a.weight * (0.6 + a.vibrancy)));
       if(palette.length === 0){
         return null;
       }
@@ -2080,14 +2344,39 @@
     }
   }
 
+  function selectProminentColors(palette, count){
+    if(!Array.isArray(palette) || palette.length === 0) return [];
+    const seen = new Set();
+    const unique = palette.filter(entry=>{
+      if(!entry || !entry.color) return false;
+      const key = entry.color.toLowerCase();
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    if(unique.length === 0) return [];
+    const ranked = unique.slice().sort((a,b)=>{
+      const scoreA = (a.weight || 1) * (0.5 + (a.vibrancy || 0));
+      const scoreB = (b.weight || 1) * (0.5 + (b.vibrancy || 0));
+      return scoreB - scoreA;
+    });
+    const target = Math.max(1, count|0);
+    const result = ranked.slice(0, target).map(entry=>entry.color);
+    while(result.length < target){
+      result.push(result[result.length-1] || '#6366f1');
+    }
+    return result;
+  }
+
   async function generateGradientBackground(){
-    const dataUrl = createLiquidGradient(state.banner.gradient.colors);
+    const type = state.banner.gradient.type || 'linear';
+    const dataUrl = createLiquidGradient(state.banner.gradient.colors, type);
     state.banner.gradient.dataUrl = dataUrl;
     if(!state.banner.gradient.sourceName){
       state.banner.gradient.sourceName = 'custom palette';
     }
     formatGradientSourceLabel();
-    await applyBannerBackground(dataUrl, 'Generated gradient');
+    await applyBannerBackground(dataUrl, 'Generated gradient', { kind:'gradient', gradientType:type });
   }
 
   function showLoading(msg, pct){ els.loadingTitle.textContent='Please wait'; els.loadingText.textContent = msg||'Working…'; els.loadingBar.style.width=(pct||0)+'%'; els.loading.style.display='flex'; }
@@ -2328,6 +2617,8 @@
         else { colors.push(value); }
         state.banner.unsplash.colors = colors;
       }
+      state.banner.unsplash.page = 1;
+      state.banner.unsplash.selectedId = null;
       updateUnsplashPaletteActive();
       if(state.banner.mode === 'unsplash' && state.banner.unsplash.results.length > 0){
         handleUnsplashSearch();
@@ -2339,6 +2630,8 @@
       const btn = e.target.closest('button'); if(!btn) return;
       const tone = btn.dataset.tone || 'all';
       state.banner.unsplash.tone = tone;
+      state.banner.unsplash.page = 1;
+      state.banner.unsplash.selectedId = null;
       [...els.unsplashToneSeg.querySelectorAll('button')].forEach(b=>{
         const isActive = (b.dataset.tone || 'all') === tone;
         b.classList.toggle('active', isActive);
@@ -2354,6 +2647,8 @@
       const btn = e.target.closest('button'); if(!btn) return;
       const style = btn.dataset.style || 'all';
       state.banner.unsplash.style = style;
+      state.banner.unsplash.page = 1;
+      state.banner.unsplash.selectedId = null;
       [...els.unsplashStyleSeg.querySelectorAll('button')].forEach(b=>{
         const isActive = (b.dataset.style || 'all') === style;
         b.classList.toggle('active', isActive);
@@ -2371,8 +2666,46 @@
       handleUnsplashSearch();
     }
   });
+  els.downloadApp?.addEventListener('click', ()=>{
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+    const blob = new Blob([html], { type:'text/html' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const stamp = new Date().toISOString().slice(0,10);
+    link.href = url;
+    link.download = `frozone-${stamp}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  });
+  els.unsplashPrev?.addEventListener('click', ()=>{
+    if(state.banner.unsplash.page > 1){
+      state.banner.unsplash.page -= 1;
+      renderUnsplashResults();
+    }
+  });
+  els.unsplashNext?.addEventListener('click', ()=>{
+    const totalPages = Math.max(1, Math.ceil((state.banner.unsplash.results || []).length / 6));
+    if(state.banner.unsplash.page < totalPages){
+      state.banner.unsplash.page += 1;
+      renderUnsplashResults();
+    }
+  });
   els.gradientGenerate?.addEventListener('click', ()=>{ generateGradientBackground(); });
   els.gradientRandomize?.addEventListener('click', ()=>{ generateGradientBackground(); });
+  els.gradientTypeSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const type = btn.dataset.type;
+    if(!type || type === state.banner.gradient.type) return;
+    state.banner.gradient.type = type;
+    if(state.banner.mode === 'gradient' || state.banner.lastSelection?.kind === 'gradient'){
+      generateGradientBackground();
+    } else {
+      updateControls();
+    }
+  });
   els.gradientAddColor?.addEventListener('click', ()=>{
     clampGradientColors(state.banner.gradient.colors.length + 1);
     formatGradientSourceLabel();
@@ -2388,7 +2721,8 @@
     try{
       const palette = await extractGradientColors(file);
       if(palette && palette.length){
-        let limited = palette.slice(0, Math.max(2, Math.min(6, palette.length)));
+        const desired = Math.max(2, Math.min(6, state.banner.gradient.colors.length || 3));
+        let limited = selectProminentColors(palette, desired);
         if(limited.length === 1){ limited = [limited[0], limited[0]]; }
         state.banner.gradient.colors = limited;
         state.banner.gradient.sourceName = file.name || 'reference image';
@@ -2566,12 +2900,14 @@
   });
 
   // ---------- Batch helpers ----------
-  function pushImage(src, name, natural){
+  function pushImage(src, name, natural, options = {}){
     state.images.push({
       src, name, natural,
       brightness:100, saturation:100, contrast:100,
       flipH:false, flipV:false, rotation:0,
-      imgZoom:1, offset:{x:0,y:0}
+      imgZoom:1, offset:{x:0,y:0},
+      kind: options.kind || 'image',
+      gradientType: options.gradientType || null
     });
     resetDeleteAllPrompt();
     const position = state.current>=0 ? state.current+1 : state.images.length;
@@ -2595,6 +2931,12 @@
     resetDeleteAllPrompt();
     state.imageSrc = it.src;
     state.natural = {w:it.natural.w, h:it.natural.h};
+    if(it.kind === 'gradient'){
+      state.banner.gradient.type = it.gradientType || state.banner.gradient.type || 'linear';
+      setGradientPreviewState(true, state.banner.gradient.type);
+    } else {
+      setGradientPreviewState(false);
+    }
     state.brightness = it.brightness; state.saturation = it.saturation; state.contrast = it.contrast;
     state.flipH = it.flipH; state.flipV = it.flipV; state.rotation = it.rotation;
     state.imgZoom = it.imgZoom; state.offset = {x:it.offset.x, y:it.offset.y};
@@ -2957,9 +3299,9 @@
     }
 
     // JPEG size 300–500 KB
-    let quality = 0.98; let dataURL = canvas.toDataURL('image/jpeg', quality);
+    let quality = 0.995; let dataURL = canvas.toDataURL('image/jpeg', quality);
     let bytes = bytesFromDataURL(dataURL);
-    while(bytes > 500*1024 && quality > 0.6){ quality -= 0.02; dataURL = canvas.toDataURL('image/jpeg', quality); bytes = bytesFromDataURL(dataURL); }
+    while(bytes > 500*1024 && quality > 0.7){ quality -= 0.01; dataURL = canvas.toDataURL('image/jpeg', quality); bytes = bytesFromDataURL(dataURL); }
     if(bytes < 300*1024){
       const ctx2 = canvas.getContext('2d');
       // very subtle noise to lift size floor
