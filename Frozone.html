@@ -28,7 +28,7 @@
   body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color:var(--ink);
     background: linear-gradient(180deg,var(--bg1),var(--bg2) 55%, var(--bg3));
     transition: background .6s ease, color .45s ease;}
-  .wrap{max-width:1280px; margin:0 auto; padding:16px}
+  .wrap{max-width:1280px; margin:0 auto; padding:20px 20px 44px}
 
   header{position:sticky; top:0; z-index:40; backdrop-filter: blur(12px); background:var(--headerBg); border-bottom:1px solid var(--border); transition:background .25s ease}
   header .inner{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 16px}
@@ -75,8 +75,8 @@
   input[type="range"]{width:100%}
   input[type="search"], input[type="url"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); color:var(--ink); font-size:14px; transition:background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease; box-shadow:0 6px 16px rgba(15,23,42,0.06); appearance:none}
 
-  .seg{display:inline-flex; gap:6px; padding:4px; background:linear-gradient(135deg,#e0e7ff,#f5f8ff); border:1px solid rgba(99,102,241,0.2); border-radius:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 14px rgba(14,165,233,0.08)}
-  .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; border-radius:10px; min-width:48px; text-align:center; transition:all .18s ease}
+  .seg{display:inline-flex; gap:6px; padding:4px; background:linear-gradient(135deg,#e0e7ff,#f5f8ff); border:1px solid rgba(99,102,241,0.2); border-radius:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 14px rgba(14,165,233,0.08); flex-wrap:wrap; justify-content:flex-start}
+  .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; border-radius:10px; min-width:44px; text-align:center; transition:all .18s ease; white-space:nowrap}
   .seg button:not(.active):hover{color:var(--ink); background:rgba(148,163,184,0.16); box-shadow:0 4px 8px rgba(15,23,42,0.08)}
   .seg button.active{color:var(--ink); background:#fff; box-shadow:0 6px 16px rgba(99,102,241,0.18)}
   .seg button:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
@@ -92,7 +92,7 @@
   .switch input:disabled + .tgl{opacity:0.4}
   .switch input:disabled ~ .lbl{opacity:0.5}
 
-  main{display:grid; grid-template-columns: 1fr 1.25fr; gap:18px; padding:16px}
+  main{display:grid; grid-template-columns: 1fr 1.25fr; gap:18px; padding:20px 20px 32px}
   main > *{min-width:0}
   @media (max-width: 1000px){ main{grid-template-columns:1fr} .right-head{align-items:flex-start; text-align:left} }
 
@@ -189,7 +189,7 @@
   .bgInputRow input{flex:1 1 auto}
   .bgInputRow button{flex:0 0 auto}
   .unsplashFilters{display:grid; gap:12px}
-  .unsplashPalette{display:flex; gap:8px; flex-wrap:wrap}
+  .unsplashPalette{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-start}
   .colorChip{width:36px; height:36px; border-radius:50%; border:1px solid var(--border); box-shadow:0 4px 10px rgba(15,23,42,0.08); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, border-color .2s ease; position:relative; display:flex; align-items:center; justify-content:center; background-size:cover; background-position:center}
   .colorChip.active{outline:2px solid var(--brand); outline-offset:2px; border-color:transparent; box-shadow:0 8px 18px rgba(14,165,233,0.2)}
   .colorChip:hover{transform:translateY(-2px)}
@@ -199,6 +199,7 @@
   .unsplashResultsWrap{display:grid; gap:12px}
   .unsplashResults{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:10px; min-width:0}
   .unsplashPagination{display:flex; align-items:center; justify-content:center; gap:12px; margin-top:4px; flex-wrap:wrap}
+  .unsplashPagination .unsplashPageStatus{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
   .unsplashNav{all:unset; display:grid; place-items:center; width:38px; height:38px; border-radius:12px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:0 10px 24px rgba(15,23,42,0.1); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
   .unsplashNav:hover{transform:translateY(-2px); box-shadow:0 16px 30px rgba(15,23,42,0.18)}
   .unsplashNav:active{transform:translateY(1px)}
@@ -209,8 +210,8 @@
   .unsplashDot:hover{transform:scale(1.1); background:rgba(99,102,241,0.55)}
   .unsplashDot.active{background:linear-gradient(135deg,var(--brand),var(--brand2)); box-shadow:0 6px 14px rgba(14,165,233,0.22)}
   .unsplashDot:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
-  .unsplashPageStatus{margin-top:8px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); text-align:center}
-  .toneToggle .seg button, .styleToggle .seg button{flex:1 1 auto}
+  .unsplashPageStatus{margin-top:0}
+  .toneToggle .seg button, .styleToggle .seg button{flex:1 1 120px}
   .unsplashResults button{all:unset; display:block; cursor:pointer; border-radius:14px; overflow:hidden; border:1px solid var(--border); box-shadow:0 8px 20px rgba(15,23,42,0.12); position:relative; aspect-ratio:4/3; background:var(--stageInner); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
   .unsplashResults button:hover{transform:translateY(-3px); box-shadow:0 16px 30px rgba(15,23,42,0.18)}
   .unsplashResults button img{width:100%; height:100%; object-fit:cover; display:block}
@@ -218,7 +219,7 @@
   .gradientLayout{display:grid; gap:18px; align-items:start}
   .gradientControls{display:grid; gap:16px}
   .gradientIntro{font-size:13px; color:var(--muted); line-height:1.5; margin:0}
-  .gradientPreview{position:relative; width:100%; aspect-ratio:16/9; border-radius:20px; border:1px solid var(--border); overflow:hidden; background:var(--stageInner); background-size:cover; background-position:center; background-repeat:no-repeat; box-shadow:0 18px 38px rgba(15,23,42,0.12); transition:border-color .25s ease, box-shadow .25s ease}
+  .gradientPreview{position:relative; width:100%; aspect-ratio:21/9; border-radius:20px; border:1px solid var(--border); overflow:hidden; background:var(--stageInner); background-size:cover; background-position:center; background-repeat:no-repeat; box-shadow:0 18px 38px rgba(15,23,42,0.12); transition:border-color .25s ease, box-shadow .25s ease}
   .gradientPreview::before{content:""; position:absolute; inset:-40%; background:conic-gradient(from 0deg,var(--grad-stops,#38bdf8,#6366f1,#f472b6)); animation:gradientOrbit 18s linear infinite; filter:blur(2px); opacity:0.9; transform-origin:50% 50%}
   .gradientPreview::after{content:""; position:absolute; inset:-12%; background:
     radial-gradient(circle at 18% 18%, rgba(255,255,255,0.65), transparent 55%),
@@ -322,13 +323,13 @@
   .bar > span{display:block; height:100%; width:0%; background:linear-gradient(135deg,var(--brand),var(--brand2)); border-radius:999px; transition:width .2s}
 
   .foot-note{font-size:11px; color:var(--muted); padding:10px 16px; text-align:center}
-  .adjust-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
+  .adjust-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:18px}
   .adjust-card{background:var(--chip-bg); border:1px solid var(--border); border-radius:14px; padding:12px 14px; box-shadow:0 6px 16px rgba(15,23,42,0.06); display:grid; gap:6px; transition:background .2s ease, border-color .2s ease}
   .adjust-card label{font-size:13px; color:var(--muted); font-weight:600}
   .adjust-card .value{font-size:18px; font-weight:700; color:var(--ink)}
-  .adjust-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
+  .adjust-actions{display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 22px}
   .adjust-actions .btn{flex:1 1 120px; justify-content:center}
-  .adjust-coords{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-top:12px}
+  .adjust-coords{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-top:20px}
   .adjust-rot-label{display:flex; align-items:center; padding:10px 12px; color:var(--muted); font-weight:600}
   .exportActions{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
   .exportMeta{margin-top:10px; display:flex; width:100%; justify-content:space-between}
@@ -368,12 +369,13 @@
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
 
-  .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:center; gap:0; min-width:56px; max-width:56px; height:56px; padding:0; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .28s cubic-bezier(.4,0,.2,1), padding .28s cubic-bezier(.4,0,.2,1), border-radius .28s cubic-bezier(.4,0,.2,1), transform .18s ease, box-shadow .18s ease, background .2s ease, color .2s ease;}
-  .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .18s ease}
-  .floatingFab .fab-label{font-size:13px; font-weight:600; opacity:0; max-width:0; transform:translateX(8px); transition:opacity .18s ease, transform .18s ease, max-width .28s cubic-bezier(.4,0,.2,1); white-space:nowrap}
-  .floatingFab:hover, .floatingFab:focus-visible{max-width:220px; padding:0 20px 0 18px; border-radius:999px; justify-content:flex-start; gap:10px}
-  .floatingFab:hover .fab-label, .floatingFab:focus-visible .fab-label{opacity:1; transform:translateX(0); max-width:160px}
-  .floatingFab:hover{transform:translateY(-2px); box-shadow:0 26px 46px rgba(15,23,42,0.22)}
+  .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:center; gap:var(--fab-gap,0); min-width:56px; max-width:56px; height:56px; padding:0; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .32s cubic-bezier(.4,0,.2,1), padding .32s cubic-bezier(.4,0,.2,1), border-radius .32s cubic-bezier(.4,0,.2,1), box-shadow .32s cubic-bezier(.4,0,.2,1), background .28s ease, color .28s ease; will-change:max-width}
+  .floatingFab .fab-iconWrap{display:grid; place-items:center; width:28px; height:28px; position:relative; flex-shrink:0}
+  .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .22s ease, opacity .22s ease}
+  .floatingFab .fab-label{font-size:13px; font-weight:600; opacity:0; max-width:0; transform:translateX(8px); transition:opacity .24s ease, transform .24s ease, max-width .32s cubic-bezier(.4,0,.2,1); white-space:nowrap; line-height:1}
+  .floatingFab:hover, .floatingFab:focus-visible{--fab-gap:12px; max-width:236px; padding:0 22px 0 20px; border-radius:999px; justify-content:flex-start}
+  .floatingFab:hover .fab-label, .floatingFab:focus-visible .fab-label{opacity:1; transform:translateX(0); max-width:180px}
+  .floatingFab:hover{box-shadow:0 26px 46px rgba(15,23,42,0.22)}
   .floatingFab:focus-visible{outline:3px solid rgba(14,165,233,0.45); outline-offset:3px}
 
   #downloadApp{bottom:110px; border-color:rgba(148,163,184,0.45)}
@@ -383,11 +385,12 @@
   :root[data-theme="dark"] #downloadApp:hover{background:rgba(15,32,58,0.85)}
 
   #themeToggle{bottom:32px; background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; box-shadow:0 18px 36px rgba(15,23,42,0.22); color:#fff; z-index:62}
+  #themeToggle .fab-iconWrap{width:30px; height:30px}
   #themeToggle .btn-ico{width:26px; height:26px; stroke:#fff}
   #themeToggle .fab-label{color:#fff}
-  #themeToggle .sunIcon,#themeToggle .moonIcon{position:absolute; opacity:0; transform:scale(0.7); transition:opacity .18s ease, transform .18s ease}
-  #themeToggle[data-next="light"] .sunIcon{opacity:1; transform:scale(1)}
-  #themeToggle[data-next="dark"] .moonIcon{opacity:1; transform:scale(1)}
+  #themeToggle .sunIcon,#themeToggle .moonIcon{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(0.72); opacity:0; transition:opacity .24s ease, transform .24s ease}
+  #themeToggle[data-next="light"] .sunIcon{opacity:1; transform:translate(-50%,-50%) scale(1)}
+  #themeToggle[data-next="dark"] .moonIcon{opacity:1; transform:translate(-50%,-50%) scale(1)}
   #themeToggle:hover{box-shadow:0 28px 56px rgba(15,23,42,0.3)}
   :root[data-theme="dark"] #themeToggle{box-shadow:0 24px 52px rgba(1,5,19,0.55)}
 
@@ -472,7 +475,7 @@
       </div>
       <div class="right-head">
         <div class="team">LiveOps Team</div>
-        <div class="by">made by <a href="https://www.pratov.site" target="_blank" rel="noopener">Beka Pratov</a></div>
+        <div class="by">designed by <a href="https://www.pratov.site" target="_blank" rel="noopener">Beka Pratov</a></div>
       </div>
     </div>
   </header>
@@ -586,7 +589,6 @@
               <div class="unsplashFilters">
                 <input id="unsplashQuery" type="search" placeholder="Search stock photos…">
                 <div class="unsplashPalette" id="unsplashPalette" role="list">
-                  <button type="button" class="colorChip active" data-color="all" title="All colors" aria-label="All colors" aria-pressed="true" style="background:linear-gradient(135deg,#e2e8f0,#f8fafc);"><span>All</span></button>
                   <button type="button" class="colorChip" data-color="white" title="White" aria-pressed="false" style="background:#ffffff"></button>
                   <button type="button" class="colorChip" data-color="black" title="Black" aria-pressed="false" style="background:#0f172a"></button>
                   <button type="button" class="colorChip" data-color="red" title="Red" aria-pressed="false" style="background:#ef4444"></button>
@@ -606,31 +608,30 @@
                 </div>
                 <div class="styleToggle">
                   <div class="seg" id="unsplashStyleSeg" role="group" aria-label="Style preference">
-                    <button type="button" class="active" data-style="all">All</button>
-                    <button type="button" data-style="pattern">Pattern</button>
-                    <button type="button" data-style="gradient">Gradient</button>
-                    <button type="button" data-style="texture">Texture</button>
-                    <button type="button" data-style="shapes">Shapes</button>
-                    <button type="button" data-style="liquid">Liquid</button>
+                    <button type="button" data-style="pattern" aria-pressed="false">Pattern</button>
+                    <button type="button" data-style="gradient" aria-pressed="false">Gradient</button>
+                    <button type="button" data-style="texture" aria-pressed="false">Texture</button>
+                    <button type="button" data-style="shapes" aria-pressed="false">Shapes</button>
+                    <button type="button" data-style="liquid" aria-pressed="false">Liquid</button>
                   </div>
                 </div>
                 <div class="bgInputRow">
                   <button class="btn primary" type="button" id="unsplashSearchBtn">Search</button>
                 </div>
               </div>
-              <div class="unsplashResultsWrap">
-                <div class="unsplashResults" id="unsplashResults" aria-live="polite"></div>
-                <div class="unsplashPagination" id="unsplashPagination">
-                  <button type="button" class="unsplashNav" id="unsplashPrev" aria-label="Previous results" aria-disabled="true">
-                    <i data-lucide="arrow-left" class="btn-ico" aria-hidden="true"></i>
-                  </button>
-                  <div class="unsplashDots" id="unsplashDots" role="group" aria-label="Browse stock pages"></div>
-                  <button type="button" class="unsplashNav" id="unsplashNext" aria-label="Next results" aria-disabled="true">
-                    <i data-lucide="arrow-right" class="btn-ico" aria-hidden="true"></i>
-                  </button>
+                <div class="unsplashResultsWrap">
+                  <div class="unsplashResults" id="unsplashResults" aria-live="polite"></div>
+                  <div class="unsplashPagination" id="unsplashPagination">
+                    <button type="button" class="unsplashNav" id="unsplashPrev" aria-label="Previous results" aria-disabled="true">
+                      <i data-lucide="arrow-left" class="btn-ico" aria-hidden="true"></i>
+                    </button>
+                    <div class="unsplashDots" id="unsplashDots" role="group" aria-label="Browse stock pages"></div>
+                    <div class="unsplashPageStatus" id="unsplashPageStatus" aria-live="polite">Page 1 / 1</div>
+                    <button type="button" class="unsplashNav" id="unsplashNext" aria-label="Next results" aria-disabled="true">
+                      <i data-lucide="arrow-right" class="btn-ico" aria-hidden="true"></i>
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div class="unsplashPageStatus" id="unsplashPageStatus" aria-live="polite">Page 1 / 1</div>
             </div>
 
             <div class="bg-source-block" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" hidden aria-hidden="true">
@@ -1016,8 +1017,10 @@
     <span class="fab-label">Download Web App</span>
   </button>
   <button id="themeToggle" type="button" class="floatingFab fab-theme" aria-pressed="false" aria-label="Toggle dark mode" data-next="dark">
-    <i data-lucide="sun" class="btn-ico sunIcon" aria-hidden="true"></i>
-    <i data-lucide="moon" class="btn-ico moonIcon" aria-hidden="true"></i>
+    <span class="fab-iconWrap" aria-hidden="true">
+      <i data-lucide="sun" class="btn-ico sunIcon" aria-hidden="true"></i>
+      <i data-lucide="moon" class="btn-ico moonIcon" aria-hidden="true"></i>
+    </span>
     <span class="fab-label" id="themeToggleLabelText">Night mode</span>
   </button>
   <div class="modal" id="partnerSettingsModal" role="dialog" aria-modal="true" aria-labelledby="partnerSettingsTitle">
@@ -1275,7 +1278,7 @@
       mode:'upload',
       uploadName:'',
       link:'',
-      unsplash:{ colors:[], tone:'all', style:'all', results:[], page:1, totalPages:1 },
+      unsplash:{ colors:[], tone:'all', style:'', results:[], page:1, totalPages:1 },
       gradient:{ colors:['#38bdf8','#6366f1','#f472b6'], type:'linear', dataUrl:null, previewUrl:null, sourceName:'' },
       lastSelection:null
     },
@@ -1450,9 +1453,10 @@
         });
       }
       if(els.unsplashStyleSeg){
-        const style = state.banner.unsplash.style || 'all';
+        const style = state.banner.unsplash.style || '';
         [...els.unsplashStyleSeg.querySelectorAll('button')].forEach(btn=>{
-          const isActive = (btn.dataset.style || 'all') === style;
+          const key = btn.dataset.style || '';
+          const isActive = style !== '' && key === style;
           btn.classList.toggle('active', isActive);
           btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
@@ -1969,7 +1973,7 @@
     const set = new Set(state.banner.unsplash.colors || []);
     [...els.unsplashPalette.querySelectorAll('.colorChip')].forEach(chip=>{
       const val = chip.dataset.color || '';
-      const active = (val === 'all') ? set.size === 0 : set.has(val);
+      const active = set.has(val);
       chip.classList.toggle('active', active);
       chip.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
@@ -1980,7 +1984,7 @@
     const parts = ['abstract'];
     if(input){ parts.push(input); }
     else { parts.push('background'); }
-    if(state.banner.unsplash.style && state.banner.unsplash.style !== 'all'){
+    if(state.banner.unsplash.style){
       parts.push(state.banner.unsplash.style);
     }
     if(state.banner.unsplash.tone === 'dark'){ parts.push('dark'); }
@@ -2730,15 +2734,11 @@
       const chip = e.target.closest('.colorChip');
       if(!chip) return;
       const value = chip.dataset.color || '';
-      if(value === 'all'){
-        state.banner.unsplash.colors = [];
-      } else {
-        const colors = state.banner.unsplash.colors || [];
-        const idx = colors.indexOf(value);
-        if(idx >= 0){ colors.splice(idx,1); }
-        else { colors.push(value); }
-        state.banner.unsplash.colors = colors;
-      }
+      const colors = state.banner.unsplash.colors || [];
+      const idx = colors.indexOf(value);
+      if(idx >= 0){ colors.splice(idx,1); }
+      else { colors.push(value); }
+      state.banner.unsplash.colors = colors;
       updateUnsplashPaletteActive();
       if(state.banner.mode === 'unsplash'){
         handleUnsplashSearch({ reset:true });
@@ -2763,10 +2763,12 @@
   if(els.unsplashStyleSeg){
     els.unsplashStyleSeg.addEventListener('click', (e)=>{
       const btn = e.target.closest('button'); if(!btn) return;
-      const style = btn.dataset.style || 'all';
-      state.banner.unsplash.style = style;
+      const styleKey = btn.dataset.style || '';
+      const next = state.banner.unsplash.style === styleKey ? '' : styleKey;
+      state.banner.unsplash.style = next;
       [...els.unsplashStyleSeg.querySelectorAll('button')].forEach(b=>{
-        const isActive = (b.dataset.style || 'all') === style;
+        const key = b.dataset.style || '';
+        const isActive = next !== '' && key === next;
         b.classList.toggle('active', isActive);
         b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       });
