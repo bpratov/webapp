@@ -42,8 +42,6 @@
   .right-head .team{font-weight:600}
   .right-head .by{font-size:12px; color:var(--muted)}
   .right-head a{color:var(--muted); text-decoration:none}
-  #themeToggle:hover{transform:translateY(-2px); box-shadow:0 20px 38px rgba(15,23,42,0.22);}
-  #themeToggle:focus-visible{outline:3px solid rgba(255,255,255,0.75); outline-offset:4px}
 
   .introScreen{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0b1120,#1f2750); color:#fff; z-index:120; opacity:0; pointer-events:none; transition:opacity .6s ease, transform .6s ease; transform:scale(1.02)}
   .introScreen.show{opacity:1; pointer-events:auto}
@@ -75,7 +73,7 @@
   .btn .btn-text{display:inline}
 
   input[type="range"]{width:100%}
-  input[type="search"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); color:var(--ink); font-size:14px; transition:background .2s ease, color .2s ease, border-color .2s ease}
+  input[type="search"], input[type="url"], select{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); color:var(--ink); font-size:14px; transition:background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease; box-shadow:0 6px 16px rgba(15,23,42,0.06); appearance:none}
 
   .seg{display:inline-flex; gap:6px; padding:4px; background:linear-gradient(135deg,#e0e7ff,#f5f8ff); border:1px solid rgba(99,102,241,0.2); border-radius:14px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.6), 0 6px 14px rgba(14,165,233,0.08)}
   .seg button{all:unset; display:inline-flex; align-items:center; justify-content:center; padding:8px 14px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; border-radius:10px; min-width:48px; text-align:center; transition:all .18s ease}
@@ -182,7 +180,7 @@
   #bgSourceSection{display:none}
   #bgSourceTabs{width:100%; justify-content:space-between}
   #bgSourceTabs button{flex:1 1 120px}
-  .bg-source-block{display:none; background:var(--chip-bg); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:var(--shadow); gap:14px}
+  .bg-source-block{display:none; background:var(--chip-bg); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow:var(--shadow); gap:14px; overflow:hidden}
   .bg-source-block.active{display:grid}
   .bgUploadChip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; border:1px solid var(--border); background:var(--stageInner); font-size:12px; font-weight:600; color:var(--muted); box-shadow:0 6px 16px rgba(15,23,42,0.08)}
   .bgUploadChip button{all:unset; cursor:pointer; display:grid; place-items:center; width:20px; height:20px; border-radius:50%; background:rgba(148,163,184,0.18); color:var(--muted); transition:background .18s ease, color .18s ease}
@@ -198,24 +196,29 @@
   .colorChip span{font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
   .colorChip.active span{color:var(--brand2)}
   .toneToggle .seg, .styleToggle .seg{width:100%}
-  .unsplashResultsWrap{display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:center}
+  .unsplashResultsWrap{display:grid; gap:12px}
+  .unsplashResults{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:10px; min-width:0}
+  .unsplashPagination{display:flex; align-items:center; justify-content:center; gap:12px; margin-top:4px; flex-wrap:wrap}
   .unsplashNav{all:unset; display:grid; place-items:center; width:38px; height:38px; border-radius:12px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:0 10px 24px rgba(15,23,42,0.1); cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
   .unsplashNav:hover{transform:translateY(-2px); box-shadow:0 16px 30px rgba(15,23,42,0.18)}
   .unsplashNav:active{transform:translateY(1px)}
   .unsplashNav[aria-disabled="true"]{opacity:0.4; cursor:not-allowed; pointer-events:none}
   .unsplashNav .btn-ico{width:20px; height:20px}
-  .unsplashPageStatus{margin-top:10px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); text-align:center}
+  .unsplashDots{display:flex; align-items:center; gap:6px}
+  .unsplashDot{all:unset; width:10px; height:10px; border-radius:50%; background:rgba(148,163,184,0.45); cursor:pointer; transition:transform .15s ease, background .2s ease}
+  .unsplashDot:hover{transform:scale(1.1); background:rgba(99,102,241,0.55)}
+  .unsplashDot.active{background:linear-gradient(135deg,var(--brand),var(--brand2)); box-shadow:0 6px 14px rgba(14,165,233,0.22)}
+  .unsplashDot:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .unsplashPageStatus{margin-top:8px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); text-align:center}
   .toneToggle .seg button, .styleToggle .seg button{flex:1 1 auto}
-  .unsplashResults{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; min-width:0}
   .unsplashResults button{all:unset; display:block; cursor:pointer; border-radius:14px; overflow:hidden; border:1px solid var(--border); box-shadow:0 8px 20px rgba(15,23,42,0.12); position:relative; aspect-ratio:4/3; background:var(--stageInner); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
   .unsplashResults button:hover{transform:translateY(-3px); box-shadow:0 16px 30px rgba(15,23,42,0.18)}
   .unsplashResults button img{width:100%; height:100%; object-fit:cover; display:block}
   .unsplashResults button.active{border-color:rgba(14,165,233,0.55); box-shadow:0 18px 36px rgba(14,165,233,0.22)}
-  .gradientLayout{display:grid; grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr); gap:20px; align-items:start}
-  @media (max-width: 1080px){ .gradientLayout{grid-template-columns:1fr} }
-  .gradientControls{display:grid; gap:18px}
+  .gradientLayout{display:grid; gap:18px; align-items:start}
+  .gradientControls{display:grid; gap:16px}
   .gradientIntro{font-size:13px; color:var(--muted); line-height:1.5; margin:0}
-  .gradientPreview{position:relative; width:100%; min-height:220px; border-radius:20px; border:1px solid var(--border); overflow:hidden; background:var(--stageInner); background-size:cover; background-position:center; background-repeat:no-repeat; box-shadow:0 22px 46px rgba(15,23,42,0.12); transition:border-color .25s ease, box-shadow .25s ease}
+  .gradientPreview{position:relative; width:100%; aspect-ratio:16/9; border-radius:20px; border:1px solid var(--border); overflow:hidden; background:var(--stageInner); background-size:cover; background-position:center; background-repeat:no-repeat; box-shadow:0 18px 38px rgba(15,23,42,0.12); transition:border-color .25s ease, box-shadow .25s ease}
   .gradientPreview::before{content:""; position:absolute; inset:-40%; background:conic-gradient(from 0deg,var(--grad-stops,#38bdf8,#6366f1,#f472b6)); animation:gradientOrbit 18s linear infinite; filter:blur(2px); opacity:0.9; transform-origin:50% 50%}
   .gradientPreview::after{content:""; position:absolute; inset:-12%; background:
     radial-gradient(circle at 18% 18%, rgba(255,255,255,0.65), transparent 55%),
@@ -228,7 +231,7 @@
   .gradientPreviewOverlay{position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen}
   .gradientPreviewOverlay::before{content:""; position:absolute; inset:-10%; background:radial-gradient(circle at 30% 70%, rgba(255,255,255,0.4), transparent 60%); filter:blur(18px); opacity:0.55; animation:frostSweep 10s linear infinite}
   .gradientPreviewOverlay::after{content:""; position:absolute; inset:0; background-image:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none"%3E%3Cpath d="M6 6h2v2H6z" fill="rgba(255,255,255,0.18)"/%3E%3C/svg%3E'); opacity:0.15; mix-blend-mode:soft-light; animation:noiseDrift 20s linear infinite}
-  .gradientToolbar{display:grid; gap:14px}
+  .gradientToolbar{display:grid; gap:16px}
   .gradientToolbarRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
   .gradientGroupLabel{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); font-weight:600}
   .gradientCountControls{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:12px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:0 6px 16px rgba(15,23,42,0.05); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
@@ -240,12 +243,12 @@
   .gradientUpload:hover{background:rgba(148,163,184,0.12); color:var(--ink); border-color:rgba(14,165,233,0.4)}
   .gradientUpload input{display:none}
   .gradientUpload i{width:18px; height:18px; stroke:currentColor}
-  .gradientColorGrid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(160px,1fr))}
-  .gradientSwatch{display:grid; gap:10px; padding:14px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 10px 24px rgba(15,23,42,0.08)}
+  .gradientColorGrid{display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(130px,1fr))}
+  .gradientSwatch{display:grid; gap:8px; padding:12px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 8px 20px rgba(15,23,42,0.08)}
   .gradientSwatchHeader{display:flex; align-items:center; justify-content:space-between; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
   .gradientSwatchValue{font-size:12px; font-family:'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace; letter-spacing:0.04em; color:var(--muted)}
-  .gradientSwatch input[type="color"]{appearance:none; border:none; width:100%; height:44px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
-  .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .gradientSwatch input[type="color"]{appearance:none; border:none; width:100%; height:36px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
+  .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
   .bgSourceNote.error{color:#b91c1c}
@@ -365,19 +368,28 @@
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
 
-  #downloadApp{position:fixed; right:24px; bottom:110px; display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:18px; border:1px solid rgba(148,163,184,0.45); background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.12); z-index:61; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, background .18s ease; backdrop-filter:blur(14px);}
-  #downloadApp .btn-ico{width:20px; height:20px; stroke:currentColor}
-  #downloadApp:hover{transform:translateY(-2px); box-shadow:0 26px 44px rgba(15,23,42,0.18); background:rgba(255,255,255,0.92)}
-  #downloadApp:focus-visible{outline:3px solid rgba(14,165,233,0.55); outline-offset:4px}
+  .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:center; gap:0; min-width:56px; max-width:56px; height:56px; padding:0; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .28s cubic-bezier(.4,0,.2,1), padding .28s cubic-bezier(.4,0,.2,1), border-radius .28s cubic-bezier(.4,0,.2,1), transform .18s ease, box-shadow .18s ease, background .2s ease, color .2s ease;}
+  .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .18s ease}
+  .floatingFab .fab-label{font-size:13px; font-weight:600; opacity:0; max-width:0; transform:translateX(8px); transition:opacity .18s ease, transform .18s ease, max-width .28s cubic-bezier(.4,0,.2,1); white-space:nowrap}
+  .floatingFab:hover, .floatingFab:focus-visible{max-width:220px; padding:0 20px 0 18px; border-radius:999px; justify-content:flex-start; gap:10px}
+  .floatingFab:hover .fab-label, .floatingFab:focus-visible .fab-label{opacity:1; transform:translateX(0); max-width:160px}
+  .floatingFab:hover{transform:translateY(-2px); box-shadow:0 26px 46px rgba(15,23,42,0.22)}
+  .floatingFab:focus-visible{outline:3px solid rgba(14,165,233,0.45); outline-offset:3px}
+
+  #downloadApp{bottom:110px; border-color:rgba(148,163,184,0.45)}
+  #downloadApp .fab-label{color:var(--ink)}
+  #downloadApp:hover{background:rgba(255,255,255,0.92)}
   :root[data-theme="dark"] #downloadApp{background:rgba(9,20,41,0.72); border-color:rgba(46,63,98,0.65); box-shadow:0 26px 50px rgba(1,5,19,0.6)}
   :root[data-theme="dark"] #downloadApp:hover{background:rgba(15,32,58,0.85)}
 
-  #themeToggle{display:flex; align-items:center; justify-content:center; gap:0; position:fixed; right:28px; bottom:32px; width:56px; height:56px; border-radius:50%; padding:0; margin:0; box-shadow:0 18px 32px rgba(15,23,42,0.18); background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; z-index:60; transition:transform .18s ease, box-shadow .18s ease;}
+  #themeToggle{bottom:32px; background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; box-shadow:0 18px 36px rgba(15,23,42,0.22); color:#fff; z-index:62}
   #themeToggle .btn-ico{width:26px; height:26px; stroke:#fff}
-  #themeToggle .btn-text{display:none}
+  #themeToggle .fab-label{color:#fff}
   #themeToggle .sunIcon,#themeToggle .moonIcon{position:absolute; opacity:0; transform:scale(0.7); transition:opacity .18s ease, transform .18s ease}
   #themeToggle[data-next="light"] .sunIcon{opacity:1; transform:scale(1)}
   #themeToggle[data-next="dark"] .moonIcon{opacity:1; transform:scale(1)}
+  #themeToggle:hover{box-shadow:0 28px 56px rgba(15,23,42,0.3)}
+  :root[data-theme="dark"] #themeToggle{box-shadow:0 24px 52px rgba(1,5,19,0.55)}
 
   .resizeHandle{position:absolute; width:18px; height:18px; border-radius:50%; border:2px solid rgba(255,255,255,0.9); background:rgba(14,165,233,0.75); box-shadow:0 6px 16px rgba(14,165,233,0.25); cursor:nwse-resize; z-index:30; transition:transform .12s ease}
   .resizeHandle:hover{transform:scale(1.1)}
@@ -400,13 +412,14 @@
   :root[data-theme="dark"] .veil{box-shadow:inset 0 2px 6px rgba(2,6,23,0.5)}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
   :root[data-theme="dark"] .switchGroup{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 16px 36px rgba(2,6,23,0.6)}
-  :root[data-theme="dark"] input[type="search"], :root[data-theme="dark"] select{border-color:rgba(148,163,184,0.45)}
+  :root[data-theme="dark"] input[type="search"], :root[data-theme="dark"] input[type="url"], :root[data-theme="dark"] select{border-color:rgba(148,163,184,0.45); box-shadow:0 10px 26px rgba(1,9,23,0.35)}
   :root[data-theme="dark"] .bg-source-block{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .bgUploadChip{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); color:rgba(226,232,240,0.78)}
   :root[data-theme="dark"] .colorChip{box-shadow:0 8px 18px rgba(2,6,23,0.55)}
   :root[data-theme="dark"] .unsplashResults button{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .unsplashNav{background:rgba(9,20,41,0.72); border-color:rgba(46,63,98,0.65); box-shadow:0 18px 36px rgba(1,5,19,0.6)}
   :root[data-theme="dark"] .unsplashNav:hover{background:rgba(15,32,58,0.85)}
+  :root[data-theme="dark"] .unsplashDot{background:rgba(71,85,105,0.7)}
   :root[data-theme="dark"] .gradientPreview{border-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .gradientPreview::before{opacity:0.95}
   :root[data-theme="dark"] .gradientPreview::after{opacity:0.82}
@@ -541,7 +554,7 @@
             <div class="seg" id="bgSourceTabs" role="tablist" aria-label="Background source">
               <button type="button" data-mode="upload" class="active" aria-selected="true" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock">Upload</button>
               <button type="button" data-mode="link" aria-selected="false" id="bgTabLink" role="tab" aria-controls="bgLinkBlock" tabindex="-1">Paste link</button>
-              <button type="button" data-mode="unsplash" aria-selected="false" id="bgTabUnsplash" role="tab" aria-controls="unsplashBlock" tabindex="-1">Unsplash</button>
+              <button type="button" data-mode="unsplash" aria-selected="false" id="bgTabUnsplash" role="tab" aria-controls="unsplashBlock" tabindex="-1">Browse Stock</button>
               <button type="button" data-mode="gradient" aria-selected="false" id="bgTabGradient" role="tab" aria-controls="gradientBlock" tabindex="-1">Gradient</button>
             </div>
 
@@ -571,7 +584,7 @@
 
             <div class="bg-source-block" data-mode="unsplash" id="unsplashBlock" role="tabpanel" aria-labelledby="bgTabUnsplash" hidden aria-hidden="true">
               <div class="unsplashFilters">
-                <input id="unsplashQuery" type="search" placeholder="Search Unsplash…">
+                <input id="unsplashQuery" type="search" placeholder="Search stock photos…">
                 <div class="unsplashPalette" id="unsplashPalette" role="list">
                   <button type="button" class="colorChip active" data-color="all" title="All colors" aria-label="All colors" aria-pressed="true" style="background:linear-gradient(135deg,#e2e8f0,#f8fafc);"><span>All</span></button>
                   <button type="button" class="colorChip" data-color="white" title="White" aria-pressed="false" style="background:#ffffff"></button>
@@ -606,13 +619,16 @@
                 </div>
               </div>
               <div class="unsplashResultsWrap">
-                <button type="button" class="unsplashNav" id="unsplashPrev" aria-label="Previous results" aria-disabled="true">
-                  <i data-lucide="arrow-left" class="btn-ico" aria-hidden="true"></i>
-                </button>
                 <div class="unsplashResults" id="unsplashResults" aria-live="polite"></div>
-                <button type="button" class="unsplashNav" id="unsplashNext" aria-label="Next results" aria-disabled="true">
-                  <i data-lucide="arrow-right" class="btn-ico" aria-hidden="true"></i>
-                </button>
+                <div class="unsplashPagination" id="unsplashPagination">
+                  <button type="button" class="unsplashNav" id="unsplashPrev" aria-label="Previous results" aria-disabled="true">
+                    <i data-lucide="arrow-left" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                  <div class="unsplashDots" id="unsplashDots" role="group" aria-label="Browse stock pages"></div>
+                  <button type="button" class="unsplashNav" id="unsplashNext" aria-label="Next results" aria-disabled="true">
+                    <i data-lucide="arrow-right" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                </div>
               </div>
               <div class="unsplashPageStatus" id="unsplashPageStatus" aria-live="polite">Page 1 / 1</div>
             </div>
@@ -995,13 +1011,14 @@
   </div>
 
   <div class="globalDropOverlay" id="globalDropOverlay">Drop images anywhere to upload</div>
-  <button id="downloadApp" type="button">
+  <button id="downloadApp" type="button" class="floatingFab fab-download" aria-label="Download Web App">
     <i data-lucide="download" class="btn-ico" aria-hidden="true"></i>
-    <span>Download Web App</span>
+    <span class="fab-label">Download Web App</span>
   </button>
-  <button id="themeToggle" type="button" aria-pressed="false" aria-label="Toggle dark mode" data-next="dark">
+  <button id="themeToggle" type="button" class="floatingFab fab-theme" aria-pressed="false" aria-label="Toggle dark mode" data-next="dark">
     <i data-lucide="sun" class="btn-ico sunIcon" aria-hidden="true"></i>
     <i data-lucide="moon" class="btn-ico moonIcon" aria-hidden="true"></i>
+    <span class="fab-label" id="themeToggleLabelText">Night mode</span>
   </button>
   <div class="modal" id="partnerSettingsModal" role="dialog" aria-modal="true" aria-labelledby="partnerSettingsTitle">
     <div class="modal-card">
@@ -1095,6 +1112,7 @@
     header: document.getElementById('appHeader'),
     introScreen: document.getElementById('introScreen'),
     themeToggle: document.getElementById('themeToggle'),
+    themeToggleLabelText: document.getElementById('themeToggleLabelText'),
     downloadApp: document.getElementById('downloadApp'),
     file: document.getElementById('file'),
     folder: document.getElementById('folder'),
@@ -1139,6 +1157,7 @@
     unsplashResults: document.getElementById('unsplashResults'),
     unsplashPrev: document.getElementById('unsplashPrev'),
     unsplashNext: document.getElementById('unsplashNext'),
+    unsplashDots: document.getElementById('unsplashDots'),
     unsplashPageStatus: document.getElementById('unsplashPageStatus'),
     gradientGenerate: document.getElementById('gradientGenerate'),
     gradientRandomize: document.getElementById('gradientRandomize'),
@@ -1290,6 +1309,9 @@
       els.themeToggle.title = labelText;
       const upcoming = next === 'dark' ? 'light' : 'dark';
       els.themeToggle.dataset.next = upcoming;
+      if(els.themeToggleLabelText){
+        els.themeToggleLabelText.textContent = upcoming === 'dark' ? 'Night mode' : 'Light mode';
+      }
     }
     try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
   }
@@ -1992,6 +2014,22 @@
     if(els.unsplashNext){
       els.unsplashNext.setAttribute('aria-disabled', nextDisabled ? 'true' : 'false');
       els.unsplashNext.tabIndex = nextDisabled ? -1 : 0;
+    }
+    if(els.unsplashDots){
+      els.unsplashDots.innerHTML = '';
+      els.unsplashDots.hidden = total <= 1;
+      for(let i = 1; i <= total; i += 1){
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = `unsplashDot${i === page ? ' active' : ''}`;
+        dot.dataset.page = String(i);
+        dot.setAttribute('aria-label', `Go to page ${i}`);
+        dot.setAttribute('aria-pressed', i === page ? 'true' : 'false');
+        if(loading){
+          dot.disabled = true;
+        }
+        els.unsplashDots.appendChild(dot);
+      }
     }
   }
 
@@ -2746,6 +2784,17 @@
   });
   els.unsplashPrev?.addEventListener('click', ()=>{ changeUnsplashPage(-1); });
   els.unsplashNext?.addEventListener('click', ()=>{ changeUnsplashPage(1); });
+  els.unsplashDots?.addEventListener('click', (event)=>{
+    const target = event.target.closest('.unsplashDot');
+    if(!target || target.disabled) return;
+    const requested = Number.parseInt(target.dataset.page || '', 10);
+    if(Number.isNaN(requested)) return;
+    const total = Math.max(1, Math.min(UNSPLASH_MAX_PAGES, state.banner.unsplash.totalPages || 1));
+    const safe = Math.max(1, Math.min(total, requested));
+    if(safe === Math.max(1, Math.min(total, state.banner.unsplash.page || 1))) return;
+    state.banner.unsplash.page = safe;
+    handleUnsplashSearch();
+  });
   els.downloadApp?.addEventListener('click', ()=>{
     try {
       const serializer = new XMLSerializer();
