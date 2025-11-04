@@ -307,6 +307,51 @@
   .partnerRowRemove .btn-ico{stroke:#b91c1c}
 
   .tone-note{font-size:12px; color:var(--muted); margin-top:6px}
+  .logo-warning{font-size:12px; color:var(--muted); line-height:1.4}
+  .logo-warning strong{color:var(--ink)}
+
+  .logoSaveRow{display:flex; align-items:center; justify-content:flex-end; gap:12px; margin:12px 0 18px}
+  .logoGuidance{font-size:12px; color:var(--muted); line-height:1.5; margin-top:-6px}
+
+  .textSection{border:1px solid var(--border); border-radius:20px; padding:20px 24px; background:var(--stageInner); box-shadow:0 12px 28px rgba(15,23,42,0.08); display:grid; gap:18px}
+  .textToggleRow{display:flex; flex-wrap:wrap; gap:14px; align-items:center}
+  .textBlock{display:grid; gap:16px; border:1px solid var(--border); border-radius:16px; padding:18px 20px; background:var(--chip-bg); box-shadow:0 8px 22px rgba(15,23,42,0.06)}
+  .textBlockHeader{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .textBlockHeader h4{margin:0; font-size:14px; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted)}
+  .textBlockContent{display:grid; gap:14px}
+  .textControlRow{display:flex; flex-wrap:wrap; gap:14px; align-items:center}
+  .textControlRow label{font-size:13px; font-weight:600; color:var(--muted)}
+  .textControlRow input[type="text"],
+  .textControlRow input[type="number"],
+  .textControlRow input[type="url"],
+  .textControlRow textarea,
+  .textControlRow select{flex:1 1 200px; min-width:160px}
+  .textControlRow textarea{min-height:80px; resize:vertical}
+  .textControlRow .seg{flex:0 0 auto}
+  .colorInline{display:inline-flex; align-items:center; gap:10px}
+  .colorInline input[type="color"]{width:42px; height:34px; border:1px solid var(--border); border-radius:10px; padding:0; background:none}
+  .colorInline input[type="text"]{width:110px; flex:0 0 auto}
+  .cornerGrid{display:inline-flex; flex-wrap:wrap; gap:8px}
+  .cornerGrid button{all:unset; width:42px; height:42px; border-radius:12px; border:1px solid var(--border); background:var(--chip-bg); display:grid; place-items:center; cursor:pointer; box-shadow:0 4px 12px rgba(15,23,42,0.06); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease}
+  .cornerGrid button.active{border-color:rgba(14,165,233,0.6); box-shadow:0 10px 20px rgba(14,165,233,0.16); transform:translateY(-1px)}
+  .cornerGrid svg{width:18px; height:18px; stroke:currentColor; stroke-width:1.8; fill:none}
+  .textNotice{font-size:12px; color:var(--muted); line-height:1.4}
+
+  .serialOverlay{position:absolute; pointer-events:none; font-size:13px; letter-spacing:0.18em; font-weight:600; text-transform:uppercase; background:rgba(255,255,255,0.12); padding:6px 10px; border-radius:999px; backdrop-filter:blur(6px); box-shadow:0 4px 12px rgba(15,23,42,0.18); opacity:0; transition:opacity .2s ease}
+  .serialOverlay.show{opacity:1}
+
+  .heroOverlay{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#ffffff; font-weight:800; font-size:96px; line-height:1.1; letter-spacing:0; text-align:center; cursor:grab; user-select:none; white-space:pre-wrap; pointer-events:auto; text-shadow:0 12px 32px rgba(15,23,42,0.35); max-width:90%;}
+  .heroOverlay.dragging{cursor:grabbing}
+  .heroOverlay.hidden{display:none}
+  .heroOverlay::after{content:""; position:absolute; inset:-12px; border-radius:18px; border:1px dashed transparent; transition:border-color .18s ease; pointer-events:none}
+  .heroOverlay:focus-visible::after{border-color:rgba(14,165,233,0.6)}
+  .heroOverlayControls{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .heroColorRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .heroColorPreview{width:38px; height:38px; border-radius:12px; border:1px solid var(--border); box-shadow:0 6px 16px rgba(15,23,42,0.12)}
+
+  #vertSizeRow{margin-top:18px}
+
+  .bannerLogoPreview{position:absolute; top:15px; left:15px; height:30px; width:auto; object-fit:contain; display:none; filter:none}
 
   .loading{position:fixed; inset:0; background:rgba(15,23,42,.35); display:none; align-items:center; justify-content:center; z-index:1000}
   .loading .card{min-width:280px; max-width:420px; background:var(--stageInner); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px; text-align:center; transition:background .2s ease, border-color .2s ease}
@@ -542,7 +587,7 @@
         <div class="section">
           <div class="section-title"><span class="badge">2</span> Choose format</div>
           <div class="stack" id="formatRow"></div>
-          <div class="row" id="vertSizeRow" style="display:none; margin-top:8px">
+          <div class="row" id="vertSizeRow" style="display:none">
             <div class="seg" id="vertSizeSeg">
               <button data-v="L" class="active">L 1080×1920</button>
               <button data-v="M">M 1080×1440</button>
@@ -553,6 +598,7 @@
 
         <div class="section" id="bgSourceSection" aria-hidden="true">
           <div class="section-title"><span class="badge">2b</span> Background source</div>
+          <div class="logoGuidance">Use simple/subtle graphics to ensure that the header and logo remain visible and unobstructed.<br>Partners or live operations teams will supply the background image following their brand guidelines.</div>
           <div class="stack">
             <div class="seg" id="bgSourceTabs" role="tablist" aria-label="Background source">
               <button type="button" data-mode="upload" class="active" aria-selected="true" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock">Upload</button>
@@ -749,6 +795,14 @@
             </label>
           </div>
 
+          <div class="logoSaveRow">
+            <div class="logo-warning">Add partner logos for preview, then save to reuse later.</div>
+            <button class="btn ghost" type="button" id="saveLogoSettings">
+              <i data-lucide="save" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Save logos</span>
+            </button>
+          </div>
+
           <div class="logoSection" id="logo1Section">
             <div class="logoSectionHead">
               <div class="logoSectionHeading">
@@ -782,7 +836,7 @@
                   </div>
                 </div>
               </div>
-              <div class="tone-note">Check partner brand rules before changing logo colors.</div>
+              <div class="tone-note">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo1Search" type="search" placeholder="Search partners…" />
@@ -847,7 +901,10 @@
         <!-- Step 4b: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none">
           <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
-          <div class="stack">
+          <div class="row" style="gap:16px">
+            <label class="switch"><input type="checkbox" id="toggleSqLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
+          </div>
+          <div id="sqLogoBlock" class="stack" style="display:none; margin-top:10px">
             <div class="row">
               <label class="btn ghost uploadAction">
                 <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
@@ -864,7 +921,6 @@
                 <button data-tone="white">White</button>
                 <button data-tone="black">Black</button>
               </div>
-              <button class="btn small ghost" id="removeSqLogo">Remove</button>
             </div>
             <div class="libWrap">
               <div class="libHeader">
@@ -875,6 +931,8 @@
               </div>
               <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
             </div>
+            <div class="tone-note">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
+            <div class="logo-warning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
           </div>
         </div>
 
@@ -911,6 +969,160 @@
                 </button>
               </div>
               <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+            </div>
+            <div class="tone-note">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
+            <div class="logo-warning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+          </div>
+        </div>
+
+        <div class="section" id="bannerLogoSection" style="display:none">
+          <div class="section-title"><span class="badge">4d</span> Banner logo (top-left)</div>
+          <div class="stack">
+            <div class="row">
+              <label class="btn ghost uploadAction">
+                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                <span class="btn-text">Banner logo</span>
+                <input id="bannerLogoInput" type="file" accept="image/*" style="display:none"/>
+              </label>
+              <div class="seg" id="bannerLogoToneSeg">
+                <button data-tone="orig" class="active">Original</button>
+                <button data-tone="white">White</button>
+                <button data-tone="black">Black</button>
+              </div>
+            </div>
+            <div class="libWrap">
+              <div class="libHeader">
+                <input id="bannerLogoSearch" type="search" placeholder="Search partners…" />
+                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                  <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div id="bannerLogoGallery" class="libScroller" aria-label="Logo library"></div>
+            </div>
+            <div class="tone-note">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
+            <div class="logo-warning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+            <div class="textNotice">Banner logos are fixed to 30px height and sit 15px from the top-left corner for consistent spacing.</div>
+          </div>
+        </div>
+
+        <div class="section" id="textSettingsSection" style="display:none">
+          <div class="section-title"><span class="badge">4e</span> Text settings</div>
+          <div class="textSection">
+            <div class="textToggleRow">
+              <label class="switch"><input type="checkbox" id="toggleSerial"><span class="tgl"><span class="knob"></span></span><span class="lbl">Serial code</span></label>
+              <label class="switch"><input type="checkbox" id="toggleHero"><span class="tgl"><span class="knob"></span></span><span class="lbl">Hero text</span></label>
+            </div>
+
+            <div id="serialBlock" class="textBlock" style="display:none">
+              <div class="textBlockHeader"><h4>Serial code</h4></div>
+              <div class="textBlockContent">
+                <div class="textControlRow">
+                  <label for="serialTextInput">Code</label>
+                  <input id="serialTextInput" type="text" placeholder="e.g. 001-AXX-2024" />
+                </div>
+                <div class="textControlRow">
+                  <label>Corner</label>
+                  <div class="cornerGrid" id="serialCornerGrid" role="group" aria-label="Serial position">
+                    <button type="button" data-corner="tl" class="active" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="3"></rect></svg></button>
+                    <button type="button" data-corner="tr" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="13" y="3" width="8" height="8" rx="3"></rect></svg></button>
+                    <button type="button" data-corner="bl" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="3" y="13" width="8" height="8" rx="3"></rect></svg></button>
+                    <button type="button" data-corner="br" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="13" y="13" width="8" height="8" rx="3"></rect></svg></button>
+                  </div>
+                </div>
+                <div class="textControlRow">
+                  <label>Colour</label>
+                  <div class="seg" id="serialColorSeg" role="group" aria-label="Serial colour">
+                    <button type="button" data-color="black" class="active">Black</button>
+                    <button type="button" data-color="white">White</button>
+                    <button type="button" data-color="custom">Custom</button>
+                  </div>
+                  <div class="colorInline" id="serialCustomWrap" style="display:none">
+                    <input type="color" id="serialCustomColor" value="#0f172a">
+                    <input type="text" id="serialCustomHex" value="#0f172a" maxlength="9">
+                  </div>
+                </div>
+                <label class="switch" style="max-width:fit-content"><input type="checkbox" id="serialApplyAll"><span class="tgl"><span class="knob"></span></span><span class="lbl">Apply to all images in batch</span></label>
+              </div>
+            </div>
+
+            <div id="heroBlock" class="textBlock" style="display:none">
+              <div class="textBlockHeader"><h4>Hero text</h4></div>
+              <div class="textBlockContent">
+                <div class="textControlRow">
+                  <label for="heroTextInput">Content</label>
+                  <textarea id="heroTextInput" placeholder="Type headline…"></textarea>
+                </div>
+                <div class="textControlRow">
+                  <label for="heroFontFamily">Font</label>
+                  <select id="heroFontFamily">
+                    <option>SF Pro Text</option>
+                    <option>Inter</option>
+                    <option>Roboto</option>
+                    <option>Helvetica Neue</option>
+                    <option>Arial</option>
+                    <option>Neue Frutigier World</option>
+                  </select>
+                  <label for="heroFontWeight">Weight</label>
+                  <select id="heroFontWeight">
+                    <option>Thin</option>
+                    <option>Light</option>
+                    <option>Regular</option>
+                    <option>Medium</option>
+                    <option>Semibold</option>
+                    <option selected>Heavy</option>
+                    <option>Bold</option>
+                    <option>Black</option>
+                  </select>
+                  <label for="heroFontSize">Size</label>
+                  <input id="heroFontSize" type="number" min="80" step="1" value="120">
+                </div>
+                <div class="textControlRow">
+                  <label for="heroLetterSpacing">Letter spacing (px)</label>
+                  <input id="heroLetterSpacing" type="number" step="0.5" value="0">
+                  <label for="heroLineHeight">Line height (%)</label>
+                  <input id="heroLineHeight" type="number" step="1" value="100">
+                </div>
+                <div class="textControlRow">
+                  <label>Align</label>
+                  <div class="seg" id="heroAlignSeg" role="group" aria-label="Text alignment">
+                    <button type="button" data-align="left">⟸</button>
+                    <button type="button" data-align="center" class="active">≡</button>
+                    <button type="button" data-align="right">⟹</button>
+                  </div>
+                  <label>Vertical</label>
+                  <div class="seg" id="heroVerticalSeg" role="group" aria-label="Vertical alignment">
+                    <button type="button" data-valign="top">Top</button>
+                    <button type="button" data-valign="bottom">Bottom</button>
+                  </div>
+                </div>
+                <div class="textControlRow">
+                  <label>Colour mode</label>
+                  <div class="seg" id="heroColorMode" role="group" aria-label="Hero colour mode">
+                    <button type="button" data-mode="solid" class="active">Solid</button>
+                    <button type="button" data-mode="gradient">Gradient</button>
+                  </div>
+                  <div class="heroColorRow" id="heroSolidControls">
+                    <span class="heroColorPreview" id="heroSolidPreview"></span>
+                    <div class="colorInline">
+                      <input type="color" id="heroSolidColor" value="#ffffff">
+                      <input type="text" id="heroSolidHex" value="#ffffff" maxlength="9">
+                    </div>
+                  </div>
+                  <div class="heroColorRow" id="heroGradientControls" style="display:none">
+                    <div class="colorInline">
+                      <label style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em">Start</label>
+                      <input type="color" id="heroGradientStart" value="#38bdf8">
+                      <input type="text" id="heroGradientStartHex" value="#38bdf8" maxlength="9">
+                    </div>
+                    <div class="colorInline">
+                      <label style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em">End</label>
+                      <input type="color" id="heroGradientEnd" value="#6366f1">
+                      <input type="text" id="heroGradientEndHex" value="#6366f1" maxlength="9">
+                    </div>
+                  </div>
+                </div>
+                <div class="textNotice">Drag the hero text in the preview to position it. Use alignment controls for quick top/bottom placement.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -993,8 +1205,12 @@
             </div>
           </div>
 
+          <div id="serialOverlay" class="serialOverlay" aria-hidden="true"></div>
+          <div id="heroOverlay" class="heroOverlay hidden" tabindex="0"></div>
+
           <img id="sqLogoPrev" class="sqLogo" alt="square logo" />
           <img id="vertLogoPrev" class="vertLogo" alt="vertical logo" />
+          <img id="bannerLogoPrev" class="bannerLogoPreview" alt="banner logo" />
           <div class="stageHint" id="stageHint">Upload or drop your images here to start.</div>
           <div class="dropOverlay" id="dropOverlay">Drop images to upload</div>
         </div>
@@ -1109,6 +1325,17 @@
   partnerLibrary = partnerLibrary
     .map(entry => ({ name: String(entry?.name || '').trim(), url: String(entry?.url || '').trim() }))
     .filter(entry => entry.name && entry.url);
+  try {
+    const storedLib = window.localStorage?.getItem(PARTNER_LIBRARY_KEY);
+    if(storedLib){
+      const parsed = JSON.parse(storedLib);
+      if(Array.isArray(parsed)){
+        partnerLibrary = parsed
+          .map(entry => ({ name: String(entry?.name || '').trim(), url: String(entry?.url || '').trim() }))
+          .filter(entry => entry.name && entry.url);
+      }
+    }
+  } catch(err){ console.warn('Unable to restore stored partner logos', err); }
   const PARTNER_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
   let partnerSettingsRestoreFocus = null;
 
@@ -1142,6 +1369,8 @@
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
     frame: document.getElementById('frame'),
+    serialOverlay: document.getElementById('serialOverlay'),
+    heroOverlay: document.getElementById('heroOverlay'),
     stageHint: document.getElementById('stageHint'),
     bgSourceSection: document.getElementById('bgSourceSection'),
     bgSourceTabs: document.getElementById('bgSourceTabs'),
@@ -1193,8 +1422,9 @@
 
     squareLogoSection: document.getElementById('squareLogoSection'),
     sqLogoPrev: document.getElementById('sqLogoPrev'),
+    toggleSqLogo: document.getElementById('toggleSqLogo'),
+    sqLogoBlock: document.getElementById('sqLogoBlock'),
     sqLogoInput: document.getElementById('sqLogoInput'), sqLogoSeg: document.getElementById('sqLogoSeg'), sqLogoToneSeg: document.getElementById('sqLogoToneSeg'),
-    removeSqLogo: document.getElementById('removeSqLogo'),
     sqLogoSearch: document.getElementById('sqLogoSearch'),
     sqLogoGallery: document.getElementById('sqLogoGallery'),
 
@@ -1206,6 +1436,43 @@
     removeVertLogo: document.getElementById('removeVertLogo'),
     vertLogoSearch: document.getElementById('vertLogoSearch'),
     vertLogoGallery: document.getElementById('vertLogoGallery'),
+
+    bannerLogoSection: document.getElementById('bannerLogoSection'),
+    bannerLogoPrev: document.getElementById('bannerLogoPrev'),
+    bannerLogoInput: document.getElementById('bannerLogoInput'), bannerLogoToneSeg: document.getElementById('bannerLogoToneSeg'),
+    bannerLogoSearch: document.getElementById('bannerLogoSearch'),
+    bannerLogoGallery: document.getElementById('bannerLogoGallery'),
+
+    textSettingsSection: document.getElementById('textSettingsSection'),
+    toggleSerial: document.getElementById('toggleSerial'),
+    toggleHero: document.getElementById('toggleHero'),
+    serialBlock: document.getElementById('serialBlock'),
+    heroBlock: document.getElementById('heroBlock'),
+    serialTextInput: document.getElementById('serialTextInput'),
+    serialCornerGrid: document.getElementById('serialCornerGrid'),
+    serialColorSeg: document.getElementById('serialColorSeg'),
+    serialCustomWrap: document.getElementById('serialCustomWrap'),
+    serialCustomColor: document.getElementById('serialCustomColor'),
+    serialCustomHex: document.getElementById('serialCustomHex'),
+    serialApplyAll: document.getElementById('serialApplyAll'),
+    heroTextInput: document.getElementById('heroTextInput'),
+    heroFontFamily: document.getElementById('heroFontFamily'),
+    heroFontWeight: document.getElementById('heroFontWeight'),
+    heroFontSize: document.getElementById('heroFontSize'),
+    heroLetterSpacing: document.getElementById('heroLetterSpacing'),
+    heroLineHeight: document.getElementById('heroLineHeight'),
+    heroAlignSeg: document.getElementById('heroAlignSeg'),
+    heroVerticalSeg: document.getElementById('heroVerticalSeg'),
+    heroColorMode: document.getElementById('heroColorMode'),
+    heroSolidControls: document.getElementById('heroSolidControls'),
+    heroSolidPreview: document.getElementById('heroSolidPreview'),
+    heroSolidColor: document.getElementById('heroSolidColor'),
+    heroSolidHex: document.getElementById('heroSolidHex'),
+    heroGradientControls: document.getElementById('heroGradientControls'),
+    heroGradientStart: document.getElementById('heroGradientStart'), heroGradientStartHex: document.getElementById('heroGradientStartHex'),
+    heroGradientEnd: document.getElementById('heroGradientEnd'), heroGradientEndHex: document.getElementById('heroGradientEndHex'),
+
+    saveLogoSettings: document.getElementById('saveLogoSettings'),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
@@ -1241,12 +1508,33 @@
   const UNSPLASH_PAGE_SIZE = 6;
   const UNSPLASH_FETCH_SIZE = 18;
   const UNSPLASH_MAX_PAGES = 5;
+  const SERIAL_CORNERS = ['tl','tr','bl','br'];
+  const SERIAL_COLOR_CHOICES = ['black','white','custom'];
   const EXPORT_MAX_BYTES = 500 * 1024;
   const EXPORT_MIN_BYTES = 300 * 1024;
   const EXPORT_START_QUALITY = 0.995;
   const EXPORT_MIN_QUALITY = 0.74;
   const EXPORT_QUALITY_STEP = 0.01;
   const UNSPLASH_KEY = 'lS5t0PyTTNcbftZPooe7sNzTb7zLx5K82dY5UZGh6gw';
+
+  function defaultSerialSettings(){
+    return { enabled:false, value:'', corner:'tl', color:'black', custom:'#0f172a' };
+  }
+
+  function cloneSerialSettings(src){
+    const base = defaultSerialSettings();
+    if(!src) return { ...base };
+    const corner = SERIAL_CORNERS.includes(src.corner) ? src.corner : base.corner;
+    const color = SERIAL_COLOR_CHOICES.includes(src.color) ? src.color : base.color;
+    const custom = typeof src.custom === 'string' ? (normalizeHex(src.custom) || base.custom) : base.custom;
+    return {
+      enabled: !!src.enabled,
+      value: src.value || '',
+      corner,
+      color,
+      custom
+    };
+  }
 
   const state = {
     images: [],
@@ -1272,8 +1560,9 @@
     },
     play:{ enabled:false, sizeExp:175 },
 
-    squareLogo: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
-    vertLogo:   { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+    squareLogo: { enabled:false, src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+    vertLogo:   { enabled:false, src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+    bannerLogo: { src:null, w:0, h:0, tone:'orig', source:'none', chosen:"" },
 
     banner: {
       mode:'upload',
@@ -1283,12 +1572,57 @@
       gradient:{ colors:['#38bdf8','#6366f1','#f472b6'], type:'linear', dataUrl:null, previewUrl:null, sourceName:'' },
       lastSelection:null
     },
+
+    text: {
+      serial: { ...defaultSerialSettings(), applyAll:false },
+      hero: {
+        enabled:false,
+        value:'',
+        font:'SF Pro Text',
+        weight:'Heavy',
+        size:120,
+        letterSpacing:0,
+        lineHeight:1,
+        align:'center',
+        valign:'center',
+        colorMode:'solid',
+        color:'#ffffff',
+        gradient:{ start:'#38bdf8', end:'#6366f1' },
+        position:{ x:0.5, y:0.5 }
+      }
+    },
   };
+
+  function captureSerialFromState(){
+    return cloneSerialSettings(state.text.serial);
+  }
+
+  function applySerialToState(serial){
+    const data = cloneSerialSettings(serial);
+    state.text.serial.enabled = !!data.enabled;
+    state.text.serial.value = data.value || '';
+    state.text.serial.corner = data.corner;
+    state.text.serial.color = data.color;
+    state.text.serial.custom = data.custom;
+  }
+
+  function commitSerialSettings(){
+    const snapshot = captureSerialFromState();
+    if(state.text.serial.applyAll){
+      state.images.forEach(img=>{
+        img.serial = cloneSerialSettings(snapshot);
+      });
+    } else if(state.current >= 0 && state.images[state.current]){
+      state.images[state.current].serial = cloneSerialSettings(snapshot);
+    }
+  }
 
   let frameMetrics = { left:0, top:0, width:0, height:0 };
   let frostPreviewCache = { key:null, data:null };
   let resizeState = null;
   let gradientPreviewFrame = null;
+  let heroDrag = null;
+  let logoSaveFeedbackTimer = null;
 
   if(els.img){
     els.img.crossOrigin = 'anonymous';
@@ -1301,6 +1635,8 @@
   }
 
   const THEME_KEY = 'frozone-theme';
+  const PARTNER_LIBRARY_KEY = 'frozone-partner-library';
+  const LOGO_SETTINGS_KEY = 'frozone-logo-settings';
 
   function setTheme(mode){
     const root = document.documentElement;
@@ -1468,9 +1804,19 @@
     els.squareLogoSection.style.display   = (state.format.key==='SQUARE') ? 'block' : 'none';
     els.frostSection.style.display        = (state.format.key==='HORIZ')  ? 'block' : 'none';
     els.verticalLogoSection.style.display = (state.format.key==='VERT')   ? 'block' : 'none';
+    els.bannerLogoSection.style.display   = (state.format.key==='BANNER') ? 'block' : 'none';
+    els.textSettingsSection.style.display = (state.format.key==='HORIZ' || state.format.key==='SQUARE' || state.format.key==='VERT') ? 'block' : 'none';
+
     els.vertSizeRow.style.display         = (state.format.key==='VERT')   ? 'flex' : 'none';
-    if(state.format.key==='VERT'){
-      els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
+
+    if(els.toggleSqLogo){
+      els.toggleSqLogo.checked = !!state.squareLogo.enabled;
+      els.sqLogoBlock.style.display = (state.squareLogo.enabled && state.format.key==='SQUARE') ? 'grid' : 'none';
+    }
+
+    if(els.toggleVertLogo){
+      els.toggleVertLogo.checked = !!state.vertLogo.enabled;
+      els.vertLogoBlock.style.display = (state.vertLogo.enabled && state.format.key==='VERT') ? 'grid' : 'none';
     }
 
     els.bVal.textContent = state.brightness;
@@ -1519,6 +1865,98 @@
     if(els.vertLogoSeg) [...els.vertLogoSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.size===state.vertLogo.sizeKey));
     if(els.vertLogoToneSeg) [...els.vertLogoToneSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.tone===state.vertLogo.tone));
     if(els.vertSizeSeg) [...els.vertSizeSeg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.v===state.vertVariant));
+
+    if(els.bannerLogoToneSeg){
+      [...els.bannerLogoToneSeg.querySelectorAll('button')].forEach(btn=>{
+        const active = (btn.dataset.tone||'orig') === state.bannerLogo.tone;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+
+    if(els.toggleSerial){
+      els.toggleSerial.checked = !!state.text.serial.enabled;
+      els.serialBlock.style.display = state.text.serial.enabled ? 'grid' : 'none';
+      if(els.serialTextInput){ els.serialTextInput.value = state.text.serial.value || ''; }
+      if(els.serialApplyAll){ els.serialApplyAll.checked = !!state.text.serial.applyAll; }
+      if(els.serialCornerGrid){
+        const corner = state.text.serial.corner || 'tl';
+        [...els.serialCornerGrid.querySelectorAll('button')].forEach(btn=>{
+          const active = (btn.dataset.corner || 'tl') === corner;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+      }
+      if(els.serialColorSeg){
+        const colorChoice = state.text.serial.color || 'black';
+        [...els.serialColorSeg.querySelectorAll('button')].forEach(btn=>{
+          const active = (btn.dataset.color||'black') === colorChoice;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        if(els.serialCustomWrap){
+          const showCustom = colorChoice === 'custom';
+          els.serialCustomWrap.style.display = showCustom ? 'inline-flex' : 'none';
+          const customHex = state.text.serial.custom || '#0f172a';
+          if(showCustom){
+            if(els.serialCustomColor){ els.serialCustomColor.value = customHex; }
+            if(els.serialCustomHex){ els.serialCustomHex.value = customHex.toUpperCase(); }
+          }
+        }
+      }
+    }
+
+    if(els.toggleHero){
+      els.toggleHero.checked = !!state.text.hero.enabled;
+      els.heroBlock.style.display = state.text.hero.enabled ? 'grid' : 'none';
+      if(els.heroTextInput){ els.heroTextInput.value = state.text.hero.value || ''; }
+      if(els.heroFontFamily){ els.heroFontFamily.value = state.text.hero.font || 'SF Pro Text'; }
+      if(els.heroFontWeight){ els.heroFontWeight.value = state.text.hero.weight || 'Heavy'; }
+      if(els.heroFontSize){ els.heroFontSize.value = Math.max(80, Math.round(state.text.hero.size || 120)); }
+      if(els.heroLetterSpacing){ els.heroLetterSpacing.value = parseFloat(state.text.hero.letterSpacing ?? 0); }
+      if(els.heroLineHeight){ els.heroLineHeight.value = Math.round((state.text.hero.lineHeight || 1) * 100); }
+      if(els.heroAlignSeg){
+        const align = state.text.hero.align || 'center';
+        [...els.heroAlignSeg.querySelectorAll('button')].forEach(btn=>{
+          const isActive = (btn.dataset.align||'center') === align;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+      if(els.heroVerticalSeg){
+        const valign = state.text.hero.valign || 'center';
+        [...els.heroVerticalSeg.querySelectorAll('button')].forEach(btn=>{
+          const val = btn.dataset.valign || '';
+          const isActive = val && val === valign;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+      if(els.heroColorMode){
+        const mode = state.text.hero.colorMode || 'solid';
+        [...els.heroColorMode.querySelectorAll('button')].forEach(btn=>{
+          const active = (btn.dataset.mode||'solid') === mode;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        if(els.heroSolidControls){ els.heroSolidControls.style.display = mode === 'solid' ? 'flex' : 'none'; }
+        if(els.heroGradientControls){ els.heroGradientControls.style.display = mode === 'gradient' ? 'flex' : 'none'; }
+        if(els.heroSolidColor){ els.heroSolidColor.value = state.text.hero.color || '#ffffff'; }
+        if(els.heroSolidHex){ els.heroSolidHex.value = (state.text.hero.color || '#ffffff').toUpperCase(); }
+        if(els.heroSolidPreview){
+          const previewColor = mode === 'solid' ? (state.text.hero.color || '#ffffff') : `linear-gradient(135deg, ${state.text.hero.gradient?.start || '#38bdf8'}, ${state.text.hero.gradient?.end || '#6366f1'})`;
+          els.heroSolidPreview.style.background = previewColor;
+        }
+        if(els.heroGradientStart){
+          els.heroGradientStart.value = state.text.hero.gradient?.start || '#38bdf8';
+          els.heroGradientStartHex.value = (state.text.hero.gradient?.start || '#38bdf8').toUpperCase();
+        }
+        if(els.heroGradientEnd){
+          els.heroGradientEnd.value = state.text.hero.gradient?.end || '#6366f1';
+          els.heroGradientEndHex.value = (state.text.hero.gradient?.end || '#6366f1').toUpperCase();
+        }
+      }
+    }
 
     els.batchMeta.textContent = `${state.current>=0?state.current+1:0} / ${state.images.length}`;
 
@@ -1590,6 +2028,92 @@
     const frameTopPx = (els.stage.clientHeight - fhPx)/2;
     frameMetrics = { left: frameLeftPx, top: frameTopPx, width: fwPx, height: fhPx };
 
+    if(els.serialOverlay){
+      const serialState = state.text.serial;
+      const active = serialState.enabled && serialState.value && state.format.key !== 'BANNER';
+      if(active){
+        const scaleW = state.previewZoom * (state.format.wPreview / state.format.wExport);
+        const scaleH = state.previewZoom * (state.format.hPreview / state.format.hExport);
+        const fontPx = Math.max(12, Math.round(26 * scaleH));
+        els.serialOverlay.textContent = serialState.value;
+        let color = '#0f172a';
+        if(serialState.color === 'white') color = '#ffffff';
+        else if(serialState.color === 'custom' && normalizeHex(serialState.custom)){ color = normalizeHex(serialState.custom); }
+        els.serialOverlay.style.color = color;
+        els.serialOverlay.style.fontSize = fontPx + 'px';
+        els.serialOverlay.style.top = '';
+        els.serialOverlay.style.bottom = '';
+        els.serialOverlay.style.left = '';
+        els.serialOverlay.style.right = '';
+        const padX = Math.max(10, 24 * scaleW);
+        const padY = Math.max(10, 24 * scaleH);
+        const corner = serialState.corner || 'tl';
+        const stageW = els.stage.clientWidth;
+        const stageH = els.stage.clientHeight;
+        if(corner === 'tl'){
+          els.serialOverlay.style.top = (frameTopPx + padY) + 'px';
+          els.serialOverlay.style.left = (frameLeftPx + padX) + 'px';
+        }
+        else if(corner === 'tr'){
+          els.serialOverlay.style.top = (frameTopPx + padY) + 'px';
+          els.serialOverlay.style.right = (stageW - (frameLeftPx + fwPx) + padX) + 'px';
+        }
+        else if(corner === 'bl'){
+          els.serialOverlay.style.bottom = (stageH - (frameTopPx + fhPx) + padY) + 'px';
+          els.serialOverlay.style.left = (frameLeftPx + padX) + 'px';
+        }
+        else {
+          els.serialOverlay.style.bottom = (stageH - (frameTopPx + fhPx) + padY) + 'px';
+          els.serialOverlay.style.right = (stageW - (frameLeftPx + fwPx) + padX) + 'px';
+        }
+        els.serialOverlay.classList.add('show');
+      } else {
+        els.serialOverlay.classList.remove('show');
+      }
+    }
+
+    if(els.heroOverlay){
+      const heroState = state.text.hero;
+      const active = heroState.enabled && heroState.value && state.format.key !== 'BANNER';
+      if(active){
+        els.heroOverlay.classList.remove('hidden');
+        els.heroOverlay.textContent = heroState.value;
+        els.heroOverlay.style.fontFamily = heroState.font || 'SF Pro Text';
+        const weightMap = { Thin:100, Light:300, Regular:400, Medium:500, Semibold:600, Bold:700, Heavy:800, Black:900 };
+        const weight = weightMap[heroState.weight] || 800;
+        els.heroOverlay.style.fontWeight = weight;
+        const scale = state.previewZoom * (state.format.hPreview / state.format.hExport);
+        els.heroOverlay.style.fontSize = Math.max(40, heroState.size * scale) + 'px';
+        const spacing = (heroState.letterSpacing || 0) * (state.previewZoom * (state.format.wPreview / state.format.wExport));
+        els.heroOverlay.style.letterSpacing = spacing.toFixed(2) + 'px';
+        const lineHeightRatio = heroState.lineHeight || 1;
+        els.heroOverlay.style.lineHeight = Math.max(0.5, lineHeightRatio).toString();
+        els.heroOverlay.style.textAlign = heroState.align || 'center';
+        const mode = heroState.colorMode || 'solid';
+        if(mode === 'gradient'){
+          const start = heroState.gradient?.start || '#38bdf8';
+          const end = heroState.gradient?.end || '#6366f1';
+          els.heroOverlay.style.background = `linear-gradient(135deg, ${start}, ${end})`;
+          els.heroOverlay.style.webkitBackgroundClip = 'text';
+          els.heroOverlay.style.backgroundClip = 'text';
+          els.heroOverlay.style.color = 'transparent';
+        } else {
+          const color = heroState.color || '#ffffff';
+          els.heroOverlay.style.background = 'transparent';
+          els.heroOverlay.style.webkitBackgroundClip = '';
+          els.heroOverlay.style.backgroundClip = '';
+          els.heroOverlay.style.color = color;
+        }
+        const pos = heroState.position || {x:0.5,y:0.5};
+        const centerX = frameLeftPx + (pos.x || 0.5) * fwPx;
+        const centerY = frameTopPx + (pos.y || 0.5) * fhPx;
+        els.heroOverlay.style.left = centerX + 'px';
+        els.heroOverlay.style.top = centerY + 'px';
+      } else {
+        els.heroOverlay.classList.add('hidden');
+      }
+    }
+
     if(els.resizeHandles){
       const offset = (els.resizeHandles[0]?.offsetWidth || 18) / 2;
       const display = state.imageSrc ? 'block' : 'none';
@@ -1641,7 +2165,7 @@
       }
     }
 
-    if(state.format.key==='SQUARE' && state.squareLogo.src){
+    if(state.format.key==='SQUARE' && state.squareLogo.enabled && state.squareLogo.src){
       const scale = (state.format.wPreview/1080) * state.previewZoom;
       const h = (SIZE_MAP_SQ[state.squareLogo.sizeKey]||55) * scale;
       const ratio = state.squareLogo.w && state.squareLogo.h ? (state.squareLogo.w/state.squareLogo.h) : 1;
@@ -1655,7 +2179,7 @@
       applyLogoPreviewTone(els.sqLogoPrev, state.squareLogo.tone);
     } else { els.sqLogoPrev.style.display='none'; }
 
-    if(state.format.key==='VERT' && state.vertLogo.src){
+    if(state.format.key==='VERT' && state.vertLogo.enabled && state.vertLogo.src){
       const scale = (state.format.wPreview/1080) * state.previewZoom;
       const h = (SIZE_MAP_SQ[state.vertLogo.sizeKey]||55) * scale;
       const left = frameLeftPx + 60*scale;
@@ -1666,6 +2190,26 @@
       els.vertLogoPrev.style.top = top + 'px';
       applyLogoPreviewTone(els.vertLogoPrev, state.vertLogo.tone);
     } else { els.vertLogoPrev.style.display='none'; }
+
+    if(state.format.key==='BANNER' && state.bannerLogo.src){
+      const scale = state.previewZoom * (state.format.hPreview / state.format.hExport);
+      const h = 30 * scale;
+      const ratio = state.bannerLogo.w && state.bannerLogo.h ? (state.bannerLogo.w/state.bannerLogo.h) : 1;
+      const wpx = h * ratio;
+      const padScaleX = state.previewZoom * (state.format.wPreview / state.format.wExport);
+      const padScaleY = state.previewZoom * (state.format.hPreview / state.format.hExport);
+      const left = frameLeftPx + Math.max(10, 15 * padScaleX);
+      const top = frameTopPx + Math.max(10, 15 * padScaleY);
+      els.bannerLogoPrev.style.display = 'block';
+      els.bannerLogoPrev.style.height = h + 'px';
+      els.bannerLogoPrev.style.left = left + 'px';
+      els.bannerLogoPrev.style.top = top + 'px';
+      els.bannerLogoPrev.style.width = wpx + 'px';
+      applyLogoPreviewTone(els.bannerLogoPrev, state.bannerLogo.tone);
+      els.bannerLogoPrev.src = state.bannerLogo.src || '';
+    } else {
+      els.bannerLogoPrev.style.display = 'none';
+    }
   }
 
   function updateFrostPreviewTexture(){
@@ -2348,16 +2892,36 @@
       valueEl.className = 'gradientSwatchValue';
       valueEl.textContent = color.toUpperCase();
       header.append(label, valueEl);
+      const control = document.createElement('div');
+      control.className = 'colorInline';
       const input = document.createElement('input');
       input.type = 'color';
       input.value = color;
       input.dataset.index = idx.toString();
-      input.addEventListener('input', ()=>{
-        state.banner.gradient.colors[idx] = input.value;
-        valueEl.textContent = input.value.toUpperCase();
+      const hex = document.createElement('input');
+      hex.type = 'text';
+      hex.value = color.toUpperCase();
+      hex.maxLength = 9;
+      hex.dataset.index = idx.toString();
+
+      function applyColor(next){
+        const normalized = normalizeHex(next) || '#000000';
+        state.banner.gradient.colors[idx] = normalized;
+        valueEl.textContent = normalized.toUpperCase();
+        input.value = normalized;
+        hex.value = normalized.toUpperCase();
         updateGradientPreview();
+      }
+
+      input.addEventListener('input', ()=>{ applyColor(input.value); });
+      hex.addEventListener('input', ()=>{
+        const raw = hex.value.trim();
+        if(/^#?[0-9a-fA-F]{3,8}$/.test(raw)){ applyColor(raw); }
       });
-      swatch.append(header, input);
+      hex.addEventListener('blur', ()=>{ applyColor(hex.value); });
+
+      control.append(input, hex);
+      swatch.append(header, control);
       els.gradientColorContainer.appendChild(swatch);
     });
     if(els.gradientColorCount){
@@ -2397,6 +2961,101 @@
 
   function rgbToHex(r,g,b){
     return `#${hexComponentToHex(r)}${hexComponentToHex(g)}${hexComponentToHex(b)}`.toUpperCase();
+  }
+
+  function normalizeHex(value){
+    if(!value) return null;
+    let raw = value.trim();
+    if(!raw) return null;
+    if(raw[0] !== '#'){ raw = `#${raw}`; }
+    const valid = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(raw);
+    if(!valid) return null;
+    if(raw.length === 4 || raw.length === 5){
+      const chars = raw.slice(1).split('').map(c=>c+c).join('');
+      return `#${chars}`.toLowerCase();
+    }
+    return raw.toLowerCase();
+  }
+
+  function hexToRGBAComponents(value){
+    const norm = normalizeHex(value) || '#0f172a';
+    const hex = norm.slice(1);
+    const hasAlpha = hex.length === 8;
+    const int = parseInt(hex.slice(0,6), 16);
+    const r = (int >> 16) & 255;
+    const g = (int >> 8) & 255;
+    const b = int & 255;
+    let a = 1;
+    if(hasAlpha){
+      const alphaInt = parseInt(hex.slice(6,8), 16);
+      a = +(alphaInt / 255).toFixed(3);
+    }
+    return { r, g, b, a };
+  }
+
+  function drawHeroText(ctx, hero, fw, fh){
+    if(!hero || !hero.value) return;
+    const lines = hero.value.split(/\r?\n/);
+    if(lines.length === 0) return;
+    const weightMap = { Thin:100, Light:300, Regular:400, Medium:500, Semibold:600, Bold:700, Heavy:800, Black:900 };
+    const fontFamily = hero.font || 'SF Pro Text';
+    const fontWeight = weightMap[hero.weight] || 800;
+    const fontSize = Math.max(10, hero.size || 120);
+    const letterSpacing = hero.letterSpacing || 0;
+    const lineHeightRatio = hero.lineHeight || 1;
+
+    ctx.save();
+    ctx.font = `${fontWeight} ${fontSize}px "${fontFamily}"`;
+    ctx.textBaseline = 'alphabetic';
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+
+    const metrics = lines.map(line=>{
+      const measurement = ctx.measureText(line);
+      const width = measurement.width + letterSpacing * Math.max(0, line.length - 1);
+      return { line, width };
+    });
+    const maxWidth = Math.max(...metrics.map(m=>m.width), 1);
+    const lineHeight = fontSize * lineHeightRatio;
+    const blockHeight = lineHeight * metrics.length;
+    const pos = hero.position || {x:0.5,y:0.5};
+    const centerX = (pos.x || 0.5) * fw;
+    const centerY = (pos.y || 0.5) * fh;
+    const blockTop = centerY - blockHeight/2;
+
+    if(hero.colorMode === 'gradient'){
+      const start = hero.gradient?.start || '#38bdf8';
+      const end = hero.gradient?.end || '#6366f1';
+      const gradient = ctx.createLinearGradient(centerX - maxWidth/2, blockTop, centerX + maxWidth/2, blockTop + blockHeight);
+      gradient.addColorStop(0, start);
+      gradient.addColorStop(1, end);
+      ctx.fillStyle = gradient;
+    } else {
+      const {r,g,b,a} = hexToRGBAComponents(hero.color || '#ffffff');
+      ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
+    }
+
+    ctx.shadowColor = 'rgba(15,23,42,0.28)';
+    ctx.shadowBlur = fontSize * 0.18;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = fontSize * 0.05;
+
+    metrics.forEach((m, idx)=>{
+      let startX;
+      if(hero.align === 'left'){ startX = centerX - maxWidth/2; }
+      else if(hero.align === 'right'){ startX = centerX + maxWidth/2 - m.width; }
+      else { startX = centerX - m.width/2; }
+      const baselineY = blockTop + lineHeight * idx + fontSize;
+      let x = startX;
+      const text = m.line;
+      if(text.length === 0){ ctx.fillText('', x, baselineY); return; }
+      for(const char of text){
+        ctx.fillText(char, x, baselineY);
+        x += ctx.measureText(char).width + letterSpacing;
+      }
+    });
+
+    ctx.restore();
   }
 
   function rgbToHsl(r, g, b){
@@ -2618,6 +3277,93 @@
     if(partnerDataScript){
       partnerDataScript.textContent = JSON.stringify(partnerLibrary, null, 2);
     }
+    try{ window.localStorage?.setItem(PARTNER_LIBRARY_KEY, JSON.stringify(partnerLibrary)); }
+    catch(err){ console.warn('Unable to persist partner library', err); }
+  }
+
+  function snapshotLogo(store, extras = {}){
+    return {
+      src: store?.src || null,
+      w: store?.w || 0,
+      h: store?.h || 0,
+      sizeKey: store?.sizeKey || 'M',
+      tone: store?.tone || 'orig',
+      source: store?.source || 'none',
+      chosen: store?.chosen || '',
+      ...extras
+    };
+  }
+
+  function persistLogoSettings(){
+    const payload = {
+      frost: {
+        logo1: snapshotLogo(state.frost.logo1),
+        logo2: snapshotLogo(state.frost.logo2)
+      },
+      square: snapshotLogo(state.squareLogo, { enabled: !!state.squareLogo.enabled }),
+      vert: snapshotLogo(state.vertLogo, { enabled: !!state.vertLogo.enabled }),
+      banner: snapshotLogo(state.bannerLogo)
+    };
+    try {
+      window.localStorage?.setItem(LOGO_SETTINGS_KEY, JSON.stringify(payload));
+      if(els.saveLogoSettings){
+        els.saveLogoSettings.disabled = true;
+        const label = els.saveLogoSettings.querySelector('.btn-text');
+        const original = label?.textContent || 'Save logos';
+        label && (label.textContent = 'Saved');
+        if(logoSaveFeedbackTimer){ clearTimeout(logoSaveFeedbackTimer); }
+        logoSaveFeedbackTimer = window.setTimeout(()=>{
+          label && (label.textContent = original);
+          els.saveLogoSettings.disabled = false;
+        }, 1200);
+      }
+    } catch(err){
+      console.warn('Unable to store logo settings', err);
+    }
+  }
+
+  async function restoreLogoSettings(){
+    let payload = null;
+    try{
+      const stored = window.localStorage?.getItem(LOGO_SETTINGS_KEY);
+      if(!stored) return;
+      payload = JSON.parse(stored);
+    }catch(err){ console.warn('Unable to parse stored logos', err); return; }
+    if(!payload || typeof payload !== 'object') return;
+
+    const tasks = [];
+    const apply = (data, store, target, which, extras = {})=>{
+      if(!data || !data.src){
+        store.src=null; store.w=0; store.h=0; store.source='none'; store.chosen='';
+        if(extras.enabled !== undefined) store.enabled = extras.enabled;
+        if(target) target.style.display='none';
+        return;
+      }
+      store.src = data.src; store.w = data.w || store.w; store.h = data.h || store.h;
+      if(data.sizeKey) store.sizeKey = data.sizeKey;
+      if(data.tone) store.tone = data.tone;
+      store.source = data.source || 'none';
+      store.chosen = data.chosen || '';
+      if(extras.enabled !== undefined){ store.enabled = extras.enabled; }
+      if(which==='squareLogo'){ state.squareLogo.enabled = !!extras.enabled; }
+      if(which==='vertLogo'){ state.vertLogo.enabled = !!extras.enabled; }
+      if(which==='bannerLogo'){ state.bannerLogo = { ...state.bannerLogo, ...store }; }
+      if(data.source === 'partner'){
+        tasks.push(loadLogoURL(data.src, target, store, which, data.chosen));
+      } else {
+        if(target){ target.src = data.src; target.style.display='block'; }
+      }
+    };
+
+    apply(payload.frost?.logo1, state.frost.logo1, els.logo1Prev, 'logo1');
+    apply(payload.frost?.logo2, state.frost.logo2, els.logo2Prev, 'logo2');
+    apply(payload.square, state.squareLogo, els.sqLogoPrev, 'squareLogo', { enabled: payload.square?.enabled });
+    apply(payload.vert, state.vertLogo, els.vertLogoPrev, 'vertLogo', { enabled: payload.vert?.enabled });
+    apply(payload.banner, state.bannerLogo, els.bannerLogoPrev, 'bannerLogo');
+
+    await Promise.allSettled(tasks);
+    updateControls();
+    render();
   }
 
   function updatePartnerPreview(img, url){
@@ -3034,7 +3780,8 @@
       src, name, natural,
       brightness:100, saturation:100, contrast:100,
       flipH:false, flipV:false, rotation:0,
-      imgZoom:1, offset:{x:0,y:0}
+      imgZoom:1, offset:{x:0,y:0},
+      serial: cloneSerialSettings(state.text.serial.applyAll ? state.text.serial : defaultSerialSettings())
     });
     resetDeleteAllPrompt();
     const position = state.current>=0 ? state.current+1 : state.images.length;
@@ -3050,10 +3797,12 @@
     it.flipH = state.flipH; it.flipV = state.flipV; it.rotation = state.rotation;
     it.imgZoom = state.imgZoom; it.offset = {x:state.offset.x, y:state.offset.y};
     it.natural = {w:state.natural.w, h:state.natural.h};
+    commitSerialSettings();
   }
   function loadImageAt(idx){
     if(idx<0 || idx>=state.images.length) return;
     const it = state.images[idx];
+    if(!it.serial){ it.serial = cloneSerialSettings(defaultSerialSettings()); }
     state.current = idx;
     resetDeleteAllPrompt();
     state.imageSrc = it.src;
@@ -3061,6 +3810,9 @@
     state.brightness = it.brightness; state.saturation = it.saturation; state.contrast = it.contrast;
     state.flipH = it.flipH; state.flipV = it.flipV; state.rotation = it.rotation;
     state.imgZoom = it.imgZoom; state.offset = {x:it.offset.x, y:it.offset.y};
+    if(!state.text.serial.applyAll){
+      applySerialToState(it.serial);
+    }
     els.img.src = it.src;
     const text = `${idx+1} / ${state.images.length}`;
     els.batchMeta.textContent = text;
@@ -3089,13 +3841,35 @@
     render(); updateControls();
   });
 
-  els.toggleVertLogo.addEventListener('change', ()=>{
-    els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
-    if(!els.toggleVertLogo.checked){
-      state.vertLogo={src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
-      els.vertLogoPrev.style.display='none';
-      render(); updateControls();
+  els.toggleSqLogo?.addEventListener('change', ()=>{
+    const enabled = !!els.toggleSqLogo.checked;
+    state.squareLogo.enabled = enabled;
+    els.sqLogoBlock.style.display = enabled ? 'grid' : 'none';
+    if(!enabled){
+      state.squareLogo.src=null; state.squareLogo.w=0; state.squareLogo.h=0; state.squareLogo.source='none'; state.squareLogo.chosen="";
+      els.sqLogoPrev.style.display='none';
     }
+    render(); updateControls();
+  });
+
+  els.toggleVertLogo.addEventListener('change', ()=>{
+    const enabled = els.toggleVertLogo.checked;
+    state.vertLogo.enabled = enabled;
+    els.vertLogoBlock.style.display = enabled ? 'grid' : 'none';
+    if(!enabled){
+      state.vertLogo.src=null; state.vertLogo.w=0; state.vertLogo.h=0; state.vertLogo.source='none'; state.vertLogo.chosen="";
+      els.vertLogoPrev.style.display='none';
+    }
+    render(); updateControls();
+  });
+  els.toggleSerial?.addEventListener('change', ()=>{
+    state.text.serial.enabled = !!els.toggleSerial.checked;
+    commitSerialSettings();
+    render(); updateControls();
+  });
+  els.toggleHero?.addEventListener('change', ()=>{
+    state.text.hero.enabled = !!els.toggleHero.checked;
+    render(); updateControls();
   });
   els.vertSizeSeg.addEventListener('click', (e)=>{
     const btn = e.target.closest('button'); if(!btn) return;
@@ -3105,6 +3879,148 @@
   });
 
   els.overlayAlpha.addEventListener('input', (e)=>{ state.frost.overlayAlpha = (+e.target.value)/100; els.overlayAlphaVal.textContent = Math.round(state.frost.overlayAlpha*100); updateControls(); render(); });
+
+  els.serialTextInput?.addEventListener('input', (e)=>{
+    state.text.serial.value = e.target.value;
+    commitSerialSettings();
+    render();
+  });
+  els.serialCornerGrid?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const corner = btn.dataset.corner || 'tl';
+    state.text.serial.corner = corner;
+    commitSerialSettings();
+    updateControls(); render();
+  });
+  els.serialColorSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const color = btn.dataset.color || 'black';
+    state.text.serial.color = color;
+    if(color !== 'custom'){ state.text.serial.custom = state.text.serial.custom || '#0f172a'; }
+    commitSerialSettings();
+    updateControls(); render();
+  });
+  els.serialCustomColor?.addEventListener('input', (e)=>{
+    const val = e.target.value;
+    state.text.serial.custom = val;
+    state.text.serial.color = 'custom';
+    if(els.serialCustomHex){ els.serialCustomHex.value = val.toUpperCase(); }
+    commitSerialSettings();
+    updateControls(); render();
+  });
+  els.serialCustomHex?.addEventListener('blur', (e)=>{
+    const normalized = normalizeHex(e.target.value) || '#0f172a';
+    state.text.serial.custom = normalized;
+    state.text.serial.color = 'custom';
+    e.target.value = normalized.toUpperCase();
+    if(els.serialCustomColor){ els.serialCustomColor.value = normalized; }
+    commitSerialSettings();
+    updateControls(); render();
+  });
+  els.serialApplyAll?.addEventListener('change', (e)=>{
+    const applyAll = !!e.target.checked;
+    state.text.serial.applyAll = applyAll;
+    if(applyAll){
+      const snapshot = captureSerialFromState();
+      state.images.forEach(img=>{ img.serial = cloneSerialSettings(snapshot); });
+    } else {
+      if(state.current >= 0 && state.images[state.current]){
+        if(!state.images[state.current].serial){
+          state.images[state.current].serial = cloneSerialSettings(defaultSerialSettings());
+        }
+        applySerialToState(state.images[state.current].serial);
+      } else {
+        applySerialToState(defaultSerialSettings());
+      }
+    }
+    render();
+    updateControls();
+  });
+
+  els.heroTextInput?.addEventListener('input', (e)=>{ state.text.hero.value = e.target.value; render(); });
+  els.heroFontFamily?.addEventListener('change', (e)=>{ state.text.hero.font = e.target.value; render(); });
+  els.heroFontWeight?.addEventListener('change', (e)=>{ state.text.hero.weight = e.target.value; render(); });
+  els.heroFontSize?.addEventListener('input', (e)=>{
+    const val = Math.max(80, Number(e.target.value)||120);
+    state.text.hero.size = val;
+    render();
+  });
+  els.heroLetterSpacing?.addEventListener('input', (e)=>{
+    state.text.hero.letterSpacing = Number(e.target.value)||0;
+    render();
+  });
+  els.heroLineHeight?.addEventListener('input', (e)=>{
+    const pct = Math.max(10, Number(e.target.value)||100);
+    state.text.hero.lineHeight = pct/100;
+    render();
+  });
+  els.heroAlignSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const align = btn.dataset.align || 'center';
+    state.text.hero.align = align;
+    updateControls(); render();
+  });
+  els.heroVerticalSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const val = btn.dataset.valign || '';
+    const current = state.text.hero.valign || 'center';
+    if(current === val){ state.text.hero.valign = 'center'; state.text.hero.position.y = 0.5; }
+    else if(val){
+      state.text.hero.valign = val;
+      state.text.hero.position.y = val === 'top' ? 0.2 : 0.8;
+    }
+    updateControls(); render();
+  });
+  els.heroColorMode?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const mode = btn.dataset.mode || 'solid';
+    state.text.hero.colorMode = mode;
+    updateControls(); render();
+  });
+  els.heroSolidColor?.addEventListener('input', (e)=>{
+    const val = e.target.value;
+    state.text.hero.color = val;
+    if(els.heroSolidHex){ els.heroSolidHex.value = val.toUpperCase(); }
+    updateControls(); render();
+  });
+  els.heroSolidHex?.addEventListener('blur', (e)=>{
+    const norm = normalizeHex(e.target.value) || '#ffffff';
+    state.text.hero.color = norm;
+    e.target.value = norm.toUpperCase();
+    if(els.heroSolidColor){ els.heroSolidColor.value = norm; }
+    updateControls(); render();
+  });
+  els.heroGradientStart?.addEventListener('input', (e)=>{
+    const val = e.target.value;
+    if(!state.text.hero.gradient) state.text.hero.gradient = {start:'#38bdf8', end:'#6366f1'};
+    state.text.hero.gradient.start = val;
+    if(els.heroGradientStartHex){ els.heroGradientStartHex.value = val.toUpperCase(); }
+    updateControls(); render();
+  });
+  els.heroGradientStartHex?.addEventListener('blur', (e)=>{
+    const norm = normalizeHex(e.target.value) || '#38bdf8';
+    if(!state.text.hero.gradient) state.text.hero.gradient = {start:'#38bdf8', end:'#6366f1'};
+    state.text.hero.gradient.start = norm;
+    e.target.value = norm.toUpperCase();
+    if(els.heroGradientStart){ els.heroGradientStart.value = norm; }
+    updateControls(); render();
+  });
+  els.heroGradientEnd?.addEventListener('input', (e)=>{
+    const val = e.target.value;
+    if(!state.text.hero.gradient) state.text.hero.gradient = {start:'#38bdf8', end:'#6366f1'};
+    state.text.hero.gradient.end = val;
+    if(els.heroGradientEndHex){ els.heroGradientEndHex.value = val.toUpperCase(); }
+    updateControls(); render();
+  });
+  els.heroGradientEndHex?.addEventListener('blur', (e)=>{
+    const norm = normalizeHex(e.target.value) || '#6366f1';
+    if(!state.text.hero.gradient) state.text.hero.gradient = {start:'#38bdf8', end:'#6366f1'};
+    state.text.hero.gradient.end = norm;
+    e.target.value = norm.toUpperCase();
+    if(els.heroGradientEnd){ els.heroGradientEnd.value = norm; }
+    updateControls(); render();
+  });
+  els.saveLogoSettings?.addEventListener('click', ()=>{ persistLogoSettings(); });
 
   function segSizeHandler(segEl, which, map){
     if(!segEl) return;
@@ -3123,6 +4039,7 @@
       const btn=e.target.closest('button'); if(!btn) return; const tone=btn.dataset.tone; if(!tone) return;
       if(which==='squareLogo') state.squareLogo.tone=tone;
       else if(which==='vertLogo') state.vertLogo.tone=tone;
+      else if(which==='bannerLogo') state.bannerLogo.tone=tone;
       else state.frost[which].tone=tone;
       updateControls(); render();
     });
@@ -3131,6 +4048,7 @@
   segToneHandler(els.logo1ToneSeg,'logo1'); segToneHandler(els.logo2ToneSeg,'logo2');
   segSizeHandler(els.sqLogoSeg,'squareLogo', SIZE_MAP_SQ); segToneHandler(els.sqLogoToneSeg,'squareLogo');
   segSizeHandler(els.vertLogoSeg,'vertLogo', SIZE_MAP_SQ); segToneHandler(els.vertLogoToneSeg,'vertLogo');
+  segToneHandler(els.bannerLogoToneSeg,'bannerLogo');
 
   function buildGallery(scroller, onPick, getStore){
     if(!scroller) return;
@@ -3182,14 +4100,26 @@
     else if(which==='logo2'){ if(sourceType==='upload'){ els.logo2Gallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.logo2Input.value=''; } }
     else if(which==='squareLogo'){ if(sourceType==='upload'){ els.sqLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.sqLogoInput.value=''; } }
     else if(which==='vertLogo'){ if(sourceType==='upload'){ els.vertLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.vertLogoInput.value=''; } }
+    else if(which==='bannerLogo'){ if(sourceType==='upload'){ els.bannerLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.bannerLogoInput.value=''; } }
   }
   function loadLogo(file, targetImgEl, store, which){
-    if(!file){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; render(); updateControls(); return; }
+    if(!file){
+      targetImgEl.style.display='none';
+      store.src=null; store.w=store.h=0; store.source='none'; store.chosen="";
+      if(which==='squareLogo'){ state.squareLogo.enabled = false; els.toggleSqLogo && (els.toggleSqLogo.checked=false); }
+      if(which==='vertLogo'){ state.vertLogo.enabled = false; els.toggleVertLogo.checked=false; }
+      render(); updateControls();
+      return;
+    }
     const r = new FileReader();
     r.onload = ()=>{
       const src = r.result; targetImgEl.onload = ()=>{
         targetImgEl.style.display='block';
-        const temp = new Image(); temp.onload = ()=>{ store.src = src; store.w = temp.width; store.h = temp.height; store.source='upload'; store.chosen=""; exclusivePick(which,'upload'); render(); updateControls(); };
+        const temp = new Image(); temp.onload = ()=>{
+          store.src = src; store.w = temp.width; store.h = temp.height; store.source='upload'; store.chosen="";
+          if(which==='squareLogo'){ state.squareLogo.enabled = true; if(els.toggleSqLogo && !els.toggleSqLogo.checked) els.toggleSqLogo.checked = true; }
+          if(which==='vertLogo'){ state.vertLogo.enabled = true; if(!els.toggleVertLogo.checked) els.toggleVertLogo.checked = true; }
+          exclusivePick(which,'upload'); render(); updateControls(); };
         temp.src = src;
       }; targetImgEl.src = src;
     };
@@ -3199,31 +4129,37 @@
     if(!url){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; render(); updateControls(); return; }
     try{
       const im = await loadImageCORS(url);
-      store.src = url; store.w = im.width; store.h = im.height; store.source='partner'; store.chosen = (label||''); targetImgEl.src = url; targetImgEl.style.display='block'; exclusivePick(which,'partner'); render(); updateControls();
+      store.src = url; store.w = im.width; store.h = im.height; store.source='partner'; store.chosen = (label||'');
+      if(which==='squareLogo'){ state.squareLogo.enabled = true; if(els.toggleSqLogo && !els.toggleSqLogo.checked) els.toggleSqLogo.checked = true; }
+      if(which==='vertLogo'){ state.vertLogo.enabled = true; if(!els.toggleVertLogo.checked) els.toggleVertLogo.checked = true; }
+      targetImgEl.src = url; targetImgEl.style.display='block'; exclusivePick(which,'partner'); render(); updateControls();
     }catch(err){ console.error('Failed to load partner logo', err); alert('This logo host blocks export due to CORS. Please upload the logo file instead.'); }
   }
   els.logo1Input.addEventListener('change', ()=> loadLogo(els.logo1Input.files?.[0], els.logo1Prev, state.frost.logo1, 'logo1'));
   els.logo2Input.addEventListener('change', ()=> loadLogo(els.logo2Input.files?.[0], els.logo2Prev, state.frost.logo2, 'logo2'));
   els.removeLogo2.addEventListener('click', ()=>{ state.frost.logo2 = {src:null,w:0,h:0,sizeKey:state.frost.logo2.sizeKey||'M', tone: state.frost.logo2.tone||'orig', source:'none', chosen:""}; els.logo2Prev.style.display='none'; render(); updateControls(); });
   els.sqLogoInput?.addEventListener('change', ()=> loadLogo(els.sqLogoInput.files?.[0], els.sqLogoPrev, state.squareLogo, 'squareLogo'));
-  els.removeSqLogo?.addEventListener('click', ()=>{ state.squareLogo = {src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.sqLogoPrev.style.display='none'; render(); updateControls(); });
   els.vertLogoInput?.addEventListener('change', ()=> loadLogo(els.vertLogoInput.files?.[0], els.vertLogoPrev, state.vertLogo, 'vertLogo'));
   els.removeVertLogo?.addEventListener('click', ()=>{ state.vertLogo = {src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.vertLogoPrev.style.display='none'; render(); updateControls(); });
+  els.bannerLogoInput?.addEventListener('change', ()=> loadLogo(els.bannerLogoInput.files?.[0], els.bannerLogoPrev, state.bannerLogo, 'bannerLogo'));
 
   function buildAllGalleries(){
     buildGallery(els.logo1Gallery, p=>loadLogoURL(p.url, els.logo1Prev, state.frost.logo1, 'logo1', p.name), ()=>state.frost.logo1);
     buildGallery(els.logo2Gallery, p=>loadLogoURL(p.url, els.logo2Prev, state.frost.logo2, 'logo2', p.name), ()=>state.frost.logo2);
     buildGallery(els.sqLogoGallery, p=>loadLogoURL(p.url, els.sqLogoPrev, state.squareLogo, 'squareLogo', p.name), ()=>state.squareLogo);
     buildGallery(els.vertLogoGallery, p=>loadLogoURL(p.url, els.vertLogoPrev, state.vertLogo, 'vertLogo', p.name), ()=>state.vertLogo);
+    buildGallery(els.bannerLogoGallery, p=>loadLogoURL(p.url, els.bannerLogoPrev, state.bannerLogo, 'bannerLogo', p.name), ()=>state.bannerLogo);
     if(els.logo1Search?.value) filterGallery(els.logo1Gallery, els.logo1Search.value);
     if(els.logo2Search?.value) filterGallery(els.logo2Gallery, els.logo2Search.value);
     if(els.sqLogoSearch?.value) filterGallery(els.sqLogoGallery, els.sqLogoSearch.value);
     if(els.vertLogoSearch?.value) filterGallery(els.vertLogoGallery, els.vertLogoSearch.value);
+    if(els.bannerLogoSearch?.value) filterGallery(els.bannerLogoGallery, els.bannerLogoSearch.value);
   }
   els.logo1Search.addEventListener('input', e=>filterGallery(els.logo1Gallery, e.target.value));
   els.logo2Search.addEventListener('input', e=>filterGallery(els.logo2Gallery, e.target.value));
   els.sqLogoSearch?.addEventListener('input', e=>filterGallery(els.sqLogoGallery, e.target.value));
   els.vertLogoSearch?.addEventListener('input', e=>filterGallery(els.vertLogoGallery, e.target.value));
+  els.bannerLogoSearch?.addEventListener('input', e=>filterGallery(els.bannerLogoGallery, e.target.value));
 
   els.partnerSettingsTriggers?.forEach(btn=>btn.addEventListener('click', openPartnerSettings));
   els.partnerSettingsAdd?.addEventListener('click', ()=>{
@@ -3407,7 +4343,7 @@
     }
 
     // Vertical corner logo (top-left)
-    if(state.format.key==='VERT' && state.vertLogo.src){
+    if(state.format.key==='VERT' && state.vertLogo.enabled && state.vertLogo.src){
       const im = await loadImageCORS(state.vertLogo.src);
       if(im){
         const targetH = (SIZE_MAP_SQ[state.vertLogo.sizeKey]||55);
@@ -3417,6 +4353,49 @@
         const source = toneImageSource(im, state.vertLogo.tone);
         ctx.save(); ctx.drawImage(source, x, y, w, h); ctx.restore();
       }
+    }
+
+    // Banner top-left logo
+    if(state.format.key==='BANNER' && state.bannerLogo.src){
+      const im = await loadImageCORS(state.bannerLogo.src);
+      if(im){
+        const targetH = 30;
+        const baseW = im.naturalWidth || im.width; const baseH = im.naturalHeight || im.height;
+        const scale = targetH / baseH; const w = Math.round(baseW*scale); const h = Math.round(targetH);
+        const x = 15; const y = 15;
+        const source = toneImageSource(im, state.bannerLogo.tone);
+        ctx.save(); ctx.drawImage(source, x, y, w, h); ctx.restore();
+      }
+    }
+
+    // Serial code text
+    if(state.text.serial.enabled && state.text.serial.value && state.format.key !== 'BANNER'){
+      const serial = state.text.serial;
+      let colorHex = '#0f172a';
+      if(serial.color === 'white') colorHex = '#ffffff';
+      else if(serial.color === 'custom' && normalizeHex(serial.custom)){ colorHex = normalizeHex(serial.custom); }
+      const {r,g,b,a} = hexToRGBAComponents(colorHex);
+      const corner = serial.corner || 'tl';
+      const pad = 24;
+      const fontSize = Math.max(16, Math.round(32 * (state.format.hExport / 1080)));
+      ctx.save();
+      ctx.font = `600 ${fontSize}px "SF Pro Text"`;
+      ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
+      ctx.shadowColor = 'rgba(15,23,42,0.25)';
+      ctx.shadowBlur = fontSize * 0.18;
+      let x = pad; let y = pad;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      if(corner === 'tr'){ x = fw - pad; ctx.textAlign = 'right'; }
+      if(corner === 'bl'){ y = fh - pad; ctx.textBaseline = 'bottom'; }
+      if(corner === 'br'){ x = fw - pad; y = fh - pad; ctx.textAlign='right'; ctx.textBaseline='bottom'; }
+      ctx.fillText(serial.value, x, y);
+      ctx.restore();
+    }
+
+    // Hero text overlay
+    if(state.text.hero.enabled && state.text.hero.value && state.format.key !== 'BANNER'){
+      drawHeroText(ctx, state.text.hero, fw, fh);
     }
 
     // JPEG size tuning
@@ -3469,12 +4448,19 @@
 
     showLoading('Exporting…', 0);
     const filesObj = {};
+    const serialSnapshot = captureSerialFromState();
     for(let i=0;i<state.images.length;i++){
       const it = state.images[i];
       state.current = i;
       state.imageSrc = it.src; state.natural = {w:it.natural.w,h:it.natural.h};
       state.brightness=it.brightness; state.saturation=it.saturation; state.contrast=it.contrast;
       state.flipH=it.flipH; state.flipV=it.flipV; state.rotation=it.rotation; state.imgZoom=it.imgZoom; state.offset={x:it.offset.x,y:it.offset.y};
+      if(state.text.serial.applyAll){
+        applySerialToState(serialSnapshot);
+      } else {
+        if(!it.serial){ it.serial = cloneSerialSettings(defaultSerialSettings()); }
+        applySerialToState(it.serial);
+      }
       els.img.src = it.src;
       computeCover();
       await new Promise(res=>{ if(els.img.complete) res(); else els.img.onload=()=>res(); });
@@ -3527,6 +4513,44 @@
     }
   });
 
+  function updateHeroDragPosition(clientX, clientY){
+    if(!els.stage || !frameMetrics.width || !frameMetrics.height) return;
+    const stageRect = els.stage.getBoundingClientRect();
+    const localX = clientX - stageRect.left - frameMetrics.left;
+    const localY = clientY - stageRect.top - frameMetrics.top;
+    const normX = Math.max(0, Math.min(1, localX / frameMetrics.width));
+    const normY = Math.max(0, Math.min(1, localY / frameMetrics.height));
+    const prevValign = state.text.hero.valign;
+    state.text.hero.position = { x: normX, y: normY };
+    state.text.hero.valign = 'custom';
+    render();
+    if(prevValign !== 'custom'){ updateControls(); }
+  }
+
+  if(els.heroOverlay){
+    els.heroOverlay.addEventListener('pointerdown', (e)=>{
+      if(!state.text.hero.enabled) return;
+      heroDrag = { pointerId: e.pointerId };
+      els.heroOverlay.classList.add('dragging');
+      try{ els.heroOverlay.setPointerCapture(e.pointerId); }catch(err){}
+      updateHeroDragPosition(e.clientX, e.clientY);
+      e.preventDefault();
+    });
+  }
+
+  window.addEventListener('pointermove', (e)=>{
+    if(!heroDrag || e.pointerId !== heroDrag.pointerId) return;
+    updateHeroDragPosition(e.clientX, e.clientY);
+  });
+  const endHeroDrag = (e)=>{
+    if(!heroDrag || (e && e.pointerId !== heroDrag.pointerId)) return;
+    heroDrag = null;
+    els.heroOverlay?.classList.remove('dragging');
+    if(e){ try{ els.heroOverlay?.releasePointerCapture(e.pointerId); }catch(err){} }
+  };
+  window.addEventListener('pointerup', endHeroDrag);
+  window.addEventListener('pointercancel', endHeroDrag);
+
   const ro = new ResizeObserver(()=>{ fitPreviewZoomToStage(); render(); });
   ro.observe(els.stage);
   window.addEventListener('resize', ()=>{ syncHeaderHeight(); fitPreviewZoomToStage(); render(); });
@@ -3543,6 +4567,7 @@
   renderGradientSwatches();
   formatGradientSourceLabel();
   updateGradientPreview();
+  restoreLogoSettings();
   refreshIcons();
   buildAllGalleries();
   els.toggleLogo2.checked = false; els.logo2Block.style.display='none';
