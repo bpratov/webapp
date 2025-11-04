@@ -158,6 +158,61 @@
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
+  .stageWarning{position:absolute; inset:20px; pointer-events:none}
+  .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:40; display:none; padding:6px 10px; border-radius:8px; background:rgba(15,23,42,0.12); backdrop-filter:blur(6px)}
+  .serialPreview[data-corner="top-left"]{top:24px; left:24px; transform:translate(0,0)}
+  .serialPreview[data-corner="top-right"]{top:24px; right:24px; transform:translate(0,0)}
+  .serialPreview[data-corner="bottom-left"]{bottom:24px; left:24px; transform:translate(0,0)}
+  .serialPreview[data-corner="bottom-right"]{bottom:24px; right:24px; transform:translate(0,0)}
+  .serialPreview.has-barcode{padding-bottom:42px}
+  .serialPreview canvas{display:block; width:100%; height:38px; margin-top:6px; background:#fff; border-radius:6px}
+  .heroText{position:absolute; z-index:42; min-width:120px; padding:12px 16px; border-radius:16px; cursor:grab; display:none; user-select:none; transition:box-shadow .15s ease, transform .15s ease; backdrop-filter:blur(10px)}
+  .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.25)}
+  .heroText .heroInner{display:block; pointer-events:none}
+  .heroText[data-align="left"] .heroInner{text-align:left}
+  .heroText[data-align="center"] .heroInner{text-align:center}
+  .heroText[data-align="right"] .heroInner{text-align:right}
+  .heroText[data-valign="top"]{transform:translate(-50%,-50%)}
+  .heroText[data-valign="middle"]{transform:translate(-50%,-50%)}
+  .heroText[data-valign="bottom"]{transform:translate(-50%,-50%)}
+  .heroText span{display:block; white-space:pre-wrap}
+  .heroText[data-mode="gradient"]{background:rgba(15,23,42,0.14)}
+  .heroText[data-mode="solid"]{background:rgba(15,23,42,0.08)}
+  .heroText.no-bg{background:transparent}
+  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
+  .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
+  .logoSaveRow{display:flex; justify-content:flex-end; margin-top:12px}
+  .textSettingsWrap{display:grid; gap:18px}
+  .textToggleRow{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .textPanel{border:1px solid var(--border); border-radius:16px; padding:16px; background:var(--chip-bg); box-shadow:0 6px 18px rgba(15,23,42,0.06); display:grid; gap:14px}
+  .textPanel h4{margin:0; font-size:14px}
+  .textFieldRow{display:grid; gap:10px}
+  .textFieldRow label{font-size:13px; font-weight:600}
+  .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+  .cornerPicker button{all:unset; display:grid; place-items:center; border-radius:10px; border:1px solid var(--border); padding:12px; cursor:pointer; transition:all .15s ease}
+  .cornerPicker button svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8}
+  .cornerPicker button.active{border-color:var(--brand); box-shadow:0 6px 16px rgba(14,165,233,0.18)}
+  .cornerPicker button.active svg{stroke:var(--brand2)}
+  .serialColorRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .serialColorRow .seg{flex-shrink:0}
+  .serialColorRow input[type="text"]{width:120px}
+  .heroGrid{display:grid; gap:14px}
+  .heroRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .heroRow label{font-size:13px; font-weight:600}
+  .heroRow select, .heroRow input[type="number"], .heroRow input[type="text"]{min-width:110px}
+  .alignSeg{display:inline-flex; gap:6px; padding:4px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
+  .alignSeg button{all:unset; display:grid; place-items:center; padding:8px 12px; border-radius:10px; cursor:pointer; color:var(--muted); transition:all .15s ease}
+  .alignSeg button svg{width:18px; height:18px; stroke:currentColor; stroke-width:1.8}
+  .alignSeg button.active{color:var(--ink); background:#fff; box-shadow:0 6px 16px rgba(14,165,233,0.18)}
+  .heroColorControls{display:grid; gap:12px}
+  .heroColorControls .seg{justify-content:flex-start}
+  .heroColorInputs{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .heroColorInputs label{font-size:12px; font-weight:600}
+  .heroColorInputs input[type="color"], .heroColorInputs input[type="text"]{width:110px}
+  .heroGradientAngle{display:flex; align-items:center; gap:8px}
+  .bannerGuidelines{font-size:12px; color:var(--muted); line-height:1.6; margin-top:6px}
+  .bg3dNote{margin-top:10px; font-size:12px; color:var(--muted); border-radius:12px; background:rgba(99,102,241,0.08); padding:12px; border:1px solid rgba(99,102,241,0.18)}
+  .serialOptions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
 
   .playWrap{position:absolute; display:none; pointer-events:none}
   .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(6.2037px); background:rgba(0,0,0,0.40); box-shadow:inset 0 1px 2px rgba(255,255,255,0.2), 0 10px 30px rgba(2,6,23,0.25);}
@@ -250,6 +305,9 @@
   .gradientSwatchHeader{display:flex; align-items:center; justify-content:space-between; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
   .gradientSwatchValue{font-size:12px; font-family:'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace; letter-spacing:0.04em; color:var(--muted)}
   .gradientSwatch input[type="color"]{appearance:none; border:none; width:100%; height:36px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
+  .gradientInputRow{display:flex; gap:10px; align-items:center; margin-top:6px}
+  .gradientInputRow input[type="text"]{width:110px; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
+  .gradientInputRow input[type="color"]{width:46px; height:36px; border-radius:10px; padding:0; border:1px solid var(--border); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
   .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
@@ -542,7 +600,7 @@
         <div class="section">
           <div class="section-title"><span class="badge">2</span> Choose format</div>
           <div class="stack" id="formatRow"></div>
-          <div class="row" id="vertSizeRow" style="display:none; margin-top:8px">
+          <div class="row" id="vertSizeRow" style="display:none; margin-top:18px">
             <div class="seg" id="vertSizeSeg">
               <button data-v="L" class="active">L 1080×1920</button>
               <button data-v="M">M 1080×1440</button>
@@ -553,6 +611,7 @@
 
         <div class="section" id="bgSourceSection" aria-hidden="true">
           <div class="section-title"><span class="badge">2b</span> Background source</div>
+          <div class="bannerGuidelines" id="bgSourceGuidelines" style="display:none">Use simple/subtle graphics to ensure that the header and logo remain visible and unobstructed.<br>Partners or live operations teams will supply the background image following their brand guidelines.</div>
           <div class="stack">
             <div class="seg" id="bgSourceTabs" role="tablist" aria-label="Background source">
               <button type="button" data-mode="upload" class="active" aria-selected="true" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock">Upload</button>
@@ -676,6 +735,7 @@
             </div>
 
             <div class="bgSourceNote">All background sources are export-safe and compatible with canvas rendering.</div>
+            <div class="bg3dNote" id="banner3DNote" style="display:none">3D banner tips: keep depth elements subtle, align hero objects within the 1120×360 safe area, and reserve space for copy or partner logos along the top edge.</div>
           </div>
         </div>
 
@@ -782,7 +842,8 @@
                   </div>
                 </div>
               </div>
-              <div class="tone-note">Check partner brand rules before changing logo colors.</div>
+              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
+              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo1Search" type="search" placeholder="Search partners…" />
@@ -829,6 +890,8 @@
                   </div>
                 </div>
               </div>
+              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
+              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo2Search" type="search" placeholder="Search partners…" />
@@ -844,43 +907,90 @@
           
         </div>
 
+        <div class="logoSaveRow">
+          <button class="btn primary" type="button" id="saveLogoState">
+            <i data-lucide="save" class="btn-ico" aria-hidden="true"></i>
+            <span class="btn-text">Save logos</span>
+          </button>
+        </div>
+
         <!-- Step 4b: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none">
           <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
           <div class="stack">
-            <div class="row">
-              <label class="btn ghost uploadAction">
-                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                <span class="btn-text">Square logo</span>
-                <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
-              </label>
-              <div class="seg" id="sqLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
-              </div>
-              <div class="seg" id="sqLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
-              <button class="btn small ghost" id="removeSqLogo">Remove</button>
+            <div class="row" style="gap:16px">
+              <label class="switch"><input type="checkbox" id="toggleSqLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
             </div>
-            <div class="libWrap">
-              <div class="libHeader">
-                <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
-                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
-                </button>
+            <div id="sqLogoBlock" class="stack" style="display:none; margin-top:10px">
+              <div class="row">
+                <label class="btn ghost uploadAction">
+                  <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                  <span class="btn-text">Square logo</span>
+                  <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="seg" id="sqLogoSeg">
+                  <button data-size="S" class="active">S</button>
+                  <button data-size="M">M</button>
+                  <button data-size="L">L</button>
+                </div>
+                <div class="seg" id="sqLogoToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
               </div>
-              <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
+              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
+                  <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                    <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="bannerLogoSection" style="display:none">
+          <div class="section-title"><span class="badge">4c</span> Banner logo (top-left)</div>
+          <div class="stack">
+            <div class="row" style="gap:16px">
+              <label class="switch"><input type="checkbox" id="toggleBannerLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
+            </div>
+            <div id="bannerLogoBlock" class="stack" style="display:none; margin-top:10px">
+              <div class="row">
+                <label class="btn ghost uploadAction">
+                  <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                  <span class="btn-text">Banner logo</span>
+                  <input id="bannerLogoInput" type="file" accept="image/*" style="display:none"/>
+                </label>
+                <div class="seg" id="bannerLogoToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
+              </div>
+              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
+              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="bannerLogoSearch" type="search" placeholder="Search partners…" />
+                  <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                    <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div id="bannerLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Step 4c: Vertical logo -->
         <div class="section" id="verticalLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4c</span> Vertical logo (top-left)</div>
+          <div class="section-title"><span class="badge">4d</span> Vertical logo (top-left)</div>
           <div class="row" style="gap:16px">
             <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
           </div>
@@ -903,6 +1013,8 @@
               </div>
               <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
+            <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
+            <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
             <div class="libWrap">
               <div class="libHeader">
                 <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
@@ -911,6 +1023,131 @@
                 </button>
               </div>
               <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="textSettingsSection" style="display:none">
+          <div class="section-title"><span class="badge">4e</span> Text settings</div>
+          <div class="textSettingsWrap">
+            <div class="textToggleRow">
+              <label class="switch"><input type="checkbox" id="toggleSerial"><span class="tgl"><span class="knob"></span></span><span class="lbl">Serial code</span></label>
+            </div>
+            <div class="textPanel" id="serialSettingsPanel" style="display:none">
+              <h4>Serial code overlay</h4>
+              <div class="textFieldRow">
+                <label for="serialCodeInput">Serial number</label>
+                <input id="serialCodeInput" type="text" placeholder="e.g. #A9-204" />
+              </div>
+              <div class="textFieldRow">
+                <label>Corner</label>
+                <div class="cornerPicker" id="serialCornerPicker">
+                  <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                  <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                  <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                  <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                </div>
+              </div>
+              <div class="serialColorRow">
+                <div class="serialOptions">
+                  <span class="logoControlLabel">Colour</span>
+                  <div class="seg" id="serialColorSeg">
+                    <button type="button" data-color="black" class="active">Black</button>
+                    <button type="button" data-color="white">White</button>
+                    <button type="button" data-color="custom">Custom</button>
+                  </div>
+                </div>
+                <div class="heroColorInputs" id="serialCustomWrap" style="display:none">
+                  <label for="serialCustomColor">Hex</label>
+                  <input id="serialCustomColor" type="text" placeholder="#111111" maxlength="7" />
+                  <input id="serialCustomPicker" type="color" value="#0f172a" />
+                </div>
+              </div>
+              <div class="serialOptions">
+                <label class="switch"><input type="checkbox" id="serialBarcodeToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Show barcode</span></label>
+                <label class="switch"><input type="checkbox" id="serialApplyAll"><span class="tgl"><span class="knob"></span></span><span class="lbl">Apply to all images</span></label>
+              </div>
+            </div>
+
+            <div class="textToggleRow">
+              <label class="switch"><input type="checkbox" id="toggleHero"><span class="tgl"><span class="knob"></span></span><span class="lbl">Hero text</span></label>
+            </div>
+            <div class="textPanel" id="heroSettingsPanel" style="display:none">
+              <h4>Hero text overlay</h4>
+              <div class="muted">Drag the text directly on the preview to reposition. Use gradients for expressive hero copy.</div>
+              <div class="textFieldRow">
+                <label for="heroTextInput">Headline</label>
+                <textarea id="heroTextInput" rows="3" placeholder="Type hero message…"></textarea>
+              </div>
+              <div class="heroGrid">
+                <div class="heroRow">
+                  <label for="heroFontSelect">Font</label>
+                  <select id="heroFontSelect">
+                    <option>SF Pro Text</option>
+                    <option>Inter</option>
+                    <option>Roboto</option>
+                    <option>Helvetica Neue</option>
+                    <option>Arial</option>
+                    <option>Neue Frutigier World</option>
+                  </select>
+                  <label for="heroWeightSelect">Weight</label>
+                  <select id="heroWeightSelect">
+                    <option>Thin</option>
+                    <option>Light</option>
+                    <option>Regular</option>
+                    <option>Medium</option>
+                    <option>Semibold</option>
+                    <option selected>Heavy</option>
+                    <option>Bold</option>
+                    <option>Black</option>
+                  </select>
+                </div>
+                <div class="heroRow">
+                  <label for="heroSizeInput">Size</label>
+                  <input id="heroSizeInput" type="number" min="80" step="1" value="120" />
+                  <label for="heroLetterSpacing">Letter spacing (px)</label>
+                  <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
+                  <label for="heroLineHeight">Line height (%)</label>
+                  <input id="heroLineHeight" type="text" value="110%" />
+                </div>
+                <div class="heroRow">
+                  <span class="logoControlLabel">Alignment</span>
+                  <div class="alignSeg" id="heroAlignSeg">
+                    <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
+                    <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
+                    <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                  </div>
+                  <span class="logoControlLabel">Vertical</span>
+                  <div class="alignSeg" id="heroVerticalSeg">
+                    <button type="button" data-valign="top" aria-label="Align top"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="8" x2="20" y2="8"></line><rect x="10" y="10" width="8" height="10" rx="2"></rect></svg></button>
+                    <button type="button" data-valign="bottom" aria-label="Align bottom"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="20" x2="20" y2="20"></line><rect x="10" y="8" width="8" height="10" rx="2"></rect></svg></button>
+                  </div>
+                </div>
+                <div class="heroRow">
+                  <span class="logoControlLabel">Colour mode</span>
+                  <div class="seg" id="heroColorModeSeg">
+                    <button type="button" data-mode="solid" class="active">Solid</button>
+                    <button type="button" data-mode="gradient">Gradient</button>
+                  </div>
+                </div>
+                <div class="heroColorControls">
+                  <div class="heroColorInputs" id="heroSolidControls">
+                    <label for="heroSolidHex">Hex</label>
+                    <input id="heroSolidHex" type="text" value="#ffffff" maxlength="7" />
+                    <input id="heroSolidPicker" type="color" value="#ffffff" />
+                  </div>
+                  <div class="heroColorInputs" id="heroGradientControls" style="display:none">
+                    <label for="heroGradStart">Start</label>
+                    <input id="heroGradStart" type="color" value="#0ea5e9" />
+                    <label for="heroGradEnd">End</label>
+                    <input id="heroGradEnd" type="color" value="#6366f1" />
+                    <div class="heroGradientAngle">
+                      <label for="heroGradAngle">Angle</label>
+                      <input id="heroGradAngle" type="number" value="0" step="1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -995,6 +1232,14 @@
 
           <img id="sqLogoPrev" class="sqLogo" alt="square logo" />
           <img id="vertLogoPrev" class="vertLogo" alt="vertical logo" />
+          <img id="bannerLogoPrev" class="bannerLogoPrev" alt="banner logo" />
+          <div class="serialPreview" id="serialPreview" data-corner="top-left">
+            <span id="serialTextPreview"></span>
+            <canvas id="serialBarcodeCanvas" width="200" height="40"></canvas>
+          </div>
+          <div class="heroText no-bg" id="heroTextPreview" data-align="center" data-valign="middle" data-mode="solid">
+            <span class="heroInner" id="heroInnerText"></span>
+          </div>
           <div class="stageHint" id="stageHint">Upload or drop your images here to start.</div>
           <div class="dropOverlay" id="dropOverlay">Drop images to upload</div>
         </div>
@@ -1089,7 +1334,7 @@
   </script>
 
 <script>
-(function(){
+(async function(){
   const FORMATS = {
     HORIZ:   { key:'HORIZ',  label:'Horizontal',         sub:'Native Story / MPU / Video / Coupon Exp', icon:'H', wPreview:335, hPreview:203, wExport:1080, hExport:635 },
     BANNER:  { key:'BANNER', label:'Banner background',  sub:'3D Info Banner',                           icon:'B', wPreview:420, hPreview:135, wExport:1120, hExport:360 },
@@ -1105,12 +1350,23 @@
     console.warn('Unable to parse partner data', err);
     partnerLibrary = [];
   }
+  const PARTNER_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+  const PARTNER_STORAGE_KEY = 'frozone-partners';
+  const LOGO_STATE_KEY = 'frozone-logo-state';
+  const TEXT_STATE_KEY = 'frozone-text-state';
+  let partnerSettingsRestoreFocus = null;
+
+  try{
+    const storedPartners = localStorage.getItem(PARTNER_STORAGE_KEY);
+    if(storedPartners){
+      const parsed = JSON.parse(storedPartners);
+      if(Array.isArray(parsed) && parsed.length){ partnerLibrary = parsed; }
+    }
+  }catch(err){ console.warn('Unable to read partner storage', err); }
   if(!Array.isArray(partnerLibrary)) partnerLibrary = [];
   partnerLibrary = partnerLibrary
     .map(entry => ({ name: String(entry?.name || '').trim(), url: String(entry?.url || '').trim() }))
     .filter(entry => entry.name && entry.url);
-  const PARTNER_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-  let partnerSettingsRestoreFocus = null;
 
   const els = {
     header: document.getElementById('appHeader'),
@@ -1144,6 +1400,8 @@
     frame: document.getElementById('frame'),
     stageHint: document.getElementById('stageHint'),
     bgSourceSection: document.getElementById('bgSourceSection'),
+    bgSourceGuidelines: document.getElementById('bgSourceGuidelines'),
+    banner3DNote: document.getElementById('banner3DNote'),
     bgSourceTabs: document.getElementById('bgSourceTabs'),
     bgSourceBlocks: Array.from(document.querySelectorAll('.bg-source-block')),
     bgUpload: document.getElementById('bgUpload'),
@@ -1183,6 +1441,7 @@
 
     logoDockPrev: document.getElementById('logoDockPrev'),
     logo1Prev: document.getElementById('logo1Prev'), logo2Prev: document.getElementById('logo2Prev'), logoSepPrev: document.getElementById('logoSepPrev'),
+    bannerLogoPrev: document.getElementById('bannerLogoPrev'),
     logo1Input: document.getElementById('logo1Input'), logo2Input: document.getElementById('logo2Input'),
     logo1Seg: document.getElementById('logo1Seg'), logo2Seg: document.getElementById('logo2Seg'),
     logo1ToneSeg: document.getElementById('logo1ToneSeg'), logo2ToneSeg: document.getElementById('logo2ToneSeg'),
@@ -1192,11 +1451,20 @@
     logo1Gallery: document.getElementById('logo1Gallery'), logo2Gallery: document.getElementById('logo2Gallery'),
 
     squareLogoSection: document.getElementById('squareLogoSection'),
+    toggleSqLogo: document.getElementById('toggleSqLogo'),
+    sqLogoBlock: document.getElementById('sqLogoBlock'),
     sqLogoPrev: document.getElementById('sqLogoPrev'),
     sqLogoInput: document.getElementById('sqLogoInput'), sqLogoSeg: document.getElementById('sqLogoSeg'), sqLogoToneSeg: document.getElementById('sqLogoToneSeg'),
-    removeSqLogo: document.getElementById('removeSqLogo'),
     sqLogoSearch: document.getElementById('sqLogoSearch'),
     sqLogoGallery: document.getElementById('sqLogoGallery'),
+
+    bannerLogoSection: document.getElementById('bannerLogoSection'),
+    toggleBannerLogo: document.getElementById('toggleBannerLogo'),
+    bannerLogoBlock: document.getElementById('bannerLogoBlock'),
+    bannerLogoInput: document.getElementById('bannerLogoInput'),
+    bannerLogoToneSeg: document.getElementById('bannerLogoToneSeg'),
+    bannerLogoSearch: document.getElementById('bannerLogoSearch'),
+    bannerLogoGallery: document.getElementById('bannerLogoGallery'),
 
     verticalLogoSection: document.getElementById('verticalLogoSection'),
     toggleVertLogo: document.getElementById('toggleVertLogo'),
@@ -1206,6 +1474,45 @@
     removeVertLogo: document.getElementById('removeVertLogo'),
     vertLogoSearch: document.getElementById('vertLogoSearch'),
     vertLogoGallery: document.getElementById('vertLogoGallery'),
+
+    textSettingsSection: document.getElementById('textSettingsSection'),
+    toggleSerial: document.getElementById('toggleSerial'),
+    serialSettingsPanel: document.getElementById('serialSettingsPanel'),
+    serialCodeInput: document.getElementById('serialCodeInput'),
+    serialCornerPicker: document.getElementById('serialCornerPicker'),
+    serialColorSeg: document.getElementById('serialColorSeg'),
+    serialCustomWrap: document.getElementById('serialCustomWrap'),
+    serialCustomColor: document.getElementById('serialCustomColor'),
+    serialCustomPicker: document.getElementById('serialCustomPicker'),
+    serialBarcodeToggle: document.getElementById('serialBarcodeToggle'),
+    serialApplyAll: document.getElementById('serialApplyAll'),
+
+    toggleHero: document.getElementById('toggleHero'),
+    heroSettingsPanel: document.getElementById('heroSettingsPanel'),
+    heroTextInput: document.getElementById('heroTextInput'),
+    heroFontSelect: document.getElementById('heroFontSelect'),
+    heroWeightSelect: document.getElementById('heroWeightSelect'),
+    heroSizeInput: document.getElementById('heroSizeInput'),
+    heroLetterSpacing: document.getElementById('heroLetterSpacing'),
+    heroLineHeight: document.getElementById('heroLineHeight'),
+    heroAlignSeg: document.getElementById('heroAlignSeg'),
+    heroVerticalSeg: document.getElementById('heroVerticalSeg'),
+    heroColorModeSeg: document.getElementById('heroColorModeSeg'),
+    heroSolidControls: document.getElementById('heroSolidControls'),
+    heroSolidHex: document.getElementById('heroSolidHex'),
+    heroSolidPicker: document.getElementById('heroSolidPicker'),
+    heroGradientControls: document.getElementById('heroGradientControls'),
+    heroGradStart: document.getElementById('heroGradStart'),
+    heroGradEnd: document.getElementById('heroGradEnd'),
+    heroGradAngle: document.getElementById('heroGradAngle'),
+
+    serialPreview: document.getElementById('serialPreview'),
+    serialTextPreview: document.getElementById('serialTextPreview'),
+    serialBarcodeCanvas: document.getElementById('serialBarcodeCanvas'),
+    heroTextPreview: document.getElementById('heroTextPreview'),
+    heroInnerText: document.getElementById('heroInnerText'),
+
+    saveLogoState: document.getElementById('saveLogoState'),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
@@ -1248,6 +1555,250 @@
   const EXPORT_QUALITY_STEP = 0.01;
   const UNSPLASH_KEY = 'lS5t0PyTTNcbftZPooe7sNzTb7zLx5K82dY5UZGh6gw';
 
+  function defaultTextState(){
+    return {
+      serial: { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', showBarcode:false, applyAll:false },
+      hero: {
+        enabled:false,
+        value:'',
+        font:'SF Pro Text',
+        weight:'Heavy',
+        size:120,
+        letterSpacing:0,
+        lineHeight:'110%',
+        align:'center',
+        vAlign:'middle',
+        colorMode:'solid',
+        solid:'#ffffff',
+        gradient:{ start:'#0ea5e9', end:'#6366f1', angle:0 },
+        position:{ x:0.5, y:0.42 }
+      }
+    };
+  }
+
+  function cloneTextSettings(src){
+    try{
+      return JSON.parse(JSON.stringify(src || defaultTextState()));
+    }catch(err){
+      return defaultTextState();
+    }
+  }
+
+  function cloneSerialSettings(){
+    try{
+      return JSON.parse(JSON.stringify(state.text.serial));
+    }catch(err){
+      return { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', showBarcode:false, applyAll:false };
+    }
+  }
+
+  function propagateSerialToBatch(){
+    if(!state.text.serial.applyAll) return;
+    const serialClone = cloneSerialSettings();
+    state.images.forEach((img, idx)=>{
+      if(!img.text) img.text = defaultTextState();
+      img.text.serial = JSON.parse(JSON.stringify(serialClone));
+    });
+  }
+
+  function commitTextState({ propagateSerial = false, refreshControls = true } = {}){
+    serializeCurrent();
+    if(propagateSerial){ propagateSerialToBatch(); }
+    render();
+    if(refreshControls){ updateControls(); }
+  }
+
+  function normalizeHex(val, fallback = '#ffffff'){
+    if(typeof val !== 'string') return fallback;
+    let clean = val.trim();
+    if(!clean.startsWith('#')){ clean = '#' + clean.replace(/[^0-9a-fA-F]/g,''); }
+    if(/^#[0-9a-fA-F]{6}$/.test(clean)){ return clean.toLowerCase(); }
+    return fallback;
+  }
+
+  function createBarcodeCanvas(text, color){
+    const cleaned = (text || '').replace(/[^0-9A-Za-z]/g,'').toUpperCase();
+    if(!cleaned){ return null; }
+    let pattern = '1010';
+    for(const ch of cleaned){
+      const bits = ch.charCodeAt(0).toString(2).padStart(8,'0');
+      pattern += bits + '0';
+    }
+    pattern += '10101';
+    const moduleWidth = 2;
+    const margin = 10;
+    const width = Math.max(120, pattern.length * moduleWidth + margin * 2);
+    const height = 48;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = color;
+    let x = margin;
+    for(const bit of pattern){
+      if(bit === '1'){ ctx.fillRect(x, 4, moduleWidth, height - 8); }
+      x += moduleWidth;
+    }
+    return canvas;
+  }
+
+  function drawRoundedRect(ctx, x, y, w, h, r){
+    if(w <= 0 || h <= 0) return;
+    const radius = Math.max(0, Math.min(r, Math.min(w, h) / 2));
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + w - radius, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+    ctx.lineTo(x + w, y + h - radius);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+    ctx.lineTo(x + radius, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  }
+
+  function renderBarcodePreview(text, color){
+    if(!els.serialBarcodeCanvas) return;
+    const barcodeCanvas = createBarcodeCanvas(text, color);
+    const ctx = els.serialBarcodeCanvas.getContext('2d');
+    if(!barcodeCanvas){
+      ctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
+      els.serialBarcodeCanvas.style.display = 'none';
+      return;
+    }
+    els.serialBarcodeCanvas.width = barcodeCanvas.width;
+    els.serialBarcodeCanvas.height = barcodeCanvas.height;
+    ctx.clearRect(0,0,barcodeCanvas.width, barcodeCanvas.height);
+    ctx.drawImage(barcodeCanvas, 0, 0);
+    els.serialBarcodeCanvas.style.display = 'block';
+  }
+
+  const HERO_WEIGHT_MAP = {
+    Thin:100,
+    Light:300,
+    Regular:400,
+    Medium:500,
+    Semibold:600,
+    Bold:700,
+    Heavy:800,
+    Black:900
+  };
+
+  function mapHeroWeight(weight){
+    return HERO_WEIGHT_MAP[weight] || 700;
+  }
+
+  function serializeLogoStore(store){
+    if(!store){ return { enabled:false }; }
+    const active = store.enabled !== undefined ? !!store.enabled : !!store.src;
+    if(!store.src){ return { enabled: active }; }
+    return {
+      enabled: active,
+      src: store.src,
+      w: store.w || 0,
+      h: store.h || 0,
+      sizeKey: store.sizeKey || null,
+      tone: store.tone || 'orig',
+      source: store.source || 'none',
+      chosen: store.chosen || ''
+    };
+  }
+
+  function gatherLogoState(){
+    return {
+      frost: {
+        enabled: state.frost.enabled,
+        logo1: serializeLogoStore(state.frost.logo1),
+        logo2: serializeLogoStore(state.frost.logo2),
+        logo2Active: !!els.toggleLogo2?.checked
+      },
+      squareLogo: serializeLogoStore(state.squareLogo),
+      vertLogo: serializeLogoStore(state.vertLogo),
+      bannerLogo: serializeLogoStore(state.bannerLogo)
+    };
+  }
+
+  async function applyLogoSnapshot(snapshot, targetEl, store, which){
+    if(!snapshot || !store || !targetEl) return;
+    const enabled = snapshot.enabled !== undefined ? !!snapshot.enabled : !!snapshot.src;
+    store.sizeKey = snapshot.sizeKey || store.sizeKey;
+    store.tone = snapshot.tone || store.tone || 'orig';
+    store.source = snapshot.source || store.source || 'none';
+    store.chosen = snapshot.chosen || store.chosen || '';
+    store.enabled = enabled;
+    if(!snapshot.src){
+      store.src = null; store.w = 0; store.h = 0;
+      targetEl.style.display = 'none';
+      return;
+    }
+    if(snapshot.source === 'partner'){
+      await loadLogoURL(snapshot.src, targetEl, store, which, snapshot.chosen);
+      store.tone = snapshot.tone || 'orig';
+      if(snapshot.w){ store.w = snapshot.w; }
+      if(snapshot.h){ store.h = snapshot.h; }
+    } else {
+      targetEl.onload = ()=>{
+        store.w = snapshot.w || targetEl.naturalWidth || targetEl.width;
+        store.h = snapshot.h || targetEl.naturalHeight || targetEl.height;
+        render(); updateControls();
+      };
+      targetEl.src = snapshot.src;
+      targetEl.style.display = 'block';
+      store.src = snapshot.src;
+      store.w = snapshot.w || store.w || 0;
+      store.h = snapshot.h || store.h || 0;
+      store.source = 'upload';
+      exclusivePick(which, 'upload');
+    }
+    store.enabled = enabled;
+    if(!enabled){ targetEl.style.display = 'none'; }
+  }
+
+  async function restoreLogoState(){
+    let raw = null;
+    try{ raw = localStorage.getItem(LOGO_STATE_KEY); }catch(err){ raw = null; }
+    if(!raw) return false;
+    let data = null;
+    try{ data = JSON.parse(raw); }catch(err){ console.warn('Failed to parse saved logos', err); return false; }
+    if(!data) return false;
+
+    if(data.frost){
+      if(typeof data.frost.enabled === 'boolean'){ state.frost.enabled = data.frost.enabled; if(els.toggleFrost) els.toggleFrost.checked = state.frost.enabled; }
+      await applyLogoSnapshot(data.frost.logo1, els.logo1Prev, state.frost.logo1, 'logo1');
+      await applyLogoSnapshot(data.frost.logo2, els.logo2Prev, state.frost.logo2, 'logo2');
+      if(typeof data.frost.logo2Active === 'boolean' && els.toggleLogo2){
+        els.toggleLogo2.checked = data.frost.logo2Active;
+        els.logo2Block.style.display = data.frost.logo2Active ? 'grid' : 'none';
+      }
+    }
+    if(data.squareLogo){
+      state.squareLogo.enabled = !!data.squareLogo.enabled;
+      state.squareLogo.sizeKey = data.squareLogo.sizeKey || state.squareLogo.sizeKey;
+      state.squareLogo.tone = data.squareLogo.tone || state.squareLogo.tone;
+      await applyLogoSnapshot(data.squareLogo, els.sqLogoPrev, state.squareLogo, 'squareLogo');
+      if(els.toggleSqLogo){ els.toggleSqLogo.checked = state.squareLogo.enabled; }
+    }
+    if(data.vertLogo){
+      state.vertLogo.enabled = !!data.vertLogo.enabled;
+      state.vertLogo.sizeKey = data.vertLogo.sizeKey || state.vertLogo.sizeKey;
+      state.vertLogo.tone = data.vertLogo.tone || state.vertLogo.tone;
+      await applyLogoSnapshot(data.vertLogo, els.vertLogoPrev, state.vertLogo, 'vertLogo');
+      if(els.toggleVertLogo){ els.toggleVertLogo.checked = state.vertLogo.enabled; els.vertLogoBlock.style.display = state.vertLogo.enabled ? 'grid' : 'none'; }
+    }
+    if(data.bannerLogo){
+      state.bannerLogo.enabled = !!data.bannerLogo.enabled;
+      state.bannerLogo.tone = data.bannerLogo.tone || state.bannerLogo.tone;
+      await applyLogoSnapshot(data.bannerLogo, els.bannerLogoPrev, state.bannerLogo, 'bannerLogo');
+      if(els.toggleBannerLogo){ els.toggleBannerLogo.checked = state.bannerLogo.enabled; }
+    }
+    render();
+    updateControls();
+    return true;
+  }
+
   const state = {
     images: [],
     current: -1,
@@ -1272,8 +1823,11 @@
     },
     play:{ enabled:false, sizeExp:175 },
 
-    squareLogo: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
-    vertLogo:   { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+    squareLogo: { enabled:false, src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+    vertLogo:   { enabled:false, src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
+    bannerLogo: { enabled:false, src:null, w:0, h:0, tone:'orig', source:'none', chosen:"" },
+
+    text: defaultTextState(),
 
     banner: {
       mode:'upload',
@@ -1442,6 +1996,8 @@
       els.bgSourceSection.style.display = isBanner ? 'block' : 'none';
       els.bgSourceSection.setAttribute('aria-hidden', isBanner ? 'false' : 'true');
     }
+    if(els.bgSourceGuidelines){ els.bgSourceGuidelines.style.display = isBanner ? 'block' : 'none'; }
+    if(els.banner3DNote){ els.banner3DNote.style.display = isBanner ? 'block' : 'none'; }
     if(isBanner){
       updateBannerUploadChip();
       updateUnsplashPaletteActive();
@@ -1465,12 +2021,94 @@
       renderGradientSwatches();
       formatGradientSourceLabel();
     }
-    els.squareLogoSection.style.display   = (state.format.key==='SQUARE') ? 'block' : 'none';
-    els.frostSection.style.display        = (state.format.key==='HORIZ')  ? 'block' : 'none';
-    els.verticalLogoSection.style.display = (state.format.key==='VERT')   ? 'block' : 'none';
-    els.vertSizeRow.style.display         = (state.format.key==='VERT')   ? 'flex' : 'none';
-    if(state.format.key==='VERT'){
-      els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
+
+    const isSquare = state.format.key==='SQUARE';
+    const isVertical = state.format.key==='VERT';
+    const isHorizontal = state.format.key==='HORIZ';
+    const isBannerFormat = state.format.key==='BANNER';
+    const isTextFormat = isHorizontal || isSquare || isVertical;
+
+    if(els.squareLogoSection){
+      els.squareLogoSection.style.display = isSquare ? 'block' : 'none';
+      const sqEnabled = state.squareLogo.enabled || !!state.squareLogo.src;
+      if(els.toggleSqLogo){ els.toggleSqLogo.checked = sqEnabled; }
+      if(els.sqLogoBlock){ els.sqLogoBlock.style.display = sqEnabled ? 'grid' : 'none'; }
+    }
+    if(els.frostSection){ els.frostSection.style.display = isHorizontal ? 'block' : 'none'; }
+    if(els.verticalLogoSection){ els.verticalLogoSection.style.display = isVertical ? 'block' : 'none'; }
+    if(els.vertSizeRow){ els.vertSizeRow.style.display = isVertical ? 'flex' : 'none'; }
+    if(isVertical){
+      const vertEnabled = state.vertLogo.enabled || !!state.vertLogo.src;
+      if(els.toggleVertLogo){ els.toggleVertLogo.checked = vertEnabled; }
+      if(els.vertLogoBlock){ els.vertLogoBlock.style.display = vertEnabled ? 'grid' : 'none'; }
+    }
+    if(els.bannerLogoSection){
+      els.bannerLogoSection.style.display = isBannerFormat ? 'block' : 'none';
+      if(isBannerFormat){
+        const bannerEnabled = state.bannerLogo.enabled || !!state.bannerLogo.src;
+        if(els.toggleBannerLogo){ els.toggleBannerLogo.checked = bannerEnabled; }
+        if(els.bannerLogoBlock){ els.bannerLogoBlock.style.display = bannerEnabled ? 'grid' : 'none'; }
+      }
+    }
+    if(els.textSettingsSection){ els.textSettingsSection.style.display = isTextFormat ? 'block' : 'none'; }
+
+    if(isTextFormat){
+      if(els.toggleSerial){ els.toggleSerial.checked = !!state.text.serial.enabled; }
+      if(els.serialSettingsPanel){ els.serialSettingsPanel.style.display = state.text.serial.enabled ? 'grid' : 'none'; }
+      if(els.serialCodeInput && els.serialCodeInput.value !== state.text.serial.value){ els.serialCodeInput.value = state.text.serial.value || ''; }
+      if(els.serialCornerPicker){
+        [...els.serialCornerPicker.querySelectorAll('button')].forEach(btn=>{
+          btn.classList.toggle('active', btn.dataset.corner === state.text.serial.corner);
+        });
+      }
+      if(els.serialColorSeg){
+        [...els.serialColorSeg.querySelectorAll('button')].forEach(btn=>{
+          const color = btn.dataset.color;
+          btn.classList.toggle('active', color === state.text.serial.color);
+        });
+      }
+      if(els.serialCustomWrap){ els.serialCustomWrap.style.display = state.text.serial.color === 'custom' ? 'flex' : 'none'; }
+      if(els.serialCustomColor){ els.serialCustomColor.value = state.text.serial.custom || '#0f172a'; }
+      if(els.serialCustomPicker){
+        const pick = state.text.serial.custom || '#0f172a';
+        els.serialCustomPicker.value = /^#[0-9a-fA-F]{6}$/.test(pick) ? pick : '#0f172a';
+      }
+      if(els.serialBarcodeToggle){ els.serialBarcodeToggle.checked = !!state.text.serial.showBarcode; }
+      if(els.serialApplyAll){ els.serialApplyAll.checked = !!state.text.serial.applyAll; }
+
+      if(els.toggleHero){ els.toggleHero.checked = !!state.text.hero.enabled; }
+      if(els.heroSettingsPanel){ els.heroSettingsPanel.style.display = state.text.hero.enabled ? 'grid' : 'none'; }
+      if(els.heroTextInput && els.heroTextInput.value !== state.text.hero.value){ els.heroTextInput.value = state.text.hero.value || ''; }
+      if(els.heroFontSelect){ els.heroFontSelect.value = state.text.hero.font || 'SF Pro Text'; }
+      if(els.heroWeightSelect){ els.heroWeightSelect.value = state.text.hero.weight || 'Heavy'; }
+      if(els.heroSizeInput){ els.heroSizeInput.value = state.text.hero.size ?? 120; }
+      if(els.heroLetterSpacing){ els.heroLetterSpacing.value = state.text.hero.letterSpacing ?? 0; }
+      if(els.heroLineHeight){ els.heroLineHeight.value = state.text.hero.lineHeight || '110%'; }
+      if(els.heroAlignSeg){
+        [...els.heroAlignSeg.querySelectorAll('button')].forEach(btn=>{
+          btn.classList.toggle('active', btn.dataset.align === state.text.hero.align);
+        });
+      }
+      if(els.heroVerticalSeg){
+        [...els.heroVerticalSeg.querySelectorAll('button')].forEach(btn=>{
+          btn.classList.toggle('active', btn.dataset.valign === state.text.hero.vAlign);
+        });
+      }
+      if(els.heroColorModeSeg){
+        [...els.heroColorModeSeg.querySelectorAll('button')].forEach(btn=>{
+          btn.classList.toggle('active', btn.dataset.mode === state.text.hero.colorMode);
+        });
+      }
+      if(els.heroSolidControls){ els.heroSolidControls.style.display = state.text.hero.colorMode === 'solid' ? 'flex' : 'none'; }
+      if(els.heroSolidHex){ els.heroSolidHex.value = state.text.hero.solid || '#ffffff'; }
+      if(els.heroSolidPicker){
+        const val = state.text.hero.solid || '#ffffff';
+        els.heroSolidPicker.value = /^#[0-9a-fA-F]{6}$/.test(val) ? val : '#ffffff';
+      }
+      if(els.heroGradientControls){ els.heroGradientControls.style.display = state.text.hero.colorMode === 'gradient' ? 'flex' : 'none'; }
+      if(els.heroGradStart){ els.heroGradStart.value = state.text.hero.gradient?.start || '#0ea5e9'; }
+      if(els.heroGradEnd){ els.heroGradEnd.value = state.text.hero.gradient?.end || '#6366f1'; }
+      if(els.heroGradAngle){ els.heroGradAngle.value = state.text.hero.gradient?.angle ?? 0; }
     }
 
     els.bVal.textContent = state.brightness;
@@ -1666,6 +2304,98 @@
       els.vertLogoPrev.style.top = top + 'px';
       applyLogoPreviewTone(els.vertLogoPrev, state.vertLogo.tone);
     } else { els.vertLogoPrev.style.display='none'; }
+
+    if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
+      const scaleX = (state.format.wPreview/state.format.wExport) * state.previewZoom;
+      const scaleY = (state.format.hPreview/state.format.hExport) * state.previewZoom;
+      const targetH = 30 * scaleY;
+      const ratio = state.bannerLogo.w && state.bannerLogo.h ? state.bannerLogo.w/state.bannerLogo.h : 1;
+      const left = frameLeftPx + 15 * scaleX;
+      const top = frameTopPx + 15 * scaleY;
+      els.bannerLogoPrev.style.display='block';
+      els.bannerLogoPrev.style.height = targetH + 'px';
+      els.bannerLogoPrev.style.left = left + 'px';
+      els.bannerLogoPrev.style.top = top + 'px';
+      applyLogoPreviewTone(els.bannerLogoPrev, state.bannerLogo.tone);
+    } else { els.bannerLogoPrev.style.display='none'; }
+
+    const isTextFormat = state.format.key==='HORIZ' || state.format.key==='SQUARE' || state.format.key==='VERT';
+    if(isTextFormat && state.text.serial.enabled && state.text.serial.value){
+      const color = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
+      const exportFont = Math.max(18, Math.round(state.format.hExport * 0.025));
+      const scale = (state.format.hPreview/state.format.hExport) * state.previewZoom;
+      els.serialPreview.style.display = 'inline-block';
+      els.serialPreview.dataset.corner = state.text.serial.corner || 'top-left';
+      els.serialPreview.style.fontSize = (exportFont * scale).toFixed(2) + 'px';
+      els.serialPreview.style.color = color;
+      const background = state.text.serial.color === 'white' ? 'rgba(15,23,42,0.45)' : 'rgba(255,255,255,0.28)';
+      els.serialPreview.style.background = background;
+      els.serialPreview.style.textAlign = (state.text.serial.corner||'top-left').includes('right') ? 'right' : 'left';
+      els.serialTextPreview.textContent = state.text.serial.value;
+      if(state.text.serial.showBarcode){
+        els.serialPreview.classList.add('has-barcode');
+        renderBarcodePreview(state.text.serial.value, color === '#ffffff' ? '#111111' : color);
+      } else {
+        els.serialPreview.classList.remove('has-barcode');
+        if(els.serialBarcodeCanvas){
+          const bctx = els.serialBarcodeCanvas.getContext('2d');
+          bctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
+          els.serialBarcodeCanvas.style.display = 'none';
+        }
+      }
+    } else {
+      els.serialPreview.style.display = 'none';
+      if(els.serialBarcodeCanvas){
+        const bctx = els.serialBarcodeCanvas.getContext('2d');
+        bctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
+        els.serialBarcodeCanvas.style.display = 'none';
+      }
+    }
+
+    if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
+      const pos = state.text.hero.position || {x:0.5, y:0.5};
+      const left = frameLeftPx + (pos.x||0.5) * fwPx;
+      const top = frameTopPx + (pos.y||0.5) * fhPx;
+      const scale = (state.format.hPreview/state.format.hExport) * state.previewZoom;
+      const fontPx = (state.text.hero.size || 120) * scale;
+      const spacingPx = (state.text.hero.letterSpacing || 0) * scale;
+      const inner = els.heroInnerText;
+      els.heroTextPreview.style.display = 'block';
+      els.heroTextPreview.style.left = left + 'px';
+      els.heroTextPreview.style.top = top + 'px';
+      els.heroTextPreview.dataset.align = state.text.hero.align || 'center';
+      els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
+      els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
+      inner.textContent = state.text.hero.value;
+      inner.style.fontSize = fontPx.toFixed(2) + 'px';
+      inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
+      inner.style.fontWeight = mapHeroWeight(state.text.hero.weight);
+      inner.style.letterSpacing = spacingPx.toFixed(2) + 'px';
+      const lh = state.text.hero.lineHeight || '110%';
+      if(typeof lh === 'string' && lh.trim().endsWith('%')){ inner.style.lineHeight = lh.trim(); }
+      else { const num = parseFloat(lh)||110; inner.style.lineHeight = (num/100).toFixed(2); }
+      inner.style.textAlign = state.text.hero.align || 'center';
+      if(state.text.hero.colorMode === 'gradient'){
+        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
+        const angle = state.text.hero.gradient?.angle || 0;
+        const gradient = `linear-gradient(${angle}deg, ${start}, ${end})`;
+        inner.style.backgroundImage = gradient;
+        inner.style.webkitBackgroundClip = 'text';
+        inner.style.backgroundClip = 'text';
+        inner.style.color = 'transparent';
+        els.heroTextPreview.classList.add('no-bg');
+      } else {
+        const col = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+        inner.style.color = col;
+        inner.style.backgroundImage = 'none';
+        inner.style.webkitBackgroundClip = 'initial';
+        inner.style.backgroundClip = 'initial';
+        els.heroTextPreview.classList.remove('no-bg');
+      }
+    } else {
+      els.heroTextPreview.style.display = 'none';
+    }
   }
 
   function updateFrostPreviewTexture(){
@@ -2344,20 +3074,49 @@
       header.className = 'gradientSwatchHeader';
       const label = document.createElement('span');
       label.textContent = `Color ${idx+1}`;
-      const valueEl = document.createElement('span');
-      valueEl.className = 'gradientSwatchValue';
-      valueEl.textContent = color.toUpperCase();
-      header.append(label, valueEl);
-      const input = document.createElement('input');
-      input.type = 'color';
-      input.value = color;
-      input.dataset.index = idx.toString();
-      input.addEventListener('input', ()=>{
-        state.banner.gradient.colors[idx] = input.value;
-        valueEl.textContent = input.value.toUpperCase();
+      header.append(label);
+
+      const row = document.createElement('div');
+      row.className = 'gradientInputRow';
+
+      const textInput = document.createElement('input');
+      textInput.type = 'text';
+      textInput.value = (color || '').toUpperCase();
+      textInput.placeholder = '#FFFFFF';
+      textInput.maxLength = 7;
+      textInput.dataset.index = idx.toString();
+
+      const colorInput = document.createElement('input');
+      colorInput.type = 'color';
+      colorInput.value = /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#ffffff';
+      colorInput.dataset.index = idx.toString();
+
+      const commitColor = (val)=>{
+        const normalized = /^#[0-9a-fA-F]{6}$/.test(val) ? val : null;
+        if(!normalized) return false;
+        state.banner.gradient.colors[idx] = normalized;
+        textInput.value = normalized.toUpperCase();
+        colorInput.value = normalized;
         updateGradientPreview();
+        return true;
+      };
+
+      colorInput.addEventListener('input', ()=>{
+        commitColor(colorInput.value);
       });
-      swatch.append(header, input);
+
+      textInput.addEventListener('change', ()=>{
+        const val = textInput.value.trim().toUpperCase();
+        if(!val.startsWith('#')){ textInput.value = '#' + val.replace(/[^0-9A-F]/gi,'').slice(0,6); }
+        const candidate = textInput.value.toUpperCase();
+        if(!commitColor(candidate)){
+          const current = state.banner.gradient.colors[idx] || '#FFFFFF';
+          textInput.value = current.toUpperCase();
+        }
+      });
+
+      row.append(textInput, colorInput);
+      swatch.append(header, row);
       els.gradientColorContainer.appendChild(swatch);
     });
     if(els.gradientColorCount){
@@ -2618,6 +3377,7 @@
     if(partnerDataScript){
       partnerDataScript.textContent = JSON.stringify(partnerLibrary, null, 2);
     }
+    try{ localStorage.setItem(PARTNER_STORAGE_KEY, JSON.stringify(partnerLibrary)); }catch(err){ console.warn('Failed to store partner logos', err); }
   }
 
   function updatePartnerPreview(img, url){
@@ -3034,7 +3794,8 @@
       src, name, natural,
       brightness:100, saturation:100, contrast:100,
       flipH:false, flipV:false, rotation:0,
-      imgZoom:1, offset:{x:0,y:0}
+      imgZoom:1, offset:{x:0,y:0},
+      text: defaultTextState()
     });
     resetDeleteAllPrompt();
     const position = state.current>=0 ? state.current+1 : state.images.length;
@@ -3050,6 +3811,7 @@
     it.flipH = state.flipH; it.flipV = state.flipV; it.rotation = state.rotation;
     it.imgZoom = state.imgZoom; it.offset = {x:state.offset.x, y:state.offset.y};
     it.natural = {w:state.natural.w, h:state.natural.h};
+    it.text = cloneTextSettings(state.text);
   }
   function loadImageAt(idx){
     if(idx<0 || idx>=state.images.length) return;
@@ -3062,6 +3824,7 @@
     state.flipH = it.flipH; state.flipV = it.flipV; state.rotation = it.rotation;
     state.imgZoom = it.imgZoom; state.offset = {x:it.offset.x, y:it.offset.y};
     els.img.src = it.src;
+    state.text = cloneTextSettings(it.text);
     const text = `${idx+1} / ${state.images.length}`;
     els.batchMeta.textContent = text;
     computeCover(); fitPreviewZoomToStage(); render(); updateControls();
@@ -3090,13 +3853,198 @@
   });
 
   els.toggleVertLogo.addEventListener('change', ()=>{
-    els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
-    if(!els.toggleVertLogo.checked){
-      state.vertLogo={src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
+    const checked = !!els.toggleVertLogo.checked;
+    state.vertLogo.enabled = checked;
+    els.vertLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(!checked){
+      state.vertLogo={enabled:false, src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
       els.vertLogoPrev.style.display='none';
-      render(); updateControls();
+    }
+    render(); updateControls();
+  });
+  els.toggleSqLogo?.addEventListener('change', ()=>{
+    const checked = !!els.toggleSqLogo.checked;
+    state.squareLogo.enabled = checked;
+    if(els.sqLogoBlock) els.sqLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(!checked){
+      state.squareLogo = { enabled:false, src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone: state.squareLogo.tone||'orig', source:'none', chosen:"" };
+      els.sqLogoPrev.style.display='none';
+    }
+    render(); updateControls();
+  });
+  els.toggleBannerLogo?.addEventListener('change', ()=>{
+    const checked = !!els.toggleBannerLogo.checked;
+    state.bannerLogo.enabled = checked;
+    if(els.bannerLogoBlock) els.bannerLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(!checked){
+      state.bannerLogo = { enabled:false, src:null,w:0,h:0,tone:state.bannerLogo.tone||'orig', source:'none', chosen:"" };
+      els.bannerLogoPrev.style.display='none';
+    }
+    render(); updateControls();
+  });
+  els.toggleSerial?.addEventListener('change', ()=>{
+    state.text.serial.enabled = !!els.toggleSerial.checked;
+    commitTextState({ propagateSerial: state.text.serial.applyAll });
+  });
+  els.serialCodeInput?.addEventListener('input', (e)=>{
+    state.text.serial.value = e.target.value;
+    commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+  });
+  els.serialCornerPicker?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const corner = btn.dataset.corner || 'top-left';
+    state.text.serial.corner = corner;
+    commitTextState({ propagateSerial: state.text.serial.applyAll });
+  });
+  els.serialColorSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const color = btn.dataset.color || 'black';
+    state.text.serial.color = color;
+    if(color !== 'custom'){ state.text.serial.custom = color === 'white' ? '#ffffff' : '#0f172a'; }
+    commitTextState({ propagateSerial: state.text.serial.applyAll });
+  });
+  els.serialCustomColor?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
+    if(val !== state.text.serial.custom){
+      state.text.serial.custom = val;
+      commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
     }
   });
+  els.serialCustomPicker?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
+    state.text.serial.custom = val;
+    commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+  });
+  els.serialBarcodeToggle?.addEventListener('change', ()=>{
+    state.text.serial.showBarcode = !!els.serialBarcodeToggle.checked;
+    commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+  });
+  els.serialApplyAll?.addEventListener('change', ()=>{
+    state.text.serial.applyAll = !!els.serialApplyAll.checked;
+    commitTextState({ propagateSerial: state.text.serial.applyAll });
+  });
+
+  els.toggleHero?.addEventListener('change', ()=>{
+    state.text.hero.enabled = !!els.toggleHero.checked;
+    commitTextState();
+  });
+  els.heroTextInput?.addEventListener('input', (e)=>{
+    state.text.hero.value = e.target.value;
+    commitTextState({ refreshControls:false });
+  });
+  els.heroFontSelect?.addEventListener('change', (e)=>{
+    state.text.hero.font = e.target.value;
+    commitTextState();
+  });
+  els.heroWeightSelect?.addEventListener('change', (e)=>{
+    state.text.hero.weight = e.target.value;
+    commitTextState({ refreshControls:false });
+  });
+  els.heroSizeInput?.addEventListener('input', (e)=>{
+    const val = Math.max(80, parseFloat(e.target.value)||80);
+    state.text.hero.size = val;
+    commitTextState({ refreshControls:false });
+  });
+  els.heroLetterSpacing?.addEventListener('input', (e)=>{
+    state.text.hero.letterSpacing = parseFloat(e.target.value)||0;
+    commitTextState({ refreshControls:false });
+  });
+  els.heroLineHeight?.addEventListener('change', (e)=>{
+    const raw = (e.target.value||'').trim();
+    state.text.hero.lineHeight = raw || '110%';
+    commitTextState();
+  });
+  els.heroAlignSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    state.text.hero.align = btn.dataset.align || 'center';
+    commitTextState();
+  });
+  els.heroVerticalSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const current = state.text.hero.vAlign || 'middle';
+    const target = btn.dataset.valign || 'middle';
+    if(current === target){
+      state.text.hero.vAlign = 'middle';
+    } else {
+      state.text.hero.vAlign = target;
+      if(target === 'top'){ state.text.hero.position.y = 0.15; }
+      else if(target === 'bottom'){ state.text.hero.position.y = 0.85; }
+    }
+    commitTextState();
+  });
+  els.heroColorModeSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    state.text.hero.colorMode = btn.dataset.mode || 'solid';
+    commitTextState();
+  });
+  els.heroSolidHex?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.hero.solid || '#ffffff');
+    state.text.hero.solid = val;
+    commitTextState({ refreshControls:false });
+  });
+  els.heroSolidPicker?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.hero.solid || '#ffffff');
+    state.text.hero.solid = val;
+    commitTextState({ refreshControls:false });
+  });
+  els.heroGradStart?.addEventListener('input', (e)=>{
+    state.text.hero.gradient.start = normalizeHex(e.target.value, state.text.hero.gradient.start || '#0ea5e9');
+    commitTextState({ refreshControls:false });
+  });
+  els.heroGradEnd?.addEventListener('input', (e)=>{
+    state.text.hero.gradient.end = normalizeHex(e.target.value, state.text.hero.gradient.end || '#6366f1');
+    commitTextState({ refreshControls:false });
+  });
+  els.heroGradAngle?.addEventListener('input', (e)=>{
+    state.text.hero.gradient.angle = parseFloat(e.target.value)||0;
+    commitTextState({ refreshControls:false });
+  });
+  els.saveLogoState?.addEventListener('click', ()=>{
+    const payload = gatherLogoState();
+    try{ localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload)); }catch(err){ console.warn('Failed to store logo state', err); return; }
+    if(els.saveLogoState){
+      els.saveLogoState.classList.remove('feedback-error');
+      els.saveLogoState.classList.add('feedback-success');
+      window.setTimeout(()=> els.saveLogoState.classList.remove('feedback-success'), 1400);
+    }
+  });
+
+  let heroDrag = null;
+  function updateHeroPositionFromPointer(e){
+    if(!frameMetrics.width || !frameMetrics.height) return;
+    const stageRect = els.stage.getBoundingClientRect();
+    const x = e.clientX - stageRect.left - frameMetrics.left;
+    const y = e.clientY - stageRect.top - frameMetrics.top;
+    const normX = Math.max(0, Math.min(1, x / frameMetrics.width));
+    const normY = Math.max(0, Math.min(1, y / frameMetrics.height));
+    state.text.hero.position = { x: normX, y: normY };
+    state.text.hero.vAlign = 'middle';
+    render();
+  }
+  const endHeroDrag = (e)=>{
+    if(heroDrag === null) return;
+    if(els.heroTextPreview){
+      try{ els.heroTextPreview.releasePointerCapture(heroDrag); }catch(err){}
+      els.heroTextPreview.classList.remove('dragging');
+    }
+    heroDrag = null;
+    commitTextState({ refreshControls:false });
+  };
+  els.heroTextPreview?.addEventListener('pointerdown', (e)=>{
+    if(!state.text.hero.enabled) return;
+    if(e.button !== 0) return;
+    heroDrag = e.pointerId;
+    els.heroTextPreview.classList.add('dragging');
+    els.heroTextPreview.setPointerCapture(e.pointerId);
+    updateHeroPositionFromPointer(e);
+    e.preventDefault();
+  });
+  els.heroTextPreview?.addEventListener('pointermove', (e)=>{
+    if(heroDrag === null || e.pointerId !== heroDrag) return;
+    updateHeroPositionFromPointer(e);
+  });
+  els.heroTextPreview?.addEventListener('pointerup', endHeroDrag);
+  els.heroTextPreview?.addEventListener('pointercancel', endHeroDrag);
   els.vertSizeSeg.addEventListener('click', (e)=>{
     const btn = e.target.closest('button'); if(!btn) return;
     const v = btn.dataset.v; if(!v) return;
@@ -3182,24 +4130,25 @@
     else if(which==='logo2'){ if(sourceType==='upload'){ els.logo2Gallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.logo2Input.value=''; } }
     else if(which==='squareLogo'){ if(sourceType==='upload'){ els.sqLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.sqLogoInput.value=''; } }
     else if(which==='vertLogo'){ if(sourceType==='upload'){ els.vertLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.vertLogoInput.value=''; } }
+    else if(which==='bannerLogo'){ if(sourceType==='upload'){ els.bannerLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.bannerLogoInput.value=''; } }
   }
   function loadLogo(file, targetImgEl, store, which){
-    if(!file){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; render(); updateControls(); return; }
+    if(!file){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; store.enabled=false; render(); updateControls(); return; }
     const r = new FileReader();
     r.onload = ()=>{
       const src = r.result; targetImgEl.onload = ()=>{
         targetImgEl.style.display='block';
-        const temp = new Image(); temp.onload = ()=>{ store.src = src; store.w = temp.width; store.h = temp.height; store.source='upload'; store.chosen=""; exclusivePick(which,'upload'); render(); updateControls(); };
+        const temp = new Image(); temp.onload = ()=>{ store.src = src; store.w = temp.width; store.h = temp.height; store.source='upload'; store.chosen=""; store.enabled = true; exclusivePick(which,'upload'); render(); updateControls(); };
         temp.src = src;
       }; targetImgEl.src = src;
     };
     r.readAsDataURL(file);
   }
   async function loadLogoURL(url, targetImgEl, store, which, label){
-    if(!url){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; render(); updateControls(); return; }
+    if(!url){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; store.enabled=false; render(); updateControls(); return; }
     try{
       const im = await loadImageCORS(url);
-      store.src = url; store.w = im.width; store.h = im.height; store.source='partner'; store.chosen = (label||''); targetImgEl.src = url; targetImgEl.style.display='block'; exclusivePick(which,'partner'); render(); updateControls();
+      store.src = url; store.w = im.width; store.h = im.height; store.source='partner'; store.chosen = (label||''); store.enabled = true; targetImgEl.src = url; targetImgEl.style.display='block'; exclusivePick(which,'partner'); render(); updateControls();
     }catch(err){ console.error('Failed to load partner logo', err); alert('This logo host blocks export due to CORS. Please upload the logo file instead.'); }
   }
   els.logo1Input.addEventListener('change', ()=> loadLogo(els.logo1Input.files?.[0], els.logo1Prev, state.frost.logo1, 'logo1'));
@@ -3215,15 +4164,18 @@
     buildGallery(els.logo2Gallery, p=>loadLogoURL(p.url, els.logo2Prev, state.frost.logo2, 'logo2', p.name), ()=>state.frost.logo2);
     buildGallery(els.sqLogoGallery, p=>loadLogoURL(p.url, els.sqLogoPrev, state.squareLogo, 'squareLogo', p.name), ()=>state.squareLogo);
     buildGallery(els.vertLogoGallery, p=>loadLogoURL(p.url, els.vertLogoPrev, state.vertLogo, 'vertLogo', p.name), ()=>state.vertLogo);
+    buildGallery(els.bannerLogoGallery, p=>loadLogoURL(p.url, els.bannerLogoPrev, state.bannerLogo, 'bannerLogo', p.name), ()=>state.bannerLogo);
     if(els.logo1Search?.value) filterGallery(els.logo1Gallery, els.logo1Search.value);
     if(els.logo2Search?.value) filterGallery(els.logo2Gallery, els.logo2Search.value);
     if(els.sqLogoSearch?.value) filterGallery(els.sqLogoGallery, els.sqLogoSearch.value);
     if(els.vertLogoSearch?.value) filterGallery(els.vertLogoGallery, els.vertLogoSearch.value);
+    if(els.bannerLogoSearch?.value) filterGallery(els.bannerLogoGallery, els.bannerLogoSearch.value);
   }
   els.logo1Search.addEventListener('input', e=>filterGallery(els.logo1Gallery, e.target.value));
   els.logo2Search.addEventListener('input', e=>filterGallery(els.logo2Gallery, e.target.value));
   els.sqLogoSearch?.addEventListener('input', e=>filterGallery(els.sqLogoGallery, e.target.value));
   els.vertLogoSearch?.addEventListener('input', e=>filterGallery(els.vertLogoGallery, e.target.value));
+  els.bannerLogoSearch?.addEventListener('input', e=>filterGallery(els.bannerLogoGallery, e.target.value));
 
   els.partnerSettingsTriggers?.forEach(btn=>btn.addEventListener('click', openPartnerSettings));
   els.partnerSettingsAdd?.addEventListener('click', ()=>{
@@ -3419,6 +4371,159 @@
       }
     }
 
+    // Banner logo (top-left)
+    if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
+      const im = await loadImageCORS(state.bannerLogo.src);
+      if(im){
+        const targetH = 30;
+        const baseW = im.naturalWidth || im.width; const baseH = im.naturalHeight || im.height;
+        const scale = targetH / baseH; const w = Math.max(1, Math.round(baseW * scale));
+        const source = toneImageSource(im, state.bannerLogo.tone);
+        ctx.save(); ctx.drawImage(source, 15, 15, w, targetH); ctx.restore();
+      }
+    }
+
+    const isTextFormat = state.format.key==='HORIZ' || state.format.key==='SQUARE' || state.format.key==='VERT';
+    if(isTextFormat && state.text.serial.enabled && state.text.serial.value){
+      const color = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
+      const fontSize = Math.max(18, Math.round(state.format.hExport * 0.025));
+      const fontFamily = `'SF Pro Text', 'Inter', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
+      ctx.save();
+      ctx.font = `600 ${fontSize}px ${fontFamily}`;
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
+      const metrics = ctx.measureText(state.text.serial.value);
+      const textHeightRaw = (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0);
+      const textHeight = textHeightRaw > 0 ? textHeightRaw : fontSize * 1.2;
+      const textWidth = metrics.width || (state.text.serial.value.length * fontSize * 0.6);
+      const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
+      const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
+      const marginX = 24 * scaleX;
+      const marginY = 24 * scaleY;
+      const padX = 10 * scaleX;
+      const padY = 6 * scaleY;
+      const gap = state.text.serial.showBarcode ? 6 * scaleY : 0;
+      const radius = 8 * ((scaleX + scaleY) / 2);
+      const corner = state.text.serial.corner || 'top-left';
+      const barcodeCanvas = state.text.serial.showBarcode ? createBarcodeCanvas(state.text.serial.value, color === '#ffffff' ? '#111111' : color) : null;
+      const barcodeWidth = barcodeCanvas ? barcodeCanvas.width * scaleX : 0;
+      const barcodeHeight = barcodeCanvas ? barcodeCanvas.height * scaleY : 0;
+      const boxWidth = Math.max(textWidth + padX * 2, barcodeWidth + padX * 2);
+      const contentHeight = textHeight + (barcodeCanvas ? gap + barcodeHeight : 0);
+      const boxHeight = contentHeight + padY * 2;
+      let x = corner.includes('right') ? fw - marginX - boxWidth : marginX;
+      let y = corner.includes('bottom') ? fh - marginY - boxHeight : marginY;
+      const background = state.text.serial.color === 'white' ? 'rgba(15,23,42,0.45)' : 'rgba(255,255,255,0.28)';
+      drawRoundedRect(ctx, x, y, boxWidth, boxHeight, radius);
+      ctx.fillStyle = background;
+      ctx.fill();
+      ctx.fillStyle = color;
+      const textAlign = corner.includes('right') ? 'right' : 'left';
+      const textX = textAlign === 'right' ? x + boxWidth - padX : x + padX;
+      const textY = y + padY;
+      ctx.textAlign = textAlign;
+      ctx.fillText(state.text.serial.value, textX, textY);
+      if(barcodeCanvas){
+        const bX = textAlign === 'right' ? x + boxWidth - padX - barcodeWidth : x + padX;
+        const bY = textY + textHeight + gap;
+        ctx.drawImage(barcodeCanvas, bX, bY, barcodeWidth, barcodeHeight);
+      }
+      ctx.restore();
+    }
+
+    if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
+      const lines = state.text.hero.value.split(/\n/);
+      const fontSize = Math.max(12, state.text.hero.size || 120);
+      const letterSpacing = Number.isFinite(state.text.hero.letterSpacing) ? state.text.hero.letterSpacing : 0;
+      const fontFamily = state.text.hero.font || 'SF Pro Text';
+      const weight = mapHeroWeight(state.text.hero.weight);
+      const fontStack = `'${fontFamily.replace(/'/g, "\\'")}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
+      const rawLine = state.text.hero.lineHeight ?? '110%';
+      let lineFactor = 1.1;
+      if(typeof rawLine === 'string'){
+        const trimmed = rawLine.trim();
+        if(trimmed){
+          const val = parseFloat(trimmed);
+          if(!Number.isNaN(val)){ lineFactor = val/100; }
+        }
+      } else if(typeof rawLine === 'number' && !Number.isNaN(rawLine)){ lineFactor = rawLine/100; }
+      if(!Number.isFinite(lineFactor) || lineFactor <= 0){ lineFactor = 1.1; }
+      const lineHeightPx = fontSize * lineFactor;
+      ctx.save();
+      ctx.font = `${weight} ${fontSize}px ${fontStack}`;
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
+      const measureLine = (text)=>{
+        if(!text) return 0;
+        if(!letterSpacing){ return ctx.measureText(text).width; }
+        let width = 0;
+        for(let i=0;i<text.length;i++){
+          const ch = text[i];
+          width += ctx.measureText(ch).width;
+          if(i < text.length - 1){ width += letterSpacing; }
+        }
+        return width;
+      };
+      const lineWidths = lines.map(measureLine);
+      const maxWidth = lineWidths.length ? Math.max(...lineWidths) : 0;
+      const totalHeight = lines.length ? (fontSize + (lines.length - 1) * lineHeightPx) : 0;
+      const pos = state.text.hero.position || {x:0.5, y:0.5};
+      const anchorX = (pos.x || 0.5) * fw;
+      const anchorY = (pos.y || 0.5) * fh;
+      const align = state.text.hero.align || 'center';
+      const vAlign = state.text.hero.vAlign || 'middle';
+      const baseLeft = align === 'center' ? anchorX - maxWidth/2 : align === 'right' ? anchorX - maxWidth : anchorX;
+      const baseTop = vAlign === 'middle' ? anchorY - totalHeight/2 : vAlign === 'bottom' ? anchorY - totalHeight : anchorY;
+      const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
+      const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
+      const padScale = Math.sqrt(scaleX * scaleY);
+      const padX = 16 * padScale;
+      const padY = 12 * padScale;
+      const radius = 16 * padScale;
+      if(state.text.hero.colorMode !== 'gradient'){
+        ctx.save();
+        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
+        ctx.fillStyle = 'rgba(15,23,42,0.08)';
+        ctx.fill();
+        ctx.restore();
+      }
+      let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+      if(state.text.hero.colorMode === 'gradient'){
+        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
+        const angle = state.text.hero.gradient?.angle || 0;
+        const angleRad = angle * Math.PI / 180;
+        const dirX = Math.cos(angleRad);
+        const dirY = Math.sin(angleRad);
+        const halfW = maxWidth / 2;
+        const halfH = totalHeight / 2;
+        const len = Math.abs(halfW * dirX) + Math.abs(halfH * dirY);
+        const grad = ctx.createLinearGradient(baseLeft + halfW - dirX * len, baseTop + halfH - dirY * len, baseLeft + halfW + dirX * len, baseTop + halfH + dirY * len);
+        grad.addColorStop(0, start);
+        grad.addColorStop(1, end);
+        fillStyle = grad;
+      }
+      ctx.fillStyle = fillStyle;
+      const drawLine = (text, startX, startY)=>{
+        if(!letterSpacing){ ctx.fillText(text, startX, startY); return; }
+        let x = startX;
+        for(let i=0;i<text.length;i++){
+          const ch = text[i];
+          ctx.fillText(ch, x, startY);
+          x += ctx.measureText(ch).width + letterSpacing;
+        }
+      };
+      let y = baseTop;
+      for(let i=0;i<lines.length;i++){
+        const line = lines[i];
+        const width = lineWidths[i];
+        const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
+        drawLine(line, lineLeft, y);
+        y += lineHeightPx;
+      }
+      ctx.restore();
+    }
+
     // JPEG size tuning
     let quality = EXPORT_START_QUALITY;
     let dataURL = canvas.toDataURL('image/jpeg', quality);
@@ -3545,8 +4650,37 @@
   updateGradientPreview();
   refreshIcons();
   buildAllGalleries();
-  els.toggleLogo2.checked = false; els.logo2Block.style.display='none';
-  els.toggleVertLogo.checked = true; els.vertLogoBlock.style.display='grid';
+  let restored = false;
+  try{
+    restored = await restoreLogoState();
+  }catch(err){
+    console.warn('Unable to restore saved logos', err);
+    restored = false;
+  }
+  if(!restored){
+    if(els.toggleLogo2){
+      els.toggleLogo2.checked = false;
+      if(els.logo2Block){ els.logo2Block.style.display = 'none'; }
+    }
+    if(els.toggleVertLogo){
+      els.toggleVertLogo.checked = true;
+      state.vertLogo.enabled = true;
+      if(els.vertLogoBlock){ els.vertLogoBlock.style.display = 'grid'; }
+    }
+  } else {
+    if(els.toggleLogo2 && els.logo2Block){
+      els.logo2Block.style.display = els.toggleLogo2.checked ? 'grid' : 'none';
+    }
+    if(els.toggleVertLogo && els.vertLogoBlock){
+      els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
+    }
+    if(els.toggleSqLogo && els.sqLogoBlock){
+      els.sqLogoBlock.style.display = els.toggleSqLogo.checked ? 'grid' : 'none';
+    }
+    if(els.toggleBannerLogo && els.bannerLogoBlock){
+      els.bannerLogoBlock.style.display = els.toggleBannerLogo.checked ? 'grid' : 'none';
+    }
+  }
   fitPreviewZoomToStage();
   render();
   updateControls();
