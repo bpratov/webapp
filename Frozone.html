@@ -152,16 +152,18 @@
 
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
-  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -8px 24px rgba(2,6,23,0.15);}
+  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -6px 28px rgba(2,6,23,0.24); pointer-events:none; z-index:40;}
   .frostBg{position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; transition:background-image .2s ease, opacity .2s ease; filter:none;}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.28),rgba(255,255,255,0.08)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.12)}
+  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(15,23,42,0.28),rgba(15,23,42,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -12px 24px rgba(2,6,23,0.3)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
   .stageWarning{position:absolute; inset:20px; pointer-events:none}
-  .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:40; display:none; pointer-events:none; white-space:nowrap; text-shadow:0 1px 2px rgba(15,23,42,0.28)}
+  .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:44; display:none; pointer-events:none; white-space:nowrap; text-shadow:0 1px 2px rgba(15,23,42,0.28)}
   .serialPreview span{display:inline-block}
-  .heroText{position:absolute; z-index:42; min-width:120px; display:none; cursor:grab; user-select:none; transition:box-shadow .15s ease, transform .15s ease; transform:translate(-50%,-50%); pointer-events:auto}
+  .heroText{position:absolute; z-index:32; min-width:120px; display:none; cursor:grab; user-select:none; transition:box-shadow .15s ease, transform .15s ease; transform:translate(-50%,-50%); pointer-events:auto}
+  .heroText::after{content:""; position:absolute; inset:-10px; border-radius:22px; border:1.5px dashed rgba(255,255,255,0.65); box-shadow:0 8px 20px rgba(15,23,42,0.16); opacity:0; pointer-events:none; transition:opacity .18s ease}
+  .heroText:focus::after, .heroText:focus-within::after, .heroText.dragging::after, .heroText.resizing::after, .heroText.editing::after{opacity:1}
   .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText.resizing{cursor:nwse-resize}
   .heroText .heroInner{display:block; pointer-events:none; white-space:pre-wrap}
@@ -172,7 +174,7 @@
   .heroText[data-panel="light"], .heroText[data-panel="dark"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText[data-panel="light"]{background:rgba(255,255,255,0.68)}
   .heroText[data-panel="dark"]{background:rgba(15,23,42,0.68)}
-  .heroEditor{position:absolute; inset:0; width:100%; height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor}
+  .heroEditor{position:absolute; inset:0; min-width:100%; min-height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor; overflow:hidden; pointer-events:auto}
   .heroText.editing .heroEditor{display:block}
   .heroText.editing .heroInner{visibility:hidden}
   .heroText.editing .heroHandle{display:none}
@@ -207,8 +209,14 @@
   .colorHexInput:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
   .colorOverlay{position:absolute; inset:0; opacity:0; cursor:pointer}
   .inputStack{display:flex; flex-direction:column; gap:4px; min-width:100px}
-  .inputHint{font-size:11px; color:var(--muted)}
-  .heroMetricsRow input[type="number"], .heroMetricsRow input[type="text"]{min-width:110px}
+  .heroMetricGrid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
+  @media (max-width: 960px){
+    .heroMetricGrid{grid-template-columns:1fr}
+  }
+  .heroControl{display:grid; gap:6px; align-content:flex-start}
+  .heroControl input[type="number"], .heroControl input[type="text"]{width:100%}
+  .heroControlLabel{font-size:13px; font-weight:600}
+  .heroAlignControl .alignSeg{justify-content:flex-start}
   .heroColorRow{gap:14px}
   .heroColorRow .seg{flex-wrap:nowrap}
   .heroGradientControls{display:flex; flex-wrap:wrap; gap:18px; align-items:flex-end}
@@ -220,8 +228,8 @@
   .textFieldRow{display:grid; gap:10px}
   .textFieldRow label{font-size:13px; font-weight:600}
   .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
-  .cornerPicker button{all:unset; display:grid; place-items:center; border-radius:10px; border:1px solid var(--border); padding:12px; cursor:pointer; transition:all .15s ease}
-  .cornerPicker button svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8}
+  .cornerPicker button{all:unset; display:grid; place-items:center; border-radius:12px; border:1px solid var(--border); padding:12px; cursor:pointer; transition:all .15s ease; background:var(--stageInner); box-shadow:0 4px 10px rgba(15,23,42,0.05)}
+  .cornerPicker button svg{width:22px; height:22px; stroke:var(--muted); stroke-width:2.4; fill:none}
   .cornerPicker button.active{border-color:var(--brand); box-shadow:0 6px 16px rgba(14,165,233,0.18)}
   .cornerPicker button.active svg{stroke:var(--brand2)}
   .serialColorRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
@@ -248,7 +256,7 @@
   .bgGuidanceList .bannerOnly{display:none}
   .serialOptions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
 
-  .playWrap{position:absolute; display:none; pointer-events:none}
+  .playWrap{position:absolute; display:none; pointer-events:none; z-index:46}
   .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(6.2037px); background:rgba(0,0,0,0.40); box-shadow:inset 0 1px 2px rgba(255,255,255,0.2), 0 10px 30px rgba(2,6,23,0.25);}
   .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
   .playTri svg{width:54%; max-width:72px; height:auto}
@@ -1087,10 +1095,10 @@
               <div class="serialFieldRow">
                 <label>Corner</label>
                 <div class="cornerPicker" id="serialCornerPicker">
-                  <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                  <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="5" y="5" width="18" height="18" rx="5"></rect><path d="M10 6h8" stroke-linecap="round"></path><path d="M6 10v8" stroke-linecap="round"></path><circle cx="10" cy="10" r="3" fill="currentColor" stroke="none"></circle></svg></button>
+                  <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="5" y="5" width="18" height="18" rx="5"></rect><path d="M18 6h-8" stroke-linecap="round"></path><path d="M22 10v8" stroke-linecap="round"></path><circle cx="18" cy="10" r="3" fill="currentColor" stroke="none"></circle></svg></button>
+                  <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="5" y="5" width="18" height="18" rx="5"></rect><path d="M10 22h8" stroke-linecap="round"></path><path d="M6 18v-8" stroke-linecap="round"></path><circle cx="10" cy="18" r="3" fill="currentColor" stroke="none"></circle></svg></button>
+                  <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="5" y="5" width="18" height="18" rx="5"></rect><path d="M18 22h-8" stroke-linecap="round"></path><path d="M22 18v-8" stroke-linecap="round"></path><circle cx="18" cy="18" r="3" fill="currentColor" stroke="none"></circle></svg></button>
                 </div>
               </div>
               <div class="serialColorRow">
@@ -1146,28 +1154,26 @@
                     <option>Black</option>
                   </select>
                 </div>
-                <div class="heroRow heroMetricsRow">
-                  <label for="heroSizeInput">Size</label>
-                  <div class="inputStack">
-                    <input id="heroSizeInput" type="number" min="80" step="1" value="120" />
-                    <span class="inputHint">Min 80px</span>
+                <div class="heroMetricGrid">
+                  <div class="heroControl">
+                    <label for="heroSizeInput">Size</label>
+                    <input id="heroSizeInput" type="number" step="1" value="120" />
                   </div>
-                  <label for="heroLetterSpacing">Letter spacing (px)</label>
-                  <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
-                  <label for="heroLineHeight">Line height (%)</label>
-                  <input id="heroLineHeight" type="text" value="110%" />
-                </div>
-                <div class="heroRow heroAlignmentRow">
-                  <span class="logoControlLabel">Alignment</span>
-                  <div class="alignSeg" id="heroAlignSeg">
-                    <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
-                    <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
-                    <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                  <div class="heroControl">
+                    <label for="heroLetterSpacing">Letter spacing (px)</label>
+                    <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
                   </div>
-                  <span class="logoControlLabel">Vertical</span>
-                  <div class="alignSeg" id="heroVerticalSeg">
-                    <button type="button" data-valign="top" aria-label="Align top"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="8" x2="20" y2="8"></line><rect x="10" y="10" width="8" height="10" rx="2"></rect></svg></button>
-                    <button type="button" data-valign="bottom" aria-label="Align bottom"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="20" x2="20" y2="20"></line><rect x="10" y="8" width="8" height="10" rx="2"></rect></svg></button>
+                  <div class="heroControl">
+                    <label for="heroLineHeight">Line height (%)</label>
+                    <input id="heroLineHeight" type="text" value="110%" />
+                  </div>
+                  <div class="heroControl heroAlignControl">
+                    <span class="heroControlLabel">Alignment</span>
+                    <div class="alignSeg" id="heroAlignSeg">
+                      <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
+                      <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
+                      <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                    </div>
                   </div>
                 </div>
                 <div class="heroRow heroColorRow">
@@ -1566,7 +1572,6 @@
     heroLetterSpacing: document.getElementById('heroLetterSpacing'),
     heroLineHeight: document.getElementById('heroLineHeight'),
     heroAlignSeg: document.getElementById('heroAlignSeg'),
-    heroVerticalSeg: document.getElementById('heroVerticalSeg'),
     heroColorModeSeg: document.getElementById('heroColorModeSeg'),
     heroSolidControls: document.getElementById('heroSolidControls'),
     heroSolidHex: document.getElementById('heroSolidHex'),
@@ -1607,6 +1612,8 @@
     partnerSettingsTriggers: Array.from(document.querySelectorAll('[data-partner-settings]')),
   };
 
+  bindHexPaletteTriggers();
+
   function refreshIcons(){
     if(window.lucide && typeof window.lucide.createIcons === 'function'){
       window.lucide.createIcons({ attrs:{ class:'btn-ico', 'stroke-width':1.8 } });
@@ -1617,6 +1624,7 @@
   const SIZE_MAP = { S:23, M:30, L:53 };
   const SIZE_MAP_SQ = { S:35, M:55, L:75 };
   const BANNER_MODES = ['gradient','unsplash','upload','link'];
+  const HERO_MIN_SIZE = 24;
   const UNSPLASH_COLOR_PARAM_MAP = {
     pink: 'magenta'
   };
@@ -1740,6 +1748,15 @@
 
   function mapHeroWeight(weight){
     return HERO_WEIGHT_MAP[weight] || 700;
+  }
+
+  function bindHexPaletteTriggers(){
+    document.querySelectorAll('.colorHexInput').forEach(input=>{
+      const field = input.closest('.colorField');
+      const picker = field?.querySelector('input[type="color"]');
+      if(!picker) return;
+      input.addEventListener('dblclick', ()=>{ picker.click(); });
+    });
   }
 
   function serializeLogoStore(store){
@@ -2160,11 +2177,6 @@
           btn.classList.toggle('active', btn.dataset.align === state.text.hero.align);
         });
       }
-      if(els.heroVerticalSeg){
-        [...els.heroVerticalSeg.querySelectorAll('button')].forEach(btn=>{
-          btn.classList.toggle('active', btn.dataset.valign === state.text.hero.vAlign);
-        });
-      }
       if(els.heroColorModeSeg){
         [...els.heroColorModeSeg.querySelectorAll('button')].forEach(btn=>{
           const mode = btn.dataset.mode || 'solid';
@@ -2422,8 +2434,12 @@
       const corner = state.text.serial.corner || 'top-left';
       const alignRight = corner.includes('right');
       const alignBottom = corner.includes('bottom');
+      const frostVisible = state.format.key==='HORIZ' && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
+      const bottomBufferExp = frostVisible ? (state.frost.barHExp + 16) : 0;
+      const bottomBuffer = alignBottom ? bottomBufferExp * scaleY : 0;
       const left = frameLeftPx + (alignRight ? fwPx - marginX : marginX);
-      const top = frameTopPx + (alignBottom ? fhPx - marginY : marginY);
+      const rawTop = frameTopPx + (alignBottom ? fhPx - marginY - bottomBuffer : marginY);
+      const top = alignBottom ? Math.max(frameTopPx + marginY, rawTop) : rawTop;
       els.serialPreview.style.display = 'block';
       els.serialPreview.dataset.corner = corner;
       els.serialPreview.dataset.align = alignRight ? 'right' : 'left';
@@ -2489,8 +2505,15 @@
         editorStyle.lineHeight = inner.style.lineHeight;
         editorStyle.letterSpacing = inner.style.letterSpacing;
         editorStyle.textAlign = inner.style.textAlign;
+        const rect = els.heroTextPreview.getBoundingClientRect();
+        editorStyle.width = `${rect.width}px`;
+        editorStyle.minWidth = `${rect.width}px`;
+        editorStyle.height = `${rect.height}px`;
+        editorStyle.minHeight = `${rect.height}px`;
+        editorStyle.overflow = 'hidden';
         editorStyle.color = heroEditorTextColor();
-        editorStyle.background = heroEditorBackground();
+        editorStyle.background = 'transparent';
+        editorStyle.boxShadow = 'none';
       }
     } else {
       els.heroTextPreview.style.display = 'none';
@@ -2568,7 +2591,7 @@
     frostCanvas.width = fw;
     frostCanvas.height = Math.max(1, barH);
     const frostCtx = frostCanvas.getContext('2d');
-    frostCtx.fillStyle = '#ffffff';
+    frostCtx.fillStyle = '#e5edf8';
     frostCtx.fillRect(0, 0, fw, frostCanvas.height);
 
     const captureH = Math.max(6, Math.min(baseCanvas.height, Math.round(barH * 1.8)));
@@ -2623,15 +2646,22 @@
     frostCtx.restore();
 
     const tint = frostCtx.createLinearGradient(0, 0, 0, frostCanvas.height);
-    tint.addColorStop(0, 'rgba(255,255,255,0.25)');
-    tint.addColorStop(0.55, 'rgba(255,255,255,0.18)');
-    tint.addColorStop(1, 'rgba(218,226,238,0.16)');
+    tint.addColorStop(0, 'rgba(18,27,45,0.36)');
+    tint.addColorStop(0.55, 'rgba(22,32,52,0.28)');
+    tint.addColorStop(1, 'rgba(10,16,30,0.4)');
     frostCtx.fillStyle = tint;
     frostCtx.fillRect(0, 0, fw, frostCanvas.height);
 
-    frostCtx.fillStyle = 'rgba(255,255,255,0.42)';
+    const edgeFade = frostCtx.createLinearGradient(0, 0, fw, 0);
+    edgeFade.addColorStop(0, 'rgba(10,16,30,0.24)');
+    edgeFade.addColorStop(0.5, 'rgba(10,16,30,0)');
+    edgeFade.addColorStop(1, 'rgba(10,16,30,0.24)');
+    frostCtx.fillStyle = edgeFade;
+    frostCtx.fillRect(0, 0, fw, frostCanvas.height);
+
+    frostCtx.fillStyle = 'rgba(255,255,255,0.18)';
     frostCtx.fillRect(0, 0, fw, 1);
-    frostCtx.fillStyle = 'rgba(15,23,42,0.12)';
+    frostCtx.fillStyle = 'rgba(6,10,20,0.36)';
     frostCtx.fillRect(0, frostCanvas.height-2, fw, 2);
 
     return frostCanvas;
@@ -3193,6 +3223,8 @@
       colorInput.type = 'color';
       colorInput.className = 'gradientColorOverlay';
       colorInput.dataset.index = idx.toString();
+
+      textInput.addEventListener('dblclick', ()=>{ colorInput.click(); });
 
       const commitColor = (val)=>{
         const fallback = state.banner.gradient.colors[idx] || '#ffffff';
@@ -4062,7 +4094,7 @@
     commitTextState({ refreshControls:false });
   });
   els.heroSizeInput?.addEventListener('input', (e)=>{
-    const val = Math.max(80, parseFloat(e.target.value)||80);
+    const val = Math.max(HERO_MIN_SIZE, parseFloat(e.target.value)||HERO_MIN_SIZE);
     state.text.hero.size = val;
     commitTextState({ refreshControls:false });
   });
@@ -4078,19 +4110,6 @@
   els.heroAlignSeg?.addEventListener('click', (e)=>{
     const btn = e.target.closest('button'); if(!btn) return;
     state.text.hero.align = btn.dataset.align || 'center';
-    commitTextState();
-  });
-  els.heroVerticalSeg?.addEventListener('click', (e)=>{
-    const btn = e.target.closest('button'); if(!btn) return;
-    const current = state.text.hero.vAlign || 'middle';
-    const target = btn.dataset.valign || 'middle';
-    if(current === target){
-      state.text.hero.vAlign = 'middle';
-    } else {
-      state.text.hero.vAlign = target;
-      if(target === 'top'){ state.text.hero.position.y = 0.15; }
-      else if(target === 'bottom'){ state.text.hero.position.y = 0.85; }
-    }
     commitTextState();
   });
   els.heroColorModeSeg?.addEventListener('click', (e)=>{
@@ -4183,6 +4202,9 @@
     if(!state.text.hero.enabled) return;
     if(heroEditing) return;
     if(e.button !== 0) return;
+    if(document.activeElement !== els.heroTextPreview){
+      try{ els.heroTextPreview.focus({ preventScroll:true }); }catch(err){ els.heroTextPreview.focus(); }
+    }
     heroDrag = e.pointerId;
     els.heroTextPreview.classList.add('dragging');
     els.heroTextPreview.setPointerCapture(e.pointerId);
@@ -4220,7 +4242,7 @@
     const exportDeltaX = effectX / (heroResize.scaleX || 1);
     const exportDeltaY = effectY / (heroResize.scaleY || 1);
     const combined = (exportDeltaX + exportDeltaY) / 2;
-    const nextSize = Math.max(80, heroResize.startSize + combined);
+    const nextSize = Math.max(HERO_MIN_SIZE, heroResize.startSize + combined);
     if(Math.abs(nextSize - (state.text.hero.size || 120)) < 0.2) return;
     state.text.hero.size = nextSize;
     if(els.heroSizeInput){ els.heroSizeInput.value = Math.round(nextSize); }
@@ -4266,12 +4288,6 @@
     const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
     return getReadableInk(start);
   }
-  function heroEditorBackground(){
-    const panel = state.text.hero.panel || 'none';
-    if(panel === 'dark'){ return 'rgba(15,23,42,0.68)'; }
-    if(panel === 'light'){ return 'rgba(255,255,255,0.7)'; }
-    return 'rgba(15,23,42,0.18)';
-  }
   function openHeroEditor(){
     if(heroEditing) return;
     if(!els.heroInlineEditor || !els.heroTextPreview) return;
@@ -4279,18 +4295,27 @@
     els.heroTextPreview.classList.add('editing');
     const value = state.text.hero.value || '';
     els.heroInlineEditor.value = value;
+    const editorStyle = els.heroInlineEditor.style;
     const computed = window.getComputedStyle(els.heroInnerText);
     if(computed){
-      const style = els.heroInlineEditor.style;
-      style.fontSize = computed.fontSize;
-      style.fontFamily = computed.fontFamily;
-      style.fontWeight = computed.fontWeight;
-      style.lineHeight = computed.lineHeight;
-      style.letterSpacing = computed.letterSpacing;
-      style.textAlign = computed.textAlign;
+      editorStyle.fontSize = computed.fontSize;
+      editorStyle.fontFamily = computed.fontFamily;
+      editorStyle.fontWeight = computed.fontWeight;
+      editorStyle.lineHeight = computed.lineHeight;
+      editorStyle.letterSpacing = computed.letterSpacing;
+      editorStyle.textAlign = computed.textAlign;
     }
-    els.heroInlineEditor.style.color = heroEditorTextColor();
-    els.heroInlineEditor.style.background = heroEditorBackground();
+    const containerRect = els.heroTextPreview.getBoundingClientRect();
+    const width = Math.max(1, containerRect.width);
+    const height = Math.max(1, containerRect.height);
+    editorStyle.width = `${width}px`;
+    editorStyle.minWidth = `${width}px`;
+    editorStyle.height = `${height}px`;
+    editorStyle.minHeight = `${height}px`;
+    editorStyle.overflow = 'hidden';
+    editorStyle.color = heroEditorTextColor();
+    editorStyle.background = 'transparent';
+    editorStyle.boxShadow = 'none';
     requestAnimationFrame(()=>{
       if(!els.heroInlineEditor) return;
       els.heroInlineEditor.focus({ preventScroll:true });
@@ -4303,6 +4328,10 @@
     heroEditing = false;
     if(els.heroTextPreview){ els.heroTextPreview.classList.remove('editing'); }
     if(!els.heroInlineEditor) return;
+    els.heroInlineEditor.style.width = '';
+    els.heroInlineEditor.style.height = '';
+    els.heroInlineEditor.style.minWidth = '';
+    els.heroInlineEditor.style.minHeight = '';
     const nextValue = els.heroInlineEditor.value.replace(/\r\n/g,'\n');
     if(commit && nextValue !== state.text.hero.value){
       state.text.hero.value = nextValue;
@@ -4611,15 +4640,25 @@
         if(overlayStrength > 0){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.2 + overlayStrength*0.6})`);
-          grad.addColorStop(1, `rgba(246,248,252,${0.14 + overlayStrength*0.45})`);
+          grad.addColorStop(0, `rgba(255,255,255,${0.08 + overlayStrength*0.18})`);
+          grad.addColorStop(0.55, `rgba(24,33,52,${0.22 + overlayStrength*0.2})`);
+          grad.addColorStop(1, `rgba(9,14,26,${0.32 + overlayStrength*0.22})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
+        ctx.save();
+        const edgeShade = ctx.createLinearGradient(0, barY, fw, barY);
+        const edgeAlpha = 0.18 + overlayStrength*0.12;
+        edgeShade.addColorStop(0, `rgba(8,12,24,${edgeAlpha})`);
+        edgeShade.addColorStop(0.5, 'rgba(8,12,24,0)');
+        edgeShade.addColorStop(1, `rgba(8,12,24,${edgeAlpha})`);
+        ctx.fillStyle = edgeShade;
+        ctx.fillRect(0, barY, fw, barH);
+        ctx.restore();
 
-        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.25; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.12; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.28 + overlayStrength*0.18; ctx.fillStyle = 'rgba(6,10,20,1)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
@@ -4729,8 +4768,11 @@
       const alignBottom = corner.includes('bottom');
       const marginX = Math.max(12, state.format.wExport * 0.02);
       const marginY = Math.max(12, state.format.hExport * 0.02);
+      const frostVisible = state.format.key==='HORIZ' && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
+      const bottomBuffer = frostVisible ? (state.frost.barHExp + 16) : 0;
       const x = alignRight ? fw - marginX : marginX;
-      const y = alignBottom ? fh - marginY : marginY;
+      const rawY = alignBottom ? fh - marginY - bottomBuffer : marginY;
+      const y = alignBottom ? Math.max(marginY, rawY) : rawY;
       ctx.save();
       ctx.font = `600 ${fontSize}px ${fontFamily}`;
       ctx.textAlign = alignRight ? 'right' : 'left';
@@ -4781,9 +4823,8 @@
       const anchorX = (pos.x || 0.5) * fw;
       const anchorY = (pos.y || 0.5) * fh;
       const align = state.text.hero.align || 'center';
-      const vAlign = state.text.hero.vAlign || 'middle';
-      const baseLeft = align === 'center' ? anchorX - maxWidth/2 : align === 'right' ? anchorX - maxWidth : anchorX;
-      const baseTop = vAlign === 'middle' ? anchorY - totalHeight/2 : vAlign === 'bottom' ? anchorY - totalHeight : anchorY;
+      const baseLeft = anchorX - maxWidth/2;
+      const baseTop = anchorY - totalHeight/2;
       const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
       const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
       const padScale = Math.sqrt(scaleX * scaleY);
