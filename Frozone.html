@@ -159,33 +159,64 @@
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
   .stageWarning{position:absolute; inset:20px; pointer-events:none}
-  .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:40; display:none; padding:6px 10px; border-radius:8px; background:rgba(15,23,42,0.12); backdrop-filter:blur(6px)}
-  .serialPreview[data-corner="top-left"]{top:24px; left:24px; transform:translate(0,0)}
-  .serialPreview[data-corner="top-right"]{top:24px; right:24px; transform:translate(0,0)}
-  .serialPreview[data-corner="bottom-left"]{bottom:24px; left:24px; transform:translate(0,0)}
-  .serialPreview[data-corner="bottom-right"]{bottom:24px; right:24px; transform:translate(0,0)}
-  .serialPreview.has-barcode{padding-bottom:42px}
-  .serialPreview canvas{display:block; width:100%; height:38px; margin-top:6px; background:#fff; border-radius:6px}
-  .heroText{position:absolute; z-index:42; min-width:120px; padding:12px 16px; border-radius:16px; cursor:grab; display:none; user-select:none; transition:box-shadow .15s ease, transform .15s ease; backdrop-filter:blur(10px)}
-  .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.25)}
-  .heroText .heroInner{display:block; pointer-events:none}
+  .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:40; display:none; pointer-events:none; white-space:nowrap; text-shadow:0 1px 2px rgba(15,23,42,0.28)}
+  .serialPreview span{display:inline-block}
+  .heroText{position:absolute; z-index:42; min-width:120px; display:none; cursor:grab; user-select:none; transition:box-shadow .15s ease, transform .15s ease; transform:translate(-50%,-50%); pointer-events:auto}
+  .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
+  .heroText.resizing{cursor:nwse-resize}
+  .heroText .heroInner{display:block; pointer-events:none; white-space:pre-wrap}
   .heroText[data-align="left"] .heroInner{text-align:left}
   .heroText[data-align="center"] .heroInner{text-align:center}
   .heroText[data-align="right"] .heroInner{text-align:right}
-  .heroText[data-valign="top"]{transform:translate(-50%,-50%)}
-  .heroText[data-valign="middle"]{transform:translate(-50%,-50%)}
-  .heroText[data-valign="bottom"]{transform:translate(-50%,-50%)}
-  .heroText span{display:block; white-space:pre-wrap}
-  .heroText[data-mode="gradient"]{background:rgba(15,23,42,0.14)}
-  .heroText[data-mode="solid"]{background:rgba(15,23,42,0.08)}
-  .heroText.no-bg{background:transparent}
+  .heroText[data-panel="none"]{padding:0; background:transparent; border-radius:0; box-shadow:none}
+  .heroText[data-panel="light"], .heroText[data-panel="dark"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
+  .heroText[data-panel="light"]{background:rgba(255,255,255,0.68)}
+  .heroText[data-panel="dark"]{background:rgba(15,23,42,0.68)}
+  .heroEditor{position:absolute; inset:0; width:100%; height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor}
+  .heroText.editing .heroEditor{display:block}
+  .heroText.editing .heroInner{visibility:hidden}
+  .heroText.editing .heroHandle{display:none}
+  .heroHandle{position:absolute; width:12px; height:12px; border-radius:50%; border:2px solid rgba(255,255,255,0.95); background:linear-gradient(135deg,var(--brand),var(--brand2)); box-shadow:0 4px 10px rgba(15,23,42,0.32); pointer-events:none; opacity:0; transition:opacity .2s ease, transform .2s ease}
+  .heroText[data-active="true"] .heroHandle{pointer-events:auto}
+  .heroText[data-active="false"] .heroHandle{display:none}
+  .heroText:hover .heroHandle, .heroText.dragging .heroHandle, .heroText.resizing .heroHandle{opacity:1}
+  .heroHandle[data-corner="nw"], .heroHandle[data-corner="ne"], .heroHandle[data-corner="se"], .heroHandle[data-corner="sw"]{transform:translate(-50%,-50%)}
+  .heroHandle[data-corner="nw"]{top:-10px; left:-10px; cursor:nwse-resize}
+  .heroHandle[data-corner="ne"]{top:-10px; right:-10px; cursor:nesw-resize}
+  .heroHandle[data-corner="se"]{bottom:-10px; right:-10px; cursor:nwse-resize}
+  .heroHandle[data-corner="sw"]{bottom:-10px; left:-10px; cursor:nesw-resize}
   .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
   .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
-  .logoSaveRow{display:flex; justify-content:flex-end; margin-top:12px}
+  .toneHint{display:block; font-size:12px; color:var(--muted); margin-top:6px}
   .textSettingsWrap{display:grid; gap:18px}
   .textToggleRow{display:flex; align-items:center; justify-content:space-between; gap:12px}
   .textPanel{border:1px solid var(--border); border-radius:16px; padding:16px; background:var(--chip-bg); box-shadow:0 6px 18px rgba(15,23,42,0.06); display:grid; gap:14px}
   .textPanel h4{margin:0; font-size:14px}
+  .textPanel input[type="text"], .textPanel input[type="number"], .textPanel textarea, .textPanel select{padding:10px 12px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06); font-size:14px}
+  .textPanel textarea{min-height:90px; resize:vertical}
+  .textToggleBar{display:flex; gap:16px; flex-wrap:wrap; align-items:center; justify-content:flex-start}
+  .serialFieldRow{display:grid; gap:8px}
+  .serialFieldRow label{font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); font-weight:600}
+  .serialOpacityControl{display:flex; align-items:center; gap:12px}
+  .serialOpacityControl input[type="range"]{flex:1}
+  .serialOpacityValue{font-size:12px; font-weight:600; color:var(--muted); min-width:48px; text-align:right}
+  .applyAllSwitch{margin-top:4px}
+  .colorField{position:relative; display:inline-flex; width:140px}
+  .colorHexInput{width:100%; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:10px 12px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06); text-transform:uppercase; letter-spacing:0.04em; transition:border-color .18s ease, box-shadow .18s ease, color .18s ease}
+  .colorHexInput::placeholder{color:var(--muted)}
+  .colorHexInput:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .colorOverlay{position:absolute; inset:0; opacity:0; cursor:pointer}
+  .inputStack{display:flex; flex-direction:column; gap:4px; min-width:100px}
+  .inputHint{font-size:11px; color:var(--muted)}
+  .heroMetricsRow input[type="number"], .heroMetricsRow input[type="text"]{min-width:110px}
+  .heroColorRow{gap:14px}
+  .heroColorRow .seg{flex-wrap:nowrap}
+  .heroGradientControls{display:flex; flex-wrap:wrap; gap:18px; align-items:flex-end}
+  .gradientField{display:grid; gap:6px}
+  .gradientField span{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
+  .heroGradientAngle{display:grid; gap:6px}
+  .heroGradientAngle label{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
+  .heroPanelRow .seg{flex-wrap:nowrap}
   .textFieldRow{display:grid; gap:10px}
   .textFieldRow label{font-size:13px; font-weight:600}
   .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
@@ -210,8 +241,11 @@
   .heroColorInputs label{font-size:12px; font-weight:600}
   .heroColorInputs input[type="color"], .heroColorInputs input[type="text"]{width:110px}
   .heroGradientAngle{display:flex; align-items:center; gap:8px}
-  .bannerGuidelines{font-size:12px; color:var(--muted); line-height:1.6; margin-top:6px}
-  .bg3dNote{margin-top:10px; font-size:12px; color:var(--muted); border-radius:12px; background:rgba(99,102,241,0.08); padding:12px; border:1px solid rgba(99,102,241,0.18)}
+  .bgGuidance{display:grid; gap:10px; margin:6px 0 12px 0; padding:16px 18px; border:1px solid var(--border); border-radius:16px; background:var(--stageInner); box-shadow:0 8px 18px rgba(15,23,42,0.08)}
+  .bgGuidanceTitle{font-size:12px; text-transform:uppercase; letter-spacing:0.12em; font-weight:700; color:var(--muted)}
+  .bgGuidanceList{margin:0; padding:0 0 0 18px; display:grid; gap:6px; color:var(--muted); font-size:13px; line-height:1.5}
+  .bgGuidanceList li{margin:0}
+  .bgGuidanceList .bannerOnly{display:none}
   .serialOptions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
 
   .playWrap{position:absolute; display:none; pointer-events:none}
@@ -306,8 +340,12 @@
   .gradientSwatchValue{font-size:12px; font-family:'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace; letter-spacing:0.04em; color:var(--muted)}
   .gradientSwatch input[type="color"]{appearance:none; border:none; width:100%; height:36px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
   .gradientInputRow{display:flex; gap:10px; align-items:center; margin-top:6px}
-  .gradientInputRow input[type="text"]{width:110px; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
-  .gradientInputRow input[type="color"]{width:46px; height:36px; border-radius:10px; padding:0; border:1px solid var(--border); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
+  .gradientColorField{position:relative; width:100%;}
+  .gradientHexInput{width:100%; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:10px 14px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06); text-transform:uppercase; letter-spacing:0.04em; transition:border-color .18s ease, box-shadow .18s ease, color .18s ease}
+  .gradientHexInput::placeholder{color:var(--muted); letter-spacing:0.04em}
+  .gradientHexInput[data-color]{border-color:rgba(15,23,42,0.12); box-shadow:0 6px 16px rgba(15,23,42,0.08)}
+  .gradientHexInput:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .gradientColorOverlay{position:absolute; inset:0; opacity:0; cursor:pointer}
   .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
@@ -352,6 +390,7 @@
   .modalFooter{padding:20px 28px; display:flex; gap:16px; justify-content:space-between; align-items:center; flex-wrap:wrap; border-top:1px solid var(--border); background:var(--card)}
   .modalFooterStart,.modalFooterEnd{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
   .modalIntro{font-size:13px; color:var(--muted); background:var(--chip-bg); border:1px dashed var(--border); border-radius:14px; padding:16px 18px; line-height:1.5}
+  .modalNotice{margin:12px 0 0 0; font-size:12px; color:var(--muted); line-height:1.5}
   .partnerRows{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
   .partnerRow{display:grid; grid-template-columns:minmax(0,72px) 1fr auto; gap:16px; align-items:flex-start; padding:16px; border:1px solid var(--border); border-radius:16px; background:var(--card); box-shadow:0 14px 32px rgba(15,23,42,0.12)}
   .partnerRow img{width:60px; height:60px; object-fit:contain; border-radius:14px; background:#fff; box-shadow:inset 0 1px 2px rgba(15,23,42,0.08)}
@@ -486,6 +525,15 @@
   :root[data-theme="dark"] .gradientPreview::after{opacity:0.82}
   :root[data-theme="dark"] .gradientPreviewOverlay::after{opacity:0.22}
   :root[data-theme="dark"] .gradientSwatch{background:rgba(9,20,41,0.72); border-color:rgba(46,63,98,0.65); box-shadow:0 20px 38px rgba(1,5,19,0.55)}
+  :root[data-theme="dark"] .gradientHexInput{background:rgba(9,20,41,0.9); border-color:rgba(46,63,98,0.65); color:#e2e8f0; box-shadow:0 6px 18px rgba(1,5,19,0.55)}
+  :root[data-theme="dark"] .textPanel input[type="text"],
+  :root[data-theme="dark"] .textPanel input[type="number"],
+  :root[data-theme="dark"] .textPanel textarea,
+  :root[data-theme="dark"] .textPanel select{background:rgba(9,20,41,0.85); border-color:rgba(46,63,98,0.65); color:#e2e8f0; box-shadow:0 6px 18px rgba(1,5,19,0.55)}
+  :root[data-theme="dark"] .colorHexInput{background:rgba(9,20,41,0.9); border-color:rgba(46,63,98,0.65); color:#e2e8f0; box-shadow:0 6px 18px rgba(1,5,19,0.55)}
+  :root[data-theme="dark"] .bgGuidance{background:rgba(9,20,41,0.72); border-color:rgba(46,63,98,0.65); box-shadow:0 20px 38px rgba(1,5,19,0.55)}
+  :root[data-theme="dark"] .bgGuidanceTitle{color:rgba(186,204,240,0.85)}
+  :root[data-theme="dark"] .bgGuidanceList{color:rgba(200,212,242,0.82)}
   :root[data-theme="dark"] .gradientSwatchValue{color:rgba(186,204,240,0.82)}
   :root[data-theme="dark"] .gradientCountControls{background:rgba(9,20,41,0.7); border-color:rgba(46,63,98,0.65); color:rgba(200,212,242,0.82)}
   :root[data-theme="dark"] .gradientCountControls button{background:rgba(6,14,28,0.9); color:#dce7ff}
@@ -501,6 +549,7 @@
   :root[data-theme="dark"] .modalHeader{background:linear-gradient(135deg,rgba(30,41,59,0.85),rgba(37,99,235,0.28)); border-bottom-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .modalFooter{background:rgba(15,23,42,0.75); border-top-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .modalIntro{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.7); color:rgba(226,232,240,0.82)}
+  :root[data-theme="dark"] .modalNotice{color:rgba(200,212,242,0.82)}
   :root[data-theme="dark"] .partnerRow{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 22px 48px rgba(2,6,23,0.7)}
   :root[data-theme="dark"] .partnerRowFields input{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.75); color:#e2e8f0}
   :root[data-theme="dark"] .partnerRowRemove{background:rgba(248,113,113,0.28); border-color:rgba(248,113,113,0.4); color:#fecaca}
@@ -611,37 +660,62 @@
 
         <div class="section" id="bgSourceSection" aria-hidden="true">
           <div class="section-title"><span class="badge">2b</span> Background source</div>
-          <div class="bannerGuidelines" id="bgSourceGuidelines" style="display:none">Use simple/subtle graphics to ensure that the header and logo remain visible and unobstructed.<br>Partners or live operations teams will supply the background image following their brand guidelines.</div>
           <div class="stack">
+            <div class="bgGuidance" id="bgGuidance" aria-live="polite">
+              <div class="bgGuidanceTitle">Background tips</div>
+              <ul class="bgGuidanceList">
+                <li id="bgTipVisibility">Use simple or subtle graphics so headers and partner logos stay legible.</li>
+                <li id="bgTipSupply">Partners or Live Ops teams will usually supply brand-approved imagery.</li>
+                <li id="bgTipExport">All background sources here are export-safe and canvas ready.</li>
+                <li id="bgTip3d" class="bannerOnly">3D banner tips: keep depth elements subtle and leave headroom for copy.</li>
+              </ul>
+            </div>
+
             <div class="seg" id="bgSourceTabs" role="tablist" aria-label="Background source">
-              <button type="button" data-mode="upload" class="active" aria-selected="true" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock">Upload</button>
+              <button type="button" data-mode="gradient" class="active" aria-selected="true" id="bgTabGradient" role="tab" aria-controls="gradientBlock">Gradient</button>
+              <button type="button" data-mode="unsplash" aria-selected="false" id="bgTabUnsplash" role="tab" aria-controls="unsplashBlock" tabindex="-1">Browse stock</button>
+              <button type="button" data-mode="upload" aria-selected="false" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock" tabindex="-1">Upload</button>
               <button type="button" data-mode="link" aria-selected="false" id="bgTabLink" role="tab" aria-controls="bgLinkBlock" tabindex="-1">Paste link</button>
-              <button type="button" data-mode="unsplash" aria-selected="false" id="bgTabUnsplash" role="tab" aria-controls="unsplashBlock" tabindex="-1">Browse Stock</button>
-              <button type="button" data-mode="gradient" aria-selected="false" id="bgTabGradient" role="tab" aria-controls="gradientBlock" tabindex="-1">Gradient</button>
             </div>
 
-            <div class="bg-source-block active" data-mode="upload" id="bgUploadBlock" role="tabpanel" aria-labelledby="bgTabUpload" aria-hidden="false">
-              <label class="btn ghost uploadAction">
-                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                <span class="btn-text">Upload image</span>
-                <input id="bgUpload" type="file" accept="image/*" style="display:none" />
-              </label>
-              <div id="bgUploadChipWrap" style="display:none">
-                <span class="bgUploadChip" aria-live="polite">
-                  <span id="bgUploadFileName"></span>
-                  <button type="button" id="bgUploadRemove" aria-label="Remove uploaded background">
-                    <i data-lucide="x" aria-hidden="true"></i>
-                  </button>
-                </span>
+            <div class="bg-source-block active" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" aria-hidden="false">
+              <div class="gradientLayout">
+                <div class="gradientPreview" id="gradientPreview" role="img" aria-label="Gradient preview">
+                  <div class="gradientPreviewOverlay"></div>
+                </div>
+                <div class="gradientControls">
+                  <p class="gradientIntro">Craft fluid gradients from curated palettes or pull accent colors from reference art in seconds.</p>
+                  <div class="gradientToolbar">
+                    <div class="gradientToolbarRow">
+                      <span class="gradientGroupLabel">Gradient type</span>
+                      <div class="seg" id="gradientTypeSeg" role="group" aria-label="Gradient type">
+                        <button type="button" class="active" data-type="linear" aria-pressed="true">Linear</button>
+                        <button type="button" data-type="radial" aria-pressed="false">Radial</button>
+                        <button type="button" data-type="multi" aria-pressed="false">Multi-point</button>
+                        <button type="button" data-type="wavy" aria-pressed="false">Wavy</button>
+                      </div>
+                    </div>
+                    <div class="gradientToolbarRow">
+                      <span class="gradientGroupLabel">Color count</span>
+                      <div class="gradientCountControls" role="group" aria-label="Gradient color count">
+                        <button type="button" id="gradientRemoveColor" aria-label="Remove color">−</button>
+                        <span class="gradientCountLabel">Colors: <span id="gradientColorCount">3</span></span>
+                        <button type="button" id="gradientAddColor" aria-label="Add color">+</button>
+                      </div>
+                      <label class="gradientUpload" id="gradientImageUploadLabel">
+                        <i data-lucide="image" aria-hidden="true"></i>
+                        <span id="gradientUploadCopy">Extract from image</span>
+                        <input type="file" id="gradientImageUpload" accept="image/*">
+                      </label>
+                    </div>
+                  </div>
+                  <div class="gradientColorGrid" id="gradientColorContainer" aria-live="polite"></div>
+                  <div class="gradientActionButtons">
+                    <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
+                    <button class="btn ghost" type="button" id="gradientRandomize">Surprise me</button>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            <div class="bg-source-block" data-mode="link" id="bgLinkBlock" role="tabpanel" aria-labelledby="bgTabLink" hidden aria-hidden="true">
-              <div class="bgInputRow">
-                <input id="bgLinkInput" type="url" placeholder="Paste image link…">
-                <button class="btn small primary" id="bgLinkLoad" type="button">Load</button>
-              </div>
-              <div id="bgLinkStatus" class="bgSourceNote" aria-live="polite"></div>
             </div>
 
             <div class="bg-source-block" data-mode="unsplash" id="unsplashBlock" role="tabpanel" aria-labelledby="bgTabUnsplash" hidden aria-hidden="true">
@@ -694,48 +768,29 @@
               </div>
             </div>
 
-            <div class="bg-source-block" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" hidden aria-hidden="true">
-              <div class="gradientLayout">
-                <div class="gradientPreview" id="gradientPreview" role="img" aria-label="Gradient preview">
-                  <div class="gradientPreviewOverlay"></div>
-                </div>
-                <div class="gradientControls">
-                  <p class="gradientIntro">Craft fluid gradients from curated palettes or pull accent colors from reference art in seconds.</p>
-                  <div class="gradientToolbar">
-                    <div class="gradientToolbarRow">
-                      <span class="gradientGroupLabel">Gradient type</span>
-                      <div class="seg" id="gradientTypeSeg" role="group" aria-label="Gradient type">
-                        <button type="button" class="active" data-type="linear" aria-pressed="true">Linear</button>
-                        <button type="button" data-type="radial" aria-pressed="false">Radial</button>
-                        <button type="button" data-type="multi" aria-pressed="false">Multi-point</button>
-                        <button type="button" data-type="wavy" aria-pressed="false">Wavy</button>
-                      </div>
-                    </div>
-                    <div class="gradientToolbarRow">
-                      <span class="gradientGroupLabel">Color count</span>
-                      <div class="gradientCountControls" role="group" aria-label="Gradient color count">
-                        <button type="button" id="gradientRemoveColor" aria-label="Remove color">−</button>
-                        <span class="gradientCountLabel">Colors: <span id="gradientColorCount">3</span></span>
-                        <button type="button" id="gradientAddColor" aria-label="Add color">+</button>
-                      </div>
-                      <label class="gradientUpload" id="gradientImageUploadLabel">
-                        <i data-lucide="image" aria-hidden="true"></i>
-                        <span id="gradientUploadCopy">Extract from image</span>
-                        <input type="file" id="gradientImageUpload" accept="image/*">
-                      </label>
-                    </div>
-                  </div>
-                  <div class="gradientColorGrid" id="gradientColorContainer" aria-live="polite"></div>
-                  <div class="gradientActionButtons">
-                    <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
-                    <button class="btn ghost" type="button" id="gradientRandomize">Surprise me</button>
-                  </div>
-                </div>
+            <div class="bg-source-block" data-mode="upload" id="bgUploadBlock" role="tabpanel" aria-labelledby="bgTabUpload" hidden aria-hidden="true">
+              <label class="btn ghost uploadAction">
+                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                <span class="btn-text">Upload image</span>
+                <input id="bgUpload" type="file" accept="image/*" style="display:none" />
+              </label>
+              <div id="bgUploadChipWrap" style="display:none">
+                <span class="bgUploadChip" aria-live="polite">
+                  <span id="bgUploadFileName"></span>
+                  <button type="button" id="bgUploadRemove" aria-label="Remove uploaded background">
+                    <i data-lucide="x" aria-hidden="true"></i>
+                  </button>
+                </span>
               </div>
             </div>
 
-            <div class="bgSourceNote">All background sources are export-safe and compatible with canvas rendering.</div>
-            <div class="bg3dNote" id="banner3DNote" style="display:none">3D banner tips: keep depth elements subtle, align hero objects within the 1120×360 safe area, and reserve space for copy or partner logos along the top edge.</div>
+            <div class="bg-source-block" data-mode="link" id="bgLinkBlock" role="tabpanel" aria-labelledby="bgTabLink" hidden aria-hidden="true">
+              <div class="bgInputRow">
+                <input id="bgLinkInput" type="url" placeholder="Paste image link…">
+                <button class="btn small primary" id="bgLinkLoad" type="button">Load</button>
+              </div>
+              <div id="bgLinkStatus" class="bgSourceNote" aria-live="polite"></div>
+            </div>
           </div>
         </div>
 
@@ -840,10 +895,9 @@
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
+                  <span class="toneHint">Check partner brand rules before changing logo colours.</span>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo1Search" type="search" placeholder="Search partners…" />
@@ -888,10 +942,9 @@
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
+                  <span class="toneHint">Check partner brand rules before changing logo colours.</span>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo2Search" type="search" placeholder="Search partners…" />
@@ -906,14 +959,6 @@
 
           
         </div>
-
-        <div class="logoSaveRow">
-          <button class="btn primary" type="button" id="saveLogoState">
-            <i data-lucide="save" class="btn-ico" aria-hidden="true"></i>
-            <span class="btn-text">Save logos</span>
-          </button>
-        </div>
-
         <!-- Step 4b: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none">
           <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
@@ -938,9 +983,8 @@
                   <button data-tone="white">White</button>
                   <button data-tone="black">Black</button>
                 </div>
+                <span class="toneHint">Check partner brand rules before changing logo colours.</span>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
@@ -972,9 +1016,9 @@
                   <button data-tone="white">White</button>
                   <button data-tone="black">Black</button>
                 </div>
+                <span class="toneHint">Check partner brand rules before changing logo colours.</span>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+              <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="bannerLogoSearch" type="search" placeholder="Search partners…" />
@@ -1013,8 +1057,8 @@
               </div>
               <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
-            <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-            <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+            <div class="toneHint">Check partner brand rules before changing logo colours.</div>
+            <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
             <div class="libWrap">
               <div class="libHeader">
                 <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
@@ -1030,16 +1074,17 @@
         <div class="section" id="textSettingsSection" style="display:none">
           <div class="section-title"><span class="badge">4e</span> Text settings</div>
           <div class="textSettingsWrap">
-            <div class="textToggleRow">
+            <div class="textToggleBar">
               <label class="switch"><input type="checkbox" id="toggleSerial"><span class="tgl"><span class="knob"></span></span><span class="lbl">Serial code</span></label>
+              <label class="switch"><input type="checkbox" id="toggleHero"><span class="tgl"><span class="knob"></span></span><span class="lbl">Hero text</span></label>
             </div>
             <div class="textPanel" id="serialSettingsPanel" style="display:none">
               <h4>Serial code overlay</h4>
-              <div class="textFieldRow">
+              <div class="serialFieldRow">
                 <label for="serialCodeInput">Serial number</label>
                 <input id="serialCodeInput" type="text" placeholder="e.g. #A9-204" />
               </div>
-              <div class="textFieldRow">
+              <div class="serialFieldRow">
                 <label>Corner</label>
                 <div class="cornerPicker" id="serialCornerPicker">
                   <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
@@ -1057,20 +1102,19 @@
                     <button type="button" data-color="custom">Custom</button>
                   </div>
                 </div>
-                <div class="heroColorInputs" id="serialCustomWrap" style="display:none">
-                  <label for="serialCustomColor">Hex</label>
-                  <input id="serialCustomColor" type="text" placeholder="#111111" maxlength="7" />
-                  <input id="serialCustomPicker" type="color" value="#0f172a" />
+                <div class="colorField" id="serialCustomWrap" style="display:none">
+                  <input id="serialCustomColor" type="text" placeholder="#111111" maxlength="7" class="colorHexInput" />
+                  <input id="serialCustomPicker" type="color" class="colorOverlay" value="#0f172a" />
                 </div>
               </div>
-              <div class="serialOptions">
-                <label class="switch"><input type="checkbox" id="serialBarcodeToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Show barcode</span></label>
-                <label class="switch"><input type="checkbox" id="serialApplyAll"><span class="tgl"><span class="knob"></span></span><span class="lbl">Apply to all images</span></label>
+              <div class="serialFieldRow">
+                <label for="serialOpacity">Opacity</label>
+                <div class="serialOpacityControl">
+                  <input id="serialOpacity" type="range" min="30" max="100" value="100" />
+                  <span class="serialOpacityValue" id="serialOpacityValue">100%</span>
+                </div>
               </div>
-            </div>
-
-            <div class="textToggleRow">
-              <label class="switch"><input type="checkbox" id="toggleHero"><span class="tgl"><span class="knob"></span></span><span class="lbl">Hero text</span></label>
+              <label class="switch applyAllSwitch"><input type="checkbox" id="serialApplyAll"><span class="tgl"><span class="knob"></span></span><span class="lbl">Apply to all images</span></label>
             </div>
             <div class="textPanel" id="heroSettingsPanel" style="display:none">
               <h4>Hero text overlay</h4>
@@ -1102,15 +1146,18 @@
                     <option>Black</option>
                   </select>
                 </div>
-                <div class="heroRow">
+                <div class="heroRow heroMetricsRow">
                   <label for="heroSizeInput">Size</label>
-                  <input id="heroSizeInput" type="number" min="80" step="1" value="120" />
+                  <div class="inputStack">
+                    <input id="heroSizeInput" type="number" min="80" step="1" value="120" />
+                    <span class="inputHint">Min 80px</span>
+                  </div>
                   <label for="heroLetterSpacing">Letter spacing (px)</label>
                   <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
                   <label for="heroLineHeight">Line height (%)</label>
                   <input id="heroLineHeight" type="text" value="110%" />
                 </div>
-                <div class="heroRow">
+                <div class="heroRow heroAlignmentRow">
                   <span class="logoControlLabel">Alignment</span>
                   <div class="alignSeg" id="heroAlignSeg">
                     <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
@@ -1123,28 +1170,43 @@
                     <button type="button" data-valign="bottom" aria-label="Align bottom"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="20" x2="20" y2="20"></line><rect x="10" y="8" width="8" height="10" rx="2"></rect></svg></button>
                   </div>
                 </div>
-                <div class="heroRow">
-                  <span class="logoControlLabel">Colour mode</span>
+                <div class="heroRow heroColorRow">
+                  <span class="logoControlLabel">Colour</span>
                   <div class="seg" id="heroColorModeSeg">
                     <button type="button" data-mode="solid" class="active">Solid</button>
                     <button type="button" data-mode="gradient">Gradient</button>
                   </div>
-                </div>
-                <div class="heroColorControls">
-                  <div class="heroColorInputs" id="heroSolidControls">
-                    <label for="heroSolidHex">Hex</label>
-                    <input id="heroSolidHex" type="text" value="#ffffff" maxlength="7" />
-                    <input id="heroSolidPicker" type="color" value="#ffffff" />
+                  <div class="colorField" id="heroSolidControls">
+                    <input id="heroSolidHex" type="text" value="#ffffff" maxlength="7" class="colorHexInput" />
+                    <input id="heroSolidPicker" type="color" class="colorOverlay" value="#ffffff" />
                   </div>
-                  <div class="heroColorInputs" id="heroGradientControls" style="display:none">
-                    <label for="heroGradStart">Start</label>
-                    <input id="heroGradStart" type="color" value="#0ea5e9" />
-                    <label for="heroGradEnd">End</label>
-                    <input id="heroGradEnd" type="color" value="#6366f1" />
-                    <div class="heroGradientAngle">
-                      <label for="heroGradAngle">Angle</label>
-                      <input id="heroGradAngle" type="number" value="0" step="1" />
+                </div>
+                <div class="heroGradientControls" id="heroGradientControls" style="display:none">
+                  <div class="gradientField">
+                    <span>Start</span>
+                    <div class="colorField">
+                      <input id="heroGradStart" type="text" value="#0ea5e9" maxlength="7" class="colorHexInput" />
+                      <input id="heroGradStartPicker" type="color" class="colorOverlay" value="#0ea5e9" />
                     </div>
+                  </div>
+                  <div class="gradientField">
+                    <span>End</span>
+                    <div class="colorField">
+                      <input id="heroGradEnd" type="text" value="#6366f1" maxlength="7" class="colorHexInput" />
+                      <input id="heroGradEndPicker" type="color" class="colorOverlay" value="#6366f1" />
+                    </div>
+                  </div>
+                  <div class="heroGradientAngle">
+                    <label for="heroGradAngle">Angle</label>
+                    <input id="heroGradAngle" type="number" value="0" step="1" />
+                  </div>
+                </div>
+                <div class="heroRow heroPanelRow">
+                  <span class="logoControlLabel">Background panel</span>
+                  <div class="seg" id="heroPanelSeg">
+                    <button type="button" data-panel="none" class="active">None</button>
+                    <button type="button" data-panel="light">Light</button>
+                    <button type="button" data-panel="dark">Dark</button>
                   </div>
                 </div>
               </div>
@@ -1235,10 +1297,14 @@
           <img id="bannerLogoPrev" class="bannerLogoPrev" alt="banner logo" />
           <div class="serialPreview" id="serialPreview" data-corner="top-left">
             <span id="serialTextPreview"></span>
-            <canvas id="serialBarcodeCanvas" width="200" height="40"></canvas>
           </div>
-          <div class="heroText no-bg" id="heroTextPreview" data-align="center" data-valign="middle" data-mode="solid">
+          <div class="heroText" id="heroTextPreview" data-align="center" data-valign="middle" data-mode="solid" data-panel="none" data-active="false" tabindex="0">
             <span class="heroInner" id="heroInnerText"></span>
+            <textarea id="heroInlineEditor" class="heroEditor" rows="2" spellcheck="false" aria-label="Edit hero text"></textarea>
+            <div class="heroHandle" data-corner="nw" aria-hidden="true"></div>
+            <div class="heroHandle" data-corner="ne" aria-hidden="true"></div>
+            <div class="heroHandle" data-corner="se" aria-hidden="true"></div>
+            <div class="heroHandle" data-corner="sw" aria-hidden="true"></div>
           </div>
           <div class="stageHint" id="stageHint">Upload or drop your images here to start.</div>
           <div class="dropOverlay" id="dropOverlay">Drop images to upload</div>
@@ -1279,6 +1345,7 @@
       </div>
       <div class="modalBody">
         <div class="modalIntro">Curate partner logos, rename entries, or paste fresh image URLs. Everything saves directly into this file so you can ship updates without leaving Frozone.</div>
+        <div class="modalNotice">Before adding remote logos, confirm they follow partner brand guidelines and have transparent backgrounds when required.</div>
         <div id="partnerSettingsList" class="partnerRows"></div>
       </div>
       <div class="modalFooter">
@@ -1287,10 +1354,14 @@
             <i data-lucide="plus" class="btn-ico" aria-hidden="true"></i>
             <span class="btn-text">Add new logo</span>
           </button>
+          <button class="btn ghost" type="button" id="partnerSettingsSort">
+            <i data-lucide="arrow-up-down" class="btn-ico" aria-hidden="true"></i>
+            <span class="btn-text">Sort A→Z</span>
+          </button>
         </div>
         <div class="modalFooterEnd">
           <button class="btn ghost" type="button" id="partnerSettingsCancel">Cancel</button>
-          <button class="btn primary" type="button" id="partnerSettingsSave">Save changes</button>
+          <button class="btn primary" type="button" id="partnerSettingsSave">Save logos</button>
         </div>
       </div>
     </div>
@@ -1400,8 +1471,8 @@
     frame: document.getElementById('frame'),
     stageHint: document.getElementById('stageHint'),
     bgSourceSection: document.getElementById('bgSourceSection'),
-    bgSourceGuidelines: document.getElementById('bgSourceGuidelines'),
-    banner3DNote: document.getElementById('banner3DNote'),
+    bgGuidance: document.getElementById('bgGuidance'),
+    bgTip3d: document.getElementById('bgTip3d'),
     bgSourceTabs: document.getElementById('bgSourceTabs'),
     bgSourceBlocks: Array.from(document.querySelectorAll('.bg-source-block')),
     bgUpload: document.getElementById('bgUpload'),
@@ -1484,7 +1555,6 @@
     serialCustomWrap: document.getElementById('serialCustomWrap'),
     serialCustomColor: document.getElementById('serialCustomColor'),
     serialCustomPicker: document.getElementById('serialCustomPicker'),
-    serialBarcodeToggle: document.getElementById('serialBarcodeToggle'),
     serialApplyAll: document.getElementById('serialApplyAll'),
 
     toggleHero: document.getElementById('toggleHero'),
@@ -1503,16 +1573,20 @@
     heroSolidPicker: document.getElementById('heroSolidPicker'),
     heroGradientControls: document.getElementById('heroGradientControls'),
     heroGradStart: document.getElementById('heroGradStart'),
+    heroGradStartPicker: document.getElementById('heroGradStartPicker'),
     heroGradEnd: document.getElementById('heroGradEnd'),
+    heroGradEndPicker: document.getElementById('heroGradEndPicker'),
     heroGradAngle: document.getElementById('heroGradAngle'),
+    heroPanelSeg: document.getElementById('heroPanelSeg'),
 
     serialPreview: document.getElementById('serialPreview'),
     serialTextPreview: document.getElementById('serialTextPreview'),
-    serialBarcodeCanvas: document.getElementById('serialBarcodeCanvas'),
+    serialOpacity: document.getElementById('serialOpacity'),
+    serialOpacityValue: document.getElementById('serialOpacityValue'),
     heroTextPreview: document.getElementById('heroTextPreview'),
     heroInnerText: document.getElementById('heroInnerText'),
-
-    saveLogoState: document.getElementById('saveLogoState'),
+    heroInlineEditor: document.getElementById('heroInlineEditor'),
+    heroHandles: Array.from(document.querySelectorAll('.heroHandle')),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
@@ -1526,6 +1600,7 @@
     partnerSettingsModal: document.getElementById('partnerSettingsModal'),
     partnerSettingsList: document.getElementById('partnerSettingsList'),
     partnerSettingsAdd: document.getElementById('partnerSettingsAdd'),
+    partnerSettingsSort: document.getElementById('partnerSettingsSort'),
     partnerSettingsSave: document.getElementById('partnerSettingsSave'),
     partnerSettingsCancel: document.getElementById('partnerSettingsCancel'),
     partnerSettingsClose: document.querySelector('.partnerSettingsClose'),
@@ -1541,7 +1616,7 @@
 
   const SIZE_MAP = { S:23, M:30, L:53 };
   const SIZE_MAP_SQ = { S:35, M:55, L:75 };
-  const BANNER_MODES = ['upload','link','unsplash','gradient'];
+  const BANNER_MODES = ['gradient','unsplash','upload','link'];
   const UNSPLASH_COLOR_PARAM_MAP = {
     pink: 'magenta'
   };
@@ -1557,7 +1632,7 @@
 
   function defaultTextState(){
     return {
-      serial: { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', showBarcode:false, applyAll:false },
+      serial: { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', opacity:100, applyAll:false },
       hero: {
         enabled:false,
         value:'',
@@ -1571,7 +1646,8 @@
         colorMode:'solid',
         solid:'#ffffff',
         gradient:{ start:'#0ea5e9', end:'#6366f1', angle:0 },
-        position:{ x:0.5, y:0.42 }
+        position:{ x:0.5, y:0.42 },
+        panel:'none'
       }
     };
   }
@@ -1588,7 +1664,7 @@
     try{
       return JSON.parse(JSON.stringify(state.text.serial));
     }catch(err){
-      return { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', showBarcode:false, applyAll:false };
+      return { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', opacity:100, applyAll:false };
     }
   }
 
@@ -1616,32 +1692,23 @@
     return fallback;
   }
 
-  function createBarcodeCanvas(text, color){
-    const cleaned = (text || '').replace(/[^0-9A-Za-z]/g,'').toUpperCase();
-    if(!cleaned){ return null; }
-    let pattern = '1010';
-    for(const ch of cleaned){
-      const bits = ch.charCodeAt(0).toString(2).padStart(8,'0');
-      pattern += bits + '0';
-    }
-    pattern += '10101';
-    const moduleWidth = 2;
-    const margin = 10;
-    const width = Math.max(120, pattern.length * moduleWidth + margin * 2);
-    const height = 48;
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = color;
-    let x = margin;
-    for(const bit of pattern){
-      if(bit === '1'){ ctx.fillRect(x, 4, moduleWidth, height - 8); }
-      x += moduleWidth;
-    }
-    return canvas;
+  function getReadableInk(hex){
+    const color = normalizeHex(hex, '#ffffff').slice(1);
+    const r = parseInt(color.slice(0,2), 16);
+    const g = parseInt(color.slice(2,4), 16);
+    const b = parseInt(color.slice(4,6), 16);
+    const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return luminance > 160 ? '#0f172a' : '#ffffff';
+  }
+
+  function applyHexInputStyle(input, hex){
+    if(!input) return;
+    const normalized = normalizeHex(hex, '#ffffff');
+    input.value = normalized.toUpperCase();
+    input.dataset.color = normalized;
+    const ink = getReadableInk(normalized);
+    input.style.background = normalized;
+    input.style.color = ink;
   }
 
   function drawRoundedRect(ctx, x, y, w, h, r){
@@ -1658,22 +1725,6 @@
     ctx.lineTo(x, y + radius);
     ctx.quadraticCurveTo(x, y, x + radius, y);
     ctx.closePath();
-  }
-
-  function renderBarcodePreview(text, color){
-    if(!els.serialBarcodeCanvas) return;
-    const barcodeCanvas = createBarcodeCanvas(text, color);
-    const ctx = els.serialBarcodeCanvas.getContext('2d');
-    if(!barcodeCanvas){
-      ctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
-      els.serialBarcodeCanvas.style.display = 'none';
-      return;
-    }
-    els.serialBarcodeCanvas.width = barcodeCanvas.width;
-    els.serialBarcodeCanvas.height = barcodeCanvas.height;
-    ctx.clearRect(0,0,barcodeCanvas.width, barcodeCanvas.height);
-    ctx.drawImage(barcodeCanvas, 0, 0);
-    els.serialBarcodeCanvas.style.display = 'block';
   }
 
   const HERO_WEIGHT_MAP = {
@@ -1719,6 +1770,17 @@
       vertLogo: serializeLogoStore(state.vertLogo),
       bannerLogo: serializeLogoStore(state.bannerLogo)
     };
+  }
+
+  function persistLogoState(){
+    const payload = gatherLogoState();
+    try{
+      localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload));
+      return true;
+    }catch(err){
+      console.warn('Failed to store logo state', err);
+      return false;
+    }
   }
 
   async function applyLogoSnapshot(snapshot, targetEl, store, which){
@@ -1830,7 +1892,7 @@
     text: defaultTextState(),
 
     banner: {
-      mode:'upload',
+      mode:'gradient',
       uploadName:'',
       link:'',
       unsplash:{ colors:[], tone:'all', style:'', results:[], page:1, totalPages:1 },
@@ -1950,6 +2012,7 @@
   }
 
   function setFormat(key){
+    ensureHeroEditorClosed();
     if(key==='VERT'){ state.format = { ...FORMATS.VERT }; applyVerticalVariant(state.vertVariant); }
     else if(FORMATS[key]){ state.format = { ...FORMATS[key] }; }
     updateFormatChipActive();
@@ -1996,8 +2059,8 @@
       els.bgSourceSection.style.display = isBanner ? 'block' : 'none';
       els.bgSourceSection.setAttribute('aria-hidden', isBanner ? 'false' : 'true');
     }
-    if(els.bgSourceGuidelines){ els.bgSourceGuidelines.style.display = isBanner ? 'block' : 'none'; }
-    if(els.banner3DNote){ els.banner3DNote.style.display = isBanner ? 'block' : 'none'; }
+    if(els.bgGuidance){ els.bgGuidance.style.display = isBanner ? 'grid' : 'none'; }
+    if(els.bgTip3d){ els.bgTip3d.style.display = isBanner ? 'list-item' : 'none'; }
     if(isBanner){
       updateBannerUploadChip();
       updateUnsplashPaletteActive();
@@ -2067,13 +2130,21 @@
           btn.classList.toggle('active', color === state.text.serial.color);
         });
       }
-      if(els.serialCustomWrap){ els.serialCustomWrap.style.display = state.text.serial.color === 'custom' ? 'flex' : 'none'; }
-      if(els.serialCustomColor){ els.serialCustomColor.value = state.text.serial.custom || '#0f172a'; }
-      if(els.serialCustomPicker){
-        const pick = state.text.serial.custom || '#0f172a';
-        els.serialCustomPicker.value = /^#[0-9a-fA-F]{6}$/.test(pick) ? pick : '#0f172a';
+      if(els.serialCustomWrap){ els.serialCustomWrap.style.display = state.text.serial.color === 'custom' ? 'inline-flex' : 'none'; }
+      if(els.serialCustomColor){
+        const custom = normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
+        els.serialCustomColor.value = custom;
+        applyHexInputStyle(els.serialCustomColor, custom);
       }
-      if(els.serialBarcodeToggle){ els.serialBarcodeToggle.checked = !!state.text.serial.showBarcode; }
+      if(els.serialCustomPicker){
+        const pick = normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
+        els.serialCustomPicker.value = pick;
+      }
+      if(els.serialOpacity){
+        const opacity = Math.max(30, Math.min(100, Number(state.text.serial.opacity ?? 100)));
+        els.serialOpacity.value = opacity;
+        if(els.serialOpacityValue){ els.serialOpacityValue.textContent = `${opacity}%`; }
+      }
       if(els.serialApplyAll){ els.serialApplyAll.checked = !!state.text.serial.applyAll; }
 
       if(els.toggleHero){ els.toggleHero.checked = !!state.text.hero.enabled; }
@@ -2096,19 +2167,38 @@
       }
       if(els.heroColorModeSeg){
         [...els.heroColorModeSeg.querySelectorAll('button')].forEach(btn=>{
-          btn.classList.toggle('active', btn.dataset.mode === state.text.hero.colorMode);
+          const mode = btn.dataset.mode || 'solid';
+          const isActive = state.text.hero.colorMode === mode;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
       }
-      if(els.heroSolidControls){ els.heroSolidControls.style.display = state.text.hero.colorMode === 'solid' ? 'flex' : 'none'; }
-      if(els.heroSolidHex){ els.heroSolidHex.value = state.text.hero.solid || '#ffffff'; }
-      if(els.heroSolidPicker){
-        const val = state.text.hero.solid || '#ffffff';
-        els.heroSolidPicker.value = /^#[0-9a-fA-F]{6}$/.test(val) ? val : '#ffffff';
-      }
+      if(els.heroSolidControls){ els.heroSolidControls.style.display = state.text.hero.colorMode === 'solid' ? 'inline-flex' : 'none'; }
       if(els.heroGradientControls){ els.heroGradientControls.style.display = state.text.hero.colorMode === 'gradient' ? 'flex' : 'none'; }
-      if(els.heroGradStart){ els.heroGradStart.value = state.text.hero.gradient?.start || '#0ea5e9'; }
-      if(els.heroGradEnd){ els.heroGradEnd.value = state.text.hero.gradient?.end || '#6366f1'; }
+      if(els.heroSolidHex){
+        const solid = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+        applyHexInputStyle(els.heroSolidHex, solid);
+        if(els.heroSolidPicker){ els.heroSolidPicker.value = solid; }
+      }
+      if(els.heroGradStart){
+        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+        applyHexInputStyle(els.heroGradStart, start);
+        if(els.heroGradStartPicker){ els.heroGradStartPicker.value = start; }
+      }
+      if(els.heroGradEnd){
+        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
+        applyHexInputStyle(els.heroGradEnd, end);
+        if(els.heroGradEndPicker){ els.heroGradEndPicker.value = end; }
+      }
       if(els.heroGradAngle){ els.heroGradAngle.value = state.text.hero.gradient?.angle ?? 0; }
+      if(els.heroPanelSeg){
+        const panel = state.text.hero.panel || 'none';
+        [...els.heroPanelSeg.querySelectorAll('button')].forEach(btn=>{
+          const isActive = (btn.dataset.panel || 'none') === panel;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
     }
 
     els.bVal.textContent = state.brightness;
@@ -2323,35 +2413,33 @@
     if(isTextFormat && state.text.serial.enabled && state.text.serial.value){
       const color = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
       const exportFont = Math.max(18, Math.round(state.format.hExport * 0.025));
-      const scale = (state.format.hPreview/state.format.hExport) * state.previewZoom;
-      els.serialPreview.style.display = 'inline-block';
-      els.serialPreview.dataset.corner = state.text.serial.corner || 'top-left';
-      els.serialPreview.style.fontSize = (exportFont * scale).toFixed(2) + 'px';
+      const scaleY = (state.format.hPreview/state.format.hExport) * state.previewZoom;
+      const scaleX = (state.format.wPreview/state.format.wExport) * state.previewZoom;
+      const marginExpX = Math.max(12, state.format.wExport * 0.02);
+      const marginExpY = Math.max(12, state.format.hExport * 0.02);
+      const marginX = marginExpX * scaleX;
+      const marginY = marginExpY * scaleY;
+      const corner = state.text.serial.corner || 'top-left';
+      const alignRight = corner.includes('right');
+      const alignBottom = corner.includes('bottom');
+      const left = frameLeftPx + (alignRight ? fwPx - marginX : marginX);
+      const top = frameTopPx + (alignBottom ? fhPx - marginY : marginY);
+      els.serialPreview.style.display = 'block';
+      els.serialPreview.dataset.corner = corner;
+      els.serialPreview.dataset.align = alignRight ? 'right' : 'left';
+      els.serialPreview.style.fontSize = (exportFont * scaleY).toFixed(2) + 'px';
+      els.serialPreview.style.left = `${left}px`;
+      els.serialPreview.style.top = `${top}px`;
+      els.serialPreview.style.transform = `translate(${alignRight ? '-100%' : '0'}, ${alignBottom ? '-100%' : '0'})`;
+      els.serialPreview.style.textAlign = alignRight ? 'right' : 'left';
+      els.serialPreview.style.opacity = Math.max(0.3, Math.min(1, (state.text.serial.opacity || 100) / 100)).toFixed(2);
       els.serialPreview.style.color = color;
-      const background = state.text.serial.color === 'white' ? 'rgba(15,23,42,0.45)' : 'rgba(255,255,255,0.28)';
-      els.serialPreview.style.background = background;
-      els.serialPreview.style.textAlign = (state.text.serial.corner||'top-left').includes('right') ? 'right' : 'left';
       els.serialTextPreview.textContent = state.text.serial.value;
-      if(state.text.serial.showBarcode){
-        els.serialPreview.classList.add('has-barcode');
-        renderBarcodePreview(state.text.serial.value, color === '#ffffff' ? '#111111' : color);
-      } else {
-        els.serialPreview.classList.remove('has-barcode');
-        if(els.serialBarcodeCanvas){
-          const bctx = els.serialBarcodeCanvas.getContext('2d');
-          bctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
-          els.serialBarcodeCanvas.style.display = 'none';
-        }
-      }
     } else {
       els.serialPreview.style.display = 'none';
-      if(els.serialBarcodeCanvas){
-        const bctx = els.serialBarcodeCanvas.getContext('2d');
-        bctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
-        els.serialBarcodeCanvas.style.display = 'none';
-      }
     }
 
+    els.heroTextPreview?.setAttribute('data-active', (isTextFormat && state.text.hero.enabled && state.text.hero.value) ? 'true' : 'false');
     if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
       const pos = state.text.hero.position || {x:0.5, y:0.5};
       const left = frameLeftPx + (pos.x||0.5) * fwPx;
@@ -2366,6 +2454,7 @@
       els.heroTextPreview.dataset.align = state.text.hero.align || 'center';
       els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
       els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
+      els.heroTextPreview.dataset.panel = state.text.hero.panel || 'none';
       inner.textContent = state.text.hero.value;
       inner.style.fontSize = fontPx.toFixed(2) + 'px';
       inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
@@ -2375,7 +2464,8 @@
       if(typeof lh === 'string' && lh.trim().endsWith('%')){ inner.style.lineHeight = lh.trim(); }
       else { const num = parseFloat(lh)||110; inner.style.lineHeight = (num/100).toFixed(2); }
       inner.style.textAlign = state.text.hero.align || 'center';
-      if(state.text.hero.colorMode === 'gradient'){
+      const colorMode = state.text.hero.colorMode === 'gradient' ? 'gradient' : 'solid';
+      if(colorMode === 'gradient'){
         const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
         const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
         const angle = state.text.hero.gradient?.angle || 0;
@@ -2384,17 +2474,27 @@
         inner.style.webkitBackgroundClip = 'text';
         inner.style.backgroundClip = 'text';
         inner.style.color = 'transparent';
-        els.heroTextPreview.classList.add('no-bg');
       } else {
         const col = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
         inner.style.color = col;
         inner.style.backgroundImage = 'none';
         inner.style.webkitBackgroundClip = 'initial';
         inner.style.backgroundClip = 'initial';
-        els.heroTextPreview.classList.remove('no-bg');
+      }
+      if(heroEditing && els.heroInlineEditor){
+        const editorStyle = els.heroInlineEditor.style;
+        editorStyle.fontSize = inner.style.fontSize;
+        editorStyle.fontFamily = inner.style.fontFamily;
+        editorStyle.fontWeight = inner.style.fontWeight;
+        editorStyle.lineHeight = inner.style.lineHeight;
+        editorStyle.letterSpacing = inner.style.letterSpacing;
+        editorStyle.textAlign = inner.style.textAlign;
+        editorStyle.color = heroEditorTextColor();
+        editorStyle.background = heroEditorBackground();
       }
     } else {
       els.heroTextPreview.style.display = 'none';
+      els.heroTextPreview.dataset.panel = 'none';
     }
   }
 
@@ -2587,7 +2687,7 @@
   }
 
   function setBannerMode(mode){
-    const next = BANNER_MODES.includes(mode) ? mode : 'upload';
+    const next = BANNER_MODES.includes(mode) ? mode : 'gradient';
     state.banner.mode = next;
     if(els.bgSourceTabs){
       [...els.bgSourceTabs.querySelectorAll('button')].forEach(btn=>{
@@ -3079,23 +3179,26 @@
       const row = document.createElement('div');
       row.className = 'gradientInputRow';
 
+      const field = document.createElement('div');
+      field.className = 'gradientColorField';
+
       const textInput = document.createElement('input');
       textInput.type = 'text';
-      textInput.value = (color || '').toUpperCase();
+      textInput.className = 'gradientHexInput';
       textInput.placeholder = '#FFFFFF';
       textInput.maxLength = 7;
       textInput.dataset.index = idx.toString();
 
       const colorInput = document.createElement('input');
       colorInput.type = 'color';
-      colorInput.value = /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#ffffff';
+      colorInput.className = 'gradientColorOverlay';
       colorInput.dataset.index = idx.toString();
 
       const commitColor = (val)=>{
-        const normalized = /^#[0-9a-fA-F]{6}$/.test(val) ? val : null;
-        if(!normalized) return false;
+        const fallback = state.banner.gradient.colors[idx] || '#ffffff';
+        const normalized = normalizeHex(val, fallback);
         state.banner.gradient.colors[idx] = normalized;
-        textInput.value = normalized.toUpperCase();
+        applyHexInputStyle(textInput, normalized);
         colorInput.value = normalized;
         updateGradientPreview();
         return true;
@@ -3106,16 +3209,14 @@
       });
 
       textInput.addEventListener('change', ()=>{
-        const val = textInput.value.trim().toUpperCase();
-        if(!val.startsWith('#')){ textInput.value = '#' + val.replace(/[^0-9A-F]/gi,'').slice(0,6); }
-        const candidate = textInput.value.toUpperCase();
-        if(!commitColor(candidate)){
-          const current = state.banner.gradient.colors[idx] || '#FFFFFF';
-          textInput.value = current.toUpperCase();
-        }
+        const val = textInput.value.trim();
+        commitColor(val);
       });
 
-      row.append(textInput, colorInput);
+      field.append(textInput, colorInput);
+      row.append(field);
+      applyHexInputStyle(textInput, color);
+      colorInput.value = normalizeHex(color || '#ffffff', '#ffffff');
       swatch.append(header, row);
       els.gradientColorContainer.appendChild(swatch);
     });
@@ -3814,6 +3915,7 @@
     it.text = cloneTextSettings(state.text);
   }
   function loadImageAt(idx){
+    ensureHeroEditorClosed();
     if(idx<0 || idx>=state.images.length) return;
     const it = state.images[idx];
     state.current = idx;
@@ -3829,6 +3931,17 @@
     els.batchMeta.textContent = text;
     computeCover(); fitPreviewZoomToStage(); render(); updateControls();
     renderCarousel();
+  }
+  function stepImage(delta){
+    ensureHeroEditorClosed();
+    if(!Number.isInteger(delta) || state.images.length === 0) return;
+    if(state.current < 0){ loadImageAt(0); return; }
+    let next = state.current + delta;
+    if(next < 0){ next = state.images.length - 1; }
+    if(next >= state.images.length){ next = 0; }
+    if(next === state.current) return;
+    serializeCurrent();
+    loadImageAt(next);
   }
   // ---------- Controls ----------
   els.brightness.addEventListener('input', e=>{ state.brightness = +e.target.value; els.bVal.textContent = state.brightness; render(); serializeCurrent(); });
@@ -3908,15 +4021,22 @@
     if(val !== state.text.serial.custom){
       state.text.serial.custom = val;
       commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+      applyHexInputStyle(els.serialCustomColor, val);
     }
   });
   els.serialCustomPicker?.addEventListener('input', (e)=>{
     const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
     state.text.serial.custom = val;
+    if(els.serialCustomColor){
+      els.serialCustomColor.value = val;
+      applyHexInputStyle(els.serialCustomColor, val);
+    }
     commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
   });
-  els.serialBarcodeToggle?.addEventListener('change', ()=>{
-    state.text.serial.showBarcode = !!els.serialBarcodeToggle.checked;
+  els.serialOpacity?.addEventListener('input', (e)=>{
+    const value = Math.max(30, Math.min(100, Number(e.target.value)||100));
+    state.text.serial.opacity = value;
+    if(els.serialOpacityValue){ els.serialOpacityValue.textContent = `${value}%`; }
     commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
   });
   els.serialApplyAll?.addEventListener('change', ()=>{
@@ -3925,6 +4045,7 @@
   });
 
   els.toggleHero?.addEventListener('change', ()=>{
+    ensureHeroEditorClosed();
     state.text.hero.enabled = !!els.toggleHero.checked;
     commitTextState();
   });
@@ -3980,36 +4101,64 @@
   els.heroSolidHex?.addEventListener('input', (e)=>{
     const val = normalizeHex(e.target.value, state.text.hero.solid || '#ffffff');
     state.text.hero.solid = val;
+    applyHexInputStyle(els.heroSolidHex, val);
+    if(els.heroSolidPicker){ els.heroSolidPicker.value = val; }
     commitTextState({ refreshControls:false });
   });
   els.heroSolidPicker?.addEventListener('input', (e)=>{
     const val = normalizeHex(e.target.value, state.text.hero.solid || '#ffffff');
     state.text.hero.solid = val;
+    if(els.heroSolidHex){
+      els.heroSolidHex.value = val.toUpperCase();
+      applyHexInputStyle(els.heroSolidHex, val);
+    }
     commitTextState({ refreshControls:false });
   });
   els.heroGradStart?.addEventListener('input', (e)=>{
-    state.text.hero.gradient.start = normalizeHex(e.target.value, state.text.hero.gradient.start || '#0ea5e9');
+    const val = normalizeHex(e.target.value, state.text.hero.gradient.start || '#0ea5e9');
+    state.text.hero.gradient.start = val;
+    applyHexInputStyle(els.heroGradStart, val);
+    if(els.heroGradStartPicker){ els.heroGradStartPicker.value = val; }
     commitTextState({ refreshControls:false });
   });
   els.heroGradEnd?.addEventListener('input', (e)=>{
-    state.text.hero.gradient.end = normalizeHex(e.target.value, state.text.hero.gradient.end || '#6366f1');
+    const val = normalizeHex(e.target.value, state.text.hero.gradient.end || '#6366f1');
+    state.text.hero.gradient.end = val;
+    applyHexInputStyle(els.heroGradEnd, val);
+    if(els.heroGradEndPicker){ els.heroGradEndPicker.value = val; }
+    commitTextState({ refreshControls:false });
+  });
+  els.heroGradStartPicker?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.hero.gradient.start || '#0ea5e9');
+    state.text.hero.gradient.start = val;
+    if(els.heroGradStart){
+      els.heroGradStart.value = val.toUpperCase();
+      applyHexInputStyle(els.heroGradStart, val);
+    }
+    commitTextState({ refreshControls:false });
+  });
+  els.heroGradEndPicker?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.hero.gradient.end || '#6366f1');
+    state.text.hero.gradient.end = val;
+    if(els.heroGradEnd){
+      els.heroGradEnd.value = val.toUpperCase();
+      applyHexInputStyle(els.heroGradEnd, val);
+    }
     commitTextState({ refreshControls:false });
   });
   els.heroGradAngle?.addEventListener('input', (e)=>{
     state.text.hero.gradient.angle = parseFloat(e.target.value)||0;
     commitTextState({ refreshControls:false });
   });
-  els.saveLogoState?.addEventListener('click', ()=>{
-    const payload = gatherLogoState();
-    try{ localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload)); }catch(err){ console.warn('Failed to store logo state', err); return; }
-    if(els.saveLogoState){
-      els.saveLogoState.classList.remove('feedback-error');
-      els.saveLogoState.classList.add('feedback-success');
-      window.setTimeout(()=> els.saveLogoState.classList.remove('feedback-success'), 1400);
-    }
+  els.heroPanelSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    const panel = btn.dataset.panel || 'none';
+    state.text.hero.panel = panel;
+    commitTextState({ refreshControls:false });
   });
-
   let heroDrag = null;
+  let heroResize = null;
+  let heroEditing = false;
   function updateHeroPositionFromPointer(e){
     if(!frameMetrics.width || !frameMetrics.height) return;
     const stageRect = els.stage.getBoundingClientRect();
@@ -4032,6 +4181,7 @@
   };
   els.heroTextPreview?.addEventListener('pointerdown', (e)=>{
     if(!state.text.hero.enabled) return;
+    if(heroEditing) return;
     if(e.button !== 0) return;
     heroDrag = e.pointerId;
     els.heroTextPreview.classList.add('dragging');
@@ -4045,6 +4195,159 @@
   });
   els.heroTextPreview?.addEventListener('pointerup', endHeroDrag);
   els.heroTextPreview?.addEventListener('pointercancel', endHeroDrag);
+
+  function beginHeroResize(pointerId, corner, e){
+    if(!els.heroTextPreview) return;
+    const scaleX = (state.format.wPreview/state.format.wExport || 1) * state.previewZoom || 1;
+    const scaleY = (state.format.hPreview/state.format.hExport || 1) * state.previewZoom || 1;
+    heroResize = {
+      id: pointerId,
+      corner: corner || 'se',
+      startSize: state.text.hero.size || 120,
+      startX: e.clientX,
+      startY: e.clientY,
+      scaleX: scaleX || 1,
+      scaleY: scaleY || 1
+    };
+    els.heroTextPreview.classList.add('resizing');
+  }
+  function updateHeroResize(e){
+    if(!heroResize || e.pointerId !== heroResize.id) return;
+    const deltaX = (e.clientX - heroResize.startX);
+    const deltaY = (e.clientY - heroResize.startY);
+    const effectX = heroResize.corner.includes('w') ? -deltaX : deltaX;
+    const effectY = heroResize.corner.includes('n') ? -deltaY : deltaY;
+    const exportDeltaX = effectX / (heroResize.scaleX || 1);
+    const exportDeltaY = effectY / (heroResize.scaleY || 1);
+    const combined = (exportDeltaX + exportDeltaY) / 2;
+    const nextSize = Math.max(80, heroResize.startSize + combined);
+    if(Math.abs(nextSize - (state.text.hero.size || 120)) < 0.2) return;
+    state.text.hero.size = nextSize;
+    if(els.heroSizeInput){ els.heroSizeInput.value = Math.round(nextSize); }
+    render();
+  }
+  function endHeroResize(e){
+    if(!heroResize) return;
+    if(e && e.pointerId !== heroResize.id) return;
+    if(els.heroTextPreview){ els.heroTextPreview.classList.remove('resizing'); }
+    heroResize = null;
+    commitTextState({ refreshControls:false });
+    updateControls();
+  }
+  els.heroHandles?.forEach(handle=>{
+    handle.addEventListener('pointerdown', (e)=>{
+      if(!state.text.hero.enabled) return;
+      if(heroEditing) return;
+      if(e.button !== 0) return;
+      const corner = handle.dataset.corner || 'se';
+      beginHeroResize(e.pointerId, corner, e);
+      try{ handle.setPointerCapture(e.pointerId); }catch(err){}
+      e.stopPropagation();
+      e.preventDefault();
+    });
+    handle.addEventListener('pointermove', (e)=>{ updateHeroResize(e); });
+    handle.addEventListener('pointerup', (e)=>{
+      if(handle.hasPointerCapture?.(e.pointerId)){ try{ handle.releasePointerCapture(e.pointerId); }catch(err){} }
+      endHeroResize(e);
+    });
+    handle.addEventListener('pointercancel', (e)=>{
+      if(handle.hasPointerCapture?.(e.pointerId)){ try{ handle.releasePointerCapture(e.pointerId); }catch(err){} }
+      endHeroResize(e);
+    });
+  });
+
+  function heroEditorTextColor(){
+    if(state.text.hero.colorMode === 'solid'){
+      return normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+    }
+    const panel = state.text.hero.panel || 'none';
+    if(panel === 'dark'){ return '#ffffff'; }
+    if(panel === 'light'){ return '#111111'; }
+    const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+    return getReadableInk(start);
+  }
+  function heroEditorBackground(){
+    const panel = state.text.hero.panel || 'none';
+    if(panel === 'dark'){ return 'rgba(15,23,42,0.68)'; }
+    if(panel === 'light'){ return 'rgba(255,255,255,0.7)'; }
+    return 'rgba(15,23,42,0.18)';
+  }
+  function openHeroEditor(){
+    if(heroEditing) return;
+    if(!els.heroInlineEditor || !els.heroTextPreview) return;
+    heroEditing = true;
+    els.heroTextPreview.classList.add('editing');
+    const value = state.text.hero.value || '';
+    els.heroInlineEditor.value = value;
+    const computed = window.getComputedStyle(els.heroInnerText);
+    if(computed){
+      const style = els.heroInlineEditor.style;
+      style.fontSize = computed.fontSize;
+      style.fontFamily = computed.fontFamily;
+      style.fontWeight = computed.fontWeight;
+      style.lineHeight = computed.lineHeight;
+      style.letterSpacing = computed.letterSpacing;
+      style.textAlign = computed.textAlign;
+    }
+    els.heroInlineEditor.style.color = heroEditorTextColor();
+    els.heroInlineEditor.style.background = heroEditorBackground();
+    requestAnimationFrame(()=>{
+      if(!els.heroInlineEditor) return;
+      els.heroInlineEditor.focus({ preventScroll:true });
+      const len = els.heroInlineEditor.value.length;
+      try{ els.heroInlineEditor.setSelectionRange(len, len); }catch(err){}
+    });
+  }
+  function closeHeroEditor({ commit = true } = {}){
+    if(!heroEditing) return;
+    heroEditing = false;
+    if(els.heroTextPreview){ els.heroTextPreview.classList.remove('editing'); }
+    if(!els.heroInlineEditor) return;
+    const nextValue = els.heroInlineEditor.value.replace(/\r\n/g,'\n');
+    if(commit && nextValue !== state.text.hero.value){
+      state.text.hero.value = nextValue;
+      if(els.heroTextInput){ els.heroTextInput.value = nextValue; }
+      commitTextState({ refreshControls:false });
+      updateControls();
+    } else {
+      render();
+    }
+  }
+  els.heroTextPreview?.addEventListener('dblclick', (e)=>{
+    if(!state.text.hero.enabled) return;
+    if(heroResize || heroDrag !== null) return;
+    e.preventDefault();
+    openHeroEditor();
+  });
+  els.heroTextPreview?.addEventListener('keydown', (e)=>{
+    if(!state.text.hero.enabled) return;
+    if(heroEditing && e.key === 'Escape'){
+      e.preventDefault();
+      closeHeroEditor({ commit:false });
+      return;
+    }
+    if(heroEditing) return;
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      openHeroEditor();
+    }
+  });
+  els.heroInlineEditor?.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      e.preventDefault();
+      closeHeroEditor({ commit:false });
+    } else if((e.key === 'Enter' && (e.metaKey || e.ctrlKey))){
+      e.preventDefault();
+      closeHeroEditor({ commit:true });
+    }
+  });
+  els.heroInlineEditor?.addEventListener('blur', ()=>{
+    if(heroEditing){ closeHeroEditor({ commit:true }); }
+  });
+
+  function ensureHeroEditorClosed(commit = true){
+    if(heroEditing){ closeHeroEditor({ commit }); }
+  }
   els.vertSizeSeg.addEventListener('click', (e)=>{
     const btn = e.target.closest('button'); if(!btn) return;
     const v = btn.dataset.v; if(!v) return;
@@ -4180,13 +4483,45 @@
   els.partnerSettingsTriggers?.forEach(btn=>btn.addEventListener('click', openPartnerSettings));
   els.partnerSettingsAdd?.addEventListener('click', ()=>{
     const row = createPartnerRow();
-    els.partnerSettingsList?.appendChild(row);
+    if(els.partnerSettingsList){
+      els.partnerSettingsList.prepend(row);
+    }
     row.querySelector('input')?.focus();
   });
   const closeSettings = ()=>closePartnerSettings();
   els.partnerSettingsCancel?.addEventListener('click', closeSettings);
   els.partnerSettingsClose?.addEventListener('click', closeSettings);
   els.partnerSettingsModal?.addEventListener('click', (e)=>{ if(e.target === els.partnerSettingsModal){ closePartnerSettings(); } });
+  els.partnerSettingsSort?.addEventListener('click', ()=>{
+    if(!els.partnerSettingsList) return;
+    const rows = Array.from(els.partnerSettingsList.querySelectorAll('.partnerRow'));
+    if(rows.length === 0) return;
+    const entries = rows.map(row=>({
+      name:(row.querySelector('.partnerName')?.value||'').trim(),
+      url:(row.querySelector('.partnerUrl')?.value||'').trim()
+    }));
+    entries.sort((a,b)=>{
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      if(!a.name && !b.name) return 0;
+      if(!a.name) return 1;
+      if(!b.name) return -1;
+      const cmp = nameA.localeCompare(nameB, undefined, { sensitivity:'base' });
+      if(cmp !== 0) return cmp;
+      return a.url.localeCompare(b.url, undefined, { sensitivity:'base' });
+    });
+    els.partnerSettingsList.innerHTML = '';
+    entries.forEach(entry=>{
+      els.partnerSettingsList.appendChild(createPartnerRow(entry));
+    });
+    refreshIcons();
+    const focusTarget = els.partnerSettingsList.querySelector('.partnerName');
+    focusTarget?.focus();
+    if(els.partnerSettingsSort){
+      els.partnerSettingsSort.classList.add('feedback-success');
+      window.setTimeout(()=> els.partnerSettingsSort?.classList.remove('feedback-success'), 1200);
+    }
+  });
   window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && els.partnerSettingsModal?.classList.contains('show')){ closePartnerSettings(); } });
   els.partnerSettingsSave?.addEventListener('click', ()=>{
     if(!els.partnerSettingsList) return;
@@ -4210,6 +4545,7 @@
     partnerLibrary = next;
     persistPartnerLibrary();
     buildAllGalleries();
+    persistLogoState();
     closePartnerSettings();
   });
 
@@ -4388,46 +4724,20 @@
       const color = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
       const fontSize = Math.max(18, Math.round(state.format.hExport * 0.025));
       const fontFamily = `'SF Pro Text', 'Inter', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
+      const corner = state.text.serial.corner || 'top-left';
+      const alignRight = corner.includes('right');
+      const alignBottom = corner.includes('bottom');
+      const marginX = Math.max(12, state.format.wExport * 0.02);
+      const marginY = Math.max(12, state.format.hExport * 0.02);
+      const x = alignRight ? fw - marginX : marginX;
+      const y = alignBottom ? fh - marginY : marginY;
       ctx.save();
       ctx.font = `600 ${fontSize}px ${fontFamily}`;
-      ctx.textBaseline = 'top';
-      ctx.textAlign = 'left';
-      const metrics = ctx.measureText(state.text.serial.value);
-      const textHeightRaw = (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0);
-      const textHeight = textHeightRaw > 0 ? textHeightRaw : fontSize * 1.2;
-      const textWidth = metrics.width || (state.text.serial.value.length * fontSize * 0.6);
-      const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
-      const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
-      const marginX = 24 * scaleX;
-      const marginY = 24 * scaleY;
-      const padX = 10 * scaleX;
-      const padY = 6 * scaleY;
-      const gap = state.text.serial.showBarcode ? 6 * scaleY : 0;
-      const radius = 8 * ((scaleX + scaleY) / 2);
-      const corner = state.text.serial.corner || 'top-left';
-      const barcodeCanvas = state.text.serial.showBarcode ? createBarcodeCanvas(state.text.serial.value, color === '#ffffff' ? '#111111' : color) : null;
-      const barcodeWidth = barcodeCanvas ? barcodeCanvas.width * scaleX : 0;
-      const barcodeHeight = barcodeCanvas ? barcodeCanvas.height * scaleY : 0;
-      const boxWidth = Math.max(textWidth + padX * 2, barcodeWidth + padX * 2);
-      const contentHeight = textHeight + (barcodeCanvas ? gap + barcodeHeight : 0);
-      const boxHeight = contentHeight + padY * 2;
-      let x = corner.includes('right') ? fw - marginX - boxWidth : marginX;
-      let y = corner.includes('bottom') ? fh - marginY - boxHeight : marginY;
-      const background = state.text.serial.color === 'white' ? 'rgba(15,23,42,0.45)' : 'rgba(255,255,255,0.28)';
-      drawRoundedRect(ctx, x, y, boxWidth, boxHeight, radius);
-      ctx.fillStyle = background;
-      ctx.fill();
+      ctx.textAlign = alignRight ? 'right' : 'left';
+      ctx.textBaseline = alignBottom ? 'bottom' : 'top';
+      ctx.globalAlpha = Math.max(0.3, Math.min(1, (state.text.serial.opacity || 100) / 100));
       ctx.fillStyle = color;
-      const textAlign = corner.includes('right') ? 'right' : 'left';
-      const textX = textAlign === 'right' ? x + boxWidth - padX : x + padX;
-      const textY = y + padY;
-      ctx.textAlign = textAlign;
-      ctx.fillText(state.text.serial.value, textX, textY);
-      if(barcodeCanvas){
-        const bX = textAlign === 'right' ? x + boxWidth - padX - barcodeWidth : x + padX;
-        const bY = textY + textHeight + gap;
-        ctx.drawImage(barcodeCanvas, bX, bY, barcodeWidth, barcodeHeight);
-      }
+      ctx.fillText(state.text.serial.value, x, y);
       ctx.restore();
     }
 
@@ -4477,13 +4787,15 @@
       const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
       const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
       const padScale = Math.sqrt(scaleX * scaleY);
-      const padX = 16 * padScale;
-      const padY = 12 * padScale;
-      const radius = 16 * padScale;
-      if(state.text.hero.colorMode !== 'gradient'){
+      const panel = state.text.hero.panel || 'none';
+      const padX = panel === 'none' ? 0 : 18 * padScale;
+      const padY = panel === 'none' ? 0 : 14 * padScale;
+      const radius = panel === 'none' ? 0 : 18 * padScale;
+      if(panel !== 'none'){
         ctx.save();
+        const panelColor = panel === 'dark' ? 'rgba(15,23,42,0.68)' : 'rgba(255,255,255,0.7)';
         drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
-        ctx.fillStyle = 'rgba(15,23,42,0.08)';
+        ctx.fillStyle = panelColor;
         ctx.fill();
         ctx.restore();
       }
@@ -4629,6 +4941,24 @@
       els.imageLayer.classList.remove('dragging');
       els.stage.classList.remove('dragging');
       serializeCurrent();
+    }
+  });
+  window.addEventListener('keydown', (e)=>{
+    if(e.defaultPrevented) return;
+    if(e.altKey || e.ctrlKey || e.metaKey) return;
+    const active = document.activeElement;
+    if(active){
+      const tag = active.tagName;
+      const isEditable = active.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+      if(isEditable){ return; }
+    }
+    if(els.partnerSettingsModal?.classList.contains('show')) return;
+    if(e.key === 'ArrowRight'){
+      stepImage(1);
+      e.preventDefault();
+    } else if(e.key === 'ArrowLeft'){
+      stepImage(-1);
+      e.preventDefault();
     }
   });
 
