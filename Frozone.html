@@ -152,27 +152,39 @@
 
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
-  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -8px 24px rgba(2,6,23,0.15);}
-  .frostBg{position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; transition:background-image .2s ease, opacity .2s ease; filter:none;}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.28),rgba(255,255,255,0.08)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.12)}
+  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -8px 24px rgba(2,6,23,0.28); z-index:38; pointer-events:none;}
+  .frostBar::after{content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg, rgba(15,23,42,0.32) 0%, rgba(15,23,42,0.26) 55%, rgba(10,16,30,0.32) 100%); box-shadow:inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -12px 24px rgba(2,6,23,0.45); mix-blend-mode:normal;}
+  .frostBg{position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; transition:background-image .2s ease, opacity .2s ease; filter:none; opacity:0.88;}
+  .veil{position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,30,47,0.38),rgba(20,30,47,0.22)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(15,23,42,0.55)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
   .stageWarning{position:absolute; inset:20px; pointer-events:none}
   .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:40; display:none; pointer-events:none; white-space:nowrap; text-shadow:0 1px 2px rgba(15,23,42,0.28)}
   .serialPreview span{display:inline-block}
-  .heroText{position:absolute; z-index:42; min-width:120px; display:none; cursor:grab; user-select:none; transition:box-shadow .15s ease, transform .15s ease; transform:translate(-50%,-50%); pointer-events:auto}
+  .heroText{position:absolute; z-index:34; min-width:120px; display:none; cursor:grab; user-select:none; transition:box-shadow .15s ease, transform .15s ease; --hero-shift-x:-50%; --hero-shift-y:-50%; transform:translate(var(--hero-shift-x), var(--hero-shift-y)); pointer-events:auto}
   .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText.resizing{cursor:nwse-resize}
   .heroText .heroInner{display:block; pointer-events:none; white-space:pre-wrap}
+  .heroText::after{content:""; position:absolute; inset:-8px; border:1px solid rgba(148,163,184,0.55); border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .18s ease, border-color .18s ease}
+  .heroText[data-active="true"]::after,
+  .heroText.dragging::after,
+  .heroText.resizing::after,
+  .heroText.editing::after{opacity:1; border-color:rgba(96,165,250,0.7)}
   .heroText[data-align="left"] .heroInner{text-align:left}
   .heroText[data-align="center"] .heroInner{text-align:center}
   .heroText[data-align="right"] .heroInner{text-align:right}
+  .heroText[data-align="left"]{--hero-shift-x:0%}
+  .heroText[data-align="center"]{--hero-shift-x:-50%}
+  .heroText[data-align="right"]{--hero-shift-x:-100%}
+  .heroText[data-valign="top"]{--hero-shift-y:0%}
+  .heroText[data-valign="middle"]{--hero-shift-y:-50%}
+  .heroText[data-valign="bottom"]{--hero-shift-y:-100%}
   .heroText[data-panel="none"]{padding:0; background:transparent; border-radius:0; box-shadow:none}
   .heroText[data-panel="light"], .heroText[data-panel="dark"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText[data-panel="light"]{background:rgba(255,255,255,0.68)}
   .heroText[data-panel="dark"]{background:rgba(15,23,42,0.68)}
-  .heroEditor{position:absolute; inset:0; width:100%; height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor}
+  .heroEditor{position:absolute; inset:0; width:100%; height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:rgba(15,23,42,0.08); backdrop-filter:blur(2px); color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; white-space:pre-wrap; display:none; caret-color:currentColor; overflow:hidden; border-radius:inherit; box-shadow:inset 0 0 0 1px rgba(148,163,184,0.35)}
   .heroText.editing .heroEditor{display:block}
   .heroText.editing .heroInner{visibility:hidden}
   .heroText.editing .heroHandle{display:none}
@@ -220,8 +232,8 @@
   .textFieldRow{display:grid; gap:10px}
   .textFieldRow label{font-size:13px; font-weight:600}
   .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
-  .cornerPicker button{all:unset; display:grid; place-items:center; border-radius:10px; border:1px solid var(--border); padding:12px; cursor:pointer; transition:all .15s ease}
-  .cornerPicker button svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8}
+  .cornerPicker button{all:unset; display:grid; place-items:center; border-radius:12px; border:1px solid var(--border); padding:12px; cursor:pointer; transition:all .15s ease; background:linear-gradient(180deg,rgba(255,255,255,0.85),rgba(226,232,240,0.6))}
+  .cornerPicker button svg{width:22px; height:22px; stroke:var(--muted); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; fill:none}
   .cornerPicker button.active{border-color:var(--brand); box-shadow:0 6px 16px rgba(14,165,233,0.18)}
   .cornerPicker button.active svg{stroke:var(--brand2)}
   .serialColorRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
@@ -231,6 +243,10 @@
   .heroRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
   .heroRow label{font-size:13px; font-weight:600}
   .heroRow select, .heroRow input[type="number"], .heroRow input[type="text"]{min-width:110px}
+  .heroMetricGrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
+  .heroMetricField{display:grid; gap:6px; align-items:flex-start}
+  .heroMetricField label, .heroMetricField .metricLabel{font-size:13px; font-weight:600}
+  .heroMetricField .alignSeg{width:100%}
   .alignSeg{display:inline-flex; gap:6px; padding:4px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
   .alignSeg button{all:unset; display:grid; place-items:center; padding:8px 12px; border-radius:10px; cursor:pointer; color:var(--muted); transition:all .15s ease}
   .alignSeg button svg{width:18px; height:18px; stroke:currentColor; stroke-width:1.8}
@@ -248,7 +264,7 @@
   .bgGuidanceList .bannerOnly{display:none}
   .serialOptions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
 
-  .playWrap{position:absolute; display:none; pointer-events:none}
+  .playWrap{position:absolute; display:none; pointer-events:none; z-index:42}
   .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(6.2037px); background:rgba(0,0,0,0.40); box-shadow:inset 0 1px 2px rgba(255,255,255,0.2), 0 10px 30px rgba(2,6,23,0.25);}
   .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
   .playTri svg{width:54%; max-width:72px; height:auto}
@@ -531,6 +547,8 @@
   :root[data-theme="dark"] .textPanel textarea,
   :root[data-theme="dark"] .textPanel select{background:rgba(9,20,41,0.85); border-color:rgba(46,63,98,0.65); color:#e2e8f0; box-shadow:0 6px 18px rgba(1,5,19,0.55)}
   :root[data-theme="dark"] .colorHexInput{background:rgba(9,20,41,0.9); border-color:rgba(46,63,98,0.65); color:#e2e8f0; box-shadow:0 6px 18px rgba(1,5,19,0.55)}
+  :root[data-theme="dark"] .cornerPicker button{background:linear-gradient(180deg,rgba(21,30,46,0.92),rgba(10,16,28,0.78)); border-color:rgba(46,63,98,0.65)}
+  :root[data-theme="dark"] .cornerPicker button svg{stroke:rgba(148,197,255,0.85)}
   :root[data-theme="dark"] .bgGuidance{background:rgba(9,20,41,0.72); border-color:rgba(46,63,98,0.65); box-shadow:0 20px 38px rgba(1,5,19,0.55)}
   :root[data-theme="dark"] .bgGuidanceTitle{color:rgba(186,204,240,0.85)}
   :root[data-theme="dark"] .bgGuidanceList{color:rgba(200,212,242,0.82)}
@@ -1087,10 +1105,10 @@
               <div class="serialFieldRow">
                 <label>Corner</label>
                 <div class="cornerPicker" id="serialCornerPicker">
-                  <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                  <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M8 4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4Z" stroke-width="1.4" stroke="currentColor"></path><path d="M10 4H6a2 2 0 0 0-2 2V10" stroke-width="2.6" stroke="currentColor"></path></svg></button>
+                  <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M8 4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4Z" stroke-width="1.4" stroke="currentColor"></path><path d="M18 4h4a2 2 0 0 1 2 2V10" stroke-width="2.6" stroke="currentColor"></path></svg></button>
+                  <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M8 4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4Z" stroke-width="1.4" stroke="currentColor"></path><path d="M4 18v4a2 2 0 0 0 2 2h4" stroke-width="2.6" stroke="currentColor"></path></svg></button>
+                  <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M8 4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4Z" stroke-width="1.4" stroke="currentColor"></path><path d="M24 18v4a2 2 0 0 1-2 2h-4" stroke-width="2.6" stroke="currentColor"></path></svg></button>
                 </div>
               </div>
               <div class="serialColorRow">
@@ -1127,47 +1145,47 @@
                 <div class="heroRow">
                   <label for="heroFontSelect">Font</label>
                   <select id="heroFontSelect">
-                    <option>SF Pro Text</option>
-                    <option>Inter</option>
-                    <option>Roboto</option>
-                    <option>Helvetica Neue</option>
-                    <option>Arial</option>
-                    <option>Neue Frutigier World</option>
+                    <option value="SF Pro Text">SF Pro Text</option>
+                    <option value="Inter">Inter</option>
+                    <option value="Roboto">Roboto</option>
+                    <option value="Helvetica Neue">Helvetica Neue</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Neue Frutigier World">Neue Frutigier World</option>
+                    <option value="Manrope">Manrope</option>
+                    <option value="League Spartan">League Spartan</option>
                   </select>
                   <label for="heroWeightSelect">Weight</label>
                   <select id="heroWeightSelect">
-                    <option>Thin</option>
-                    <option>Light</option>
-                    <option>Regular</option>
-                    <option>Medium</option>
-                    <option>Semibold</option>
-                    <option selected>Heavy</option>
-                    <option>Bold</option>
-                    <option>Black</option>
+                    <option value="Thin">Thin</option>
+                    <option value="Light">Light</option>
+                    <option value="Regular">Regular</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Semibold">SemiBold</option>
+                    <option value="Heavy" selected>Heavy</option>
+                    <option value="Bold">Bold</option>
+                    <option value="Black">Black</option>
                   </select>
                 </div>
-                <div class="heroRow heroMetricsRow">
-                  <label for="heroSizeInput">Size</label>
-                  <div class="inputStack">
-                    <input id="heroSizeInput" type="number" min="80" step="1" value="120" />
-                    <span class="inputHint">Min 80px</span>
+                <div class="heroMetricGrid">
+                  <div class="heroMetricField">
+                    <label for="heroSizeInput">Size</label>
+                    <input id="heroSizeInput" type="number" step="1" value="120" />
                   </div>
-                  <label for="heroLetterSpacing">Letter spacing (px)</label>
-                  <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
-                  <label for="heroLineHeight">Line height (%)</label>
-                  <input id="heroLineHeight" type="text" value="110%" />
-                </div>
-                <div class="heroRow heroAlignmentRow">
-                  <span class="logoControlLabel">Alignment</span>
-                  <div class="alignSeg" id="heroAlignSeg">
-                    <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
-                    <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
-                    <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                  <div class="heroMetricField">
+                    <label for="heroLetterSpacing">Letter spacing (px)</label>
+                    <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
                   </div>
-                  <span class="logoControlLabel">Vertical</span>
-                  <div class="alignSeg" id="heroVerticalSeg">
-                    <button type="button" data-valign="top" aria-label="Align top"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="8" x2="20" y2="8"></line><rect x="10" y="10" width="8" height="10" rx="2"></rect></svg></button>
-                    <button type="button" data-valign="bottom" aria-label="Align bottom"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="20" x2="20" y2="20"></line><rect x="10" y="8" width="8" height="10" rx="2"></rect></svg></button>
+                  <div class="heroMetricField">
+                    <label for="heroLineHeight">Line height (%)</label>
+                    <input id="heroLineHeight" type="text" value="110%" />
+                  </div>
+                  <div class="heroMetricField">
+                    <span class="metricLabel" id="heroAlignLabel">Alignment</span>
+                    <div class="alignSeg" id="heroAlignSeg" role="group" aria-labelledby="heroAlignLabel">
+                      <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
+                      <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
+                      <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                    </div>
                   </div>
                 </div>
                 <div class="heroRow heroColorRow">
@@ -1566,7 +1584,6 @@
     heroLetterSpacing: document.getElementById('heroLetterSpacing'),
     heroLineHeight: document.getElementById('heroLineHeight'),
     heroAlignSeg: document.getElementById('heroAlignSeg'),
-    heroVerticalSeg: document.getElementById('heroVerticalSeg'),
     heroColorModeSeg: document.getElementById('heroColorModeSeg'),
     heroSolidControls: document.getElementById('heroSolidControls'),
     heroSolidHex: document.getElementById('heroSolidHex'),
@@ -1606,6 +1623,8 @@
     partnerSettingsClose: document.querySelector('.partnerSettingsClose'),
     partnerSettingsTriggers: Array.from(document.querySelectorAll('[data-partner-settings]')),
   };
+
+  document.querySelectorAll('.colorField').forEach(bindColorField);
 
   function refreshIcons(){
     if(window.lucide && typeof window.lucide.createIcons === 'function'){
@@ -1711,6 +1730,18 @@
     input.style.color = ink;
   }
 
+  function bindColorField(field){
+    if(!field) return;
+    const hexInput = field.querySelector('.colorHexInput');
+    const picker = field.querySelector('input[type="color"]');
+    if(!hexInput || !picker) return;
+    const openPicker = ()=>{ picker.click(); };
+    hexInput.addEventListener('dblclick', openPicker);
+    field.addEventListener('dblclick', (event)=>{
+      if(event.target !== hexInput){ openPicker(); }
+    });
+  }
+
   function drawRoundedRect(ctx, x, y, w, h, r){
     if(w <= 0 || h <= 0) return;
     const radius = Math.max(0, Math.min(r, Math.min(w, h) / 2));
@@ -1727,6 +1758,7 @@
     ctx.closePath();
   }
 
+  const HERO_MIN_SIZE = 16;
   const HERO_WEIGHT_MAP = {
     Thin:100,
     Light:300,
@@ -2160,11 +2192,6 @@
           btn.classList.toggle('active', btn.dataset.align === state.text.hero.align);
         });
       }
-      if(els.heroVerticalSeg){
-        [...els.heroVerticalSeg.querySelectorAll('button')].forEach(btn=>{
-          btn.classList.toggle('active', btn.dataset.valign === state.text.hero.vAlign);
-        });
-      }
       if(els.heroColorModeSeg){
         [...els.heroColorModeSeg.querySelectorAll('button')].forEach(btn=>{
           const mode = btn.dataset.mode || 'solid';
@@ -2422,8 +2449,11 @@
       const corner = state.text.serial.corner || 'top-left';
       const alignRight = corner.includes('right');
       const alignBottom = corner.includes('bottom');
+      const needsFrostClear = alignBottom && state.format.key==='HORIZ' && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
+      const frostClearExp = needsFrostClear ? (state.frost.barHExp + Math.max(12, state.format.hExport * 0.01)) : 0;
+      const frostClear = frostClearExp * scaleY;
       const left = frameLeftPx + (alignRight ? fwPx - marginX : marginX);
-      const top = frameTopPx + (alignBottom ? fhPx - marginY : marginY);
+      const top = frameTopPx + (alignBottom ? fhPx - marginY - frostClear : marginY);
       els.serialPreview.style.display = 'block';
       els.serialPreview.dataset.corner = corner;
       els.serialPreview.dataset.align = alignRight ? 'right' : 'left';
@@ -4062,7 +4092,7 @@
     commitTextState({ refreshControls:false });
   });
   els.heroSizeInput?.addEventListener('input', (e)=>{
-    const val = Math.max(80, parseFloat(e.target.value)||80);
+    const val = Math.max(HERO_MIN_SIZE, parseFloat(e.target.value)||HERO_MIN_SIZE);
     state.text.hero.size = val;
     commitTextState({ refreshControls:false });
   });
@@ -4078,19 +4108,6 @@
   els.heroAlignSeg?.addEventListener('click', (e)=>{
     const btn = e.target.closest('button'); if(!btn) return;
     state.text.hero.align = btn.dataset.align || 'center';
-    commitTextState();
-  });
-  els.heroVerticalSeg?.addEventListener('click', (e)=>{
-    const btn = e.target.closest('button'); if(!btn) return;
-    const current = state.text.hero.vAlign || 'middle';
-    const target = btn.dataset.valign || 'middle';
-    if(current === target){
-      state.text.hero.vAlign = 'middle';
-    } else {
-      state.text.hero.vAlign = target;
-      if(target === 'top'){ state.text.hero.position.y = 0.15; }
-      else if(target === 'bottom'){ state.text.hero.position.y = 0.85; }
-    }
     commitTextState();
   });
   els.heroColorModeSeg?.addEventListener('click', (e)=>{
@@ -4162,8 +4179,12 @@
   function updateHeroPositionFromPointer(e){
     if(!frameMetrics.width || !frameMetrics.height) return;
     const stageRect = els.stage.getBoundingClientRect();
-    const x = e.clientX - stageRect.left - frameMetrics.left;
-    const y = e.clientY - stageRect.top - frameMetrics.top;
+    const pointerX = e.clientX - stageRect.left - frameMetrics.left;
+    const pointerY = e.clientY - stageRect.top - frameMetrics.top;
+    const offsetX = heroDrag?.offsetX || 0;
+    const offsetY = heroDrag?.offsetY || 0;
+    const x = pointerX - offsetX;
+    const y = pointerY - offsetY;
     const normX = Math.max(0, Math.min(1, x / frameMetrics.width));
     const normY = Math.max(0, Math.min(1, y / frameMetrics.height));
     state.text.hero.position = { x: normX, y: normY };
@@ -4171,9 +4192,9 @@
     render();
   }
   const endHeroDrag = (e)=>{
-    if(heroDrag === null) return;
+    if(!heroDrag) return;
     if(els.heroTextPreview){
-      try{ els.heroTextPreview.releasePointerCapture(heroDrag); }catch(err){}
+      try{ els.heroTextPreview.releasePointerCapture(heroDrag.id); }catch(err){}
       els.heroTextPreview.classList.remove('dragging');
     }
     heroDrag = null;
@@ -4183,14 +4204,25 @@
     if(!state.text.hero.enabled) return;
     if(heroEditing) return;
     if(e.button !== 0) return;
-    heroDrag = e.pointerId;
+    if(!frameMetrics.width || !frameMetrics.height) return;
+    const stageRect = els.stage.getBoundingClientRect();
+    const pointerX = e.clientX - stageRect.left - frameMetrics.left;
+    const pointerY = e.clientY - stageRect.top - frameMetrics.top;
+    const pos = state.text.hero.position || { x:0.5, y:0.5 };
+    const anchorX = (pos.x || 0.5) * frameMetrics.width;
+    const anchorY = (pos.y || 0.5) * frameMetrics.height;
+    heroDrag = {
+      id: e.pointerId,
+      offsetX: pointerX - anchorX,
+      offsetY: pointerY - anchorY
+    };
     els.heroTextPreview.classList.add('dragging');
     els.heroTextPreview.setPointerCapture(e.pointerId);
     updateHeroPositionFromPointer(e);
     e.preventDefault();
   });
   els.heroTextPreview?.addEventListener('pointermove', (e)=>{
-    if(heroDrag === null || e.pointerId !== heroDrag) return;
+    if(!heroDrag || e.pointerId !== heroDrag.id) return;
     updateHeroPositionFromPointer(e);
   });
   els.heroTextPreview?.addEventListener('pointerup', endHeroDrag);
@@ -4220,7 +4252,7 @@
     const exportDeltaX = effectX / (heroResize.scaleX || 1);
     const exportDeltaY = effectY / (heroResize.scaleY || 1);
     const combined = (exportDeltaX + exportDeltaY) / 2;
-    const nextSize = Math.max(80, heroResize.startSize + combined);
+    const nextSize = Math.max(HERO_MIN_SIZE, heroResize.startSize + combined);
     if(Math.abs(nextSize - (state.text.hero.size || 120)) < 0.2) return;
     state.text.hero.size = nextSize;
     if(els.heroSizeInput){ els.heroSizeInput.value = Math.round(nextSize); }
@@ -4315,7 +4347,7 @@
   }
   els.heroTextPreview?.addEventListener('dblclick', (e)=>{
     if(!state.text.hero.enabled) return;
-    if(heroResize || heroDrag !== null) return;
+    if(heroResize || heroDrag) return;
     e.preventDefault();
     openHeroEditor();
   });
@@ -4590,6 +4622,101 @@
     ctx.drawImage(imgSource, dx, dy, imgWexp, imgHexp);
     ctx.restore();
 
+    if((state.format.key==='HORIZ' || state.format.key==='SQUARE' || state.format.key==='VERT') && state.text.hero.enabled && state.text.hero.value){
+      const lines = state.text.hero.value.split(/\n/);
+      const fontSize = Math.max(HERO_MIN_SIZE, state.text.hero.size || 120);
+      const letterSpacing = Number.isFinite(state.text.hero.letterSpacing) ? state.text.hero.letterSpacing : 0;
+      const fontFamily = state.text.hero.font || 'SF Pro Text';
+      const weight = mapHeroWeight(state.text.hero.weight);
+      const fontStack = `'${fontFamily.replace(/'/g, "\\'")}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
+      const rawLine = state.text.hero.lineHeight ?? '110%';
+      let lineFactor = 1.1;
+      if(typeof rawLine === 'string'){
+        const trimmed = rawLine.trim();
+        if(trimmed){
+          const val = parseFloat(trimmed);
+          if(!Number.isNaN(val)){ lineFactor = val/100; }
+        }
+      } else if(typeof rawLine === 'number' && !Number.isNaN(rawLine)){ lineFactor = rawLine/100; }
+      if(!Number.isFinite(lineFactor) || lineFactor <= 0){ lineFactor = 1.1; }
+      const lineHeightPx = fontSize * lineFactor;
+      ctx.save();
+      ctx.font = `${weight} ${fontSize}px ${fontStack}`;
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
+      const measureLine = (text)=>{
+        if(!text) return 0;
+        if(!letterSpacing){ return ctx.measureText(text).width; }
+        let width = 0;
+        for(let i=0;i<text.length;i++){
+          const ch = text[i];
+          width += ctx.measureText(ch).width;
+          if(i < text.length - 1){ width += letterSpacing; }
+        }
+        return width;
+      };
+      const lineWidths = lines.map(measureLine);
+      const maxWidth = lineWidths.length ? Math.max(...lineWidths) : 0;
+      const totalHeight = lines.length ? (fontSize + (lines.length - 1) * lineHeightPx) : 0;
+      const pos = state.text.hero.position || {x:0.5, y:0.5};
+      const anchorX = (pos.x || 0.5) * fw;
+      const anchorY = (pos.y || 0.5) * fh;
+      const align = state.text.hero.align || 'center';
+      const vAlign = state.text.hero.vAlign || 'middle';
+      const baseLeft = align === 'center' ? anchorX - maxWidth/2 : align === 'right' ? anchorX - maxWidth : anchorX;
+      const baseTop = vAlign === 'middle' ? anchorY - totalHeight/2 : vAlign === 'bottom' ? anchorY - totalHeight : anchorY;
+      const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
+      const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
+      const padScale = Math.sqrt(scaleX * scaleY);
+      const panel = state.text.hero.panel || 'none';
+      const padX = panel === 'none' ? 0 : 18 * padScale;
+      const padY = panel === 'none' ? 0 : 14 * padScale;
+      const radius = panel === 'none' ? 0 : 18 * padScale;
+      if(panel !== 'none'){
+        ctx.save();
+        const panelColor = panel === 'dark' ? 'rgba(15,23,42,0.68)' : 'rgba(255,255,255,0.7)';
+        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
+        ctx.fillStyle = panelColor;
+        ctx.fill();
+        ctx.restore();
+      }
+      let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+      if(state.text.hero.colorMode === 'gradient'){
+        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
+        const angle = state.text.hero.gradient?.angle || 0;
+        const angleRad = angle * Math.PI / 180;
+        const dirX = Math.cos(angleRad);
+        const dirY = Math.sin(angleRad);
+        const halfW = maxWidth / 2;
+        const halfH = totalHeight / 2;
+        const len = Math.abs(halfW * dirX) + Math.abs(halfH * dirY);
+        const grad = ctx.createLinearGradient(baseLeft + halfW - dirX * len, baseTop + halfH - dirY * len, baseLeft + halfW + dirX * len, baseTop + halfH + dirY * len);
+        grad.addColorStop(0, start);
+        grad.addColorStop(1, end);
+        fillStyle = grad;
+      }
+      ctx.fillStyle = fillStyle;
+      const drawLine = (text, startX, startY)=>{
+        if(!letterSpacing){ ctx.fillText(text, startX, startY); return; }
+        let x = startX;
+        for(let i=0;i<text.length;i++){
+          const ch = text[i];
+          ctx.fillText(ch, x, startY);
+          x += ctx.measureText(ch).width + letterSpacing;
+        }
+      };
+      let y = baseTop;
+      for(let i=0;i<lines.length;i++){
+        const line = lines[i];
+        const width = lineWidths[i];
+        const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
+        drawLine(line, lineLeft, y);
+        y += lineHeightPx;
+      }
+      ctx.restore();
+    }
+
     const baseLayer = document.createElement('canvas');
     baseLayer.width = fw; baseLayer.height = fh;
     baseLayer.getContext('2d').drawImage(canvas, 0, 0);
@@ -4608,18 +4735,17 @@
 
       if(state.frost.enabled){
         const overlayStrength = Math.max(0, Math.min(1, state.frost.overlayAlpha));
-        if(overlayStrength > 0){
-          ctx.save();
-          const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.2 + overlayStrength*0.6})`);
-          grad.addColorStop(1, `rgba(246,248,252,${0.14 + overlayStrength*0.45})`);
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, barY, fw, barH);
-          ctx.restore();
-        }
+        ctx.save();
+        const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
+        grad.addColorStop(0, `rgba(32,44,66,${0.34 + overlayStrength*0.32})`);
+        grad.addColorStop(1, `rgba(14,22,38,${0.46 + overlayStrength*0.28})`);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, barY, fw, barH);
+        ctx.restore();
 
-        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.25; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.24 + overlayStrength*0.18; ctx.fillStyle = 'rgba(9,14,26,0.5)'; ctx.fillRect(0, barY, fw, barH); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.08 + overlayStrength*0.12; ctx.fillStyle = 'rgba(255,255,255,0.65)'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.3 + overlayStrength*0.22; ctx.fillStyle = 'rgba(7,12,24,0.85)'; ctx.fillRect(0, barY + barH - 3, fw, 3); ctx.restore();
       }
 
       // logos on bar
@@ -4729,8 +4855,10 @@
       const alignBottom = corner.includes('bottom');
       const marginX = Math.max(12, state.format.wExport * 0.02);
       const marginY = Math.max(12, state.format.hExport * 0.02);
+      const needsFrostClear = alignBottom && state.format.key==='HORIZ' && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
+      const frostClearExp = needsFrostClear ? (state.frost.barHExp + Math.max(12, state.format.hExport * 0.01)) : 0;
       const x = alignRight ? fw - marginX : marginX;
-      const y = alignBottom ? fh - marginY : marginY;
+      const y = alignBottom ? fh - marginY - frostClearExp : marginY;
       ctx.save();
       ctx.font = `600 ${fontSize}px ${fontFamily}`;
       ctx.textAlign = alignRight ? 'right' : 'left';
@@ -4738,101 +4866,6 @@
       ctx.globalAlpha = Math.max(0.3, Math.min(1, (state.text.serial.opacity || 100) / 100));
       ctx.fillStyle = color;
       ctx.fillText(state.text.serial.value, x, y);
-      ctx.restore();
-    }
-
-    if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
-      const lines = state.text.hero.value.split(/\n/);
-      const fontSize = Math.max(12, state.text.hero.size || 120);
-      const letterSpacing = Number.isFinite(state.text.hero.letterSpacing) ? state.text.hero.letterSpacing : 0;
-      const fontFamily = state.text.hero.font || 'SF Pro Text';
-      const weight = mapHeroWeight(state.text.hero.weight);
-      const fontStack = `'${fontFamily.replace(/'/g, "\\'")}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
-      const rawLine = state.text.hero.lineHeight ?? '110%';
-      let lineFactor = 1.1;
-      if(typeof rawLine === 'string'){
-        const trimmed = rawLine.trim();
-        if(trimmed){
-          const val = parseFloat(trimmed);
-          if(!Number.isNaN(val)){ lineFactor = val/100; }
-        }
-      } else if(typeof rawLine === 'number' && !Number.isNaN(rawLine)){ lineFactor = rawLine/100; }
-      if(!Number.isFinite(lineFactor) || lineFactor <= 0){ lineFactor = 1.1; }
-      const lineHeightPx = fontSize * lineFactor;
-      ctx.save();
-      ctx.font = `${weight} ${fontSize}px ${fontStack}`;
-      ctx.textBaseline = 'top';
-      ctx.textAlign = 'left';
-      const measureLine = (text)=>{
-        if(!text) return 0;
-        if(!letterSpacing){ return ctx.measureText(text).width; }
-        let width = 0;
-        for(let i=0;i<text.length;i++){
-          const ch = text[i];
-          width += ctx.measureText(ch).width;
-          if(i < text.length - 1){ width += letterSpacing; }
-        }
-        return width;
-      };
-      const lineWidths = lines.map(measureLine);
-      const maxWidth = lineWidths.length ? Math.max(...lineWidths) : 0;
-      const totalHeight = lines.length ? (fontSize + (lines.length - 1) * lineHeightPx) : 0;
-      const pos = state.text.hero.position || {x:0.5, y:0.5};
-      const anchorX = (pos.x || 0.5) * fw;
-      const anchorY = (pos.y || 0.5) * fh;
-      const align = state.text.hero.align || 'center';
-      const vAlign = state.text.hero.vAlign || 'middle';
-      const baseLeft = align === 'center' ? anchorX - maxWidth/2 : align === 'right' ? anchorX - maxWidth : anchorX;
-      const baseTop = vAlign === 'middle' ? anchorY - totalHeight/2 : vAlign === 'bottom' ? anchorY - totalHeight : anchorY;
-      const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
-      const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
-      const padScale = Math.sqrt(scaleX * scaleY);
-      const panel = state.text.hero.panel || 'none';
-      const padX = panel === 'none' ? 0 : 18 * padScale;
-      const padY = panel === 'none' ? 0 : 14 * padScale;
-      const radius = panel === 'none' ? 0 : 18 * padScale;
-      if(panel !== 'none'){
-        ctx.save();
-        const panelColor = panel === 'dark' ? 'rgba(15,23,42,0.68)' : 'rgba(255,255,255,0.7)';
-        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
-        ctx.fillStyle = panelColor;
-        ctx.fill();
-        ctx.restore();
-      }
-      let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
-      if(state.text.hero.colorMode === 'gradient'){
-        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
-        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
-        const angle = state.text.hero.gradient?.angle || 0;
-        const angleRad = angle * Math.PI / 180;
-        const dirX = Math.cos(angleRad);
-        const dirY = Math.sin(angleRad);
-        const halfW = maxWidth / 2;
-        const halfH = totalHeight / 2;
-        const len = Math.abs(halfW * dirX) + Math.abs(halfH * dirY);
-        const grad = ctx.createLinearGradient(baseLeft + halfW - dirX * len, baseTop + halfH - dirY * len, baseLeft + halfW + dirX * len, baseTop + halfH + dirY * len);
-        grad.addColorStop(0, start);
-        grad.addColorStop(1, end);
-        fillStyle = grad;
-      }
-      ctx.fillStyle = fillStyle;
-      const drawLine = (text, startX, startY)=>{
-        if(!letterSpacing){ ctx.fillText(text, startX, startY); return; }
-        let x = startX;
-        for(let i=0;i<text.length;i++){
-          const ch = text[i];
-          ctx.fillText(ch, x, startY);
-          x += ctx.measureText(ch).width + letterSpacing;
-        }
-      };
-      let y = baseTop;
-      for(let i=0;i<lines.length;i++){
-        const line = lines[i];
-        const width = lineWidths[i];
-        const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
-        drawLine(line, lineLeft, y);
-        y += lineHeightPx;
-      }
       ctx.restore();
     }
 
