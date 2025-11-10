@@ -152,18 +152,20 @@
 
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
 
-  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -8px 24px rgba(2,6,23,0.15);}
+  .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -8px 24px rgba(2,6,23,0.2); pointer-events:none; z-index:38;}
   .frostBg{position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; transition:background-image .2s ease, opacity .2s ease; filter:none;}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,0.28),rgba(255,255,255,0.08)); box-shadow:inset 0 2px 4px rgba(15,23,42,0.12)}
+  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(29,40,62,0.24),rgba(15,23,42,0.12)); box-shadow:inset 0 2px 10px rgba(8,12,24,0.32), inset 0 -12px 18px rgba(8,12,24,0.22)}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
   .stageWarning{position:absolute; inset:20px; pointer-events:none}
   .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:40; display:none; pointer-events:none; white-space:nowrap; text-shadow:0 1px 2px rgba(15,23,42,0.28)}
   .serialPreview span{display:inline-block}
-  .heroText{position:absolute; z-index:42; min-width:120px; display:none; cursor:grab; user-select:none; transition:box-shadow .15s ease, transform .15s ease; transform:translate(-50%,-50%); pointer-events:auto}
+  .heroText{position:absolute; z-index:32; min-width:120px; display:none; cursor:grab; user-select:none; transition:box-shadow .15s ease, transform .15s ease; pointer-events:auto; overflow:visible}
+  .heroText::after{content:""; position:absolute; inset:0; border:1.5px solid rgba(148,163,184,0); border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .18s ease, border-color .18s ease}
   .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText.resizing{cursor:nwse-resize}
+  .heroText.dragging::after, .heroText.resizing::after, .heroText[data-active="true"]::after, .heroText.editing::after{border-color:rgba(148,163,184,0.7); opacity:1}
   .heroText .heroInner{display:block; pointer-events:none; white-space:pre-wrap}
   .heroText[data-align="left"] .heroInner{text-align:left}
   .heroText[data-align="center"] .heroInner{text-align:center}
@@ -172,7 +174,7 @@
   .heroText[data-panel="light"], .heroText[data-panel="dark"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText[data-panel="light"]{background:rgba(255,255,255,0.68)}
   .heroText[data-panel="dark"]{background:rgba(15,23,42,0.68)}
-  .heroEditor{position:absolute; inset:0; width:100%; height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor}
+  .heroEditor{position:absolute; inset:0; width:100%; height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor; white-space:pre-wrap; overflow:auto}
   .heroText.editing .heroEditor{display:block}
   .heroText.editing .heroInner{visibility:hidden}
   .heroText.editing .heroHandle{display:none}
@@ -209,6 +211,9 @@
   .inputStack{display:flex; flex-direction:column; gap:4px; min-width:100px}
   .inputHint{font-size:11px; color:var(--muted)}
   .heroMetricsRow input[type="number"], .heroMetricsRow input[type="text"]{min-width:110px}
+  .heroMetricsGrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px}
+  .heroMetricsGrid .heroMetricCell{display:flex; flex-direction:column; gap:6px}
+  .heroMetricsGrid .heroMetricCell .alignSeg{width:100%}
   .heroColorRow{gap:14px}
   .heroColorRow .seg{flex-wrap:nowrap}
   .heroGradientControls{display:flex; flex-wrap:wrap; gap:18px; align-items:flex-end}
@@ -248,7 +253,7 @@
   .bgGuidanceList .bannerOnly{display:none}
   .serialOptions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
 
-  .playWrap{position:absolute; display:none; pointer-events:none}
+  .playWrap{position:absolute; display:none; pointer-events:none; z-index:40}
   .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(6.2037px); background:rgba(0,0,0,0.40); box-shadow:inset 0 1px 2px rgba(255,255,255,0.2), 0 10px 30px rgba(2,6,23,0.25);}
   .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
   .playTri svg{width:54%; max-width:72px; height:auto}
@@ -1087,10 +1092,10 @@
               <div class="serialFieldRow">
                 <label>Corner</label>
                 <div class="cornerPicker" id="serialCornerPicker">
-                  <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                  <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="20" height="20" rx="6" ry="6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect><path d="M12 6H10a4 4 0 0 0-4 4v2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                  <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="20" height="20" rx="6" ry="6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect><path d="M20 6h2a4 4 0 0 1 4 4v2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                  <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="20" height="20" rx="6" ry="6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect><path d="M6 20v2a4 4 0 0 0 4 4h2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                  <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor"><rect x="6" y="6" width="20" height="20" rx="6" ry="6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect><path d="M26 20v2a4 4 0 0 1-4 4h-2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
                 </div>
               </div>
               <div class="serialColorRow">
@@ -1146,28 +1151,26 @@
                     <option>Black</option>
                   </select>
                 </div>
-                <div class="heroRow heroMetricsRow">
-                  <label for="heroSizeInput">Size</label>
-                  <div class="inputStack">
-                    <input id="heroSizeInput" type="number" min="80" step="1" value="120" />
-                    <span class="inputHint">Min 80px</span>
+                <div class="heroMetricsGrid">
+                  <div class="heroMetricCell">
+                    <label for="heroSizeInput">Size</label>
+                    <input id="heroSizeInput" type="number" min="1" step="1" value="120" />
                   </div>
-                  <label for="heroLetterSpacing">Letter spacing (px)</label>
-                  <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
-                  <label for="heroLineHeight">Line height (%)</label>
-                  <input id="heroLineHeight" type="text" value="110%" />
-                </div>
-                <div class="heroRow heroAlignmentRow">
-                  <span class="logoControlLabel">Alignment</span>
-                  <div class="alignSeg" id="heroAlignSeg">
-                    <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
-                    <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
-                    <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                  <div class="heroMetricCell">
+                    <label for="heroLetterSpacing">Letter spacing (px)</label>
+                    <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
                   </div>
-                  <span class="logoControlLabel">Vertical</span>
-                  <div class="alignSeg" id="heroVerticalSeg">
-                    <button type="button" data-valign="top" aria-label="Align top"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="8" x2="20" y2="8"></line><rect x="10" y="10" width="8" height="10" rx="2"></rect></svg></button>
-                    <button type="button" data-valign="bottom" aria-label="Align bottom"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="20" x2="20" y2="20"></line><rect x="10" y="8" width="8" height="10" rx="2"></rect></svg></button>
+                  <div class="heroMetricCell">
+                    <label for="heroLineHeight">Line height (%)</label>
+                    <input id="heroLineHeight" type="text" value="110%" />
+                  </div>
+                  <div class="heroMetricCell">
+                    <label>Alignment</label>
+                    <div class="alignSeg" id="heroAlignSeg">
+                      <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
+                      <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
+                      <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                    </div>
                   </div>
                 </div>
                 <div class="heroRow heroColorRow">
@@ -1566,7 +1569,6 @@
     heroLetterSpacing: document.getElementById('heroLetterSpacing'),
     heroLineHeight: document.getElementById('heroLineHeight'),
     heroAlignSeg: document.getElementById('heroAlignSeg'),
-    heroVerticalSeg: document.getElementById('heroVerticalSeg'),
     heroColorModeSeg: document.getElementById('heroColorModeSeg'),
     heroSolidControls: document.getElementById('heroSolidControls'),
     heroSolidHex: document.getElementById('heroSolidHex'),
@@ -1710,6 +1712,15 @@
     input.style.background = normalized;
     input.style.color = ink;
   }
+
+  document.addEventListener('dblclick', (e)=>{
+    const field = e.target.closest('.colorField, .gradientColorField');
+    if(!field) return;
+    const picker = field.querySelector('input[type="color"]');
+    if(!picker) return;
+    if(typeof picker.showPicker === 'function'){ picker.showPicker(); }
+    else { picker.click(); }
+  });
 
   function drawRoundedRect(ctx, x, y, w, h, r){
     if(w <= 0 || h <= 0) return;
@@ -2160,11 +2171,6 @@
           btn.classList.toggle('active', btn.dataset.align === state.text.hero.align);
         });
       }
-      if(els.heroVerticalSeg){
-        [...els.heroVerticalSeg.querySelectorAll('button')].forEach(btn=>{
-          btn.classList.toggle('active', btn.dataset.valign === state.text.hero.vAlign);
-        });
-      }
       if(els.heroColorModeSeg){
         [...els.heroColorModeSeg.querySelectorAll('button')].forEach(btn=>{
           const mode = btn.dataset.mode || 'solid';
@@ -2422,8 +2428,13 @@
       const corner = state.text.serial.corner || 'top-left';
       const alignRight = corner.includes('right');
       const alignBottom = corner.includes('bottom');
+      const barVisible = state.format.key==='HORIZ' && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
+      const barHeightPx = (alignBottom && barVisible)
+        ? (state.frost.barHExp * (state.format.hPreview/state.format.hExport) * state.previewZoom)
+        : 0;
       const left = frameLeftPx + (alignRight ? fwPx - marginX : marginX);
-      const top = frameTopPx + (alignBottom ? fhPx - marginY : marginY);
+      const anchorY = alignBottom ? Math.max(marginY, fhPx - barHeightPx - marginY) : marginY;
+      const top = frameTopPx + anchorY;
       els.serialPreview.style.display = 'block';
       els.serialPreview.dataset.corner = corner;
       els.serialPreview.dataset.align = alignRight ? 'right' : 'left';
@@ -2447,12 +2458,17 @@
       const scale = (state.format.hPreview/state.format.hExport) * state.previewZoom;
       const fontPx = (state.text.hero.size || 120) * scale;
       const spacingPx = (state.text.hero.letterSpacing || 0) * scale;
+      const align = state.text.hero.align || 'center';
+      const vAlign = state.text.hero.vAlign || 'middle';
+      const translateX = align === 'left' ? '0' : align === 'right' ? '-100%' : '-50%';
+      const translateY = vAlign === 'top' ? '0' : vAlign === 'bottom' ? '-100%' : '-50%';
       const inner = els.heroInnerText;
       els.heroTextPreview.style.display = 'block';
       els.heroTextPreview.style.left = left + 'px';
       els.heroTextPreview.style.top = top + 'px';
-      els.heroTextPreview.dataset.align = state.text.hero.align || 'center';
-      els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
+      els.heroTextPreview.style.transform = `translate(${translateX}, ${translateY})`;
+      els.heroTextPreview.dataset.align = align;
+      els.heroTextPreview.dataset.valign = vAlign;
       els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
       els.heroTextPreview.dataset.panel = state.text.hero.panel || 'none';
       inner.textContent = state.text.hero.value;
@@ -4062,7 +4078,7 @@
     commitTextState({ refreshControls:false });
   });
   els.heroSizeInput?.addEventListener('input', (e)=>{
-    const val = Math.max(80, parseFloat(e.target.value)||80);
+    const val = Math.max(12, parseFloat(e.target.value)||12);
     state.text.hero.size = val;
     commitTextState({ refreshControls:false });
   });
@@ -4078,19 +4094,6 @@
   els.heroAlignSeg?.addEventListener('click', (e)=>{
     const btn = e.target.closest('button'); if(!btn) return;
     state.text.hero.align = btn.dataset.align || 'center';
-    commitTextState();
-  });
-  els.heroVerticalSeg?.addEventListener('click', (e)=>{
-    const btn = e.target.closest('button'); if(!btn) return;
-    const current = state.text.hero.vAlign || 'middle';
-    const target = btn.dataset.valign || 'middle';
-    if(current === target){
-      state.text.hero.vAlign = 'middle';
-    } else {
-      state.text.hero.vAlign = target;
-      if(target === 'top'){ state.text.hero.position.y = 0.15; }
-      else if(target === 'bottom'){ state.text.hero.position.y = 0.85; }
-    }
     commitTextState();
   });
   els.heroColorModeSeg?.addEventListener('click', (e)=>{
@@ -4167,7 +4170,6 @@
     const normX = Math.max(0, Math.min(1, x / frameMetrics.width));
     const normY = Math.max(0, Math.min(1, y / frameMetrics.height));
     state.text.hero.position = { x: normX, y: normY };
-    state.text.hero.vAlign = 'middle';
     render();
   }
   const endHeroDrag = (e)=>{
@@ -4220,7 +4222,7 @@
     const exportDeltaX = effectX / (heroResize.scaleX || 1);
     const exportDeltaY = effectY / (heroResize.scaleY || 1);
     const combined = (exportDeltaX + exportDeltaY) / 2;
-    const nextSize = Math.max(80, heroResize.startSize + combined);
+    const nextSize = Math.max(12, heroResize.startSize + combined);
     if(Math.abs(nextSize - (state.text.hero.size || 120)) < 0.2) return;
     state.text.hero.size = nextSize;
     if(els.heroSizeInput){ els.heroSizeInput.value = Math.round(nextSize); }
@@ -4288,6 +4290,16 @@
       style.lineHeight = computed.lineHeight;
       style.letterSpacing = computed.letterSpacing;
       style.textAlign = computed.textAlign;
+      const hostRect = els.heroTextPreview.getBoundingClientRect();
+      if(hostRect && hostRect.width && hostRect.height){
+        style.width = hostRect.width + 'px';
+        style.height = hostRect.height + 'px';
+        style.minWidth = style.width;
+        style.minHeight = style.height;
+      }
+      const hostStyle = window.getComputedStyle(els.heroTextPreview);
+      style.padding = hostStyle.padding;
+      style.borderRadius = hostStyle.borderRadius;
     }
     els.heroInlineEditor.style.color = heroEditorTextColor();
     els.heroInlineEditor.style.background = heroEditorBackground();
@@ -4563,6 +4575,7 @@
     const canvas = document.createElement('canvas');
     canvas.width = fw; canvas.height = fh;
     const ctx = canvas.getContext('2d');
+    const isTextFormat = state.format.key==='HORIZ' || state.format.key==='SQUARE' || state.format.key==='VERT';
 
     // bg
     ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,fw,fh);
@@ -4590,6 +4603,101 @@
     ctx.drawImage(imgSource, dx, dy, imgWexp, imgHexp);
     ctx.restore();
 
+    if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
+      const lines = state.text.hero.value.split(/\n/);
+      const fontSize = Math.max(12, state.text.hero.size || 120);
+      const letterSpacing = Number.isFinite(state.text.hero.letterSpacing) ? state.text.hero.letterSpacing : 0;
+      const fontFamily = state.text.hero.font || 'SF Pro Text';
+      const weight = mapHeroWeight(state.text.hero.weight);
+      const fontStack = `'${fontFamily.replace(/'/g, "\\'")}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
+      const rawLine = state.text.hero.lineHeight ?? '110%';
+      let lineFactor = 1.1;
+      if(typeof rawLine === 'string'){
+        const trimmed = rawLine.trim();
+        if(trimmed){
+          const val = parseFloat(trimmed);
+          if(!Number.isNaN(val)){ lineFactor = val/100; }
+        }
+      } else if(typeof rawLine === 'number' && !Number.isNaN(rawLine)){ lineFactor = rawLine/100; }
+      if(!Number.isFinite(lineFactor) || lineFactor <= 0){ lineFactor = 1.1; }
+      const lineHeightPx = fontSize * lineFactor;
+      ctx.save();
+      ctx.font = `${weight} ${fontSize}px ${fontStack}`;
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
+      const measureLine = (text)=>{
+        if(!text) return 0;
+        if(!letterSpacing){ return ctx.measureText(text).width; }
+        let width = 0;
+        for(let i=0;i<text.length;i++){
+          const ch = text[i];
+          width += ctx.measureText(ch).width;
+          if(i < text.length - 1){ width += letterSpacing; }
+        }
+        return width;
+      };
+      const lineWidths = lines.map(measureLine);
+      const maxWidth = lineWidths.length ? Math.max(...lineWidths) : 0;
+      const totalHeight = lines.length ? (fontSize + (lines.length - 1) * lineHeightPx) : 0;
+      const pos = state.text.hero.position || {x:0.5, y:0.5};
+      const anchorX = (pos.x || 0.5) * fw;
+      const anchorY = (pos.y || 0.5) * fh;
+      const align = state.text.hero.align || 'center';
+      const vAlign = state.text.hero.vAlign || 'middle';
+      const baseLeft = align === 'center' ? anchorX - maxWidth/2 : align === 'right' ? anchorX - maxWidth : anchorX;
+      const baseTop = vAlign === 'middle' ? anchorY - totalHeight/2 : vAlign === 'bottom' ? anchorY - totalHeight : anchorY;
+      const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
+      const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
+      const padScale = Math.sqrt(scaleX * scaleY);
+      const panel = state.text.hero.panel || 'none';
+      const padX = panel === 'none' ? 0 : 18 * padScale;
+      const padY = panel === 'none' ? 0 : 14 * padScale;
+      const radius = panel === 'none' ? 0 : 18 * padScale;
+      if(panel !== 'none'){
+        ctx.save();
+        const panelColor = panel === 'dark' ? 'rgba(15,23,42,0.68)' : 'rgba(255,255,255,0.7)';
+        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
+        ctx.fillStyle = panelColor;
+        ctx.fill();
+        ctx.restore();
+      }
+      let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+      if(state.text.hero.colorMode === 'gradient'){
+        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
+        const angle = state.text.hero.gradient?.angle || 0;
+        const angleRad = angle * Math.PI / 180;
+        const dirX = Math.cos(angleRad);
+        const dirY = Math.sin(angleRad);
+        const halfW = maxWidth / 2;
+        const halfH = totalHeight / 2;
+        const len = Math.abs(halfW * dirX) + Math.abs(halfH * dirY);
+        const grad = ctx.createLinearGradient(baseLeft + halfW - dirX * len, baseTop + halfH - dirY * len, baseLeft + halfW + dirX * len, baseTop + halfH + dirY * len);
+        grad.addColorStop(0, start);
+        grad.addColorStop(1, end);
+        fillStyle = grad;
+      }
+      ctx.fillStyle = fillStyle;
+      const drawLine = (text, startX, startY)=>{
+        if(!letterSpacing){ ctx.fillText(text, startX, startY); return; }
+        let x = startX;
+        for(let i=0;i<text.length;i++){
+          const ch = text[i];
+          ctx.fillText(ch, x, startY);
+          x += ctx.measureText(ch).width + letterSpacing;
+        }
+      };
+      let y = baseTop;
+      for(let i=0;i<lines.length;i++){
+        const line = lines[i];
+        const width = lineWidths[i];
+        const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
+        drawLine(line, lineLeft, y);
+        y += lineHeightPx;
+      }
+      ctx.restore();
+    }
+
     const baseLayer = document.createElement('canvas');
     baseLayer.width = fw; baseLayer.height = fh;
     baseLayer.getContext('2d').drawImage(canvas, 0, 0);
@@ -4611,15 +4719,31 @@
         if(overlayStrength > 0){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.2 + overlayStrength*0.6})`);
-          grad.addColorStop(1, `rgba(246,248,252,${0.14 + overlayStrength*0.45})`);
+          grad.addColorStop(0, `rgba(255,255,255,${0.12 + overlayStrength*0.32})`);
+          grad.addColorStop(1, `rgba(232,237,246,${0.1 + overlayStrength*0.28})`);
           ctx.fillStyle = grad;
+          ctx.fillRect(0, barY, fw, barH);
+          ctx.restore();
+
+          ctx.save();
+          ctx.globalAlpha = 0.18 + overlayStrength*0.3;
+          ctx.fillStyle = 'rgba(12,18,32,0.72)';
+          ctx.fillRect(0, barY, fw, barH);
+          ctx.restore();
+
+          const innerShadow = ctx.createLinearGradient(0, barY, 0, barY + barH);
+          innerShadow.addColorStop(0, 'rgba(6,10,22,0.45)');
+          innerShadow.addColorStop(0.55, 'rgba(6,10,22,0.12)');
+          innerShadow.addColorStop(1, 'rgba(6,10,22,0.48)');
+          ctx.save();
+          ctx.globalCompositeOperation = 'multiply';
+          ctx.fillStyle = innerShadow;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
 
-        ctx.save(); ctx.globalAlpha = 0.16 + overlayStrength*0.25; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.2; ctx.fillStyle = 'rgba(15,23,42,0.16)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.1 + overlayStrength*0.18; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
+        ctx.save(); ctx.globalAlpha = 0.18 + overlayStrength*0.24; ctx.fillStyle = 'rgba(9,14,28,0.38)'; ctx.fillRect(0, barY + barH - 3, fw, 3); ctx.restore();
       }
 
       // logos on bar
@@ -4719,7 +4843,6 @@
       }
     }
 
-    const isTextFormat = state.format.key==='HORIZ' || state.format.key==='SQUARE' || state.format.key==='VERT';
     if(isTextFormat && state.text.serial.enabled && state.text.serial.value){
       const color = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
       const fontSize = Math.max(18, Math.round(state.format.hExport * 0.025));
@@ -4730,7 +4853,9 @@
       const marginX = Math.max(12, state.format.wExport * 0.02);
       const marginY = Math.max(12, state.format.hExport * 0.02);
       const x = alignRight ? fw - marginX : marginX;
-      const y = alignBottom ? fh - marginY : marginY;
+      const barActive = alignBottom && state.format.key==='HORIZ' && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
+      const barHeight = barActive ? state.frost.barHExp : 0;
+      const y = alignBottom ? Math.max(marginY, fh - barHeight - marginY) : marginY;
       ctx.save();
       ctx.font = `600 ${fontSize}px ${fontFamily}`;
       ctx.textAlign = alignRight ? 'right' : 'left';
@@ -4741,100 +4866,6 @@
       ctx.restore();
     }
 
-    if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
-      const lines = state.text.hero.value.split(/\n/);
-      const fontSize = Math.max(12, state.text.hero.size || 120);
-      const letterSpacing = Number.isFinite(state.text.hero.letterSpacing) ? state.text.hero.letterSpacing : 0;
-      const fontFamily = state.text.hero.font || 'SF Pro Text';
-      const weight = mapHeroWeight(state.text.hero.weight);
-      const fontStack = `'${fontFamily.replace(/'/g, "\\'")}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
-      const rawLine = state.text.hero.lineHeight ?? '110%';
-      let lineFactor = 1.1;
-      if(typeof rawLine === 'string'){
-        const trimmed = rawLine.trim();
-        if(trimmed){
-          const val = parseFloat(trimmed);
-          if(!Number.isNaN(val)){ lineFactor = val/100; }
-        }
-      } else if(typeof rawLine === 'number' && !Number.isNaN(rawLine)){ lineFactor = rawLine/100; }
-      if(!Number.isFinite(lineFactor) || lineFactor <= 0){ lineFactor = 1.1; }
-      const lineHeightPx = fontSize * lineFactor;
-      ctx.save();
-      ctx.font = `${weight} ${fontSize}px ${fontStack}`;
-      ctx.textBaseline = 'top';
-      ctx.textAlign = 'left';
-      const measureLine = (text)=>{
-        if(!text) return 0;
-        if(!letterSpacing){ return ctx.measureText(text).width; }
-        let width = 0;
-        for(let i=0;i<text.length;i++){
-          const ch = text[i];
-          width += ctx.measureText(ch).width;
-          if(i < text.length - 1){ width += letterSpacing; }
-        }
-        return width;
-      };
-      const lineWidths = lines.map(measureLine);
-      const maxWidth = lineWidths.length ? Math.max(...lineWidths) : 0;
-      const totalHeight = lines.length ? (fontSize + (lines.length - 1) * lineHeightPx) : 0;
-      const pos = state.text.hero.position || {x:0.5, y:0.5};
-      const anchorX = (pos.x || 0.5) * fw;
-      const anchorY = (pos.y || 0.5) * fh;
-      const align = state.text.hero.align || 'center';
-      const vAlign = state.text.hero.vAlign || 'middle';
-      const baseLeft = align === 'center' ? anchorX - maxWidth/2 : align === 'right' ? anchorX - maxWidth : anchorX;
-      const baseTop = vAlign === 'middle' ? anchorY - totalHeight/2 : vAlign === 'bottom' ? anchorY - totalHeight : anchorY;
-      const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
-      const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
-      const padScale = Math.sqrt(scaleX * scaleY);
-      const panel = state.text.hero.panel || 'none';
-      const padX = panel === 'none' ? 0 : 18 * padScale;
-      const padY = panel === 'none' ? 0 : 14 * padScale;
-      const radius = panel === 'none' ? 0 : 18 * padScale;
-      if(panel !== 'none'){
-        ctx.save();
-        const panelColor = panel === 'dark' ? 'rgba(15,23,42,0.68)' : 'rgba(255,255,255,0.7)';
-        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
-        ctx.fillStyle = panelColor;
-        ctx.fill();
-        ctx.restore();
-      }
-      let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
-      if(state.text.hero.colorMode === 'gradient'){
-        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
-        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
-        const angle = state.text.hero.gradient?.angle || 0;
-        const angleRad = angle * Math.PI / 180;
-        const dirX = Math.cos(angleRad);
-        const dirY = Math.sin(angleRad);
-        const halfW = maxWidth / 2;
-        const halfH = totalHeight / 2;
-        const len = Math.abs(halfW * dirX) + Math.abs(halfH * dirY);
-        const grad = ctx.createLinearGradient(baseLeft + halfW - dirX * len, baseTop + halfH - dirY * len, baseLeft + halfW + dirX * len, baseTop + halfH + dirY * len);
-        grad.addColorStop(0, start);
-        grad.addColorStop(1, end);
-        fillStyle = grad;
-      }
-      ctx.fillStyle = fillStyle;
-      const drawLine = (text, startX, startY)=>{
-        if(!letterSpacing){ ctx.fillText(text, startX, startY); return; }
-        let x = startX;
-        for(let i=0;i<text.length;i++){
-          const ch = text[i];
-          ctx.fillText(ch, x, startY);
-          x += ctx.measureText(ch).width + letterSpacing;
-        }
-      };
-      let y = baseTop;
-      for(let i=0;i<lines.length;i++){
-        const line = lines[i];
-        const width = lineWidths[i];
-        const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
-        drawLine(line, lineLeft, y);
-        y += lineHeightPx;
-      }
-      ctx.restore();
-    }
 
     // JPEG size tuning
     let quality = EXPORT_START_QUALITY;
