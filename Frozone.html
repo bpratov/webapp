@@ -159,47 +159,52 @@
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
   .stageWarning{position:absolute; inset:20px; pointer-events:none}
-  .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:40; display:none; padding:6px 10px; border-radius:8px; background:rgba(15,23,42,0.12); backdrop-filter:blur(6px)}
-  .serialPreview[data-corner="top-left"]{top:24px; left:24px; transform:translate(0,0)}
-  .serialPreview[data-corner="top-right"]{top:24px; right:24px; transform:translate(0,0)}
-  .serialPreview[data-corner="bottom-left"]{bottom:24px; left:24px; transform:translate(0,0)}
-  .serialPreview[data-corner="bottom-right"]{bottom:24px; right:24px; transform:translate(0,0)}
-  .serialPreview.has-barcode{padding-bottom:42px}
-  .serialPreview canvas{display:block; width:100%; height:38px; margin-top:6px; background:#fff; border-radius:6px}
-  .heroText{position:absolute; z-index:42; min-width:120px; padding:12px 16px; border-radius:16px; cursor:grab; display:none; user-select:none; transition:box-shadow .15s ease, transform .15s ease; backdrop-filter:blur(10px)}
-  .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.25)}
-  .heroText .heroInner{display:block; pointer-events:none}
-  .heroText[data-align="left"] .heroInner{text-align:left}
-  .heroText[data-align="center"] .heroInner{text-align:center}
-  .heroText[data-align="right"] .heroInner{text-align:right}
-  .heroText[data-valign="top"]{transform:translate(-50%,-50%)}
-  .heroText[data-valign="middle"]{transform:translate(-50%,-50%)}
-  .heroText[data-valign="bottom"]{transform:translate(-50%,-50%)}
-  .heroText span{display:block; white-space:pre-wrap}
-  .heroText[data-mode="gradient"]{background:rgba(15,23,42,0.14)}
-  .heroText[data-mode="solid"]{background:rgba(15,23,42,0.08)}
-  .heroText.no-bg{background:transparent}
-  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
-  .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
-  .logoSaveRow{display:flex; justify-content:flex-end; margin-top:12px}
-  .textSettingsWrap{display:grid; gap:18px}
-  .textToggleRow{display:flex; align-items:center; justify-content:space-between; gap:12px}
-  .textPanel{border:1px solid var(--border); border-radius:16px; padding:16px; background:var(--chip-bg); box-shadow:0 6px 18px rgba(15,23,42,0.06); display:grid; gap:14px}
-  .textPanel h4{margin:0; font-size:14px}
-  .textFieldRow{display:grid; gap:10px}
-  .textFieldRow label{font-size:13px; font-weight:600}
-  .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
-  .cornerPicker button{all:unset; display:grid; place-items:center; border-radius:10px; border:1px solid var(--border); padding:12px; cursor:pointer; transition:all .15s ease}
-  .cornerPicker button svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8}
-  .cornerPicker button.active{border-color:var(--brand); box-shadow:0 6px 16px rgba(14,165,233,0.18)}
-  .cornerPicker button.active svg{stroke:var(--brand2)}
-  .serialColorRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
-  .serialColorRow .seg{flex-shrink:0}
-  .serialColorRow input[type="text"]{width:120px}
-  .heroGrid{display:grid; gap:14px}
-  .heroRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
-  .heroRow label{font-size:13px; font-weight:600}
-  .heroRow select, .heroRow input[type="number"], .heroRow input[type="text"]{min-width:110px}
+  .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:40; display:none; pointer-events:none; color:var(--ink); background:transparent; padding:0; transition:opacity .2s ease;}
+  .heroText{position:absolute; z-index:42; min-width:120px; cursor:grab; display:none; transition:box-shadow .15s ease, transform .15s ease;}
+  .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.25);}
+  .heroText .heroInner{display:block; white-space:pre-wrap; min-width:120px; outline:none;}
+  .heroText .heroInner:focus-visible{outline:2px solid var(--brand); outline-offset:6px;}
+  .heroText[data-backdrop="none"]{background:transparent; padding:0; border-radius:0; box-shadow:none;}
+  .heroText[data-backdrop="dark"]{background:rgba(15,23,42,0.72); padding:16px 20px; border-radius:18px; box-shadow:0 18px 36px rgba(15,23,42,0.28);}
+  .heroText[data-backdrop="light"]{background:rgba(255,255,255,0.78); padding:16px 20px; border-radius:18px; box-shadow:0 20px 38px rgba(15,23,42,0.16);}
+  .heroHandle{position:absolute; width:16px; height:16px; border-radius:50%; border:2px solid rgba(255,255,255,0.9); background:rgba(99,102,241,0.82); box-shadow:0 6px 16px rgba(99,102,241,0.25); cursor:nwse-resize; z-index:46; display:none;}
+  .heroHandle[data-corner="ne"], .heroHandle[data-corner="sw"]{cursor:nesw-resize;}
+  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45;}
+  .textSettingsWrap{display:grid; gap:18px;}
+  .textToggleStrip{display:flex; align-items:stretch; gap:12px; padding:14px 16px; border:1px solid var(--border); border-radius:18px; background:var(--chip-bg); box-shadow:0 8px 22px rgba(15,23,42,0.06);}
+  .textToggleItem{display:flex; align-items:center; gap:12px; flex:1 1 0; min-width:0;}
+  .textToggleCopy{display:flex; flex-direction:column; gap:2px;}
+  .textToggleTitle{font-weight:600; font-size:14px;}
+  .textToggleSub{font-size:12px; color:var(--muted);}
+  .textToggleDivider{width:1px; background:var(--border); border-radius:999px;}
+  .textToggle .lbl{display:none;}
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
+  .textPanel{border:1px solid var(--border); border-radius:16px; padding:18px 20px; background:var(--chip-bg); box-shadow:0 6px 18px rgba(15,23,42,0.06); display:grid; gap:16px;}
+  .textPanelHead{display:flex; flex-direction:column; gap:4px;}
+  .textPanelHead h4{margin:0; font-size:14px; font-weight:700;}
+  .textPanelSub{font-size:12px; color:var(--muted);}
+  .controlGrid{display:grid; gap:16px;}
+  .controlGrid.two{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
+  .controlGrid.three{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}
+  .controlField{display:flex; flex-direction:column; gap:6px;}
+  .controlLabel{font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); font-weight:600;}
+  .controlHint{font-size:11px; color:var(--muted);}
+  .colorInputWrap{display:flex; align-items:center; gap:10px;}
+  .hexColorField{width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(148,163,184,0.35); background:var(--hex-color,#ffffff); color:var(--hex-ink,#0f172a); font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; box-shadow:0 6px 18px rgba(15,23,42,0.06); transition:border-color .18s ease, box-shadow .18s ease;}
+  .hexColorField:focus{outline:none; border-color:rgba(99,102,241,0.6); box-shadow:0 12px 26px rgba(99,102,241,0.25);}
+  .colorChipInput{width:40px; height:40px; border-radius:12px; border:1px solid rgba(148,163,184,0.45); padding:0; background:none; cursor:pointer; -webkit-appearance:none;}
+  .colorChipInput::-webkit-color-swatch{border:none; border-radius:10px;}
+  .colorChipInput::-moz-color-swatch{border:none; border-radius:10px;}
+  .gradientColorRow{display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end;}
+  .colorField{display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--muted); font-weight:600;}
+  .gradientAngleField{display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--muted); font-weight:600;}
+  .gradientAngleField input{padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); color:var(--ink); font-size:14px; box-shadow:0 6px 16px rgba(15,23,42,0.05);}
+  .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px;}
+  .cornerPicker button{all:unset; display:grid; place-items:center; border-radius:10px; border:1px solid var(--border); padding:12px; cursor:pointer; transition:all .15s ease;}
+  .cornerPicker button svg{width:18px; height:18px; stroke:var(--muted); stroke-width:1.8;}
+  .cornerPicker button.active{border-color:var(--brand); box-shadow:0 6px 16px rgba(14,165,233,0.18);}
+  .cornerPicker button.active svg{stroke:var(--brand2);}
+  .applyAllSwitch{justify-self:flex-start;}
   .alignSeg{display:inline-flex; gap:6px; padding:4px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
   .alignSeg button{all:unset; display:grid; place-items:center; padding:8px 12px; border-radius:10px; cursor:pointer; color:var(--muted); transition:all .15s ease}
   .alignSeg button svg{width:18px; height:18px; stroke:currentColor; stroke-width:1.8}
@@ -300,18 +305,22 @@
   .gradientUpload:hover{background:rgba(148,163,184,0.12); color:var(--ink); border-color:rgba(14,165,233,0.4)}
   .gradientUpload input{display:none}
   .gradientUpload i{width:18px; height:18px; stroke:currentColor}
-  .gradientColorGrid{display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(130px,1fr))}
-  .gradientSwatch{display:grid; gap:8px; padding:12px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 8px 20px rgba(15,23,42,0.08)}
-  .gradientSwatchHeader{display:flex; align-items:center; justify-content:space-between; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
-  .gradientSwatchValue{font-size:12px; font-family:'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace; letter-spacing:0.04em; color:var(--muted)}
-  .gradientSwatch input[type="color"]{appearance:none; border:none; width:100%; height:36px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
-  .gradientInputRow{display:flex; gap:10px; align-items:center; margin-top:6px}
-  .gradientInputRow input[type="text"]{width:110px; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
-  .gradientInputRow input[type="color"]{width:46px; height:36px; border-radius:10px; padding:0; border:1px solid var(--border); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
+  .gradientColorGrid{display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(150px,1fr))}
+  .gradientSwatch{display:flex; flex-direction:column; gap:10px; padding:16px; border:1px solid rgba(99,102,241,0.22); border-radius:16px; background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(241,246,255,0.78)); box-shadow:0 14px 34px rgba(15,23,42,0.12)}
+  .gradientSwatchHeader{display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted)}
+  .gradientSwatchValue{display:none}
+  .gradientInputRow{display:flex; flex-direction:column; gap:8px}
+  .gradientColorField{width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(148,163,184,0.35); background:var(--swatch-color,#ffffff); color:var(--swatch-ink,#0f172a); font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; text-align:center; box-shadow:0 6px 20px rgba(15,23,42,0.08); transition:border-color .18s ease, box-shadow .18s ease, transform .18s ease}
+  .gradientColorField:focus{outline:none; border-color:rgba(99,102,241,0.6); box-shadow:0 10px 26px rgba(99,102,241,0.25); transform:translateY(-1px)}
+  .gradientColorField::placeholder{color:rgba(15,23,42,0.38)}
   .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
   .bgSourceNote.error{color:#b91c1c}
+  .bgGuidanceCard{display:flex; flex-direction:column; gap:8px; padding:16px 18px; background:linear-gradient(135deg,rgba(59,130,246,0.08),rgba(99,102,241,0.06)); border:1px solid rgba(99,102,241,0.18); border-radius:16px; box-shadow:0 10px 26px rgba(15,23,42,0.08); font-size:13px; color:var(--muted)}
+  .bgGuidanceTitle{font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink)}
+  .bgGuidanceCard ul{margin:0; padding-left:18px; display:grid; gap:6px}
+  .bgGuidanceCard li{line-height:1.5}
 
   .libWrap{display:grid; gap:8px}
   .libHeader{display:flex; align-items:center; gap:10px}
@@ -339,6 +348,9 @@
   .logoSectionHeading .meta{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em}
   .logoSectionInner{padding:18px 24px 22px; display:grid; gap:18px}
   .logoSectionActions{display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end}
+  .toneWrap{display:flex; flex-direction:column; gap:6px; align-items:flex-start}
+  .toneNote{font-size:11px; color:var(--muted); letter-spacing:0.02em}
+  .logoCallout{font-size:12px; color:#334155; background:rgba(148,163,184,0.12); border:1px solid rgba(148,163,184,0.28); padding:12px 14px; border-radius:12px; line-height:1.45}
   .logoControls{display:flex; flex-wrap:wrap; gap:18px; align-items:center}
   .logoControlGroup{display:flex; align-items:center; gap:10px; flex-wrap:nowrap}
   .logoControlLabel{font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
@@ -352,6 +364,7 @@
   .modalFooter{padding:20px 28px; display:flex; gap:16px; justify-content:space-between; align-items:center; flex-wrap:wrap; border-top:1px solid var(--border); background:var(--card)}
   .modalFooterStart,.modalFooterEnd{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
   .modalIntro{font-size:13px; color:var(--muted); background:var(--chip-bg); border:1px dashed var(--border); border-radius:14px; padding:16px 18px; line-height:1.5}
+  .modalNote{margin:12px 0 18px 0; font-size:12px; color:var(--muted); background:rgba(148,163,184,0.14); border:1px solid rgba(148,163,184,0.28); border-radius:12px; padding:12px 14px; line-height:1.5}
   .partnerRows{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
   .partnerRow{display:grid; grid-template-columns:minmax(0,72px) 1fr auto; gap:16px; align-items:flex-start; padding:16px; border:1px solid var(--border); border-radius:16px; background:var(--card); box-shadow:0 14px 32px rgba(15,23,42,0.12)}
   .partnerRow img{width:60px; height:60px; object-fit:contain; border-radius:14px; background:#fff; box-shadow:inset 0 1px 2px rgba(15,23,42,0.08)}
@@ -465,6 +478,8 @@
   :root[data-theme="dark"] .libItem{box-shadow:0 4px 12px rgba(2,6,23,0.45)}
   :root[data-theme="dark"] .partnerSettingsBtn{background:rgba(30,41,59,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 10px 24px rgba(2,6,23,0.6)}
   :root[data-theme="dark"] .logoSection{background:linear-gradient(135deg,rgba(30,41,59,0.92),rgba(15,23,42,0.82)); border-color:rgba(71,85,105,0.75); box-shadow:0 26px 46px rgba(2,6,23,0.68)}
+  :root[data-theme="dark"] .toneNote{color:rgba(186,204,240,0.7)}
+  :root[data-theme="dark"] .logoCallout{color:rgba(226,232,240,0.88); background:rgba(51,65,85,0.35); border-color:rgba(148,163,184,0.32)}
   :root[data-theme="dark"] .logoSection::before{opacity:1}
   :root[data-theme="dark"] .seg{background:linear-gradient(135deg,rgba(30,64,175,0.55),rgba(17,94,205,0.28)); border:1px solid rgba(96,165,250,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
@@ -501,6 +516,19 @@
   :root[data-theme="dark"] .modalHeader{background:linear-gradient(135deg,rgba(30,41,59,0.85),rgba(37,99,235,0.28)); border-bottom-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .modalFooter{background:rgba(15,23,42,0.75); border-top-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .modalIntro{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.7); color:rgba(226,232,240,0.82)}
+  :root[data-theme="dark"] .modalNote{background:rgba(30,41,59,0.42); border-color:rgba(71,85,105,0.55); color:rgba(226,232,240,0.82)}
+  :root[data-theme="dark"] .serialPreview{color:#e2e8f0;}
+  :root[data-theme="dark"] .heroText[data-backdrop="dark"]{background:rgba(15,23,42,0.82); box-shadow:0 20px 44px rgba(2,6,23,0.65);}
+  :root[data-theme="dark"] .heroText[data-backdrop="light"]{background:rgba(255,255,255,0.88); color:#0f172a; box-shadow:0 22px 48px rgba(2,6,23,0.55);}
+  :root[data-theme="dark"] .heroHandle{background:rgba(129,140,248,0.9); border-color:rgba(241,245,249,0.9);}
+  :root[data-theme="dark"] .textToggleStrip{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 12px 28px rgba(2,6,23,0.6);}
+  :root[data-theme="dark"] .textToggleTitle{color:#e2e8f0;}
+  :root[data-theme="dark"] .textToggleSub{color:rgba(202,213,234,0.75);}
+  :root[data-theme="dark"] .textPanel{background:rgba(9,20,41,0.78); border-color:rgba(71,85,105,0.75); box-shadow:0 20px 44px rgba(2,6,23,0.6);}
+  :root[data-theme="dark"] .hexColorField{border-color:rgba(71,85,105,0.75); box-shadow:0 10px 26px rgba(2,6,23,0.55); color:#e2e8f0;}
+  :root[data-theme="dark"] .hexColorField:focus{box-shadow:0 16px 32px rgba(59,130,246,0.45);}
+  :root[data-theme="dark"] .colorChipInput{border-color:rgba(71,85,105,0.75);}
+  :root[data-theme="dark"] .gradientAngleField input{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.75); color:#e2e8f0; box-shadow:0 10px 24px rgba(2,6,23,0.55);}
   :root[data-theme="dark"] .partnerRow{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 22px 48px rgba(2,6,23,0.7)}
   :root[data-theme="dark"] .partnerRowFields input{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.75); color:#e2e8f0}
   :root[data-theme="dark"] .partnerRowRemove{background:rgba(248,113,113,0.28); border-color:rgba(248,113,113,0.4); color:#fecaca}
@@ -611,37 +639,61 @@
 
         <div class="section" id="bgSourceSection" aria-hidden="true">
           <div class="section-title"><span class="badge">2b</span> Background source</div>
-          <div class="bannerGuidelines" id="bgSourceGuidelines" style="display:none">Use simple/subtle graphics to ensure that the header and logo remain visible and unobstructed.<br>Partners or live operations teams will supply the background image following their brand guidelines.</div>
+          <div class="bgGuidanceCard" id="bgSourceGuidelines" style="display:none">
+            <span class="bgGuidanceTitle">Background tips</span>
+            <ul>
+              <li>Use simple, subtle graphics so the header and logos stay readable.</li>
+              <li>Partner or Live Ops teams will deliver imagery that follows their brand rules—double-check alignment before publishing.</li>
+              <li>Every background source in Frozone exports safely with canvas rendering.</li>
+              <li>3D banner tips: keep depth cues gentle, align hero objects within the 1120×360 safe area, and leave space for copy or partner marks along the top edge.</li>
+            </ul>
+          </div>
           <div class="stack">
             <div class="seg" id="bgSourceTabs" role="tablist" aria-label="Background source">
-              <button type="button" data-mode="upload" class="active" aria-selected="true" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock">Upload</button>
+              <button type="button" data-mode="gradient" class="active" aria-selected="true" id="bgTabGradient" role="tab" aria-controls="gradientBlock">Gradient</button>
+              <button type="button" data-mode="unsplash" aria-selected="false" id="bgTabUnsplash" role="tab" aria-controls="unsplashBlock" tabindex="-1">Browse stock</button>
+              <button type="button" data-mode="upload" aria-selected="false" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock" tabindex="-1">Upload</button>
               <button type="button" data-mode="link" aria-selected="false" id="bgTabLink" role="tab" aria-controls="bgLinkBlock" tabindex="-1">Paste link</button>
-              <button type="button" data-mode="unsplash" aria-selected="false" id="bgTabUnsplash" role="tab" aria-controls="unsplashBlock" tabindex="-1">Browse Stock</button>
-              <button type="button" data-mode="gradient" aria-selected="false" id="bgTabGradient" role="tab" aria-controls="gradientBlock" tabindex="-1">Gradient</button>
             </div>
 
-            <div class="bg-source-block active" data-mode="upload" id="bgUploadBlock" role="tabpanel" aria-labelledby="bgTabUpload" aria-hidden="false">
-              <label class="btn ghost uploadAction">
-                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                <span class="btn-text">Upload image</span>
-                <input id="bgUpload" type="file" accept="image/*" style="display:none" />
-              </label>
-              <div id="bgUploadChipWrap" style="display:none">
-                <span class="bgUploadChip" aria-live="polite">
-                  <span id="bgUploadFileName"></span>
-                  <button type="button" id="bgUploadRemove" aria-label="Remove uploaded background">
-                    <i data-lucide="x" aria-hidden="true"></i>
-                  </button>
-                </span>
+            <div class="bg-source-block active" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" aria-hidden="false">
+              <div class="gradientLayout">
+                <div class="gradientPreview" id="gradientPreview" role="img" aria-label="Gradient preview">
+                  <div class="gradientPreviewOverlay"></div>
+                </div>
+                <div class="gradientControls">
+                  <p class="gradientIntro">Craft fluid gradients from curated palettes or pull accent colors from reference art in seconds.</p>
+                  <div class="gradientToolbar">
+                    <div class="gradientToolbarRow">
+                      <span class="gradientGroupLabel">Gradient type</span>
+                      <div class="seg" id="gradientTypeSeg" role="group" aria-label="Gradient type">
+                        <button type="button" class="active" data-type="linear" aria-pressed="true">Linear</button>
+                        <button type="button" data-type="radial" aria-pressed="false">Radial</button>
+                        <button type="button" data-type="multi" aria-pressed="false">Multi-point</button>
+                        <button type="button" data-type="wavy" aria-pressed="false">Wavy</button>
+                      </div>
+                    </div>
+                    <div class="gradientToolbarRow">
+                      <span class="gradientGroupLabel">Color count</span>
+                      <div class="gradientCountControls" role="group" aria-label="Gradient color count">
+                        <button type="button" id="gradientRemoveColor" aria-label="Remove color">−</button>
+                        <span class="gradientCountLabel">Colors: <span id="gradientColorCount">3</span></span>
+                        <button type="button" id="gradientAddColor" aria-label="Add color">+</button>
+                      </div>
+                      <label class="gradientUpload" id="gradientImageUploadLabel">
+                        <i data-lucide="image" aria-hidden="true"></i>
+                        <span id="gradientUploadCopy">Extract from image</span>
+                        <input type="file" id="gradientImageUpload" accept="image/*">
+                      </label>
+                    </div>
+                  </div>
+                  <div class="gradientColorGrid" id="gradientColorContainer" aria-live="polite"></div>
+                  <div class="gradientActionButtons">
+                    <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
+                    <button class="btn ghost" type="button" id="gradientRandomize">Surprise me</button>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            <div class="bg-source-block" data-mode="link" id="bgLinkBlock" role="tabpanel" aria-labelledby="bgTabLink" hidden aria-hidden="true">
-              <div class="bgInputRow">
-                <input id="bgLinkInput" type="url" placeholder="Paste image link…">
-                <button class="btn small primary" id="bgLinkLoad" type="button">Load</button>
-              </div>
-              <div id="bgLinkStatus" class="bgSourceNote" aria-live="polite"></div>
             </div>
 
             <div class="bg-source-block" data-mode="unsplash" id="unsplashBlock" role="tabpanel" aria-labelledby="bgTabUnsplash" hidden aria-hidden="true">
@@ -694,48 +746,29 @@
               </div>
             </div>
 
-            <div class="bg-source-block" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" hidden aria-hidden="true">
-              <div class="gradientLayout">
-                <div class="gradientPreview" id="gradientPreview" role="img" aria-label="Gradient preview">
-                  <div class="gradientPreviewOverlay"></div>
-                </div>
-                <div class="gradientControls">
-                  <p class="gradientIntro">Craft fluid gradients from curated palettes or pull accent colors from reference art in seconds.</p>
-                  <div class="gradientToolbar">
-                    <div class="gradientToolbarRow">
-                      <span class="gradientGroupLabel">Gradient type</span>
-                      <div class="seg" id="gradientTypeSeg" role="group" aria-label="Gradient type">
-                        <button type="button" class="active" data-type="linear" aria-pressed="true">Linear</button>
-                        <button type="button" data-type="radial" aria-pressed="false">Radial</button>
-                        <button type="button" data-type="multi" aria-pressed="false">Multi-point</button>
-                        <button type="button" data-type="wavy" aria-pressed="false">Wavy</button>
-                      </div>
-                    </div>
-                    <div class="gradientToolbarRow">
-                      <span class="gradientGroupLabel">Color count</span>
-                      <div class="gradientCountControls" role="group" aria-label="Gradient color count">
-                        <button type="button" id="gradientRemoveColor" aria-label="Remove color">−</button>
-                        <span class="gradientCountLabel">Colors: <span id="gradientColorCount">3</span></span>
-                        <button type="button" id="gradientAddColor" aria-label="Add color">+</button>
-                      </div>
-                      <label class="gradientUpload" id="gradientImageUploadLabel">
-                        <i data-lucide="image" aria-hidden="true"></i>
-                        <span id="gradientUploadCopy">Extract from image</span>
-                        <input type="file" id="gradientImageUpload" accept="image/*">
-                      </label>
-                    </div>
-                  </div>
-                  <div class="gradientColorGrid" id="gradientColorContainer" aria-live="polite"></div>
-                  <div class="gradientActionButtons">
-                    <button class="btn primary" type="button" id="gradientGenerate">Generate</button>
-                    <button class="btn ghost" type="button" id="gradientRandomize">Surprise me</button>
-                  </div>
-                </div>
+            <div class="bg-source-block" data-mode="upload" id="bgUploadBlock" role="tabpanel" aria-labelledby="bgTabUpload" hidden aria-hidden="true">
+              <label class="btn ghost uploadAction">
+                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                <span class="btn-text">Upload image</span>
+                <input id="bgUpload" type="file" accept="image/*" style="display:none" />
+              </label>
+              <div id="bgUploadChipWrap" style="display:none">
+                <span class="bgUploadChip" aria-live="polite">
+                  <span id="bgUploadFileName"></span>
+                  <button type="button" id="bgUploadRemove" aria-label="Remove uploaded background">
+                    <i data-lucide="x" aria-hidden="true"></i>
+                  </button>
+                </span>
               </div>
             </div>
 
-            <div class="bgSourceNote">All background sources are export-safe and compatible with canvas rendering.</div>
-            <div class="bg3dNote" id="banner3DNote" style="display:none">3D banner tips: keep depth elements subtle, align hero objects within the 1120×360 safe area, and reserve space for copy or partner logos along the top edge.</div>
+            <div class="bg-source-block" data-mode="link" id="bgLinkBlock" role="tabpanel" aria-labelledby="bgTabLink" hidden aria-hidden="true">
+              <div class="bgInputRow">
+                <input id="bgLinkInput" type="url" placeholder="Paste image link…">
+                <button class="btn small primary" id="bgLinkLoad" type="button">Load</button>
+              </div>
+              <div id="bgLinkStatus" class="bgSourceNote" aria-live="polite"></div>
+            </div>
           </div>
         </div>
 
@@ -835,15 +868,17 @@
                 </div>
                 <div class="logoControlGroup">
                   <span class="logoControlLabel">Tone</span>
-                  <div class="seg" id="logo1ToneSeg">
-                    <button data-tone="orig" class="active">Original</button>
-                    <button data-tone="white">White</button>
-                    <button data-tone="black">Black</button>
+                  <div class="toneWrap">
+                    <div class="seg" id="logo1ToneSeg">
+                      <button data-tone="orig" class="active">Original</button>
+                      <button data-tone="white">White</button>
+                      <button data-tone="black">Black</button>
+                    </div>
+                    <span class="toneNote">Check partner brand rules before adjusting tone.</span>
                   </div>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+              
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo1Search" type="search" placeholder="Search partners…" />
@@ -883,15 +918,17 @@
                 </div>
                 <div class="logoControlGroup">
                   <span class="logoControlLabel">Tone</span>
-                  <div class="seg" id="logo2ToneSeg">
-                    <button data-tone="orig" class="active">Original</button>
-                    <button data-tone="white">White</button>
-                    <button data-tone="black">Black</button>
+                  <div class="toneWrap">
+                    <div class="seg" id="logo2ToneSeg">
+                      <button data-tone="orig" class="active">Original</button>
+                      <button data-tone="white">White</button>
+                      <button data-tone="black">Black</button>
+                    </div>
+                    <span class="toneNote">Check partner brand rules before adjusting tone.</span>
                   </div>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+              
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo2Search" type="search" placeholder="Search partners…" />
@@ -905,13 +942,6 @@
           </div>
 
           
-        </div>
-
-        <div class="logoSaveRow">
-          <button class="btn primary" type="button" id="saveLogoState">
-            <i data-lucide="save" class="btn-ico" aria-hidden="true"></i>
-            <span class="btn-text">Save logos</span>
-          </button>
         </div>
 
         <!-- Step 4b: Square logo -->
@@ -933,14 +963,16 @@
                   <button data-size="M">M</button>
                   <button data-size="L">L</button>
                 </div>
-                <div class="seg" id="sqLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+                <div class="toneWrap">
+                  <div class="seg" id="sqLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="toneNote">Check partner brand rules before adjusting tone.</span>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+              
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
@@ -967,14 +999,16 @@
                   <span class="btn-text">Banner logo</span>
                   <input id="bannerLogoInput" type="file" accept="image/*" style="display:none"/>
                 </label>
-                <div class="seg" id="bannerLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+                <div class="toneWrap">
+                  <div class="seg" id="bannerLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="toneNote">Check partner brand rules before adjusting tone.</span>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+              <div class="logoCallout">Logo should be added separately via Daryl. Use this panel for preview and visibility checks.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="bannerLogoSearch" type="search" placeholder="Search partners…" />
@@ -1006,15 +1040,17 @@
                 <button data-size="M">M</button>
                 <button data-size="L">L</button>
               </div>
-              <div class="seg" id="vertLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
+              <div class="toneWrap">
+                <div class="seg" id="vertLogoToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
+                <span class="toneNote">Check partner brand rules before adjusting tone.</span>
               </div>
               <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
-            <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-            <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+            <div class="logoCallout">Logo should be added separately via Daryl. Use this preview for placement and visibility only.</div>
             <div class="libWrap">
               <div class="libHeader">
                 <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
@@ -1030,58 +1066,83 @@
         <div class="section" id="textSettingsSection" style="display:none">
           <div class="section-title"><span class="badge">4e</span> Text settings</div>
           <div class="textSettingsWrap">
-            <div class="textToggleRow">
-              <label class="switch"><input type="checkbox" id="toggleSerial"><span class="tgl"><span class="knob"></span></span><span class="lbl">Serial code</span></label>
-            </div>
-            <div class="textPanel" id="serialSettingsPanel" style="display:none">
-              <h4>Serial code overlay</h4>
-              <div class="textFieldRow">
-                <label for="serialCodeInput">Serial number</label>
-                <input id="serialCodeInput" type="text" placeholder="e.g. #A9-204" />
-              </div>
-              <div class="textFieldRow">
-                <label>Corner</label>
-                <div class="cornerPicker" id="serialCornerPicker">
-                  <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
-                  <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+            <div class="textToggleStrip">
+              <div class="textToggleItem">
+                <label class="switch textToggle"><input type="checkbox" id="toggleSerial"><span class="tgl"><span class="knob"></span></span><span class="lbl sr-only">Serial code</span></label>
+                <div class="textToggleCopy">
+                  <span class="textToggleTitle">Serial code</span>
+                  <span class="textToggleSub">Preview QA overlays on canvas.</span>
                 </div>
               </div>
-              <div class="serialColorRow">
-                <div class="serialOptions">
-                  <span class="logoControlLabel">Colour</span>
+              <div class="textToggleDivider" aria-hidden="true"></div>
+              <div class="textToggleItem">
+                <label class="switch textToggle"><input type="checkbox" id="toggleHero"><span class="tgl"><span class="knob"></span></span><span class="lbl sr-only">Hero text</span></label>
+                <div class="textToggleCopy">
+                  <span class="textToggleTitle">Hero text</span>
+                  <span class="textToggleSub">Compose focal copy and drag it in preview.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="textPanel" id="serialSettingsPanel" style="display:none">
+              <div class="textPanelHead">
+                <h4>Serial code</h4>
+                <span class="textPanelSub">Used for internal QA overlays.</span>
+              </div>
+              <div class="controlGrid two">
+                <label class="controlField" for="serialCodeInput">
+                  <span class="controlLabel">Serial number</span>
+                  <input id="serialCodeInput" type="text" placeholder="e.g. #A9-204" />
+                </label>
+                <div class="controlField">
+                  <span class="controlLabel">Corner</span>
+                  <div class="cornerPicker" id="serialCornerPicker">
+                    <button type="button" data-corner="top-left" class="active" aria-label="Top left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                    <button type="button" data-corner="top-right" aria-label="Top right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="4" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                    <button type="button" data-corner="bottom-left" aria-label="Bottom left corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="4" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                    <button type="button" data-corner="bottom-right" aria-label="Bottom right corner"><svg viewBox="0 0 28 28" aria-hidden="true"><rect x="16" y="16" width="8" height="8" fill="none" stroke-width="2" rx="2" ry="2"></rect><rect x="4" y="4" width="20" height="20" fill="none" stroke-width="1.5"></rect></svg></button>
+                  </div>
+                </div>
+              </div>
+              <div class="controlGrid two">
+                <div class="controlField">
+                  <span class="controlLabel">Tone</span>
                   <div class="seg" id="serialColorSeg">
                     <button type="button" data-color="black" class="active">Black</button>
                     <button type="button" data-color="white">White</button>
                     <button type="button" data-color="custom">Custom</button>
                   </div>
                 </div>
-                <div class="heroColorInputs" id="serialCustomWrap" style="display:none">
-                  <label for="serialCustomColor">Hex</label>
-                  <input id="serialCustomColor" type="text" placeholder="#111111" maxlength="7" />
-                  <input id="serialCustomPicker" type="color" value="#0f172a" />
+                <div class="controlField" id="serialCustomWrap" style="display:none">
+                  <span class="controlLabel">Custom hex</span>
+                  <div class="colorInputWrap">
+                    <input id="serialCustomColor" type="text" placeholder="#111111" maxlength="7" class="hexColorField" />
+                    <input id="serialCustomPicker" type="color" value="#0f172a" class="colorChipInput" aria-label="Pick serial colour" />
+                  </div>
                 </div>
               </div>
-              <div class="serialOptions">
-                <label class="switch"><input type="checkbox" id="serialBarcodeToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Show barcode</span></label>
-                <label class="switch"><input type="checkbox" id="serialApplyAll"><span class="tgl"><span class="knob"></span></span><span class="lbl">Apply to all images</span></label>
-              </div>
+              <label class="overlaySliderLabel" for="serialOpacity">
+                <span class="overlayLabelText">Opacity</span>
+                <input id="serialOpacity" type="range" min="20" max="100" value="100" />
+                <span class="overlayValue"><span id="serialOpacityVal">100</span>%</span>
+              </label>
+              <label class="switch applyAllSwitch"><input type="checkbox" id="serialApplyAll"><span class="tgl"><span class="knob"></span></span><span class="lbl">Apply to all images</span></label>
             </div>
 
-            <div class="textToggleRow">
-              <label class="switch"><input type="checkbox" id="toggleHero"><span class="tgl"><span class="knob"></span></span><span class="lbl">Hero text</span></label>
-            </div>
             <div class="textPanel" id="heroSettingsPanel" style="display:none">
-              <h4>Hero text overlay</h4>
-              <div class="muted">Drag the text directly on the preview to reposition. Use gradients for expressive hero copy.</div>
-              <div class="textFieldRow">
-                <label for="heroTextInput">Headline</label>
-                <textarea id="heroTextInput" rows="3" placeholder="Type hero message…"></textarea>
+              <div class="textPanelHead">
+                <h4>Hero text</h4>
+                <span class="textPanelSub">Drag directly on the preview. Minimum size 80&nbsp;px.</span>
               </div>
-              <div class="heroGrid">
-                <div class="heroRow">
-                  <label for="heroFontSelect">Font</label>
+              <div class="controlGrid">
+                <label class="controlField" for="heroTextInput">
+                  <span class="controlLabel">Headline</span>
+                  <textarea id="heroTextInput" rows="3" placeholder="Type hero message…"></textarea>
+                </label>
+              </div>
+              <div class="controlGrid two">
+                <label class="controlField" for="heroFontSelect">
+                  <span class="controlLabel">Font</span>
                   <select id="heroFontSelect">
                     <option>SF Pro Text</option>
                     <option>Inter</option>
@@ -1090,7 +1151,9 @@
                     <option>Arial</option>
                     <option>Neue Frutigier World</option>
                   </select>
-                  <label for="heroWeightSelect">Weight</label>
+                </label>
+                <label class="controlField" for="heroWeightSelect">
+                  <span class="controlLabel">Weight</span>
                   <select id="heroWeightSelect">
                     <option>Thin</option>
                     <option>Light</option>
@@ -1101,57 +1164,87 @@
                     <option>Bold</option>
                     <option>Black</option>
                   </select>
-                </div>
-                <div class="heroRow">
-                  <label for="heroSizeInput">Size</label>
+                </label>
+              </div>
+              <div class="controlGrid three">
+                <label class="controlField" for="heroSizeInput">
+                  <span class="controlLabel">Size</span>
                   <input id="heroSizeInput" type="number" min="80" step="1" value="120" />
-                  <label for="heroLetterSpacing">Letter spacing (px)</label>
+                  <span class="controlHint">Minimum 80 px</span>
+                </label>
+                <label class="controlField" for="heroLetterSpacing">
+                  <span class="controlLabel">Letter spacing (px)</span>
                   <input id="heroLetterSpacing" type="number" step="0.5" value="0" />
-                  <label for="heroLineHeight">Line height (%)</label>
+                </label>
+                <label class="controlField" for="heroLineHeight">
+                  <span class="controlLabel">Line height (%)</span>
                   <input id="heroLineHeight" type="text" value="110%" />
-                </div>
-                <div class="heroRow">
-                  <span class="logoControlLabel">Alignment</span>
+                </label>
+              </div>
+              <div class="controlGrid two">
+                <div class="controlField">
+                  <span class="controlLabel">Alignment</span>
                   <div class="alignSeg" id="heroAlignSeg">
                     <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
                     <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
                     <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
                   </div>
-                  <span class="logoControlLabel">Vertical</span>
+                </div>
+                <div class="controlField">
+                  <span class="controlLabel">Vertical</span>
                   <div class="alignSeg" id="heroVerticalSeg">
                     <button type="button" data-valign="top" aria-label="Align top"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="8" x2="20" y2="8"></line><rect x="10" y="10" width="8" height="10" rx="2"></rect></svg></button>
                     <button type="button" data-valign="bottom" aria-label="Align bottom"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="8" y1="20" x2="20" y2="20"></line><rect x="10" y="8" width="8" height="10" rx="2"></rect></svg></button>
                   </div>
                 </div>
-                <div class="heroRow">
-                  <span class="logoControlLabel">Colour mode</span>
+              </div>
+              <div class="controlGrid two">
+                <div class="controlField">
+                  <span class="controlLabel">Colour mode</span>
                   <div class="seg" id="heroColorModeSeg">
                     <button type="button" data-mode="solid" class="active">Solid</button>
                     <button type="button" data-mode="gradient">Gradient</button>
                   </div>
                 </div>
-                <div class="heroColorControls">
-                  <div class="heroColorInputs" id="heroSolidControls">
-                    <label for="heroSolidHex">Hex</label>
-                    <input id="heroSolidHex" type="text" value="#ffffff" maxlength="7" />
-                    <input id="heroSolidPicker" type="color" value="#ffffff" />
+                <div class="controlField">
+                  <span class="controlLabel">Backdrop</span>
+                  <div class="seg" id="heroBackdropSeg">
+                    <button type="button" data-backdrop="none" class="active">None</button>
+                    <button type="button" data-backdrop="dark">Dark</button>
+                    <button type="button" data-backdrop="light">Light</button>
                   </div>
-                  <div class="heroColorInputs" id="heroGradientControls" style="display:none">
-                    <label for="heroGradStart">Start</label>
-                    <input id="heroGradStart" type="color" value="#0ea5e9" />
-                    <label for="heroGradEnd">End</label>
-                    <input id="heroGradEnd" type="color" value="#6366f1" />
-                    <div class="heroGradientAngle">
-                      <label for="heroGradAngle">Angle</label>
+                </div>
+              </div>
+              <div class="controlGrid">
+                <div class="controlField" id="heroSolidControls">
+                  <span class="controlLabel">Solid hex</span>
+                  <div class="colorInputWrap">
+                    <input id="heroSolidHex" type="text" value="#ffffff" maxlength="7" class="hexColorField" />
+                    <input id="heroSolidPicker" type="color" value="#ffffff" class="colorChipInput" aria-label="Pick hero colour" />
+                  </div>
+                </div>
+                <div class="controlField" id="heroGradientControls" style="display:none">
+                  <span class="controlLabel">Gradient colours</span>
+                  <div class="gradientColorRow">
+                    <label class="colorField" for="heroGradStart">
+                      <span>Start</span>
+                      <input id="heroGradStart" type="color" value="#0ea5e9" class="colorChipInput" />
+                    </label>
+                    <label class="colorField" for="heroGradEnd">
+                      <span>End</span>
+                      <input id="heroGradEnd" type="color" value="#6366f1" class="colorChipInput" />
+                    </label>
+                    <label class="gradientAngleField" for="heroGradAngle">
+                      <span>Angle</span>
                       <input id="heroGradAngle" type="number" value="0" step="1" />
-                    </div>
+                    </label>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
-
         <!-- Step 5: Export -->
         <div class="section">
           <div class="section-title"><span class="badge">5</span> Mockup Master</div>
@@ -1233,13 +1326,16 @@
           <img id="sqLogoPrev" class="sqLogo" alt="square logo" />
           <img id="vertLogoPrev" class="vertLogo" alt="vertical logo" />
           <img id="bannerLogoPrev" class="bannerLogoPrev" alt="banner logo" />
-          <div class="serialPreview" id="serialPreview" data-corner="top-left">
+          <div class="serialPreview" id="serialPreview">
             <span id="serialTextPreview"></span>
-            <canvas id="serialBarcodeCanvas" width="200" height="40"></canvas>
           </div>
-          <div class="heroText no-bg" id="heroTextPreview" data-align="center" data-valign="middle" data-mode="solid">
-            <span class="heroInner" id="heroInnerText"></span>
+          <div class="heroText" id="heroTextPreview" data-backdrop="none">
+            <span class="heroInner" id="heroInnerText" contenteditable="true" role="textbox" aria-label="Edit hero text" aria-multiline="true"></span>
           </div>
+          <div class="heroHandle" data-corner="nw" aria-hidden="true"></div>
+          <div class="heroHandle" data-corner="ne" aria-hidden="true"></div>
+          <div class="heroHandle" data-corner="se" aria-hidden="true"></div>
+          <div class="heroHandle" data-corner="sw" aria-hidden="true"></div>
           <div class="stageHint" id="stageHint">Upload or drop your images here to start.</div>
           <div class="dropOverlay" id="dropOverlay">Drop images to upload</div>
         </div>
@@ -1279,6 +1375,7 @@
       </div>
       <div class="modalBody">
         <div class="modalIntro">Curate partner logos, rename entries, or paste fresh image URLs. Everything saves directly into this file so you can ship updates without leaving Frozone.</div>
+        <div class="modalNote">When pasting URLs, double-check that the artwork follows the partner's brand guidelines before saving.</div>
         <div id="partnerSettingsList" class="partnerRows"></div>
       </div>
       <div class="modalFooter">
@@ -1287,10 +1384,14 @@
             <i data-lucide="plus" class="btn-ico" aria-hidden="true"></i>
             <span class="btn-text">Add new logo</span>
           </button>
+          <button class="btn ghost" type="button" id="partnerSettingsSort">
+            <i data-lucide="arrow-up-a-z" class="btn-ico" aria-hidden="true"></i>
+            <span class="btn-text">Sort A→Z</span>
+          </button>
         </div>
         <div class="modalFooterEnd">
           <button class="btn ghost" type="button" id="partnerSettingsCancel">Cancel</button>
-          <button class="btn primary" type="button" id="partnerSettingsSave">Save changes</button>
+          <button class="btn primary" type="button" id="partnerSettingsSave">Save logos</button>
         </div>
       </div>
     </div>
@@ -1302,34 +1403,65 @@
 
   <script type="application/json" id="partnerData">
 [
-  {"name":"Amazon","url":"https://i.imghippo.com/files/KHpN4511hII.png"},
-  {"name":"Babylist","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Babylist_Logo_02.png"},
-  {"name":"Babies “R” Us","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Babies_%22R%22_Us_logo.svg?width=1000"},
-  {"name":"Bayer Bepanthen","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Bayer_Logo.svg?width=1000"},
+  {"name":"Abbott Laboratories","url":"https://upload.wikimedia.org/wikipedia/commons/a/a4/Abbott_Laboratories_logo.svg"},
+  {"name":"Adidas","url":"https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg"},
+  {"name":"Altibbi","url":"https://upload.wikimedia.org/wikipedia/en/e/ed/Altibbi_Logo.png"},
+  {"name":"Amazon","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1280px-Amazon_logo.svg.png"},
+  {"name":"Amazon Baby Registry","url":"https://m.media-amazon.com/images/G/01/baby/registry/aui/babylogo_home_300x85._CB479575786_.png"},
+  {"name":"Aptamil","url":"https://static.wikia.nocookie.net/logopedia/images/8/87/Aptamil-logo.png/revision/latest?cb=20180603095511"},
+  {"name":"Arkansas","url":"https://i.postimg.cc/fysfGjx6/ARKANSAS.png"},
+  {"name":"Assurance Maladie","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/ASSURANCE_MALADIE.svg/1280px-ASSURANCE_MALADIE.svg.png"},
+  {"name":"Babies \"R\" Us","url":"https://upload.wikimedia.org/wikipedia/commons/3/32/Logo_Babies_R_Us.svg"},
+  {"name":"Babylist","url":"https://help.babylist.com/hc/theming_assets/01HZPNJYG50AQZ1T64NGX5YCHS"},
+  {"name":"Bayer Bepanthen","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Logo_Bayer.svg/2048px-Logo_Bayer.svg.png"},
+  {"name":"Bol","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Logo_of_Bol_%282025%29.svg/2560px-Logo_of_Bol_%282025%29.svg.png"},
   {"name":"C&A","url":"https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg"},
-  {"name":"Doctolib","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Doctolib_Logo.svg?width=1000"},
-  {"name":"El Corte Inglés","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Corte_Ingl%C3%A9s.svg?width=1000"},
-  {"name":"Fisher-Price","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Fisher-Price_logo.svg?width=1000"},
-  {"name":"Groupe Mutuel","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Gm_logo_hor_rvb_bicol.png"},
+  {"name":"Danone Dairy","url":"https://upload.wikimedia.org/wikipedia/en/a/a3/Danone_dairy_logo.svg"},
+  {"name":"Doctolib","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Doctolib_Logo.svg/2560px-Doctolib_Logo.svg.png"},
+  {"name":"El Corte Inglés","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Logo_Corte_Ingl%C3%A9s.svg/1200px-Logo_Corte_Ingl%C3%A9s.svg.png"},
+  {"name":"EMC","url":"https://assets.minted.com/image/upload/f_auto,q_auto/Minted_Onsite_Assets/2024/LP/BK/20BK0139OLP_0810_EMC_LandingPage_Update_EMClogo_OP.png"},
+  {"name":"Enfamil","url":"https://static.wikia.nocookie.net/logopedia/images/7/71/Enfamil.png/revision/latest?cb=20221010133352"},
+  {"name":"Erasmus MC","url":"https://iconape.com/wp-content/png_logo_vector/erasmus-mc-logo.png"},
+  {"name":"Fisher-Price","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Fisher-Price_2019.svg/2560px-Fisher-Price_2019.svg.png"},
+  {"name":"GAP","url":"https://upload.wikimedia.org/wikipedia/commons/c/cf/GAP_Logo.svg"},
+  {"name":"Gerber","url":"https://upload.wikimedia.org/wikipedia/en/f/fb/Gerber_company_logo.png"},
+  {"name":"Good","url":"https://cdn.prod.website-files.com/6557391911618b28bc0bf8b4/65df3bcf1c551db1c104ec9a_Logo%20Good.png"},
+  {"name":"Groupe Mutuel","url":"https://upload.wikimedia.org/wikipedia/commons/f/fd/Gm_logo_hor_rvb_bicol.png"},
   {"name":"GSK","url":"https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png"},
-  {"name":"H&M","url":"https://commons.wikimedia.org/wiki/Special:FilePath/H%26M-Logo.svg?width=1000"},
+  {"name":"H&M","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/H%26M-Logo.svg/2560px-H%26M-Logo.svg.png"},
+  {"name":"HelloFresh","url":"https://cdn.freebiesupply.com/logos/large/2x/hellofresh-logo.png"},
+  {"name":"HelloFresh (alt)","url":"https://upload.wikimedia.org/wikipedia/en/2/2d/HelloFreshlogo.png"},
   {"name":"HiPP","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png"},
-  {"name":"Kruidvat","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Kruidvat-New.png"},
-  {"name":"LEGO","url":"https://commons.wikimedia.org/wiki/Special:FilePath/LEGO_logo.svg?width=1000"},
-  {"name":"Lemonade","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Logo_of_Lemonade%2C_Inc.svg?width=1000"},
-  {"name":"Livi","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Kry_logo.svg?width=800"},
+  {"name":"Huggies","url":"https://static.wikia.nocookie.net/logopedia/images/e/ef/Huggies-logo.png/revision/latest?cb=20200216191353"},
+  {"name":"Johnson & Johnson","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Johnson_and_Johnson_Logo.svg/1200px-Johnson_and_Johnson_Logo.svg.png"},
+  {"name":"Kruidvat","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Kruidvat_logo.svg/2560px-Kruidvat_logo.svg.png"},
+  {"name":"LEGO","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/LEGO_logo.svg/2048px-LEGO_logo.svg.png"},
+  {"name":"Lemonade","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Logo_of_Lemonade%2C_Inc.svg/1200px-Logo_of_Lemonade%2C_Inc.svg.png"},
+  {"name":"Loir-et-Cher","url":"https://upload.wikimedia.org/wikipedia/fr/thumb/a/a9/Logo_Loir_Cher_2015.svg/1556px-Logo_Loir_Cher_2015.svg.png"},
+  {"name":"Lululemon Athletica","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lululemon_Athletica_logo.svg/1200px-Lululemon_Athletica_logo.svg.png"},
+  {"name":"Materna","url":"https://materna.familynes.ec/sites/default/files/2025-05/materna-pink.svg"},
   {"name":"Mattel","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png"},
-  {"name":"Monoprix","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Monoprix_logo_2013.png"},
+  {"name":"Mead Johnson","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Mead_Johnson_logo.svg/1200px-Mead_Johnson_logo.svg.png"},
+  {"name":"Michigan","url":"https://i.postimg.cc/D0hP9dr3/MICHIGAN.png"},
+  {"name":"Miele","url":"https://1000logos.net/wp-content/uploads/2017/12/Miele-logo.png"},
+  {"name":"Miele (box)","url":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf0BfRzHIk1y4ORk1E4XjcaddTO83Mt6AMtg&s"},
+  {"name":"Monoprix","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Monoprix_logo.svg/1200px-Monoprix_logo.svg.png"},
   {"name":"NAIF","url":"https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png"},
+  {"name":"Nestlé","url":"https://companieslogo.com/img/orig/NESN.SW_BIG-55a6f2f9.png?t=1720244493"},
+  {"name":"New York","url":"https://i.postimg.cc/D0hP9drk/image-779.png"},
+  {"name":"Nutricia","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Nutricia_company_logo.svg/2560px-Nutricia_company_logo.svg.png"},
   {"name":"Nuna","url":"https://i.imghippo.com/files/sbJA8488Sbo.png"},
+  {"name":"Pampers","url":"https://upload.wikimedia.org/wikipedia/de/thumb/8/82/Pampers-Logo.svg/1280px-Pampers-Logo.svg.png"},
   {"name":"Petite Amelie","url":"https://i.imghippo.com/files/KpIL9265gYA.png"},
   {"name":"Pfizer","url":"https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg"},
   {"name":"Philips","url":"https://cdn.worldvectorlogo.com/logos/philips-6.svg"},
+  {"name":"Philips Avent","url":"https://i.postimg.cc/L8tdkVHH/PHILIPS-AVENT-4.png"},
   {"name":"Sanofi","url":"https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png"},
-  {"name":"Target","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Target_Logo.svg?width=1000"},
+  {"name":"Target","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Target_old_logo.svg/640px-Target_old_logo.svg.png"},
+  {"name":"Veba","url":"https://vebababy.com/cdn/shop/files/Veba_Logo_Blue_1790x.png?v=1678545554"},
   {"name":"Versuni","url":"https://i.imghippo.com/files/tWvR4051Aws.png"},
-  {"name":"Walmart","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Walmart_Logo.png"},
-  {"name":"Zocdoc","url":"https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png"}
+  {"name":"Walmart","url":"https://upload.wikimedia.org/wikipedia/commons/5/5b/Walmart_logo_%282025%29.svg"},
+  {"name":"Zocdoc","url":"https://www.freelogovectors.net/wp-content/uploads/2019/02/zocdoc-logo.png"}
 ]
   </script>
 
@@ -1353,7 +1485,12 @@
   const PARTNER_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
   const PARTNER_STORAGE_KEY = 'frozone-partners';
   const LOGO_STATE_KEY = 'frozone-logo-state';
-  const TEXT_STATE_KEY = 'frozone-text-state';
+  const SERIAL_MARGIN_RATIO_X = 0.035;
+  const SERIAL_MARGIN_RATIO_Y = 0.035;
+  const HERO_MIN_SIZE = 80;
+  const BANNER_GAP_X_RATIO = 15/365;
+  const BANNER_GAP_Y_RATIO = 15/120;
+  const BANNER_LOGO_HEIGHT_RATIO = 30/120;
   let partnerSettingsRestoreFocus = null;
 
   try{
@@ -1401,7 +1538,6 @@
     stageHint: document.getElementById('stageHint'),
     bgSourceSection: document.getElementById('bgSourceSection'),
     bgSourceGuidelines: document.getElementById('bgSourceGuidelines'),
-    banner3DNote: document.getElementById('banner3DNote'),
     bgSourceTabs: document.getElementById('bgSourceTabs'),
     bgSourceBlocks: Array.from(document.querySelectorAll('.bg-source-block')),
     bgUpload: document.getElementById('bgUpload'),
@@ -1484,7 +1620,8 @@
     serialCustomWrap: document.getElementById('serialCustomWrap'),
     serialCustomColor: document.getElementById('serialCustomColor'),
     serialCustomPicker: document.getElementById('serialCustomPicker'),
-    serialBarcodeToggle: document.getElementById('serialBarcodeToggle'),
+    serialOpacity: document.getElementById('serialOpacity'),
+    serialOpacityVal: document.getElementById('serialOpacityVal'),
     serialApplyAll: document.getElementById('serialApplyAll'),
 
     toggleHero: document.getElementById('toggleHero'),
@@ -1498,6 +1635,7 @@
     heroAlignSeg: document.getElementById('heroAlignSeg'),
     heroVerticalSeg: document.getElementById('heroVerticalSeg'),
     heroColorModeSeg: document.getElementById('heroColorModeSeg'),
+    heroBackdropSeg: document.getElementById('heroBackdropSeg'),
     heroSolidControls: document.getElementById('heroSolidControls'),
     heroSolidHex: document.getElementById('heroSolidHex'),
     heroSolidPicker: document.getElementById('heroSolidPicker'),
@@ -1508,11 +1646,9 @@
 
     serialPreview: document.getElementById('serialPreview'),
     serialTextPreview: document.getElementById('serialTextPreview'),
-    serialBarcodeCanvas: document.getElementById('serialBarcodeCanvas'),
     heroTextPreview: document.getElementById('heroTextPreview'),
     heroInnerText: document.getElementById('heroInnerText'),
 
-    saveLogoState: document.getElementById('saveLogoState'),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
@@ -1520,12 +1656,14 @@
     deleteAllBtn: document.getElementById('deleteAllBtn'),
     globalDropOverlay: document.getElementById('globalDropOverlay'),
     resizeHandles: Array.from(document.querySelectorAll('.resizeHandle')),
+    heroHandles: Array.from(document.querySelectorAll('.heroHandle')),
 
     loading: document.getElementById('loading'), loadingText: document.getElementById('loadingText'), loadingBar: document.getElementById('loadingBar'), loadingTitle: document.getElementById('loadingTitle'),
 
     partnerSettingsModal: document.getElementById('partnerSettingsModal'),
     partnerSettingsList: document.getElementById('partnerSettingsList'),
     partnerSettingsAdd: document.getElementById('partnerSettingsAdd'),
+    partnerSettingsSort: document.getElementById('partnerSettingsSort'),
     partnerSettingsSave: document.getElementById('partnerSettingsSave'),
     partnerSettingsCancel: document.getElementById('partnerSettingsCancel'),
     partnerSettingsClose: document.querySelector('.partnerSettingsClose'),
@@ -1541,7 +1679,7 @@
 
   const SIZE_MAP = { S:23, M:30, L:53 };
   const SIZE_MAP_SQ = { S:35, M:55, L:75 };
-  const BANNER_MODES = ['upload','link','unsplash','gradient'];
+  const BANNER_MODES = ['gradient','unsplash','upload','link'];
   const UNSPLASH_COLOR_PARAM_MAP = {
     pink: 'magenta'
   };
@@ -1557,7 +1695,7 @@
 
   function defaultTextState(){
     return {
-      serial: { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', showBarcode:false, applyAll:false },
+      serial: { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', opacity:1, applyAll:false },
       hero: {
         enabled:false,
         value:'',
@@ -1571,7 +1709,8 @@
         colorMode:'solid',
         solid:'#ffffff',
         gradient:{ start:'#0ea5e9', end:'#6366f1', angle:0 },
-        position:{ x:0.5, y:0.42 }
+        position:{ x:0.5, y:0.42 },
+        backdrop:'none'
       }
     };
   }
@@ -1588,7 +1727,7 @@
     try{
       return JSON.parse(JSON.stringify(state.text.serial));
     }catch(err){
-      return { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', showBarcode:false, applyAll:false };
+      return { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', opacity:1, applyAll:false };
     }
   }
 
@@ -1616,64 +1755,39 @@
     return fallback;
   }
 
-  function createBarcodeCanvas(text, color){
-    const cleaned = (text || '').replace(/[^0-9A-Za-z]/g,'').toUpperCase();
-    if(!cleaned){ return null; }
-    let pattern = '1010';
-    for(const ch of cleaned){
-      const bits = ch.charCodeAt(0).toString(2).padStart(8,'0');
-      pattern += bits + '0';
+  function resolveLineHeightFactor(input){
+    if(typeof input === 'number' && Number.isFinite(input) && input > 0){
+      return input / 100;
     }
-    pattern += '10101';
-    const moduleWidth = 2;
-    const margin = 10;
-    const width = Math.max(120, pattern.length * moduleWidth + margin * 2);
-    const height = 48;
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = color;
-    let x = margin;
-    for(const bit of pattern){
-      if(bit === '1'){ ctx.fillRect(x, 4, moduleWidth, height - 8); }
-      x += moduleWidth;
+    if(typeof input === 'string'){
+      const trimmed = input.trim();
+      if(!trimmed){ return 1.1; }
+      const numeric = parseFloat(trimmed.replace('%',''));
+      if(Number.isFinite(numeric) && numeric > 0){
+        return numeric / 100;
+      }
     }
-    return canvas;
+    return 1.1;
   }
 
-  function drawRoundedRect(ctx, x, y, w, h, r){
-    if(w <= 0 || h <= 0) return;
-    const radius = Math.max(0, Math.min(r, Math.min(w, h) / 2));
-    ctx.beginPath();
-    ctx.moveTo(x + radius, y);
-    ctx.lineTo(x + w - radius, y);
-    ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
-    ctx.lineTo(x + w, y + h - radius);
-    ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
-    ctx.lineTo(x + radius, y + h);
-    ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
-    ctx.lineTo(x, y + radius);
-    ctx.quadraticCurveTo(x, y, x + radius, y);
-    ctx.closePath();
-  }
-
-  function renderBarcodePreview(text, color){
-    if(!els.serialBarcodeCanvas) return;
-    const barcodeCanvas = createBarcodeCanvas(text, color);
-    const ctx = els.serialBarcodeCanvas.getContext('2d');
-    if(!barcodeCanvas){
-      ctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
-      els.serialBarcodeCanvas.style.display = 'none';
-      return;
+  function clampHeroPosition(x, y, dims = null){
+    if(!Number.isFinite(x)){ x = 0.5; }
+    if(!Number.isFinite(y)){ y = 0.5; }
+    const width = dims?.width ?? els.heroTextPreview?.offsetWidth ?? 0;
+    const height = dims?.height ?? els.heroTextPreview?.offsetHeight ?? 0;
+    if(!frameMetrics.width || !frameMetrics.height){
+      return { x: Math.max(0, Math.min(1, x)), y: Math.max(0, Math.min(1, y)) };
     }
-    els.serialBarcodeCanvas.width = barcodeCanvas.width;
-    els.serialBarcodeCanvas.height = barcodeCanvas.height;
-    ctx.clearRect(0,0,barcodeCanvas.width, barcodeCanvas.height);
-    ctx.drawImage(barcodeCanvas, 0, 0);
-    els.serialBarcodeCanvas.style.display = 'block';
+    const halfNormW = frameMetrics.width > 0 ? Math.min(0.5, (width / frameMetrics.width) / 2) : 0.5;
+    const halfNormH = frameMetrics.height > 0 ? Math.min(0.5, (height / frameMetrics.height) / 2) : 0.5;
+    const minX = Math.max(0, Math.min(1, halfNormW));
+    const maxX = Math.max(minX, 1 - halfNormW);
+    const minY = Math.max(0, Math.min(1, halfNormH));
+    const maxY = Math.max(minY, 1 - halfNormH);
+    return {
+      x: Math.max(minX, Math.min(maxX, x)),
+      y: Math.max(minY, Math.min(maxY, y))
+    };
   }
 
   const HERO_WEIGHT_MAP = {
@@ -1719,6 +1833,22 @@
       vertLogo: serializeLogoStore(state.vertLogo),
       bannerLogo: serializeLogoStore(state.bannerLogo)
     };
+  }
+
+  let logoStateSaveTimer = null;
+  function scheduleLogoStateSave(){
+    if(logoStateSaveTimer){
+      clearTimeout(logoStateSaveTimer);
+    }
+    logoStateSaveTimer = window.setTimeout(()=>{
+      logoStateSaveTimer = null;
+      const payload = gatherLogoState();
+      try{
+        localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload));
+      }catch(err){
+        console.warn('Failed to store logo state', err);
+      }
+    }, 160);
   }
 
   async function applyLogoSnapshot(snapshot, targetEl, store, which){
@@ -1830,7 +1960,7 @@
     text: defaultTextState(),
 
     banner: {
-      mode:'upload',
+      mode:'gradient',
       uploadName:'',
       link:'',
       unsplash:{ colors:[], tone:'all', style:'', results:[], page:1, totalPages:1 },
@@ -1997,7 +2127,6 @@
       els.bgSourceSection.setAttribute('aria-hidden', isBanner ? 'false' : 'true');
     }
     if(els.bgSourceGuidelines){ els.bgSourceGuidelines.style.display = isBanner ? 'block' : 'none'; }
-    if(els.banner3DNote){ els.banner3DNote.style.display = isBanner ? 'block' : 'none'; }
     if(isBanner){
       updateBannerUploadChip();
       updateUnsplashPaletteActive();
@@ -2068,12 +2197,20 @@
         });
       }
       if(els.serialCustomWrap){ els.serialCustomWrap.style.display = state.text.serial.color === 'custom' ? 'flex' : 'none'; }
-      if(els.serialCustomColor){ els.serialCustomColor.value = state.text.serial.custom || '#0f172a'; }
+      if(els.serialCustomColor){
+        const custom = (state.text.serial.custom || '#0f172a').toUpperCase();
+        if(els.serialCustomColor.value !== custom){ els.serialCustomColor.value = custom; }
+        styleHexInput(els.serialCustomColor, custom, '#0f172a');
+      }
       if(els.serialCustomPicker){
         const pick = state.text.serial.custom || '#0f172a';
         els.serialCustomPicker.value = /^#[0-9a-fA-F]{6}$/.test(pick) ? pick : '#0f172a';
       }
-      if(els.serialBarcodeToggle){ els.serialBarcodeToggle.checked = !!state.text.serial.showBarcode; }
+      if(els.serialOpacity){
+        const op = Math.round((state.text.serial.opacity ?? 1) * 100);
+        els.serialOpacity.value = op.toString();
+        if(els.serialOpacityVal){ els.serialOpacityVal.textContent = op.toString(); }
+      }
       if(els.serialApplyAll){ els.serialApplyAll.checked = !!state.text.serial.applyAll; }
 
       if(els.toggleHero){ els.toggleHero.checked = !!state.text.hero.enabled; }
@@ -2081,7 +2218,7 @@
       if(els.heroTextInput && els.heroTextInput.value !== state.text.hero.value){ els.heroTextInput.value = state.text.hero.value || ''; }
       if(els.heroFontSelect){ els.heroFontSelect.value = state.text.hero.font || 'SF Pro Text'; }
       if(els.heroWeightSelect){ els.heroWeightSelect.value = state.text.hero.weight || 'Heavy'; }
-      if(els.heroSizeInput){ els.heroSizeInput.value = state.text.hero.size ?? 120; }
+      if(els.heroSizeInput){ els.heroSizeInput.value = Math.round(state.text.hero.size ?? 120); }
       if(els.heroLetterSpacing){ els.heroLetterSpacing.value = state.text.hero.letterSpacing ?? 0; }
       if(els.heroLineHeight){ els.heroLineHeight.value = state.text.hero.lineHeight || '110%'; }
       if(els.heroAlignSeg){
@@ -2099,18 +2236,46 @@
           btn.classList.toggle('active', btn.dataset.mode === state.text.hero.colorMode);
         });
       }
-      if(els.heroSolidControls){ els.heroSolidControls.style.display = state.text.hero.colorMode === 'solid' ? 'flex' : 'none'; }
-      if(els.heroSolidHex){ els.heroSolidHex.value = state.text.hero.solid || '#ffffff'; }
-      if(els.heroSolidPicker){
-        const val = state.text.hero.solid || '#ffffff';
-        els.heroSolidPicker.value = /^#[0-9a-fA-F]{6}$/.test(val) ? val : '#ffffff';
+      if(els.heroBackdropSeg){
+        const backdrop = state.text.hero.backdrop || 'none';
+        [...els.heroBackdropSeg.querySelectorAll('button')].forEach(btn=>{
+          const active = (btn.dataset.backdrop || 'none') === backdrop;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
       }
-      if(els.heroGradientControls){ els.heroGradientControls.style.display = state.text.hero.colorMode === 'gradient' ? 'flex' : 'none'; }
-      if(els.heroGradStart){ els.heroGradStart.value = state.text.hero.gradient?.start || '#0ea5e9'; }
-      if(els.heroGradEnd){ els.heroGradEnd.value = state.text.hero.gradient?.end || '#6366f1'; }
+      if(els.heroSolidControls){
+        const showSolid = state.text.hero.colorMode === 'solid';
+        els.heroSolidControls.style.display = showSolid ? 'grid' : 'none';
+      }
+      if(els.heroGradientControls){
+        const showGrad = state.text.hero.colorMode === 'gradient';
+        els.heroGradientControls.style.display = showGrad ? 'grid' : 'none';
+      }
+      if(els.heroSolidHex){
+        const solid = (state.text.hero.solid || '#ffffff').toUpperCase();
+        if(els.heroSolidHex.value !== solid){ els.heroSolidHex.value = solid; }
+        styleHexInput(els.heroSolidHex, solid, '#ffffff');
+      }
+      if(els.heroSolidPicker){
+        const pick = state.text.hero.solid || '#ffffff';
+        els.heroSolidPicker.value = /^#[0-9a-fA-F]{6}$/.test(pick) ? pick : '#ffffff';
+      }
+      if(els.heroGradStart){
+        const start = (state.text.hero.gradient?.start || '#0ea5e9').toUpperCase();
+        if(els.heroGradStart.value !== start){ els.heroGradStart.value = start; }
+        styleHexInput(els.heroGradStart, start, '#0ea5e9');
+      }
+      if(els.heroGradEnd){
+        const end = (state.text.hero.gradient?.end || '#6366f1').toUpperCase();
+        if(els.heroGradEnd.value !== end){ els.heroGradEnd.value = end; }
+        styleHexInput(els.heroGradEnd, end, '#6366f1');
+      }
       if(els.heroGradAngle){ els.heroGradAngle.value = state.text.hero.gradient?.angle ?? 0; }
+      if(els.heroInnerText && els.heroInnerText.textContent !== state.text.hero.value){
+        els.heroInnerText.textContent = state.text.hero.value || '';
+      }
     }
-
     els.bVal.textContent = state.brightness;
     els.sVal.textContent = state.saturation;
     els.cVal.textContent = state.contrast;
@@ -2306,14 +2471,17 @@
     } else { els.vertLogoPrev.style.display='none'; }
 
     if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
-      const scaleX = (state.format.wPreview/state.format.wExport) * state.previewZoom;
-      const scaleY = (state.format.hPreview/state.format.hExport) * state.previewZoom;
-      const targetH = 30 * scaleY;
+      const gapX = state.format.wPreview * BANNER_GAP_X_RATIO * state.previewZoom;
+      const gapY = state.format.hPreview * BANNER_GAP_Y_RATIO * state.previewZoom;
+      const baseH = state.format.hPreview * BANNER_LOGO_HEIGHT_RATIO * state.previewZoom * 1.5;
       const ratio = state.bannerLogo.w && state.bannerLogo.h ? state.bannerLogo.w/state.bannerLogo.h : 1;
-      const left = frameLeftPx + 15 * scaleX;
-      const top = frameTopPx + 15 * scaleY;
+      const targetH = Math.max(1, baseH);
+      const targetW = Math.max(1, targetH * ratio);
+      const left = frameLeftPx + gapX;
+      const top = frameTopPx + gapY;
       els.bannerLogoPrev.style.display='block';
       els.bannerLogoPrev.style.height = targetH + 'px';
+      els.bannerLogoPrev.style.width = targetW + 'px';
       els.bannerLogoPrev.style.left = left + 'px';
       els.bannerLogoPrev.style.top = top + 'px';
       applyLogoPreviewTone(els.bannerLogoPrev, state.bannerLogo.tone);
@@ -2324,77 +2492,100 @@
       const color = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
       const exportFont = Math.max(18, Math.round(state.format.hExport * 0.025));
       const scale = (state.format.hPreview/state.format.hExport) * state.previewZoom;
+      const corner = state.text.serial.corner || 'top-left';
+      const marginX = state.format.wPreview * SERIAL_MARGIN_RATIO_X * state.previewZoom;
+      const marginY = state.format.hPreview * SERIAL_MARGIN_RATIO_Y * state.previewZoom;
+      const anchorX = corner.includes('right') ? frameLeftPx + fwPx - marginX : frameLeftPx + marginX;
+      const anchorY = corner.includes('bottom') ? frameTopPx + fhPx - marginY : frameTopPx + marginY;
+      const translateX = corner.includes('right') ? -100 : 0;
+      const translateY = corner.includes('bottom') ? -100 : 0;
       els.serialPreview.style.display = 'inline-block';
-      els.serialPreview.dataset.corner = state.text.serial.corner || 'top-left';
+      els.serialPreview.dataset.corner = corner;
+      const opacity = Math.max(0.2, Math.min(1, state.text.serial.opacity ?? 1));
       els.serialPreview.style.fontSize = (exportFont * scale).toFixed(2) + 'px';
       els.serialPreview.style.color = color;
-      const background = state.text.serial.color === 'white' ? 'rgba(15,23,42,0.45)' : 'rgba(255,255,255,0.28)';
-      els.serialPreview.style.background = background;
-      els.serialPreview.style.textAlign = (state.text.serial.corner||'top-left').includes('right') ? 'right' : 'left';
+      els.serialPreview.style.opacity = opacity.toFixed(2);
+      els.serialPreview.style.background = 'transparent';
+      els.serialPreview.style.left = anchorX + 'px';
+      els.serialPreview.style.top = anchorY + 'px';
+      els.serialPreview.style.transform = `translate(${translateX}%, ${translateY}%)`;
+      els.serialPreview.style.textAlign = corner.includes('right') ? 'right' : 'left';
       els.serialTextPreview.textContent = state.text.serial.value;
-      if(state.text.serial.showBarcode){
-        els.serialPreview.classList.add('has-barcode');
-        renderBarcodePreview(state.text.serial.value, color === '#ffffff' ? '#111111' : color);
-      } else {
-        els.serialPreview.classList.remove('has-barcode');
-        if(els.serialBarcodeCanvas){
-          const bctx = els.serialBarcodeCanvas.getContext('2d');
-          bctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
-          els.serialBarcodeCanvas.style.display = 'none';
-        }
-      }
     } else {
       els.serialPreview.style.display = 'none';
-      if(els.serialBarcodeCanvas){
-        const bctx = els.serialBarcodeCanvas.getContext('2d');
-        bctx.clearRect(0,0,els.serialBarcodeCanvas.width, els.serialBarcodeCanvas.height);
-        els.serialBarcodeCanvas.style.display = 'none';
-      }
     }
 
     if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
-      const pos = state.text.hero.position || {x:0.5, y:0.5};
-      const left = frameLeftPx + (pos.x||0.5) * fwPx;
-      const top = frameTopPx + (pos.y||0.5) * fhPx;
-      const scale = (state.format.hPreview/state.format.hExport) * state.previewZoom;
-      const fontPx = (state.text.hero.size || 120) * scale;
-      const spacingPx = (state.text.hero.letterSpacing || 0) * scale;
+      const hero = state.text.hero;
+      const container = els.heroTextPreview;
       const inner = els.heroInnerText;
-      els.heroTextPreview.style.display = 'block';
-      els.heroTextPreview.style.left = left + 'px';
-      els.heroTextPreview.style.top = top + 'px';
-      els.heroTextPreview.dataset.align = state.text.hero.align || 'center';
-      els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
-      els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
-      inner.textContent = state.text.hero.value;
+      container.style.display = 'block';
+      container.dataset.align = hero.align || 'center';
+      container.dataset.valign = hero.vAlign || 'middle';
+      container.dataset.mode = hero.colorMode || 'solid';
+      container.dataset.backdrop = hero.backdrop || 'none';
+      if(inner && inner.textContent !== hero.value){ inner.textContent = hero.value; }
+      const scale = (state.format.hPreview/state.format.hExport) * state.previewZoom;
+      const heroSize = Math.max(HERO_MIN_SIZE, hero.size || HERO_MIN_SIZE);
+      if(heroSize !== hero.size){ hero.size = heroSize; }
+      const fontPx = heroSize * scale;
+      const spacingPx = (Number.isFinite(hero.letterSpacing) ? hero.letterSpacing : 0) * scale;
+      const fontFamily = hero.font || 'SF Pro Text';
       inner.style.fontSize = fontPx.toFixed(2) + 'px';
-      inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
-      inner.style.fontWeight = mapHeroWeight(state.text.hero.weight);
+      inner.style.fontFamily = `'${fontFamily.replace(/'/g, \"\'\")}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
+      inner.style.fontWeight = mapHeroWeight(hero.weight);
       inner.style.letterSpacing = spacingPx.toFixed(2) + 'px';
-      const lh = state.text.hero.lineHeight || '110%';
-      if(typeof lh === 'string' && lh.trim().endsWith('%')){ inner.style.lineHeight = lh.trim(); }
-      else { const num = parseFloat(lh)||110; inner.style.lineHeight = (num/100).toFixed(2); }
-      inner.style.textAlign = state.text.hero.align || 'center';
-      if(state.text.hero.colorMode === 'gradient'){
-        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
-        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
-        const angle = state.text.hero.gradient?.angle || 0;
-        const gradient = `linear-gradient(${angle}deg, ${start}, ${end})`;
-        inner.style.backgroundImage = gradient;
+      const lineFactor = resolveLineHeightFactor(hero.lineHeight);
+      inner.style.lineHeight = lineFactor.toFixed(2);
+      inner.style.textAlign = hero.align || 'center';
+      if(hero.colorMode === 'gradient'){
+        const start = normalizeHex(hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+        const end = normalizeHex(hero.gradient?.end || '#6366f1', '#6366f1');
+        const angle = Number.isFinite(hero.gradient?.angle) ? hero.gradient.angle : parseFloat(hero.gradient?.angle) || 0;
+        inner.style.backgroundImage = `linear-gradient(${angle}deg, ${start}, ${end})`;
         inner.style.webkitBackgroundClip = 'text';
         inner.style.backgroundClip = 'text';
         inner.style.color = 'transparent';
-        els.heroTextPreview.classList.add('no-bg');
+        inner.style.webkitTextFillColor = 'transparent';
       } else {
-        const col = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+        const col = normalizeHex(hero.solid || '#ffffff', '#ffffff');
         inner.style.color = col;
         inner.style.backgroundImage = 'none';
         inner.style.webkitBackgroundClip = 'initial';
         inner.style.backgroundClip = 'initial';
-        els.heroTextPreview.classList.remove('no-bg');
+        inner.style.webkitTextFillColor = col;
+      }
+      container.style.transform = 'translate(-50%, -50%)';
+      const desired = hero.position || {x:0.5, y:0.5};
+      container.style.left = (frameLeftPx + fwPx/2) + 'px';
+      container.style.top = (frameTopPx + fhPx/2) + 'px';
+      const dims = { width: container.offsetWidth || 0, height: container.offsetHeight || 0 };
+      const clamped = clampHeroPosition(desired.x ?? 0.5, desired.y ?? 0.5, dims);
+      if(!hero.position || Math.abs(clamped.x - (hero.position.x ?? 0.5)) > 1e-4 || Math.abs(clamped.y - (hero.position.y ?? 0.5)) > 1e-4){
+        state.text.hero.position = clamped;
+      }
+      const left = frameLeftPx + clamped.x * fwPx;
+      const top = frameTopPx + clamped.y * fhPx;
+      container.style.left = left + 'px';
+      container.style.top = top + 'px';
+      if(els.heroHandles && els.heroHandles.length){
+        const baseLeft = left - (dims.width/2);
+        const baseTop = top - (dims.height/2);
+        const offset = (els.heroHandles[0]?.offsetWidth || 16) / 2;
+        els.heroHandles.forEach(handle=>{
+          const corner = handle.dataset.corner || 'se';
+          let hx = baseLeft;
+          let hy = baseTop;
+          if(corner.includes('e')){ hx += dims.width; }
+          if(corner.includes('s')){ hy += dims.height; }
+          handle.style.display = 'block';
+          handle.style.left = (hx - offset) + 'px';
+          handle.style.top = (hy - offset) + 'px';
+        });
       }
     } else {
       els.heroTextPreview.style.display = 'none';
+      if(els.heroHandles){ els.heroHandles.forEach(handle=>handle.style.display='none'); }
     }
   }
 
@@ -2586,8 +2777,22 @@
     }
   }
 
+  function stepCarousel(delta){
+    if(state.images.length === 0) return;
+    if(state.current < 0){
+      loadImageAt(0);
+      return;
+    }
+    let next = state.current + delta;
+    if(next < 0){ next = state.images.length - 1; }
+    else if(next >= state.images.length){ next = 0; }
+    if(next === state.current) return;
+    serializeCurrent();
+    loadImageAt(next);
+  }
+
   function setBannerMode(mode){
-    const next = BANNER_MODES.includes(mode) ? mode : 'upload';
+    const next = BANNER_MODES.includes(mode) ? mode : 'gradient';
     state.banner.mode = next;
     if(els.bgSourceTabs){
       [...els.bgSourceTabs.querySelectorAll('button')].forEach(btn=>{
@@ -3060,6 +3265,18 @@
     }
   }
 
+  function styleHexInput(field, value, fallback = '#ffffff'){
+    if(!field) return fallback;
+    const normalized = /^#[0-9a-fA-F]{6}$/.test(value||'') ? value.toLowerCase() : fallback.toLowerCase();
+    const r = parseInt(normalized.slice(1,3), 16);
+    const g = parseInt(normalized.slice(3,5), 16);
+    const b = parseInt(normalized.slice(5,7), 16);
+    const luminance = (0.299*r + 0.587*g + 0.114*b) / 255;
+    field.style.setProperty('--hex-color', normalized);
+    field.style.setProperty('--hex-ink', luminance > 0.62 ? '#0f172a' : '#f8fafc');
+    return normalized;
+  }
+
   function renderGradientSwatches(){
     if(!els.gradientColorContainer) return;
     const colors = state.banner.gradient.colors;
@@ -3079,43 +3296,61 @@
       const row = document.createElement('div');
       row.className = 'gradientInputRow';
 
-      const textInput = document.createElement('input');
-      textInput.type = 'text';
-      textInput.value = (color || '').toUpperCase();
-      textInput.placeholder = '#FFFFFF';
-      textInput.maxLength = 7;
-      textInput.dataset.index = idx.toString();
-
-      const colorInput = document.createElement('input');
-      colorInput.type = 'color';
-      colorInput.value = /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#ffffff';
-      colorInput.dataset.index = idx.toString();
+      const field = document.createElement('input');
+      field.type = 'text';
+      const initial = (color || '#FFFFFF').toUpperCase();
+      field.value = initial;
+      field.placeholder = '#FFFFFF';
+      field.maxLength = 7;
+      field.dataset.index = idx.toString();
+      field.className = 'gradientColorField';
+      styleHexInput(field, initial, '#ffffff');
 
       const commitColor = (val)=>{
-        const normalized = /^#[0-9a-fA-F]{6}$/.test(val) ? val : null;
+        const normalized = /^#[0-9A-F]{6}$/.test(val) ? val.toLowerCase() : null;
         if(!normalized) return false;
         state.banner.gradient.colors[idx] = normalized;
-        textInput.value = normalized.toUpperCase();
-        colorInput.value = normalized;
+        const display = normalized.toUpperCase();
+        field.value = display;
+        styleHexInput(field, display, '#ffffff');
         updateGradientPreview();
         return true;
       };
 
-      colorInput.addEventListener('input', ()=>{
-        commitColor(colorInput.value);
-      });
-
-      textInput.addEventListener('change', ()=>{
-        const val = textInput.value.trim().toUpperCase();
-        if(!val.startsWith('#')){ textInput.value = '#' + val.replace(/[^0-9A-F]/gi,'').slice(0,6); }
-        const candidate = textInput.value.toUpperCase();
-        if(!commitColor(candidate)){
-          const current = state.banner.gradient.colors[idx] || '#FFFFFF';
-          textInput.value = current.toUpperCase();
+      field.addEventListener('input', ()=>{
+        let raw = field.value.trim().toUpperCase();
+        if(!raw.startsWith('#')){ raw = '#' + raw.replace(/[^0-9A-F]/g,''); }
+        raw = raw.slice(0,7);
+        field.value = raw;
+        styleHexInput(field, raw, '#ffffff');
+        if(/^#[0-9A-F]{6}$/.test(raw)){
+          state.banner.gradient.colors[idx] = raw.toLowerCase();
+          updateGradientPreview();
         }
       });
 
-      row.append(textInput, colorInput);
+      field.addEventListener('blur', ()=>{
+        const val = field.value.trim().toUpperCase();
+        if(!commitColor(val)){
+          const current = (state.banner.gradient.colors[idx] || '#FFFFFF').toUpperCase();
+          field.value = current;
+          styleHexInput(field, current, '#ffffff');
+        }
+      });
+
+      field.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter'){
+          e.preventDefault();
+          const val = field.value.trim().toUpperCase();
+          if(!commitColor(val)){
+            const current = (state.banner.gradient.colors[idx] || '#FFFFFF').toUpperCase();
+            field.value = current;
+            styleHexInput(field, current, '#ffffff');
+          }
+        }
+      });
+
+      row.append(field);
       swatch.append(header, row);
       els.gradientColorContainer.appendChild(swatch);
     });
@@ -3849,7 +4084,7 @@
     if(!els.toggleLogo2.checked){
       state.frost.logo2={src:null,w:0,h:0,sizeKey:state.frost.logo2.sizeKey||'M', tone: state.frost.logo2.tone||'orig', source:'none', chosen:""}; els.logo2Prev.style.display='none';
     }
-    render(); updateControls();
+    render(); updateControls(); scheduleLogoStateSave();
   });
 
   els.toggleVertLogo.addEventListener('change', ()=>{
@@ -3860,7 +4095,7 @@
       state.vertLogo={enabled:false, src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
       els.vertLogoPrev.style.display='none';
     }
-    render(); updateControls();
+    render(); updateControls(); scheduleLogoStateSave();
   });
   els.toggleSqLogo?.addEventListener('change', ()=>{
     const checked = !!els.toggleSqLogo.checked;
@@ -3870,7 +4105,7 @@
       state.squareLogo = { enabled:false, src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone: state.squareLogo.tone||'orig', source:'none', chosen:"" };
       els.sqLogoPrev.style.display='none';
     }
-    render(); updateControls();
+    render(); updateControls(); scheduleLogoStateSave();
   });
   els.toggleBannerLogo?.addEventListener('change', ()=>{
     const checked = !!els.toggleBannerLogo.checked;
@@ -3880,7 +4115,7 @@
       state.bannerLogo = { enabled:false, src:null,w:0,h:0,tone:state.bannerLogo.tone||'orig', source:'none', chosen:"" };
       els.bannerLogoPrev.style.display='none';
     }
-    render(); updateControls();
+    render(); updateControls(); scheduleLogoStateSave();
   });
   els.toggleSerial?.addEventListener('change', ()=>{
     state.text.serial.enabled = !!els.toggleSerial.checked;
@@ -3904,19 +4139,46 @@
     commitTextState({ propagateSerial: state.text.serial.applyAll });
   });
   els.serialCustomColor?.addEventListener('input', (e)=>{
-    const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
-    if(val !== state.text.serial.custom){
-      state.text.serial.custom = val;
-      commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+    let raw = (e.target.value || '').toUpperCase();
+    raw = raw.replace(/[^0-9A-F#]/g, '');
+    if(!raw.startsWith('#')){ raw = '#' + raw.replace(/#/g,''); }
+    raw = raw.slice(0,7);
+    e.target.value = raw;
+    styleHexInput(e.target, raw, state.text.serial.custom || '#0f172a');
+    if(/^#[0-9A-F]{6}$/.test(raw)){
+      const next = raw.toLowerCase();
+      if(next !== state.text.serial.custom){
+        state.text.serial.custom = next;
+        commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+      } else {
+        render();
+      }
+    }
+  });
+  els.serialCustomColor?.addEventListener('blur', (e)=>{
+    if(!/^#[0-9A-F]{6}$/.test(e.target.value)){
+      const current = (state.text.serial.custom || '#0f172a').toUpperCase();
+      e.target.value = current;
+      styleHexInput(e.target, current, state.text.serial.custom || '#0f172a');
     }
   });
   els.serialCustomPicker?.addEventListener('input', (e)=>{
     const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
     state.text.serial.custom = val;
+    if(els.serialCustomColor){
+      const display = val.toUpperCase();
+      els.serialCustomColor.value = display;
+      styleHexInput(els.serialCustomColor, display, val);
+    }
     commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
   });
-  els.serialBarcodeToggle?.addEventListener('change', ()=>{
-    state.text.serial.showBarcode = !!els.serialBarcodeToggle.checked;
+  els.serialOpacity?.addEventListener('input', (e)=>{
+    let val = parseInt(e.target.value, 10);
+    if(!Number.isFinite(val)){ val = 100; }
+    val = Math.max(20, Math.min(100, val));
+    e.target.value = val.toString();
+    state.text.serial.opacity = val / 100;
+    if(els.serialOpacityVal){ els.serialOpacityVal.textContent = val.toString(); }
     commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
   });
   els.serialApplyAll?.addEventListener('change', ()=>{
@@ -3977,65 +4239,132 @@
     state.text.hero.colorMode = btn.dataset.mode || 'solid';
     commitTextState();
   });
+  els.heroBackdropSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    state.text.hero.backdrop = btn.dataset.backdrop || 'none';
+    commitTextState();
+  });
   els.heroSolidHex?.addEventListener('input', (e)=>{
-    const val = normalizeHex(e.target.value, state.text.hero.solid || '#ffffff');
-    state.text.hero.solid = val;
-    commitTextState({ refreshControls:false });
+    let raw = (e.target.value || '').toUpperCase();
+    raw = raw.replace(/[^0-9A-F#]/g,'');
+    if(!raw.startsWith('#')){ raw = '#' + raw.replace(/#/g,''); }
+    raw = raw.slice(0,7);
+    e.target.value = raw;
+    styleHexInput(e.target, raw, state.text.hero.solid || '#ffffff');
+    if(/^#[0-9A-F]{6}$/.test(raw)){
+      const next = raw.toLowerCase();
+      if(next !== state.text.hero.solid){
+        state.text.hero.solid = next;
+        commitTextState({ refreshControls:false });
+      } else {
+        render();
+      }
+    }
+  });
+  els.heroSolidHex?.addEventListener('blur', (e)=>{
+    const fallback = (state.text.hero.solid || '#ffffff').toUpperCase();
+    if(!/^#[0-9A-F]{6}$/.test(e.target.value)){
+      e.target.value = fallback;
+    }
+    styleHexInput(e.target, e.target.value, state.text.hero.solid || '#ffffff');
   });
   els.heroSolidPicker?.addEventListener('input', (e)=>{
     const val = normalizeHex(e.target.value, state.text.hero.solid || '#ffffff');
     state.text.hero.solid = val;
+    if(els.heroSolidHex){
+      const display = val.toUpperCase();
+      els.heroSolidHex.value = display;
+      styleHexInput(els.heroSolidHex, display, val);
+    }
     commitTextState({ refreshControls:false });
   });
   els.heroGradStart?.addEventListener('input', (e)=>{
-    state.text.hero.gradient.start = normalizeHex(e.target.value, state.text.hero.gradient.start || '#0ea5e9');
-    commitTextState({ refreshControls:false });
-  });
-  els.heroGradEnd?.addEventListener('input', (e)=>{
-    state.text.hero.gradient.end = normalizeHex(e.target.value, state.text.hero.gradient.end || '#6366f1');
-    commitTextState({ refreshControls:false });
-  });
-  els.heroGradAngle?.addEventListener('input', (e)=>{
-    state.text.hero.gradient.angle = parseFloat(e.target.value)||0;
-    commitTextState({ refreshControls:false });
-  });
-  els.saveLogoState?.addEventListener('click', ()=>{
-    const payload = gatherLogoState();
-    try{ localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload)); }catch(err){ console.warn('Failed to store logo state', err); return; }
-    if(els.saveLogoState){
-      els.saveLogoState.classList.remove('feedback-error');
-      els.saveLogoState.classList.add('feedback-success');
-      window.setTimeout(()=> els.saveLogoState.classList.remove('feedback-success'), 1400);
+    let raw = (e.target.value || '').toUpperCase();
+    raw = raw.replace(/[^0-9A-F#]/g,'');
+    if(!raw.startsWith('#')){ raw = '#' + raw.replace(/#/g,''); }
+    raw = raw.slice(0,7);
+    e.target.value = raw;
+    const fallback = state.text.hero.gradient?.start || '#0ea5e9';
+    styleHexInput(e.target, raw, fallback);
+    if(/^#[0-9A-F]{6}$/.test(raw)){
+      state.text.hero.gradient.start = raw.toLowerCase();
+      commitTextState({ refreshControls:false });
     }
   });
-
+  els.heroGradStart?.addEventListener('blur', (e)=>{
+    const current = (state.text.hero.gradient?.start || '#0ea5e9').toUpperCase();
+    if(!/^#[0-9A-F]{6}$/.test(e.target.value)){ e.target.value = current; }
+    styleHexInput(e.target, e.target.value, state.text.hero.gradient?.start || '#0ea5e9');
+  });
+  els.heroGradEnd?.addEventListener('input', (e)=>{
+    let raw = (e.target.value || '').toUpperCase();
+    raw = raw.replace(/[^0-9A-F#]/g,'');
+    if(!raw.startsWith('#')){ raw = '#' + raw.replace(/#/g,''); }
+    raw = raw.slice(0,7);
+    e.target.value = raw;
+    const fallback = state.text.hero.gradient?.end || '#6366f1';
+    styleHexInput(e.target, raw, fallback);
+    if(/^#[0-9A-F]{6}$/.test(raw)){
+      state.text.hero.gradient.end = raw.toLowerCase();
+      commitTextState({ refreshControls:false });
+    }
+  });
+  els.heroGradEnd?.addEventListener('blur', (e)=>{
+    const current = (state.text.hero.gradient?.end || '#6366f1').toUpperCase();
+    if(!/^#[0-9A-F]{6}$/.test(e.target.value)){ e.target.value = current; }
+    styleHexInput(e.target, e.target.value, state.text.hero.gradient?.end || '#6366f1');
+  });
+  els.heroGradAngle?.addEventListener('input', (e)=>{
+    const raw = parseFloat(e.target.value);
+    const angle = Number.isFinite(raw) ? raw : 0;
+    state.text.hero.gradient.angle = angle;
+    commitTextState({ refreshControls:false });
+  });
   let heroDrag = null;
+  let heroDragData = null;
   function updateHeroPositionFromPointer(e){
     if(!frameMetrics.width || !frameMetrics.height) return;
     const stageRect = els.stage.getBoundingClientRect();
-    const x = e.clientX - stageRect.left - frameMetrics.left;
-    const y = e.clientY - stageRect.top - frameMetrics.top;
-    const normX = Math.max(0, Math.min(1, x / frameMetrics.width));
-    const normY = Math.max(0, Math.min(1, y / frameMetrics.height));
-    state.text.hero.position = { x: normX, y: normY };
+    if(!stageRect) return;
+    let localX = e.clientX - stageRect.left;
+    let localY = e.clientY - stageRect.top;
+    if(heroDragData){
+      localX -= heroDragData.offsetX;
+      localY -= heroDragData.offsetY;
+    }
+    const normX = (localX - frameMetrics.left) / frameMetrics.width;
+    const normY = (localY - frameMetrics.top) / frameMetrics.height;
+    const clamped = clampHeroPosition(normX, normY);
+    state.text.hero.position = clamped;
     state.text.hero.vAlign = 'middle';
     render();
   }
-  const endHeroDrag = (e)=>{
-    if(heroDrag === null) return;
+  const endHeroDrag = ()=>{
+    if(heroDrag === null) return false;
     if(els.heroTextPreview){
       try{ els.heroTextPreview.releasePointerCapture(heroDrag); }catch(err){}
       els.heroTextPreview.classList.remove('dragging');
     }
     heroDrag = null;
-    commitTextState({ refreshControls:false });
+    heroDragData = null;
+    return true;
   };
   els.heroTextPreview?.addEventListener('pointerdown', (e)=>{
     if(!state.text.hero.enabled) return;
     if(e.button !== 0) return;
+    if(e.target.closest('.heroInner')) return;
+    const stageRect = els.stage.getBoundingClientRect();
+    if(!stageRect) return;
+    const pos = state.text.hero.position || {x:0.5, y:0.5};
+    const centerX = frameMetrics.left + (pos.x || 0.5) * frameMetrics.width;
+    const centerY = frameMetrics.top + (pos.y || 0.5) * frameMetrics.height;
     heroDrag = e.pointerId;
+    heroDragData = {
+      offsetX: (e.clientX - stageRect.left) - centerX,
+      offsetY: (e.clientY - stageRect.top) - centerY
+    };
     els.heroTextPreview.classList.add('dragging');
-    els.heroTextPreview.setPointerCapture(e.pointerId);
+    try{ els.heroTextPreview.setPointerCapture(e.pointerId); }catch(err){}
     updateHeroPositionFromPointer(e);
     e.preventDefault();
   });
@@ -4043,8 +4372,82 @@
     if(heroDrag === null || e.pointerId !== heroDrag) return;
     updateHeroPositionFromPointer(e);
   });
-  els.heroTextPreview?.addEventListener('pointerup', endHeroDrag);
-  els.heroTextPreview?.addEventListener('pointercancel', endHeroDrag);
+  els.heroTextPreview?.addEventListener('pointerup', (e)=>{
+    if(heroDrag !== null && e.pointerId === heroDrag){
+      if(endHeroDrag()){ commitTextState(); }
+    }
+  });
+  els.heroTextPreview?.addEventListener('pointercancel', ()=>{
+    if(endHeroDrag()){ commitTextState({ refreshControls:false }); }
+  });
+  let heroResize = null;
+  els.heroHandles?.forEach(handle=>{
+    handle.addEventListener('pointerdown', (e)=>{
+      if(!state.text.hero.enabled || !state.text.hero.value) return;
+      if(e.button !== 0) return;
+      if(!frameMetrics.width || !frameMetrics.height) return;
+      const stageRect = els.stage.getBoundingClientRect();
+      if(!stageRect) return;
+      const pos = state.text.hero.position || {x:0.5, y:0.5};
+      const centerX = frameMetrics.left + (pos.x || 0.5) * frameMetrics.width;
+      const centerY = frameMetrics.top + (pos.y || 0.5) * frameMetrics.height;
+      const pointerX = e.clientX - stageRect.left;
+      const pointerY = e.clientY - stageRect.top;
+      const dx = pointerX - centerX;
+      const dy = pointerY - centerY;
+      const startRadius = Math.max(8, Math.hypot(dx, dy));
+      heroResize = {
+        id: e.pointerId,
+        radius: startRadius,
+        size: Math.max(HERO_MIN_SIZE, state.text.hero.size || HERO_MIN_SIZE),
+        centerX,
+        centerY
+      };
+      try{ handle.setPointerCapture(e.pointerId); }catch(err){}
+      e.stopPropagation();
+      e.preventDefault();
+    });
+    handle.addEventListener('pointermove', (e)=>{
+      if(!heroResize || e.pointerId !== heroResize.id) return;
+      const stageRect = els.stage.getBoundingClientRect();
+      if(!stageRect) return;
+      const pointerX = e.clientX - stageRect.left;
+      const pointerY = e.clientY - stageRect.top;
+      const dx = pointerX - heroResize.centerX;
+      const dy = pointerY - heroResize.centerY;
+      const radius = Math.max(8, Math.hypot(dx, dy));
+      const factor = radius / heroResize.radius;
+      const nextSize = Math.max(HERO_MIN_SIZE, heroResize.size * factor);
+      if(Math.abs(nextSize - state.text.hero.size) > 0.5){
+        state.text.hero.size = nextSize;
+        render();
+        if(els.heroSizeInput){ els.heroSizeInput.value = Math.round(nextSize); }
+      }
+    });
+    const finishResize = ()=>{
+      if(!heroResize) return;
+      try{ handle.releasePointerCapture(heroResize.id); }catch(err){}
+      heroResize = null;
+      commitTextState();
+    };
+    handle.addEventListener('pointerup', finishResize);
+    handle.addEventListener('pointercancel', finishResize);
+  });
+  els.heroInnerText?.addEventListener('input', ()=>{
+    const val = (els.heroInnerText.textContent || '').toString();
+    if(val !== state.text.hero.value){
+      state.text.hero.value = val;
+      if(els.heroTextInput && els.heroTextInput.value !== val){ els.heroTextInput.value = val; }
+      commitTextState({ refreshControls:false });
+    }
+  });
+  els.heroInnerText?.addEventListener('blur', ()=>{
+    const val = (els.heroInnerText.textContent || '').toString();
+    if(val !== state.text.hero.value){
+      state.text.hero.value = val;
+      commitTextState();
+    }
+  });
   els.vertSizeSeg.addEventListener('click', (e)=>{
     const btn = e.target.closest('button'); if(!btn) return;
     const v = btn.dataset.v; if(!v) return;
@@ -4062,7 +4465,7 @@
       if(which==='squareLogo') state.squareLogo.sizeKey=key;
       else if(which==='vertLogo') state.vertLogo.sizeKey=key;
       else state.frost[which].sizeKey=key;
-      updateControls(); render();
+      updateControls(); render(); scheduleLogoStateSave();
     });
   }
   function segToneHandler(segEl, which){
@@ -4072,7 +4475,7 @@
       if(which==='squareLogo') state.squareLogo.tone=tone;
       else if(which==='vertLogo') state.vertLogo.tone=tone;
       else state.frost[which].tone=tone;
-      updateControls(); render();
+      updateControls(); render(); scheduleLogoStateSave();
     });
   }
   segSizeHandler(els.logo1Seg,'logo1', SIZE_MAP); segSizeHandler(els.logo2Seg,'logo2', SIZE_MAP);
@@ -4133,31 +4536,31 @@
     else if(which==='bannerLogo'){ if(sourceType==='upload'){ els.bannerLogoGallery?.querySelectorAll('.libItem').forEach(i=>i.classList.remove('active')); } else { els.bannerLogoInput.value=''; } }
   }
   function loadLogo(file, targetImgEl, store, which){
-    if(!file){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; store.enabled=false; render(); updateControls(); return; }
+    if(!file){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; store.enabled=false; render(); updateControls(); scheduleLogoStateSave(); return; }
     const r = new FileReader();
     r.onload = ()=>{
       const src = r.result; targetImgEl.onload = ()=>{
         targetImgEl.style.display='block';
-        const temp = new Image(); temp.onload = ()=>{ store.src = src; store.w = temp.width; store.h = temp.height; store.source='upload'; store.chosen=""; store.enabled = true; exclusivePick(which,'upload'); render(); updateControls(); };
+        const temp = new Image(); temp.onload = ()=>{ store.src = src; store.w = temp.width; store.h = temp.height; store.source='upload'; store.chosen=""; store.enabled = true; exclusivePick(which,'upload'); render(); updateControls(); scheduleLogoStateSave(); };
         temp.src = src;
       }; targetImgEl.src = src;
     };
     r.readAsDataURL(file);
   }
   async function loadLogoURL(url, targetImgEl, store, which, label){
-    if(!url){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; store.enabled=false; render(); updateControls(); return; }
+    if(!url){ targetImgEl.style.display='none'; store.src=null; store.w=store.h=0; store.source='none'; store.chosen=""; store.enabled=false; render(); updateControls(); scheduleLogoStateSave(); return; }
     try{
       const im = await loadImageCORS(url);
-      store.src = url; store.w = im.width; store.h = im.height; store.source='partner'; store.chosen = (label||''); store.enabled = true; targetImgEl.src = url; targetImgEl.style.display='block'; exclusivePick(which,'partner'); render(); updateControls();
+      store.src = url; store.w = im.width; store.h = im.height; store.source='partner'; store.chosen = (label||''); store.enabled = true; targetImgEl.src = url; targetImgEl.style.display='block'; exclusivePick(which,'partner'); render(); updateControls(); scheduleLogoStateSave();
     }catch(err){ console.error('Failed to load partner logo', err); alert('This logo host blocks export due to CORS. Please upload the logo file instead.'); }
   }
   els.logo1Input.addEventListener('change', ()=> loadLogo(els.logo1Input.files?.[0], els.logo1Prev, state.frost.logo1, 'logo1'));
   els.logo2Input.addEventListener('change', ()=> loadLogo(els.logo2Input.files?.[0], els.logo2Prev, state.frost.logo2, 'logo2'));
-  els.removeLogo2.addEventListener('click', ()=>{ state.frost.logo2 = {src:null,w:0,h:0,sizeKey:state.frost.logo2.sizeKey||'M', tone: state.frost.logo2.tone||'orig', source:'none', chosen:""}; els.logo2Prev.style.display='none'; render(); updateControls(); });
+  els.removeLogo2.addEventListener('click', ()=>{ state.frost.logo2 = {src:null,w:0,h:0,sizeKey:state.frost.logo2.sizeKey||'M', tone: state.frost.logo2.tone||'orig', source:'none', chosen:""}; els.logo2Prev.style.display='none'; render(); updateControls(); scheduleLogoStateSave(); });
   els.sqLogoInput?.addEventListener('change', ()=> loadLogo(els.sqLogoInput.files?.[0], els.sqLogoPrev, state.squareLogo, 'squareLogo'));
-  els.removeSqLogo?.addEventListener('click', ()=>{ state.squareLogo = {src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.sqLogoPrev.style.display='none'; render(); updateControls(); });
+  els.removeSqLogo?.addEventListener('click', ()=>{ state.squareLogo = {src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.sqLogoPrev.style.display='none'; render(); updateControls(); scheduleLogoStateSave(); });
   els.vertLogoInput?.addEventListener('change', ()=> loadLogo(els.vertLogoInput.files?.[0], els.vertLogoPrev, state.vertLogo, 'vertLogo'));
-  els.removeVertLogo?.addEventListener('click', ()=>{ state.vertLogo = {src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.vertLogoPrev.style.display='none'; render(); updateControls(); });
+  els.removeVertLogo?.addEventListener('click', ()=>{ state.vertLogo = {src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone:'orig', source:'none', chosen:""}; els.vertLogoPrev.style.display='none'; render(); updateControls(); scheduleLogoStateSave(); });
 
   function buildAllGalleries(){
     buildGallery(els.logo1Gallery, p=>loadLogoURL(p.url, els.logo1Prev, state.frost.logo1, 'logo1', p.name), ()=>state.frost.logo1);
@@ -4180,14 +4583,56 @@
   els.partnerSettingsTriggers?.forEach(btn=>btn.addEventListener('click', openPartnerSettings));
   els.partnerSettingsAdd?.addEventListener('click', ()=>{
     const row = createPartnerRow();
-    els.partnerSettingsList?.appendChild(row);
+    if(els.partnerSettingsList){
+      const first = els.partnerSettingsList.firstChild;
+      if(first){ els.partnerSettingsList.insertBefore(row, first); }
+      else { els.partnerSettingsList.appendChild(row); }
+    }
     row.querySelector('input')?.focus();
   });
+  els.partnerSettingsSort?.addEventListener('click', ()=>{
+    if(!els.partnerSettingsList) return;
+    const rows = Array.from(els.partnerSettingsList.querySelectorAll('.partnerRow'));
+    if(!rows.length) return;
+    rows.forEach(row=>row.classList.remove('invalid'));
+    const data = rows.map(row=>{
+      const nameInput = row.querySelector('.partnerName');
+      const urlInput = row.querySelector('.partnerUrl');
+      const name = (nameInput?.value || '').trim();
+      const url = (urlInput?.value || '').trim();
+      return { row, name, url };
+    });
+    const invalid = data.find(item=>!item.name || !item.url);
+    if(invalid){
+      invalid.row.classList.add('invalid');
+      invalid.row.querySelector('.partnerName')?.focus();
+      return;
+    }
+    data.sort((a,b)=> a.name.localeCompare(b.name, undefined, { sensitivity:'base' }));
+    data.forEach(({row})=> els.partnerSettingsList.appendChild(row));
+    partnerLibrary = data.map(({name,url})=>({ name, url }));
+    persistPartnerLibrary();
+    buildAllGalleries();
+  });
+
   const closeSettings = ()=>closePartnerSettings();
   els.partnerSettingsCancel?.addEventListener('click', closeSettings);
   els.partnerSettingsClose?.addEventListener('click', closeSettings);
   els.partnerSettingsModal?.addEventListener('click', (e)=>{ if(e.target === els.partnerSettingsModal){ closePartnerSettings(); } });
   window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && els.partnerSettingsModal?.classList.contains('show')){ closePartnerSettings(); } });
+  window.addEventListener('keydown', (e)=>{
+    if(e.defaultPrevented) return;
+    if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    if(e.altKey || e.metaKey || e.ctrlKey) return;
+    const active = document.activeElement;
+    if(active){
+      const tag = active.tagName;
+      if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || active.isContentEditable){ return; }
+    }
+    if(state.images.length === 0) return;
+    e.preventDefault();
+    stepCarousel(e.key === 'ArrowLeft' ? -1 : 1);
+  });
   els.partnerSettingsSave?.addEventListener('click', ()=>{
     if(!els.partnerSettingsList) return;
     const rows = Array.from(els.partnerSettingsList.querySelectorAll('.partnerRow'));
@@ -4375,11 +4820,15 @@
     if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
       const im = await loadImageCORS(state.bannerLogo.src);
       if(im){
-        const targetH = 30;
-        const baseW = im.naturalWidth || im.width; const baseH = im.naturalHeight || im.height;
-        const scale = targetH / baseH; const w = Math.max(1, Math.round(baseW * scale));
+        const gapX = Math.round(state.format.wExport * BANNER_GAP_X_RATIO);
+        const gapY = Math.round(state.format.hExport * BANNER_GAP_Y_RATIO);
+        const baseH = state.format.hExport * BANNER_LOGO_HEIGHT_RATIO * 1.5;
+        const targetH = Math.max(1, Math.round(baseH));
+        const baseW = im.naturalWidth || im.width; const baseHSource = im.naturalHeight || im.height;
+        const ratio = baseHSource ? baseW / baseHSource : 1;
+        const targetW = Math.max(1, Math.round(targetH * ratio));
         const source = toneImageSource(im, state.bannerLogo.tone);
-        ctx.save(); ctx.drawImage(source, 15, 15, w, targetH); ctx.restore();
+        ctx.save(); ctx.drawImage(source, gapX, gapY, targetW, targetH); ctx.restore();
       }
     }
 
@@ -4388,71 +4837,33 @@
       const color = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
       const fontSize = Math.max(18, Math.round(state.format.hExport * 0.025));
       const fontFamily = `'SF Pro Text', 'Inter', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
+      const corner = state.text.serial.corner || 'top-left';
+      const marginX = state.format.wExport * SERIAL_MARGIN_RATIO_X;
+      const marginY = state.format.hExport * SERIAL_MARGIN_RATIO_Y;
+      const posX = corner.includes('right') ? fw - marginX : marginX;
+      const posY = corner.includes('bottom') ? fh - marginY : marginY;
       ctx.save();
       ctx.font = `600 ${fontSize}px ${fontFamily}`;
-      ctx.textBaseline = 'top';
-      ctx.textAlign = 'left';
-      const metrics = ctx.measureText(state.text.serial.value);
-      const textHeightRaw = (metrics.actualBoundingBoxAscent || 0) + (metrics.actualBoundingBoxDescent || 0);
-      const textHeight = textHeightRaw > 0 ? textHeightRaw : fontSize * 1.2;
-      const textWidth = metrics.width || (state.text.serial.value.length * fontSize * 0.6);
-      const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
-      const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
-      const marginX = 24 * scaleX;
-      const marginY = 24 * scaleY;
-      const padX = 10 * scaleX;
-      const padY = 6 * scaleY;
-      const gap = state.text.serial.showBarcode ? 6 * scaleY : 0;
-      const radius = 8 * ((scaleX + scaleY) / 2);
-      const corner = state.text.serial.corner || 'top-left';
-      const barcodeCanvas = state.text.serial.showBarcode ? createBarcodeCanvas(state.text.serial.value, color === '#ffffff' ? '#111111' : color) : null;
-      const barcodeWidth = barcodeCanvas ? barcodeCanvas.width * scaleX : 0;
-      const barcodeHeight = barcodeCanvas ? barcodeCanvas.height * scaleY : 0;
-      const boxWidth = Math.max(textWidth + padX * 2, barcodeWidth + padX * 2);
-      const contentHeight = textHeight + (barcodeCanvas ? gap + barcodeHeight : 0);
-      const boxHeight = contentHeight + padY * 2;
-      let x = corner.includes('right') ? fw - marginX - boxWidth : marginX;
-      let y = corner.includes('bottom') ? fh - marginY - boxHeight : marginY;
-      const background = state.text.serial.color === 'white' ? 'rgba(15,23,42,0.45)' : 'rgba(255,255,255,0.28)';
-      drawRoundedRect(ctx, x, y, boxWidth, boxHeight, radius);
-      ctx.fillStyle = background;
-      ctx.fill();
+      ctx.textBaseline = corner.includes('bottom') ? 'bottom' : 'top';
+      ctx.textAlign = corner.includes('right') ? 'right' : 'left';
       ctx.fillStyle = color;
-      const textAlign = corner.includes('right') ? 'right' : 'left';
-      const textX = textAlign === 'right' ? x + boxWidth - padX : x + padX;
-      const textY = y + padY;
-      ctx.textAlign = textAlign;
-      ctx.fillText(state.text.serial.value, textX, textY);
-      if(barcodeCanvas){
-        const bX = textAlign === 'right' ? x + boxWidth - padX - barcodeWidth : x + padX;
-        const bY = textY + textHeight + gap;
-        ctx.drawImage(barcodeCanvas, bX, bY, barcodeWidth, barcodeHeight);
-      }
+      ctx.globalAlpha = Math.max(0.2, Math.min(1, state.text.serial.opacity ?? 1));
+      ctx.fillText(state.text.serial.value, posX, posY);
       ctx.restore();
     }
 
     if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
       const lines = state.text.hero.value.split(/\n/);
-      const fontSize = Math.max(12, state.text.hero.size || 120);
+      const fontSize = Math.max(HERO_MIN_SIZE, state.text.hero.size || 120);
       const letterSpacing = Number.isFinite(state.text.hero.letterSpacing) ? state.text.hero.letterSpacing : 0;
       const fontFamily = state.text.hero.font || 'SF Pro Text';
       const weight = mapHeroWeight(state.text.hero.weight);
-      const fontStack = `'${fontFamily.replace(/'/g, "\\'")}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
-      const rawLine = state.text.hero.lineHeight ?? '110%';
-      let lineFactor = 1.1;
-      if(typeof rawLine === 'string'){
-        const trimmed = rawLine.trim();
-        if(trimmed){
-          const val = parseFloat(trimmed);
-          if(!Number.isNaN(val)){ lineFactor = val/100; }
-        }
-      } else if(typeof rawLine === 'number' && !Number.isNaN(rawLine)){ lineFactor = rawLine/100; }
-      if(!Number.isFinite(lineFactor) || lineFactor <= 0){ lineFactor = 1.1; }
+      const fontStack = `'${fontFamily.replace(/'/g, \"\'\")}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Neue Frutigier World'`;
+      const lineFactor = resolveLineHeightFactor(state.text.hero.lineHeight);
       const lineHeightPx = fontSize * lineFactor;
       ctx.save();
       ctx.font = `${weight} ${fontSize}px ${fontStack}`;
       ctx.textBaseline = 'top';
-      ctx.textAlign = 'left';
       const measureLine = (text)=>{
         if(!text) return 0;
         if(!letterSpacing){ return ctx.measureText(text).width; }
@@ -4466,7 +4877,7 @@
       };
       const lineWidths = lines.map(measureLine);
       const maxWidth = lineWidths.length ? Math.max(...lineWidths) : 0;
-      const totalHeight = lines.length ? (fontSize + (lines.length - 1) * lineHeightPx) : 0;
+      const totalHeight = lines.length ? (fontSize + (lines.length - 1) * lineHeightPx) : fontSize;
       const pos = state.text.hero.position || {x:0.5, y:0.5};
       const anchorX = (pos.x || 0.5) * fw;
       const anchorY = (pos.y || 0.5) * fh;
@@ -4476,52 +4887,72 @@
       const baseTop = vAlign === 'middle' ? anchorY - totalHeight/2 : vAlign === 'bottom' ? anchorY - totalHeight : anchorY;
       const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
       const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
-      const padScale = Math.sqrt(scaleX * scaleY);
-      const padX = 16 * padScale;
-      const padY = 12 * padScale;
-      const radius = 16 * padScale;
-      if(state.text.hero.colorMode !== 'gradient'){
+      const padX = 20 * scaleX;
+      const padY = 16 * scaleY;
+      const radius = 18 * ((scaleX + scaleY) / 2);
+      const backdrop = state.text.hero.backdrop || 'none';
+      if(backdrop !== 'none' && maxWidth && totalHeight){
+        const rectX = baseLeft - padX;
+        const rectY = baseTop - padY;
+        const rectW = maxWidth + padX * 2;
+        const rectH = totalHeight + padY * 2;
+        const r = Math.max(0, Math.min(radius, Math.min(rectW, rectH) / 2));
         ctx.save();
-        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
-        ctx.fillStyle = 'rgba(15,23,42,0.08)';
+        ctx.beginPath();
+        ctx.moveTo(rectX + r, rectY);
+        ctx.lineTo(rectX + rectW - r, rectY);
+        ctx.quadraticCurveTo(rectX + rectW, rectY, rectX + rectW, rectY + r);
+        ctx.lineTo(rectX + rectW, rectY + rectH - r);
+        ctx.quadraticCurveTo(rectX + rectW, rectY + rectH, rectX + rectW - r, rectY + rectH);
+        ctx.lineTo(rectX + r, rectY + rectH);
+        ctx.quadraticCurveTo(rectX, rectY + rectH, rectX, rectY + rectH - r);
+        ctx.lineTo(rectX, rectY + r);
+        ctx.quadraticCurveTo(rectX, rectY, rectX + r, rectY);
+        ctx.closePath();
+        ctx.fillStyle = backdrop === 'dark' ? 'rgba(15,23,42,0.78)' : 'rgba(255,255,255,0.82)';
         ctx.fill();
         ctx.restore();
       }
       let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
-      if(state.text.hero.colorMode === 'gradient'){
-        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
-        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
-        const angle = state.text.hero.gradient?.angle || 0;
+      if(state.text.hero.colorMode === 'gradient' && maxWidth && totalHeight){
+        const startCol = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+        const endCol = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
+        const angle = Number.isFinite(state.text.hero.gradient?.angle) ? state.text.hero.gradient.angle : parseFloat(state.text.hero.gradient?.angle) || 0;
         const angleRad = angle * Math.PI / 180;
-        const dirX = Math.cos(angleRad);
-        const dirY = Math.sin(angleRad);
         const halfW = maxWidth / 2;
         const halfH = totalHeight / 2;
+        const centerX = baseLeft + halfW;
+        const centerY = baseTop + halfH;
+        const dirX = Math.cos(angleRad);
+        const dirY = Math.sin(angleRad);
         const len = Math.abs(halfW * dirX) + Math.abs(halfH * dirY);
-        const grad = ctx.createLinearGradient(baseLeft + halfW - dirX * len, baseTop + halfH - dirY * len, baseLeft + halfW + dirX * len, baseTop + halfH + dirY * len);
-        grad.addColorStop(0, start);
-        grad.addColorStop(1, end);
+        const grad = ctx.createLinearGradient(centerX - dirX * len, centerY - dirY * len, centerX + dirX * len, centerY + dirY * len);
+        grad.addColorStop(0, startCol);
+        grad.addColorStop(1, endCol);
         fillStyle = grad;
       }
       ctx.fillStyle = fillStyle;
       const drawLine = (text, startX, startY)=>{
         if(!letterSpacing){ ctx.fillText(text, startX, startY); return; }
-        let x = startX;
+        let cursor = startX;
         for(let i=0;i<text.length;i++){
           const ch = text[i];
-          ctx.fillText(ch, x, startY);
-          x += ctx.measureText(ch).width + letterSpacing;
+          ctx.fillText(ch, cursor, startY);
+          cursor += ctx.measureText(ch).width + letterSpacing;
         }
       };
       let y = baseTop;
       for(let i=0;i<lines.length;i++){
         const line = lines[i];
         const width = lineWidths[i];
-        const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
+        let lineLeft = baseLeft;
+        if(align === 'center'){ lineLeft = baseLeft + (maxWidth - width)/2; }
+        else if(align === 'right'){ lineLeft = baseLeft + (maxWidth - width); }
         drawLine(line, lineLeft, y);
         y += lineHeightPx;
       }
       ctx.restore();
+    }
     }
 
     // JPEG size tuning
