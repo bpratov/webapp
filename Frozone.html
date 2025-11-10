@@ -179,9 +179,7 @@
   .heroText[data-mode="gradient"]{background:rgba(15,23,42,0.14)}
   .heroText[data-mode="solid"]{background:rgba(15,23,42,0.08)}
   .heroText.no-bg{background:transparent}
-  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
-  .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
-  .logoSaveRow{display:flex; justify-content:flex-end; margin-top:12px}
+  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:0; left:0; height:36px; width:auto; object-fit:contain; z-index:45}
   .textSettingsWrap{display:grid; gap:18px}
   .textToggleRow{display:flex; align-items:center; justify-content:space-between; gap:12px}
   .textPanel{border:1px solid var(--border); border-radius:16px; padding:16px; background:var(--chip-bg); box-shadow:0 6px 18px rgba(15,23,42,0.06); display:grid; gap:14px}
@@ -213,6 +211,13 @@
   .bannerGuidelines{font-size:12px; color:var(--muted); line-height:1.6; margin-top:6px}
   .bg3dNote{margin-top:10px; font-size:12px; color:var(--muted); border-radius:12px; background:rgba(99,102,241,0.08); padding:12px; border:1px solid rgba(99,102,241,0.18)}
   .serialOptions{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .bgGuidanceCard{display:flex; gap:14px; align-items:flex-start; padding:16px 20px; border-radius:16px; border:1px solid var(--border); background:var(--chip-bg); box-shadow:0 10px 26px rgba(15,23,42,0.1); margin-bottom:18px}
+  .bgGuidanceIcon{width:40px; height:40px; border-radius:14px; background:linear-gradient(135deg,rgba(14,165,233,0.18),rgba(99,102,241,0.12)); display:grid; place-items:center; color:var(--brand2); box-shadow:inset 0 1px 0 rgba(255,255,255,0.4), 0 8px 18px rgba(14,165,233,0.18)}
+  .bgGuidanceIcon .btn-ico{stroke:currentColor; width:22px; height:22px}
+  .bgGuidanceContent{display:grid; gap:8px}
+  .bgGuidanceContent p{margin:0; font-size:13px; color:var(--muted); line-height:1.5}
+  .bgGuidanceContent p.bgGuidanceHighlight{font-weight:600; color:var(--ink)}
+  .bgGuidanceContent p.bgGuidanceTip{font-size:12px; background:rgba(99,102,241,0.08); border:1px dashed rgba(99,102,241,0.24); border-radius:12px; padding:10px 12px; color:var(--muted)}
 
   .playWrap{position:absolute; display:none; pointer-events:none}
   .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(6.2037px); background:rgba(0,0,0,0.40); box-shadow:inset 0 1px 2px rgba(255,255,255,0.2), 0 10px 30px rgba(2,6,23,0.25);}
@@ -305,9 +310,10 @@
   .gradientSwatchHeader{display:flex; align-items:center; justify-content:space-between; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
   .gradientSwatchValue{font-size:12px; font-family:'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace; letter-spacing:0.04em; color:var(--muted)}
   .gradientSwatch input[type="color"]{appearance:none; border:none; width:100%; height:36px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
-  .gradientInputRow{display:flex; gap:10px; align-items:center; margin-top:6px}
-  .gradientInputRow input[type="text"]{width:110px; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
-  .gradientInputRow input[type="color"]{width:46px; height:36px; border-radius:10px; padding:0; border:1px solid var(--border); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
+  .gradientInputRow{display:flex; margin-top:6px}
+  .gradientColorField{flex:1; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; font-weight:600; font-size:13px; letter-spacing:0.08em; padding:10px 12px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 6px 16px rgba(15,23,42,0.08); text-transform:uppercase; transition:box-shadow .2s ease, transform .2s ease, border-color .2s ease}
+  .gradientColorField:focus{outline:3px solid rgba(99,102,241,0.25); outline-offset:2px; box-shadow:0 10px 24px rgba(99,102,241,0.22); transform:translateY(-1px)}
+  .gradientColorField.invalid{border-color:#fda4af; box-shadow:0 8px 22px rgba(248,113,113,0.18)}
   .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
@@ -343,6 +349,11 @@
   .logoControlGroup{display:flex; align-items:center; gap:10px; flex-wrap:nowrap}
   .logoControlLabel{font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
   .logoControls .seg{flex:0 0 auto}
+  .logoControlGroup.toneGroup{flex-direction:column; align-items:flex-start; gap:8px}
+  .logoControlGroup.toneGroup .seg{margin-top:0}
+  .tone-hint{font-size:11px; color:var(--muted); opacity:0.85; letter-spacing:0.01em}
+  .toneStack{display:flex; flex-direction:column; gap:6px}
+  .logoNotice{font-size:12px; color:#f97316; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.25); padding:10px 12px; border-radius:12px; margin-top:6px; box-shadow:0 8px 18px rgba(249,115,22,0.12)}
 
   .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; padding:24px; background:rgba(15,23,42,0.45); backdrop-filter:blur(18px); z-index:90}
   .modal.show{display:flex}
@@ -363,6 +374,10 @@
   .partnerRowRemove{align-self:flex-start; border-radius:12px; border-color:rgba(248,113,113,0.35); background:rgba(248,113,113,0.12); color:#b91c1c; box-shadow:0 6px 16px rgba(248,113,113,0.18)}
   .partnerRowRemove:hover{background:rgba(248,113,113,0.18)}
   .partnerRowRemove .btn-ico{stroke:#b91c1c}
+  .partnerNotice{display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border-radius:14px; border:1px solid rgba(59,130,246,0.2); background:linear-gradient(135deg,rgba(59,130,246,0.12),rgba(99,102,241,0.08)); box-shadow:0 8px 22px rgba(59,130,246,0.12); color:var(--muted); font-size:13px; line-height:1.5}
+  .partnerNotice .btn-ico{stroke:rgba(59,130,246,0.9); width:20px; height:20px}
+  .partnerNoticeTitle{font-weight:600; color:var(--ink); margin-bottom:4px; letter-spacing:0.02em}
+  .partnerNotice p{margin:0; color:var(--muted)}
 
   .tone-note{font-size:12px; color:var(--muted); margin-top:6px}
 
@@ -469,6 +484,13 @@
   :root[data-theme="dark"] .seg{background:linear-gradient(135deg,rgba(30,64,175,0.55),rgba(17,94,205,0.28)); border:1px solid rgba(96,165,250,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
+  :root[data-theme="dark"] .partnerNotice{background:linear-gradient(135deg,rgba(30,64,175,0.45),rgba(17,94,205,0.32)); border-color:rgba(96,165,250,0.42); box-shadow:0 16px 32px rgba(2,6,23,0.6); color:rgba(224,231,255,0.78)}
+  :root[data-theme="dark"] .partnerNoticeTitle{color:#e2e8f0}
+  :root[data-theme="dark"] .logoNotice{background:rgba(249,115,22,0.16); border-color:rgba(249,115,22,0.32); color:#fdba74; box-shadow:0 10px 22px rgba(249,115,22,0.22)}
+  :root[data-theme="dark"] .bgGuidanceCard{background:rgba(15,23,42,0.72); border-color:rgba(71,85,105,0.65); box-shadow:0 22px 44px rgba(1,5,19,0.65)}
+  :root[data-theme="dark"] .bgGuidanceIcon{background:linear-gradient(135deg,rgba(30,64,175,0.45),rgba(17,94,205,0.36)); color:rgba(165,180,252,0.92)}
+  :root[data-theme="dark"] .bgGuidanceContent p.bgGuidanceHighlight{color:#e2e8f0}
+  :root[data-theme="dark"] .bgGuidanceContent p.bgGuidanceTip{background:rgba(30,64,175,0.32); border-color:rgba(96,165,250,0.35); color:rgba(224,231,255,0.75)}
   :root[data-theme="dark"] .dropOverlay{background:rgba(14,165,233,0.22); color:#e0f2fe}
   :root[data-theme="dark"] .veil{box-shadow:inset 0 2px 6px rgba(2,6,23,0.5)}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
@@ -611,16 +633,26 @@
 
         <div class="section" id="bgSourceSection" aria-hidden="true">
           <div class="section-title"><span class="badge">2b</span> Background source</div>
-          <div class="bannerGuidelines" id="bgSourceGuidelines" style="display:none">Use simple/subtle graphics to ensure that the header and logo remain visible and unobstructed.<br>Partners or live operations teams will supply the background image following their brand guidelines.</div>
+          <div class="bgGuidanceCard" id="bgSourceGuidance">
+            <div class="bgGuidanceIcon" aria-hidden="true">
+              <i data-lucide="sparkles" class="btn-ico"></i>
+            </div>
+            <div class="bgGuidanceContent">
+              <p>Use simple, subtle graphics so headers and logos stay legible across every export.</p>
+              <p>Partners or Live Operations teams will deliver approved art — keep adjustments minimal.</p>
+              <p class="bgGuidanceHighlight">All background sources here are export-safe and compatible with canvas rendering.</p>
+              <p class="bgGuidanceTip" id="banner3DNote" style="display:none">3D banner tips: keep depth elements subtle, align hero objects within the 1120×360 safe area, and reserve room for copy or partner logos along the top edge.</p>
+            </div>
+          </div>
           <div class="stack">
             <div class="seg" id="bgSourceTabs" role="tablist" aria-label="Background source">
-              <button type="button" data-mode="upload" class="active" aria-selected="true" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock">Upload</button>
-              <button type="button" data-mode="link" aria-selected="false" id="bgTabLink" role="tab" aria-controls="bgLinkBlock" tabindex="-1">Paste link</button>
+              <button type="button" data-mode="gradient" class="active" aria-selected="true" id="bgTabGradient" role="tab" aria-controls="gradientBlock">Gradient</button>
               <button type="button" data-mode="unsplash" aria-selected="false" id="bgTabUnsplash" role="tab" aria-controls="unsplashBlock" tabindex="-1">Browse Stock</button>
-              <button type="button" data-mode="gradient" aria-selected="false" id="bgTabGradient" role="tab" aria-controls="gradientBlock" tabindex="-1">Gradient</button>
+              <button type="button" data-mode="upload" aria-selected="false" id="bgTabUpload" role="tab" aria-controls="bgUploadBlock" tabindex="-1">Upload</button>
+              <button type="button" data-mode="link" aria-selected="false" id="bgTabLink" role="tab" aria-controls="bgLinkBlock" tabindex="-1">Paste link</button>
             </div>
 
-            <div class="bg-source-block active" data-mode="upload" id="bgUploadBlock" role="tabpanel" aria-labelledby="bgTabUpload" aria-hidden="false">
+            <div class="bg-source-block" data-mode="upload" id="bgUploadBlock" role="tabpanel" aria-labelledby="bgTabUpload" hidden aria-hidden="true">
               <label class="btn ghost uploadAction">
                 <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
                 <span class="btn-text">Upload image</span>
@@ -694,7 +726,7 @@
               </div>
             </div>
 
-            <div class="bg-source-block" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" hidden aria-hidden="true">
+            <div class="bg-source-block active" data-mode="gradient" id="gradientBlock" role="tabpanel" aria-labelledby="bgTabGradient" aria-hidden="false">
               <div class="gradientLayout">
                 <div class="gradientPreview" id="gradientPreview" role="img" aria-label="Gradient preview">
                   <div class="gradientPreviewOverlay"></div>
@@ -734,8 +766,6 @@
               </div>
             </div>
 
-            <div class="bgSourceNote">All background sources are export-safe and compatible with canvas rendering.</div>
-            <div class="bg3dNote" id="banner3DNote" style="display:none">3D banner tips: keep depth elements subtle, align hero objects within the 1120×360 safe area, and reserve space for copy or partner logos along the top edge.</div>
           </div>
         </div>
 
@@ -833,17 +863,16 @@
                     <button data-size="L">L</button>
                   </div>
                 </div>
-                <div class="logoControlGroup">
+                <div class="logoControlGroup toneGroup">
                   <span class="logoControlLabel">Tone</span>
                   <div class="seg" id="logo1ToneSeg">
                     <button data-tone="orig" class="active">Original</button>
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
+                  <span class="tone-hint">Check partner brand rules before changing logo colors.</span>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo1Search" type="search" placeholder="Search partners…" />
@@ -881,17 +910,16 @@
                     <button data-size="L">L</button>
                   </div>
                 </div>
-                <div class="logoControlGroup">
+                <div class="logoControlGroup toneGroup">
                   <span class="logoControlLabel">Tone</span>
                   <div class="seg" id="logo2ToneSeg">
                     <button data-tone="orig" class="active">Original</button>
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
+                  <span class="tone-hint">Check partner brand rules before changing logo colors.</span>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="logo2Search" type="search" placeholder="Search partners…" />
@@ -906,14 +934,6 @@
 
           
         </div>
-
-        <div class="logoSaveRow">
-          <button class="btn primary" type="button" id="saveLogoState">
-            <i data-lucide="save" class="btn-ico" aria-hidden="true"></i>
-            <span class="btn-text">Save logos</span>
-          </button>
-        </div>
-
         <!-- Step 4b: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none">
           <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
@@ -933,14 +953,15 @@
                   <button data-size="M">M</button>
                   <button data-size="L">L</button>
                 </div>
-                <div class="seg" id="sqLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+                <div class="toneStack">
+                  <div class="seg" id="sqLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="tone-hint">Check partner brand rules before changing logo colors.</span>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
@@ -967,14 +988,16 @@
                   <span class="btn-text">Banner logo</span>
                   <input id="bannerLogoInput" type="file" accept="image/*" style="display:none"/>
                 </label>
-                <div class="seg" id="bannerLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+                <div class="toneStack">
+                  <div class="seg" id="bannerLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="tone-hint">Check partner brand rules before changing logo colors.</span>
                 </div>
               </div>
-              <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-              <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+              <div class="logoNotice">Add the final logo via Daryl before shipping — this control is for preview and spacing checks.</div>
               <div class="libWrap">
                 <div class="libHeader">
                   <input id="bannerLogoSearch" type="search" placeholder="Search partners…" />
@@ -1006,15 +1029,17 @@
                 <button data-size="M">M</button>
                 <button data-size="L">L</button>
               </div>
-              <div class="seg" id="vertLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
+              <div class="toneStack">
+                <div class="seg" id="vertLogoToneSeg">
+                  <button data-tone="orig" class="active">Original</button>
+                  <button data-tone="white">White</button>
+                  <button data-tone="black">Black</button>
+                </div>
+                <span class="tone-hint">Check partner brand rules before changing logo colors.</span>
               </div>
               <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
-            <div class="logoWarning">Check partner brand rules before changing logo colors or adding the link from the Internet.</div>
-            <div class="logoWarning">Logo should be added separately via Daryl, use it here for preview and visibility check.</div>
+            <div class="logoNotice">Add the final logo via Daryl before shipping — this control is for preview and spacing checks.</div>
             <div class="libWrap">
               <div class="libHeader">
                 <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
@@ -1279,6 +1304,13 @@
       </div>
       <div class="modalBody">
         <div class="modalIntro">Curate partner logos, rename entries, or paste fresh image URLs. Everything saves directly into this file so you can ship updates without leaving Frozone.</div>
+        <div class="partnerNotice">
+          <i data-lucide="shield-alert" class="btn-ico" aria-hidden="true"></i>
+          <div>
+            <div class="partnerNoticeTitle">Check brand guidelines</div>
+            <p>Before adding a logo from a link, confirm the asset follows the partner&apos;s brand rules and is cleared for export.</p>
+          </div>
+        </div>
         <div id="partnerSettingsList" class="partnerRows"></div>
       </div>
       <div class="modalFooter">
@@ -1287,10 +1319,14 @@
             <i data-lucide="plus" class="btn-ico" aria-hidden="true"></i>
             <span class="btn-text">Add new logo</span>
           </button>
+          <button class="btn ghost" type="button" id="partnerSettingsSort">
+            <i data-lucide="sort-asc" class="btn-ico" aria-hidden="true"></i>
+            <span class="btn-text">Sort A→Z</span>
+          </button>
         </div>
         <div class="modalFooterEnd">
           <button class="btn ghost" type="button" id="partnerSettingsCancel">Cancel</button>
-          <button class="btn primary" type="button" id="partnerSettingsSave">Save changes</button>
+          <button class="btn primary" type="button" id="partnerSettingsSave">Save logos</button>
         </div>
       </div>
     </div>
@@ -1400,7 +1436,7 @@
     frame: document.getElementById('frame'),
     stageHint: document.getElementById('stageHint'),
     bgSourceSection: document.getElementById('bgSourceSection'),
-    bgSourceGuidelines: document.getElementById('bgSourceGuidelines'),
+    bgSourceGuidance: document.getElementById('bgSourceGuidance'),
     banner3DNote: document.getElementById('banner3DNote'),
     bgSourceTabs: document.getElementById('bgSourceTabs'),
     bgSourceBlocks: Array.from(document.querySelectorAll('.bg-source-block')),
@@ -1512,7 +1548,6 @@
     heroTextPreview: document.getElementById('heroTextPreview'),
     heroInnerText: document.getElementById('heroInnerText'),
 
-    saveLogoState: document.getElementById('saveLogoState'),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
@@ -1526,6 +1561,7 @@
     partnerSettingsModal: document.getElementById('partnerSettingsModal'),
     partnerSettingsList: document.getElementById('partnerSettingsList'),
     partnerSettingsAdd: document.getElementById('partnerSettingsAdd'),
+    partnerSettingsSort: document.getElementById('partnerSettingsSort'),
     partnerSettingsSave: document.getElementById('partnerSettingsSave'),
     partnerSettingsCancel: document.getElementById('partnerSettingsCancel'),
     partnerSettingsClose: document.querySelector('.partnerSettingsClose'),
@@ -1541,7 +1577,8 @@
 
   const SIZE_MAP = { S:23, M:30, L:53 };
   const SIZE_MAP_SQ = { S:35, M:55, L:75 };
-  const BANNER_MODES = ['upload','link','unsplash','gradient'];
+  const BANNER_MODES = ['gradient','unsplash','upload','link'];
+  const BANNER_LOGO_BASE = { width:365, height:120, gap:15, logo:30, scale:1.5 };
   const UNSPLASH_COLOR_PARAM_MAP = {
     pink: 'magenta'
   };
@@ -1830,7 +1867,7 @@
     text: defaultTextState(),
 
     banner: {
-      mode:'upload',
+      mode:'gradient',
       uploadName:'',
       link:'',
       unsplash:{ colors:[], tone:'all', style:'', results:[], page:1, totalPages:1 },
@@ -1953,7 +1990,7 @@
     if(key==='VERT'){ state.format = { ...FORMATS.VERT }; applyVerticalVariant(state.vertVariant); }
     else if(FORMATS[key]){ state.format = { ...FORMATS[key] }; }
     updateFormatChipActive();
-    if(key==='BANNER'){ setBannerMode(state.banner.mode || 'upload'); }
+    if(key==='BANNER'){ setBannerMode(state.banner.mode || BANNER_MODES[0]); }
     if(state.imageSrc){
       computeCover();
       render();
@@ -1996,7 +2033,7 @@
       els.bgSourceSection.style.display = isBanner ? 'block' : 'none';
       els.bgSourceSection.setAttribute('aria-hidden', isBanner ? 'false' : 'true');
     }
-    if(els.bgSourceGuidelines){ els.bgSourceGuidelines.style.display = isBanner ? 'block' : 'none'; }
+    if(els.bgSourceGuidance){ els.bgSourceGuidance.style.display = isBanner ? 'block' : 'none'; }
     if(els.banner3DNote){ els.banner3DNote.style.display = isBanner ? 'block' : 'none'; }
     if(isBanner){
       updateBannerUploadChip();
@@ -2308,10 +2345,12 @@
     if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
       const scaleX = (state.format.wPreview/state.format.wExport) * state.previewZoom;
       const scaleY = (state.format.hPreview/state.format.hExport) * state.previewZoom;
-      const targetH = 30 * scaleY;
+      const exportGapX = state.format.wExport * (BANNER_LOGO_BASE.gap / BANNER_LOGO_BASE.width);
+      const exportGapY = state.format.hExport * (BANNER_LOGO_BASE.gap / BANNER_LOGO_BASE.height);
+      const targetH = (BANNER_LOGO_BASE.logo * BANNER_LOGO_BASE.scale) * scaleY;
       const ratio = state.bannerLogo.w && state.bannerLogo.h ? state.bannerLogo.w/state.bannerLogo.h : 1;
-      const left = frameLeftPx + 15 * scaleX;
-      const top = frameTopPx + 15 * scaleY;
+      const left = frameLeftPx + exportGapX * scaleX;
+      const top = frameTopPx + exportGapY * scaleY;
       els.bannerLogoPrev.style.display='block';
       els.bannerLogoPrev.style.height = targetH + 'px';
       els.bannerLogoPrev.style.left = left + 'px';
@@ -2587,7 +2626,7 @@
   }
 
   function setBannerMode(mode){
-    const next = BANNER_MODES.includes(mode) ? mode : 'upload';
+    const next = BANNER_MODES.includes(mode) ? mode : BANNER_MODES[0];
     state.banner.mode = next;
     if(els.bgSourceTabs){
       [...els.bgSourceTabs.querySelectorAll('button')].forEach(btn=>{
@@ -3081,41 +3120,43 @@
 
       const textInput = document.createElement('input');
       textInput.type = 'text';
-      textInput.value = (color || '').toUpperCase();
+      textInput.className = 'gradientColorField';
+      textInput.value = (color || '#ffffff').toUpperCase();
       textInput.placeholder = '#FFFFFF';
       textInput.maxLength = 7;
       textInput.dataset.index = idx.toString();
 
-      const colorInput = document.createElement('input');
-      colorInput.type = 'color';
-      colorInput.value = /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#ffffff';
-      colorInput.dataset.index = idx.toString();
-
       const commitColor = (val)=>{
-        const normalized = /^#[0-9a-fA-F]{6}$/.test(val) ? val : null;
-        if(!normalized) return false;
+        const normalized = normalizeHex(val, '');
+        if(!/^#[0-9a-fA-F]{6}$/.test(normalized)){ return false; }
         state.banner.gradient.colors[idx] = normalized;
         textInput.value = normalized.toUpperCase();
-        colorInput.value = normalized;
+        textInput.classList.remove('invalid');
+        applyGradientFieldAppearance(textInput, normalized);
         updateGradientPreview();
         return true;
       };
 
-      colorInput.addEventListener('input', ()=>{
-        commitColor(colorInput.value);
+      applyGradientFieldAppearance(textInput, color || '#ffffff');
+
+      textInput.addEventListener('input', ()=>{
+        const normalized = normalizeHex(textInput.value, '');
+        const valid = /^#[0-9a-fA-F]{6}$/.test(normalized);
+        textInput.classList.toggle('invalid', !valid && textInput.value.trim().length > 0);
+        const previewColor = valid ? normalized : state.banner.gradient.colors[idx];
+        applyGradientFieldAppearance(textInput, previewColor || '#ffffff');
       });
 
-      textInput.addEventListener('change', ()=>{
-        const val = textInput.value.trim().toUpperCase();
-        if(!val.startsWith('#')){ textInput.value = '#' + val.replace(/[^0-9A-F]/gi,'').slice(0,6); }
-        const candidate = textInput.value.toUpperCase();
-        if(!commitColor(candidate)){
-          const current = state.banner.gradient.colors[idx] || '#FFFFFF';
+      textInput.addEventListener('blur', ()=>{
+        if(!commitColor(textInput.value)){
+          const current = state.banner.gradient.colors[idx] || '#ffffff';
           textInput.value = current.toUpperCase();
+          textInput.classList.remove('invalid');
+          applyGradientFieldAppearance(textInput, current);
         }
       });
 
-      row.append(textInput, colorInput);
+      row.append(textInput);
       swatch.append(header, row);
       els.gradientColorContainer.appendChild(swatch);
     });
@@ -3156,6 +3197,33 @@
 
   function rgbToHex(r,g,b){
     return `#${hexComponentToHex(r)}${hexComponentToHex(g)}${hexComponentToHex(b)}`.toUpperCase();
+  }
+
+  function hexToRgb(hex){
+    const clean = normalizeHex(hex, '#ffffff');
+    return {
+      r: parseInt(clean.slice(1,3),16),
+      g: parseInt(clean.slice(3,5),16),
+      b: parseInt(clean.slice(5,7),16),
+      value: clean
+    };
+  }
+
+  function luminanceFromHex(hex){
+    const { r, g, b } = hexToRgb(hex);
+    const [rr, gg, bb] = [r,g,b].map(v=>{
+      const c = v/255;
+      return c <= 0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4);
+    });
+    return 0.2126*rr + 0.7152*gg + 0.0722*bb;
+  }
+
+  function applyGradientFieldAppearance(input, hex){
+    const { value } = hexToRgb(hex);
+    const lum = luminanceFromHex(value);
+    input.style.background = value;
+    input.style.borderColor = value;
+    input.style.color = lum > 0.55 ? '#0f172a' : '#f8fafc';
   }
 
   function rgbToHsl(r, g, b){
@@ -3441,6 +3509,59 @@
     row.append(preview, fields, removeBtn);
     refreshIcons();
     return row;
+  }
+
+  function collectPartnerEntries(){
+    if(!els.partnerSettingsList) return { rows:[], entries:[], hasError:false };
+    const rows = Array.from(els.partnerSettingsList.querySelectorAll('.partnerRow'));
+    const entries = [];
+    let hasError = false;
+    rows.forEach(row=>{
+      row.classList.remove('invalid');
+      const nameInput = row.querySelector('.partnerName');
+      const urlInput = row.querySelector('.partnerUrl');
+      const name = (nameInput?.value || '').trim();
+      const url = (urlInput?.value || '').trim();
+      if(!name || !url){
+        row.classList.add('invalid');
+        if(!hasError){ nameInput?.focus(); }
+        hasError = true;
+        return;
+      }
+      entries.push({ name, url });
+    });
+    return { rows, entries, hasError };
+  }
+
+  function flashButtonFeedback(btn){
+    if(!btn) return;
+    btn.classList.remove('feedback-error');
+    btn.classList.add('feedback-success');
+    window.setTimeout(()=> btn.classList.remove('feedback-success'), 1400);
+  }
+
+  function showButtonError(btn){
+    if(!btn) return;
+    btn.classList.remove('feedback-success');
+    btn.classList.add('feedback-error');
+    window.setTimeout(()=> btn.classList.remove('feedback-error'), 1600);
+  }
+
+  function commitPartnerLibrary({ closeModal = true, flashButton = true } = {}){
+    const { entries, hasError } = collectPartnerEntries();
+    if(hasError){
+      if(flashButton){ showButtonError(els.partnerSettingsSave); }
+      return false;
+    }
+    partnerLibrary = entries;
+    persistPartnerLibrary();
+    buildAllGalleries();
+    const payload = gatherLogoState();
+    try{ localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload)); }
+    catch(err){ console.warn('Failed to store logo state', err); }
+    if(flashButton){ flashButtonFeedback(els.partnerSettingsSave); }
+    if(closeModal){ closePartnerSettings(); }
+    return true;
   }
 
   function renderPartnerSettings(){
@@ -3999,16 +4120,6 @@
     state.text.hero.gradient.angle = parseFloat(e.target.value)||0;
     commitTextState({ refreshControls:false });
   });
-  els.saveLogoState?.addEventListener('click', ()=>{
-    const payload = gatherLogoState();
-    try{ localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload)); }catch(err){ console.warn('Failed to store logo state', err); return; }
-    if(els.saveLogoState){
-      els.saveLogoState.classList.remove('feedback-error');
-      els.saveLogoState.classList.add('feedback-success');
-      window.setTimeout(()=> els.saveLogoState.classList.remove('feedback-success'), 1400);
-    }
-  });
-
   let heroDrag = null;
   function updateHeroPositionFromPointer(e){
     if(!frameMetrics.width || !frameMetrics.height) return;
@@ -4180,7 +4291,9 @@
   els.partnerSettingsTriggers?.forEach(btn=>btn.addEventListener('click', openPartnerSettings));
   els.partnerSettingsAdd?.addEventListener('click', ()=>{
     const row = createPartnerRow();
-    els.partnerSettingsList?.appendChild(row);
+    if(els.partnerSettingsList){
+      els.partnerSettingsList.prepend(row);
+    }
     row.querySelector('input')?.focus();
   });
   const closeSettings = ()=>closePartnerSettings();
@@ -4189,28 +4302,20 @@
   els.partnerSettingsModal?.addEventListener('click', (e)=>{ if(e.target === els.partnerSettingsModal){ closePartnerSettings(); } });
   window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && els.partnerSettingsModal?.classList.contains('show')){ closePartnerSettings(); } });
   els.partnerSettingsSave?.addEventListener('click', ()=>{
-    if(!els.partnerSettingsList) return;
-    const rows = Array.from(els.partnerSettingsList.querySelectorAll('.partnerRow'));
-    const next = [];
-    let hasError = false;
-    rows.forEach(row=>{
-      const nameInput = row.querySelector('.partnerName');
-      const urlInput = row.querySelector('.partnerUrl');
-      const name = (nameInput?.value || '').trim();
-      const url = (urlInput?.value || '').trim();
-      if(!name || !url){
-        row.classList.add('invalid');
-        if(!hasError){ nameInput?.focus(); }
-        hasError = true;
-        return;
-      }
-      next.push({ name, url });
-    });
-    if(hasError){ return; }
-    partnerLibrary = next;
+    commitPartnerLibrary({ closeModal:true, flashButton:true });
+  });
+
+  els.partnerSettingsSort?.addEventListener('click', ()=>{
+    const { entries, hasError } = collectPartnerEntries();
+    if(hasError){ showButtonError(els.partnerSettingsSort); return; }
+    entries.sort((a,b)=> a.name.localeCompare(b.name, undefined, { sensitivity:'base' }));
+    partnerLibrary = entries;
     persistPartnerLibrary();
     buildAllGalleries();
-    closePartnerSettings();
+    renderPartnerSettings();
+    const focusTarget = els.partnerSettingsList?.querySelector('input');
+    focusTarget?.focus();
+    flashButtonFeedback(els.partnerSettingsSort);
   });
 
   // ---------- Export helpers ----------
