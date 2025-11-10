@@ -181,7 +181,6 @@
   .heroText.no-bg{background:transparent}
   .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
   .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
-  .logoSaveRow{display:flex; justify-content:flex-end; margin-top:12px}
   .textSettingsWrap{display:grid; gap:18px}
   .textToggleRow{display:flex; align-items:center; justify-content:space-between; gap:12px}
   .textPanel{border:1px solid var(--border); border-radius:16px; padding:16px; background:var(--chip-bg); box-shadow:0 6px 18px rgba(15,23,42,0.06); display:grid; gap:14px}
@@ -300,14 +299,15 @@
   .gradientUpload:hover{background:rgba(148,163,184,0.12); color:var(--ink); border-color:rgba(14,165,233,0.4)}
   .gradientUpload input{display:none}
   .gradientUpload i{width:18px; height:18px; stroke:currentColor}
-  .gradientColorGrid{display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(130px,1fr))}
-  .gradientSwatch{display:grid; gap:8px; padding:12px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 8px 20px rgba(15,23,42,0.08)}
+  .gradientColorGrid{display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(150px,1fr))}
+  .gradientSwatch{display:grid; gap:8px; padding:12px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 8px 20px rgba(15,23,42,0.08); transition:border-color .2s ease, box-shadow .2s ease}
   .gradientSwatchHeader{display:flex; align-items:center; justify-content:space-between; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
   .gradientSwatchValue{font-size:12px; font-family:'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace; letter-spacing:0.04em; color:var(--muted)}
-  .gradientSwatch input[type="color"]{appearance:none; border:none; width:100%; height:36px; border-radius:12px; padding:0; background:none; box-shadow:inset 0 0 0 1px var(--border)}
-  .gradientInputRow{display:flex; gap:10px; align-items:center; margin-top:6px}
-  .gradientInputRow input[type="text"]{width:110px; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
-  .gradientInputRow input[type="color"]{width:46px; height:36px; border-radius:10px; padding:0; border:1px solid var(--border); box-shadow:0 4px 12px rgba(15,23,42,0.06)}
+  .gradientInputRow{position:relative; display:flex; align-items:center; margin-top:6px}
+  .gradientHexInput, .gradientInputRow input[type="text"]{width:100%; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:10px 12px; border:1px solid var(--border); border-radius:12px; background:var(--swatch-bg,var(--stageInner)); color:var(--swatch-ink,var(--ink)); border-color:var(--swatch-border,var(--border)); box-shadow:0 6px 16px rgba(15,23,42,0.08); letter-spacing:0.08em; text-transform:uppercase; transition:border-color .18s ease, box-shadow .18s ease, color .18s ease, background .18s ease}
+  .gradientInputRow input[type="text"]:focus{outline:none; border-color:rgba(14,165,233,0.55); box-shadow:0 0 0 2px rgba(14,165,233,0.35)}
+  .gradientInputRow input[type="text"].invalid{border-color:rgba(248,113,113,0.65); box-shadow:0 0 0 1px rgba(248,113,113,0.38)}
+  .gradientHiddenPicker{position:absolute; width:1px; height:1px; opacity:0; pointer-events:none}
   .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
@@ -903,15 +903,6 @@
               </div>
             </div>
           </div>
-
-          
-        </div>
-
-        <div class="logoSaveRow">
-          <button class="btn primary" type="button" id="saveLogoState">
-            <i data-lucide="save" class="btn-ico" aria-hidden="true"></i>
-            <span class="btn-text">Save logos</span>
-          </button>
         </div>
 
         <!-- Step 4b: Square logo -->
@@ -1287,10 +1278,14 @@
             <i data-lucide="plus" class="btn-ico" aria-hidden="true"></i>
             <span class="btn-text">Add new logo</span>
           </button>
+          <button class="btn ghost" type="button" id="partnerSettingsSort">
+            <i data-lucide="arrow-up-a-z" class="btn-ico" aria-hidden="true"></i>
+            <span class="btn-text">Sort A–Z</span>
+          </button>
         </div>
         <div class="modalFooterEnd">
           <button class="btn ghost" type="button" id="partnerSettingsCancel">Cancel</button>
-          <button class="btn primary" type="button" id="partnerSettingsSave">Save changes</button>
+          <button class="btn primary" type="button" id="partnerSettingsSave">Save logos</button>
         </div>
       </div>
     </div>
@@ -1302,34 +1297,242 @@
 
   <script type="application/json" id="partnerData">
 [
-  {"name":"Amazon","url":"https://i.imghippo.com/files/KHpN4511hII.png"},
-  {"name":"Babylist","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Babylist_Logo_02.png"},
-  {"name":"Babies “R” Us","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Babies_%22R%22_Us_logo.svg?width=1000"},
-  {"name":"Bayer Bepanthen","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Bayer_Logo.svg?width=1000"},
-  {"name":"C&A","url":"https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg"},
-  {"name":"Doctolib","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Doctolib_Logo.svg?width=1000"},
-  {"name":"El Corte Inglés","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Corte_Ingl%C3%A9s.svg?width=1000"},
-  {"name":"Fisher-Price","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Fisher-Price_logo.svg?width=1000"},
-  {"name":"Groupe Mutuel","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Gm_logo_hor_rvb_bicol.png"},
-  {"name":"GSK","url":"https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png"},
-  {"name":"H&M","url":"https://commons.wikimedia.org/wiki/Special:FilePath/H%26M-Logo.svg?width=1000"},
-  {"name":"HiPP","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png"},
-  {"name":"Kruidvat","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Kruidvat-New.png"},
-  {"name":"LEGO","url":"https://commons.wikimedia.org/wiki/Special:FilePath/LEGO_logo.svg?width=1000"},
-  {"name":"Lemonade","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Logo_of_Lemonade%2C_Inc.svg?width=1000"},
-  {"name":"Livi","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Kry_logo.svg?width=800"},
-  {"name":"Mattel","url":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png"},
-  {"name":"Monoprix","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Monoprix_logo_2013.png"},
-  {"name":"NAIF","url":"https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png"},
-  {"name":"Nuna","url":"https://i.imghippo.com/files/sbJA8488Sbo.png"},
-  {"name":"Petite Amelie","url":"https://i.imghippo.com/files/KpIL9265gYA.png"},
-  {"name":"Pfizer","url":"https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg"},
-  {"name":"Philips","url":"https://cdn.worldvectorlogo.com/logos/philips-6.svg"},
-  {"name":"Sanofi","url":"https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png"},
-  {"name":"Target","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Target_Logo.svg?width=1000"},
-  {"name":"Versuni","url":"https://i.imghippo.com/files/tWvR4051Aws.png"},
-  {"name":"Walmart","url":"https://commons.wikimedia.org/wiki/Special:FilePath/Walmart_Logo.png"},
-  {"name":"Zocdoc","url":"https://commons.wikimedia.org/wiki/Special:FilePath/ZocDoc_logo.png"}
+  {
+    "name": "Abbott Laboratories",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Abbott_Laboratories_logo.svg"
+  },
+  {
+    "name": "Adidas",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg"
+  },
+  {
+    "name": "Altibbi",
+    "url": "https://upload.wikimedia.org/wikipedia/en/e/ed/Altibbi_Logo.png"
+  },
+  {
+    "name": "Amazon",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1280px-Amazon_logo.svg.png"
+  },
+  {
+    "name": "Amazon Baby Registry",
+    "url": "https://m.media-amazon.com/images/G/01/baby/registry/aui/babylogo_home_300x85._CB479575786_.png"
+  },
+  {
+    "name": "Aptamil",
+    "url": "https://static.wikia.nocookie.net/logopedia/images/8/87/Aptamil-logo.png/revision/latest?cb=20180603095511"
+  },
+  {
+    "name": "Arkansas",
+    "url": "https://i.postimg.cc/fysfGjx6/ARKANSAS.png"
+  },
+  {
+    "name": "Assurance Maladie",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/ASSURANCE_MALADIE.svg/1280px-ASSURANCE_MALADIE.svg.png"
+  },
+  {
+    "name": "Babies \"R\" Us",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Logo_Babies_R_Us.svg"
+  },
+  {
+    "name": "Babylist",
+    "url": "https://help.babylist.com/hc/theming_assets/01HZPNJYG50AQZ1T64NGX5YCHS"
+  },
+  {
+    "name": "Bayer Bepanthen",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Logo_Bayer.svg/2048px-Logo_Bayer.svg.png"
+  },
+  {
+    "name": "Bol",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Logo_of_Bol_%282025%29.svg/2560px-Logo_of_Bol_%282025%29.svg.png"
+  },
+  {
+    "name": "C&A",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/af/C%26A_logo.svg"
+  },
+  {
+    "name": "Danone Dairy",
+    "url": "https://upload.wikimedia.org/wikipedia/en/a/a3/Danone_dairy_logo.svg"
+  },
+  {
+    "name": "Doctolib",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Doctolib_Logo.svg/2560px-Doctolib_Logo.svg.png"
+  },
+  {
+    "name": "El Corte Inglés",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Logo_Corte_Ingl%C3%A9s.svg/1200px-Logo_Corte_Ingl%C3%A9s.svg.png"
+  },
+  {
+    "name": "EMC",
+    "url": "https://assets.minted.com/image/upload/f_auto,q_auto/Minted_Onsite_Assets/2024/LP/BK/20BK0139OLP_0810_EMC_LandingPage_Update_EMClogo_OP.png"
+  },
+  {
+    "name": "Enfamil",
+    "url": "https://static.wikia.nocookie.net/logopedia/images/7/71/Enfamil.png/revision/latest?cb=20221010133352"
+  },
+  {
+    "name": "Erasmus MC",
+    "url": "https://iconape.com/wp-content/png_logo_vector/erasmus-mc-logo.png"
+  },
+  {
+    "name": "Fisher-Price",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Fisher-Price_2019.svg/2560px-Fisher-Price_2019.svg.png"
+  },
+  {
+    "name": "GAP",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/GAP_Logo.svg"
+  },
+  {
+    "name": "Gerber",
+    "url": "https://upload.wikimedia.org/wikipedia/en/f/fb/Gerber_company_logo.png"
+  },
+  {
+    "name": "Good",
+    "url": "https://cdn.prod.website-files.com/6557391911618b28bc0bf8b4/65df3bcf1c551db1c104ec9a_Logo%20Good.png"
+  },
+  {
+    "name": "Groupe Mutuel",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Gm_logo_hor_rvb_bicol.png"
+  },
+  {
+    "name": "GSK",
+    "url": "https://upload.wikimedia.org/wikipedia/en/thumb/3/32/GSK_logo_2022.svg/2560px-GSK_logo_2022.svg.png"
+  },
+  {
+    "name": "H&M",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/H%26M-Logo.svg/2560px-H%26M-Logo.svg.png"
+  },
+  {
+    "name": "HelloFresh",
+    "url": "https://cdn.freebiesupply.com/logos/large/2x/hellofresh-logo.png"
+  },
+  {
+    "name": "HelloFresh (alt)",
+    "url": "https://upload.wikimedia.org/wikipedia/en/2/2d/HelloFreshlogo.png"
+  },
+  {
+    "name": "HiPP",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/HIPP-Logo.svg/2560px-HIPP-Logo.svg.png"
+  },
+  {
+    "name": "Huggies",
+    "url": "https://static.wikia.nocookie.net/logopedia/images/e/ef/Huggies-logo.png/revision/latest?cb=20200216191353"
+  },
+  {
+    "name": "Johnson & Johnson",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Johnson_and_Johnson_Logo.svg/1200px-Johnson_and_Johnson_Logo.svg.png"
+  },
+  {
+    "name": "Kruidvat",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Kruidvat_logo.svg/2560px-Kruidvat_logo.svg.png"
+  },
+  {
+    "name": "LEGO",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/LEGO_logo.svg/2048px-LEGO_logo.svg.png"
+  },
+  {
+    "name": "Lemonade",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Logo_of_Lemonade%2C_Inc.svg/1200px-Logo_of_Lemonade%2C_Inc.svg.png"
+  },
+  {
+    "name": "Loir-et-Cher",
+    "url": "https://upload.wikimedia.org/wikipedia/fr/thumb/a/a9/Logo_Loir_Cher_2015.svg/1556px-Logo_Loir_Cher_2015.svg.png"
+  },
+  {
+    "name": "Lululemon Athletica",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Lululemon_Athletica_logo.svg/1200px-Lululemon_Athletica_logo.svg.png"
+  },
+  {
+    "name": "Materna",
+    "url": "https://materna.familynes.ec/sites/default/files/2025-05/materna-pink.svg"
+  },
+  {
+    "name": "Mattel",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mattel_logo.svg/2042px-Mattel_logo.svg.png"
+  },
+  {
+    "name": "Mead Johnson",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Mead_Johnson_logo.svg/1200px-Mead_Johnson_logo.svg.png"
+  },
+  {
+    "name": "Michigan",
+    "url": "https://i.postimg.cc/D0hP9dr3/MICHIGAN.png"
+  },
+  {
+    "name": "Miele",
+    "url": "https://1000logos.net/wp-content/uploads/2017/12/Miele-logo.png"
+  },
+  {
+    "name": "Miele (box)",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf0BfRzHIk1y4ORk1E4XjcaddTO83Mt6AMtg&s"
+  },
+  {
+    "name": "Monoprix",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Monoprix_logo.svg/1200px-Monoprix_logo.svg.png"
+  },
+  {
+    "name": "NAIF",
+    "url": "https://cdn.prod.website-files.com/63f3461a49b46cad26cf1154/641da613cdf2a7c88bec93dc_naif-logo.png"
+  },
+  {
+    "name": "Nestlé",
+    "url": "https://companieslogo.com/img/orig/NESN.SW_BIG-55a6f2f9.png?t=1720244493"
+  },
+  {
+    "name": "New York",
+    "url": "https://i.postimg.cc/D0hP9drk/image-779.png"
+  },
+  {
+    "name": "Nutricia",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Nutricia_company_logo.svg/2560px-Nutricia_company_logo.svg.png"
+  },
+  {
+    "name": "Nuna",
+    "url": "https://i.imghippo.com/files/sbJA8488Sbo.png"
+  },
+  {
+    "name": "Pampers",
+    "url": "https://upload.wikimedia.org/wikipedia/de/thumb/8/82/Pampers-Logo.svg/1280px-Pampers-Logo.svg.png"
+  },
+  {
+    "name": "Petite Amelie",
+    "url": "https://i.imghippo.com/files/KpIL9265gYA.png"
+  },
+  {
+    "name": "Pfizer",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Pfizer_%282021%29.svg"
+  },
+  {
+    "name": "Philips",
+    "url": "https://cdn.worldvectorlogo.com/logos/philips-6.svg"
+  },
+  {
+    "name": "Philips Avent",
+    "url": "https://i.postimg.cc/L8tdkVHH/PHILIPS-AVENT-4.png"
+  },
+  {
+    "name": "Sanofi",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Logo_Sanofi_%282022%29.png"
+  },
+  {
+    "name": "Target",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Target_old_logo.svg/640px-Target_old_logo.svg.png"
+  },
+  {
+    "name": "Veba",
+    "url": "https://vebababy.com/cdn/shop/files/Veba_Logo_Blue_1790x.png?v=1678545554"
+  },
+  {
+    "name": "Versuni",
+    "url": "https://i.imghippo.com/files/tWvR4051Aws.png"
+  },
+  {
+    "name": "Walmart",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Walmart_logo_%282025%29.svg"
+  },
+  {
+    "name": "Zocdoc",
+    "url": "https://www.freelogovectors.net/wp-content/uploads/2019/02/zocdoc-logo.png"
+  }
 ]
   </script>
 
@@ -1512,8 +1715,6 @@
     heroTextPreview: document.getElementById('heroTextPreview'),
     heroInnerText: document.getElementById('heroInnerText'),
 
-    saveLogoState: document.getElementById('saveLogoState'),
-
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
 
     carousel: document.getElementById('imageCarousel'), carouselEmpty: document.getElementById('carouselEmpty'),
@@ -1526,6 +1727,7 @@
     partnerSettingsModal: document.getElementById('partnerSettingsModal'),
     partnerSettingsList: document.getElementById('partnerSettingsList'),
     partnerSettingsAdd: document.getElementById('partnerSettingsAdd'),
+    partnerSettingsSort: document.getElementById('partnerSettingsSort'),
     partnerSettingsSave: document.getElementById('partnerSettingsSave'),
     partnerSettingsCancel: document.getElementById('partnerSettingsCancel'),
     partnerSettingsClose: document.querySelector('.partnerSettingsClose'),
@@ -1719,6 +1921,17 @@
       vertLogo: serializeLogoStore(state.vertLogo),
       bannerLogo: serializeLogoStore(state.bannerLogo)
     };
+  }
+
+  function persistLogoState(){
+    const payload = gatherLogoState();
+    try{
+      localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload));
+      return true;
+    }catch(err){
+      console.warn('Failed to store logo state', err);
+      return false;
+    }
   }
 
   async function applyLogoSnapshot(snapshot, targetEl, store, which){
@@ -3081,41 +3294,74 @@
 
       const textInput = document.createElement('input');
       textInput.type = 'text';
-      textInput.value = (color || '').toUpperCase();
+      const initialColor = /^#[0-9a-fA-F]{6}$/.test(color) ? color.toUpperCase() : '#FFFFFF';
+      textInput.value = initialColor;
       textInput.placeholder = '#FFFFFF';
+      if(initialColor !== (color || '').toUpperCase()){
+        state.banner.gradient.colors[idx] = initialColor;
+      }
       textInput.maxLength = 7;
       textInput.dataset.index = idx.toString();
+      textInput.title = 'Type a hex value or double-click to open the color picker';
 
-      const colorInput = document.createElement('input');
-      colorInput.type = 'color';
-      colorInput.value = /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#ffffff';
-      colorInput.dataset.index = idx.toString();
+      const hiddenPicker = document.createElement('input');
+      hiddenPicker.type = 'color';
+      hiddenPicker.value = initialColor;
+      hiddenPicker.tabIndex = -1;
+      hiddenPicker.className = 'gradientHiddenPicker';
+      hiddenPicker.setAttribute('aria-hidden','true');
+
+      const applySwatchStyle = (hex)=>{
+        if(!/^#[0-9a-fA-F]{6}$/.test(hex)){ return; }
+        const { r, g, b } = hexToRgb(hex);
+        const luminance = (0.299*r + 0.587*g + 0.114*b) / 255;
+        textInput.style.setProperty('--swatch-bg', hex);
+        textInput.style.setProperty('--swatch-ink', luminance > 0.62 ? '#0f172a' : '#f8fafc');
+        textInput.style.setProperty('--swatch-border', luminance > 0.62 ? 'rgba(15,23,42,0.18)' : 'rgba(255,255,255,0.65)');
+      };
 
       const commitColor = (val)=>{
-        const normalized = /^#[0-9a-fA-F]{6}$/.test(val) ? val : null;
+        const normalized = /^#[0-9a-fA-F]{6}$/.test(val) ? val.toUpperCase() : null;
         if(!normalized) return false;
         state.banner.gradient.colors[idx] = normalized;
-        textInput.value = normalized.toUpperCase();
-        colorInput.value = normalized;
+        textInput.value = normalized;
+        hiddenPicker.value = normalized;
+        textInput.classList.remove('invalid');
+        applySwatchStyle(normalized);
         updateGradientPreview();
         return true;
       };
 
-      colorInput.addEventListener('input', ()=>{
-        commitColor(colorInput.value);
+      textInput.addEventListener('input', ()=>{
+        const raw = textInput.value.replace(/[^0-9a-fA-F]/g,'');
+        const normalized = ('#' + raw).slice(0,7).toUpperCase();
+        textInput.value = normalized;
+        if(/^#[0-9A-F]{6}$/.test(normalized)){ applySwatchStyle(normalized); }
       });
 
-      textInput.addEventListener('change', ()=>{
-        const val = textInput.value.trim().toUpperCase();
-        if(!val.startsWith('#')){ textInput.value = '#' + val.replace(/[^0-9A-F]/gi,'').slice(0,6); }
-        const candidate = textInput.value.toUpperCase();
+      const finalizeInput = ()=>{
+        const candidate = textInput.value.trim().toUpperCase();
         if(!commitColor(candidate)){
+          textInput.classList.add('invalid');
           const current = state.banner.gradient.colors[idx] || '#FFFFFF';
           textInput.value = current.toUpperCase();
+          applySwatchStyle(current);
         }
+      };
+
+      textInput.addEventListener('blur', finalizeInput);
+      textInput.addEventListener('keydown', (event)=>{
+        if(event.key === 'Enter' && !event.shiftKey){ event.preventDefault(); finalizeInput(); }
+        if(event.key === 'Enter' && event.altKey){ event.preventDefault(); hiddenPicker.click(); }
+      });
+      textInput.addEventListener('dblclick', ()=> hiddenPicker.click());
+
+      hiddenPicker.addEventListener('input', ()=>{
+        commitColor(hiddenPicker.value);
       });
 
-      row.append(textInput, colorInput);
+      row.append(textInput, hiddenPicker);
+      applySwatchStyle(initialColor);
       swatch.append(header, row);
       els.gradientColorContainer.appendChild(swatch);
     });
@@ -3999,15 +4245,6 @@
     state.text.hero.gradient.angle = parseFloat(e.target.value)||0;
     commitTextState({ refreshControls:false });
   });
-  els.saveLogoState?.addEventListener('click', ()=>{
-    const payload = gatherLogoState();
-    try{ localStorage.setItem(LOGO_STATE_KEY, JSON.stringify(payload)); }catch(err){ console.warn('Failed to store logo state', err); return; }
-    if(els.saveLogoState){
-      els.saveLogoState.classList.remove('feedback-error');
-      els.saveLogoState.classList.add('feedback-success');
-      window.setTimeout(()=> els.saveLogoState.classList.remove('feedback-success'), 1400);
-    }
-  });
 
   let heroDrag = null;
   function updateHeroPositionFromPointer(e){
@@ -4180,20 +4417,51 @@
   els.partnerSettingsTriggers?.forEach(btn=>btn.addEventListener('click', openPartnerSettings));
   els.partnerSettingsAdd?.addEventListener('click', ()=>{
     const row = createPartnerRow();
-    els.partnerSettingsList?.appendChild(row);
-    row.querySelector('input')?.focus();
+    if(els.partnerSettingsList){
+      els.partnerSettingsList.prepend(row);
+      row.querySelector('input')?.focus();
+      row.scrollIntoView({ block:'start', behavior:'smooth' });
+    }
   });
   const closeSettings = ()=>closePartnerSettings();
   els.partnerSettingsCancel?.addEventListener('click', closeSettings);
   els.partnerSettingsClose?.addEventListener('click', closeSettings);
   els.partnerSettingsModal?.addEventListener('click', (e)=>{ if(e.target === els.partnerSettingsModal){ closePartnerSettings(); } });
   window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && els.partnerSettingsModal?.classList.contains('show')){ closePartnerSettings(); } });
+  els.partnerSettingsSort?.addEventListener('click', ()=>{
+    if(!els.partnerSettingsList) return;
+    const rows = Array.from(els.partnerSettingsList.querySelectorAll('.partnerRow'));
+    if(rows.length === 0) return;
+    rows.forEach(r=>r.classList.remove('invalid'));
+    rows.sort((a,b)=>{
+      const nameA = (a.querySelector('.partnerName')?.value || '').trim().toLowerCase();
+      const nameB = (b.querySelector('.partnerName')?.value || '').trim().toLowerCase();
+      if(!nameA && !nameB) return 0;
+      if(!nameA) return 1;
+      if(!nameB) return -1;
+      return nameA.localeCompare(nameB, undefined, { sensitivity:'base' });
+    });
+    rows.forEach(row=>els.partnerSettingsList.appendChild(row));
+    const sorted = rows
+      .map(row=>{
+        const name = (row.querySelector('.partnerName')?.value || '').trim();
+        const url = (row.querySelector('.partnerUrl')?.value || '').trim();
+        return name && url ? { name, url } : null;
+      })
+      .filter(Boolean);
+    if(sorted.length){
+      partnerLibrary = sorted;
+      persistPartnerLibrary();
+      buildAllGalleries();
+    }
+  });
   els.partnerSettingsSave?.addEventListener('click', ()=>{
     if(!els.partnerSettingsList) return;
     const rows = Array.from(els.partnerSettingsList.querySelectorAll('.partnerRow'));
     const next = [];
     let hasError = false;
     rows.forEach(row=>{
+      row.classList.remove('invalid');
       const nameInput = row.querySelector('.partnerName');
       const urlInput = row.querySelector('.partnerUrl');
       const name = (nameInput?.value || '').trim();
@@ -4206,10 +4474,23 @@
       }
       next.push({ name, url });
     });
-    if(hasError){ return; }
+    if(hasError){
+      els.partnerSettingsSave?.classList.add('feedback-error');
+      window.setTimeout(()=> els.partnerSettingsSave?.classList.remove('feedback-error'), 1600);
+      return;
+    }
     partnerLibrary = next;
     persistPartnerLibrary();
     buildAllGalleries();
+    const saved = persistLogoState();
+    if(saved){
+      els.partnerSettingsSave?.classList.remove('feedback-error');
+      els.partnerSettingsSave?.classList.add('feedback-success');
+      window.setTimeout(()=> els.partnerSettingsSave?.classList.remove('feedback-success'), 1400);
+    } else {
+      els.partnerSettingsSave?.classList.add('feedback-error');
+      window.setTimeout(()=> els.partnerSettingsSave?.classList.remove('feedback-error'), 1600);
+    }
     closePartnerSettings();
   });
 
