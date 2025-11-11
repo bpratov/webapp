@@ -154,7 +154,7 @@
 
   .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -6px 28px rgba(2,6,23,0.24); pointer-events:none; z-index:40;}
   .frostBg{position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; transition:background-image .2s ease, opacity .2s ease; filter:none;}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(15,23,42,0.28),rgba(15,23,42,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -12px 24px rgba(2,6,23,0.3)}
+  .veil{position:absolute; inset:0; background:transparent; mix-blend-mode:normal; box-shadow:none; opacity:1; transition:background .25s ease, opacity .25s ease; pointer-events:none;}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
@@ -577,7 +577,7 @@
       <h2>Frozone</h2>
       <p class="introTagline">LiveOps creative toolkit</p>
     </div>
-    <span class="introVersion">v6.18</span>
+    <span class="introVersion">v 2.24</span>
   </div>
   <header id="appHeader">
     <div class="wrap inner">
@@ -865,10 +865,10 @@
               <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
               <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
             </div>
-            <label id="overlayLabel" class="overlaySliderLabel" for="overlayAlpha">
-              <span class="overlayLabelText">Overlay opacity</span>
-              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
-              <span class="overlayValue"><span id="overlayAlphaVal">30</span>%</span>
+            <label id="frostToneLabel" class="overlaySliderLabel" for="frostTone">
+              <span class="overlayLabelText">Frost tone</span>
+              <input id="frostTone" type="range" min="-100" max="100" value="0">
+              <span class="overlayValue"><span id="frostToneVal">Neutral</span></span>
             </label>
           </div>
 
@@ -903,7 +903,7 @@
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
-                  <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                  <span class="toneHint">Check partner brand rules before changing.</span>
                 </div>
               </div>
               <div class="libWrap">
@@ -1293,7 +1293,7 @@
             <div class="playBg" id="playBg"></div>
             <div class="playTri" aria-hidden="true">
               <svg viewBox="0 0 59 63" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 14 L44 31.5 L18 49 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
+                <path d="M18 14 L48 31.5 L18 49 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
               </svg>
             </div>
           </div>
@@ -1372,7 +1372,7 @@
       </div>
     </div>
   </div>
-  <div class="versionTag">V6.18</div>
+  <div class="versionTag">V2.24</div>
 
   <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -1593,7 +1593,7 @@
     heroInlineEditor: document.getElementById('heroInlineEditor'),
     heroHandles: Array.from(document.querySelectorAll('.heroHandle')),
 
-    overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
+    frostTone: document.getElementById('frostTone'), frostToneVal: document.getElementById('frostToneVal'), frostToneLabel: document.getElementById('frostToneLabel'),
 
     carousel: document.getElementById('imageCarousel'), carouselEmpty: document.getElementById('carouselEmpty'),
     deleteAllBtn: document.getElementById('deleteAllBtn'),
@@ -1779,6 +1779,7 @@
     return {
       frost: {
         enabled: state.frost.enabled,
+        tone: state.frost.tone,
         logo1: serializeLogoStore(state.frost.logo1),
         logo2: serializeLogoStore(state.frost.logo2),
         logo2Active: !!els.toggleLogo2?.checked
@@ -1846,6 +1847,7 @@
 
     if(data.frost){
       if(typeof data.frost.enabled === 'boolean'){ state.frost.enabled = data.frost.enabled; if(els.toggleFrost) els.toggleFrost.checked = state.frost.enabled; }
+      if(typeof data.frost.tone === 'number'){ state.frost.tone = Math.max(-1, Math.min(1, data.frost.tone)); }
       await applyLogoSnapshot(data.frost.logo1, els.logo1Prev, state.frost.logo1, 'logo1');
       await applyLogoSnapshot(data.frost.logo2, els.logo2Prev, state.frost.logo2, 'logo2');
       if(typeof data.frost.logo2Active === 'boolean' && els.toggleLogo2){
@@ -1895,7 +1897,7 @@
 
     frost: {
       enabled: true,
-      overlayAlpha: 0.30,
+      tone: 0,
       barHExp: 90, padYExp: 16, dockHExp: 65, padRightExp: 24, gapExp: 24,
       logo1: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
       logo2: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
@@ -1922,6 +1924,32 @@
   let frostPreviewCache = { key:null, data:null };
   let resizeState = null;
   let gradientPreviewFrame = null;
+
+  function describeFrostTone(value){
+    const v = Math.max(-1, Math.min(1, Number(value) || 0));
+    if(Math.abs(v) < 0.01) return 'Neutral';
+    const pct = Math.round(Math.abs(v) * 100);
+    return v < 0 ? `Dim ${pct}%` : `Bright ${pct}%`;
+  }
+
+  function applyFrostTonePreview(){
+    if(!els.frostVeil){ return; }
+    if(state.format.key !== 'HORIZ' || !state.frost.enabled || Math.abs(state.frost.tone) < 0.01){
+      els.frostVeil.style.display = 'none';
+      els.frostVeil.style.background = 'transparent';
+      els.frostVeil.style.mixBlendMode = 'normal';
+      return;
+    }
+    const tone = Math.max(-1, Math.min(1, state.frost.tone));
+    const strength = Math.min(1, Math.abs(tone));
+    const startAlpha = (tone < 0 ? 0.25 : 0.18) + strength * 0.22;
+    const endAlpha = (tone < 0 ? 0.42 : 0.32) + strength * 0.26;
+    const startColor = tone < 0 ? `rgba(12,16,26,${startAlpha.toFixed(3)})` : `rgba(255,255,255,${startAlpha.toFixed(3)})`;
+    const endColor = tone < 0 ? `rgba(12,16,26,${endAlpha.toFixed(3)})` : `rgba(255,255,255,${endAlpha.toFixed(3)})`;
+    els.frostVeil.style.display = 'block';
+    els.frostVeil.style.background = `linear-gradient(180deg, ${startColor} 0%, ${endColor} 100%)`;
+    els.frostVeil.style.mixBlendMode = tone < 0 ? 'multiply' : 'screen';
+  }
 
   if(els.img){
     els.img.crossOrigin = 'anonymous';
@@ -2238,16 +2266,19 @@
     const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || anyLogos);
     els.frostBar.style.display = shouldShowBar ? 'block' : 'none';
     els.frostBg.style.display = state.frost.enabled ? 'block' : 'none';
-    els.frostVeil.style.display = (state.frost.enabled && state.frost.overlayAlpha>0) ? 'block' : 'none';
 
     els.playWrap.style.display = (state.format.key==='HORIZ' && state.play.enabled) ? 'block' : 'none';
 
-    els.overlayAlpha.disabled = !state.frost.enabled;
-    els.overlayLabel.classList.toggle('dim', !state.frost.enabled);
-    if(els.overlayAlpha){
-      const pct = Math.round(state.frost.overlayAlpha * 100);
-      els.overlayAlpha.value = pct.toString();
-      if(els.overlayAlphaVal){ els.overlayAlphaVal.textContent = pct.toString(); }
+    if(els.frostTone){
+      const val = Math.round(state.frost.tone * 100);
+      els.frostTone.disabled = !state.frost.enabled;
+      els.frostTone.value = val.toString();
+    }
+    if(els.frostToneVal){
+      els.frostToneVal.textContent = describeFrostTone(state.frost.tone);
+    }
+    if(els.frostToneLabel){
+      els.frostToneLabel.classList.toggle('dim', !state.frost.enabled);
     }
 
     [...els.logo1Seg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.size===state.frost.logo1.sizeKey));
@@ -2364,8 +2395,12 @@
       Object.assign(els.frostBar.style, { width: fwPx+'px', height: barHPrevPx+'px', top: barTopPx+'px' });
       els.logoDockPrev.style.paddingRight = (state.frost.padRightExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
       els.logoDockPrev.style.gap = (state.frost.gapExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
-      els.frostVeil.style.opacity = state.frost.overlayAlpha;
-      updateFrostPreviewTexture();
+      if(state.frost.enabled){
+        updateFrostPreviewTexture();
+      } else if(els.frostBg){
+        els.frostBg.style.backgroundImage = '';
+      }
+      applyFrostTonePreview();
 
       const h1 = SIZE_MAP[state.frost.logo1.sizeKey] * scaleYPrev;
       const h2 = SIZE_MAP[state.frost.logo2.sizeKey] * scaleYPrev;
@@ -2379,6 +2414,9 @@
         const cx = frameLeftPx + fwPx/2; const cy = frameTopPx + (fhPx - barHPrevPx)/2;
         Object.assign(els.playWrap.style, { width: playD+'px', height: playD+'px', left: (cx - playD/2)+'px', top: (cy - playD/2)+'px' });
       }
+    }
+    else {
+      applyFrostTonePreview();
     }
 
     if(state.format.key==='SQUARE' && state.squareLogo.src){
@@ -2522,7 +2560,7 @@
   }
 
   function updateFrostPreviewTexture(){
-    const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
+    const shouldShowBar = (state.format.key==='HORIZ') && state.frost.enabled;
     if(!shouldShowBar || !state.imageSrc){
       frostPreviewCache = { key:null, data:null };
       els.frostBg.style.backgroundImage = '';
@@ -2538,7 +2576,8 @@
       state.previewZoom.toFixed(2),
       state.brightness,
       state.saturation,
-      state.contrast
+      state.contrast,
+      state.frost.tone.toFixed(2)
     ].join('|');
 
     if(frostPreviewCache.key === cacheKey && frostPreviewCache.data){
@@ -2579,20 +2618,18 @@
     sctx.drawImage(els.img, dx, dy, imgW, imgH);
     sctx.restore();
 
-    const frostCanvas = buildFrostCanvas(sampleCanvas, Math.max(4, Math.round(state.frost.barHExp * scale)));
+    const frostCanvas = buildFrostCanvas(sampleCanvas, Math.max(4, Math.round(state.frost.barHExp * scale)), state.frost.tone);
     const dataURL = frostCanvas.toDataURL('image/png');
     frostPreviewCache = { key: cacheKey, data: dataURL };
     els.frostBg.style.backgroundImage = `url(${dataURL})`;
   }
 
-  function buildFrostCanvas(baseCanvas, barH){
+  function buildFrostCanvas(baseCanvas, barH, toneBias = 0){
     const fw = baseCanvas.width;
     const frostCanvas = document.createElement('canvas');
     frostCanvas.width = fw;
     frostCanvas.height = Math.max(1, barH);
     const frostCtx = frostCanvas.getContext('2d');
-    frostCtx.fillStyle = '#e5edf8';
-    frostCtx.fillRect(0, 0, fw, frostCanvas.height);
 
     const captureH = Math.max(6, Math.min(baseCanvas.height, Math.round(barH * 1.8)));
     const captureY = Math.max(0, baseCanvas.height - captureH);
@@ -2620,15 +2657,25 @@
       else { colors.push([Math.round(r/count), Math.round(g/count), Math.round(b/count)]); }
     }
 
+    const normalizedTone = Math.max(-1, Math.min(1, toneBias || 0));
+    const toneStrength = Math.min(1, Math.abs(normalizedTone));
+
     const gradCanvas = document.createElement('canvas');
     gradCanvas.width = fw;
     gradCanvas.height = frostCanvas.height;
     const gctx = gradCanvas.getContext('2d');
-    if(colors.length){
+      if(colors.length){
+      const factor = normalizedTone >= 0 ? (1.05 + 0.05 * toneStrength) : (1 - 0.12 * toneStrength);
+      const lift = normalizedTone >= 0 ? (14 + 10 * toneStrength) : (-(8 + 12 * toneStrength));
+      const adjusted = colors.map(c=>[
+        Math.min(255, Math.max(0, Math.round(c[0] * factor + lift))),
+        Math.min(255, Math.max(0, Math.round(c[1] * factor + lift))),
+        Math.min(255, Math.max(0, Math.round(c[2] * factor + lift)))
+      ]);
       const gradient = gctx.createLinearGradient(0, 0, fw, 0);
-      colors.forEach((c,i)=>{ gradient.addColorStop(i/(colors.length-1), `rgba(${c[0]},${c[1]},${c[2]},1)`); });
-      const leftColor = colors[0];
-      const rightColor = colors[colors.length-1];
+      adjusted.forEach((c,i)=>{ gradient.addColorStop(i/(adjusted.length-1), `rgba(${c[0]},${c[1]},${c[2]},1)`); });
+      const leftColor = adjusted[0];
+      const rightColor = adjusted[adjusted.length-1];
       gctx.fillStyle = `rgba(${leftColor[0]},${leftColor[1]},${leftColor[2]},1)`;
       gctx.fillRect(0, 0, fw, frostCanvas.height);
       gctx.fillStyle = gradient;
@@ -2645,24 +2692,17 @@
     frostCtx.drawImage(gradCanvas, 0, 0);
     frostCtx.restore();
 
-    const tint = frostCtx.createLinearGradient(0, 0, 0, frostCanvas.height);
-    tint.addColorStop(0, 'rgba(18,27,45,0.36)');
-    tint.addColorStop(0.55, 'rgba(22,32,52,0.28)');
-    tint.addColorStop(1, 'rgba(10,16,30,0.4)');
-    frostCtx.fillStyle = tint;
+    frostCtx.save();
+    frostCtx.globalCompositeOperation = 'lighter';
+    const sheen = frostCtx.createLinearGradient(0, 0, 0, frostCanvas.height);
+    const topSheen = normalizedTone >= 0 ? (0.08 + 0.04 * toneStrength) : (0.02 * (1 - toneStrength));
+    const bottomSheen = normalizedTone >= 0 ? (0.12 + 0.06 * toneStrength) : (0.04 * (1 - toneStrength));
+    sheen.addColorStop(0, `rgba(255,255,255,${topSheen.toFixed(3)})`);
+    sheen.addColorStop(0.45, 'rgba(255,255,255,0)');
+    sheen.addColorStop(1, `rgba(255,255,255,${bottomSheen.toFixed(3)})`);
+    frostCtx.fillStyle = sheen;
     frostCtx.fillRect(0, 0, fw, frostCanvas.height);
-
-    const edgeFade = frostCtx.createLinearGradient(0, 0, fw, 0);
-    edgeFade.addColorStop(0, 'rgba(10,16,30,0.24)');
-    edgeFade.addColorStop(0.5, 'rgba(10,16,30,0)');
-    edgeFade.addColorStop(1, 'rgba(10,16,30,0.24)');
-    frostCtx.fillStyle = edgeFade;
-    frostCtx.fillRect(0, 0, fw, frostCanvas.height);
-
-    frostCtx.fillStyle = 'rgba(255,255,255,0.18)';
-    frostCtx.fillRect(0, 0, fw, 1);
-    frostCtx.fillStyle = 'rgba(6,10,20,0.36)';
-    frostCtx.fillRect(0, frostCanvas.height-2, fw, 2);
+    frostCtx.restore();
 
     return frostCanvas;
   }
@@ -3987,7 +4027,12 @@
   els.moveY.addEventListener('input', e=>{ state.offset.y = +e.target.value; els.yVal.textContent = Math.round(state.offset.y); render(); serializeCurrent(); });
   els.previewZoom.addEventListener('input', e=>{ setPreviewZoom(+e.target.value, {force:true}); });
 
-  els.toggleFrost.addEventListener('change', ()=>{ state.frost.enabled = els.toggleFrost.checked; updateControls(); render(); });
+  els.toggleFrost.addEventListener('change', ()=>{
+    state.frost.enabled = els.toggleFrost.checked;
+    frostPreviewCache = { key:null, data:null };
+    updateControls();
+    render();
+  });
   els.togglePlay.addEventListener('change', ()=>{ state.play.enabled = els.togglePlay.checked; updateControls(); render(); });
   els.toggleLogo2.addEventListener('change', ()=>{
     els.logo2Block.style.display = els.toggleLogo2.checked?'grid':'none';
@@ -4384,7 +4429,14 @@
     fitPreviewZoomToStage(); render(); updateControls(); buildFormatChips();
   });
 
-  els.overlayAlpha.addEventListener('input', (e)=>{ state.frost.overlayAlpha = (+e.target.value)/100; els.overlayAlphaVal.textContent = Math.round(state.frost.overlayAlpha*100); updateControls(); render(); });
+  els.frostTone?.addEventListener('input', (e)=>{
+    const raw = Number(e.target.value) || 0;
+    const next = Math.max(-1, Math.min(1, raw/100));
+    state.frost.tone = next;
+    if(els.frostToneVal){ els.frostToneVal.textContent = describeFrostTone(next); }
+    frostPreviewCache = { key:null, data:null };
+    render();
+  });
 
   function segSizeHandler(segEl, which, map){
     if(!segEl) return;
@@ -4630,35 +4682,30 @@
 
       const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
 
-      if(shouldShowBar){
-        const frostCanvas = buildFrostCanvas(baseLayer, barH);
+      if(state.frost.enabled){
+        const frostCanvas = buildFrostCanvas(baseLayer, barH, state.frost.tone);
         ctx.drawImage(frostCanvas, 0, barY);
       }
 
       if(state.frost.enabled){
-        const overlayStrength = Math.max(0, Math.min(1, state.frost.overlayAlpha));
-        if(overlayStrength > 0){
+        const tone = Math.max(-1, Math.min(1, state.frost.tone));
+        if(Math.abs(tone) > 0.01){
           ctx.save();
           const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.08 + overlayStrength*0.18})`);
-          grad.addColorStop(0.55, `rgba(24,33,52,${0.22 + overlayStrength*0.2})`);
-          grad.addColorStop(1, `rgba(9,14,26,${0.32 + overlayStrength*0.22})`);
+          const strength = Math.min(1, Math.abs(tone));
+          if(tone > 0){
+            grad.addColorStop(0, `rgba(255,255,255,${(0.18 + strength*0.16).toFixed(3)})`);
+            grad.addColorStop(1, `rgba(255,255,255,${(0.32 + strength*0.22).toFixed(3)})`);
+            ctx.globalCompositeOperation = 'screen';
+          } else {
+            grad.addColorStop(0, `rgba(0,0,0,${(0.18 + strength*0.14).toFixed(3)})`);
+            grad.addColorStop(1, `rgba(0,0,0,${(0.32 + strength*0.2).toFixed(3)})`);
+            ctx.globalCompositeOperation = 'multiply';
+          }
           ctx.fillStyle = grad;
           ctx.fillRect(0, barY, fw, barH);
           ctx.restore();
         }
-        ctx.save();
-        const edgeShade = ctx.createLinearGradient(0, barY, fw, barY);
-        const edgeAlpha = 0.18 + overlayStrength*0.12;
-        edgeShade.addColorStop(0, `rgba(8,12,24,${edgeAlpha})`);
-        edgeShade.addColorStop(0.5, 'rgba(8,12,24,0)');
-        edgeShade.addColorStop(1, `rgba(8,12,24,${edgeAlpha})`);
-        ctx.fillStyle = edgeShade;
-        ctx.fillRect(0, barY, fw, barH);
-        ctx.restore();
-
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.12; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.28 + overlayStrength*0.18; ctx.fillStyle = 'rgba(6,10,20,1)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
