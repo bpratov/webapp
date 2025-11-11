@@ -143,8 +143,8 @@
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .stage-inner.guides-hidden{box-shadow:none; border-color:transparent;}
-  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(148,163,184,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease;}
-  .stage-inner.guides-hidden .frame,
+  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(100,116,139,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease;}
+  .stage-inner.guides-hidden .frame{box-shadow:none;}
   .stage-inner.guides-hidden .resizeHandle,
   .stage-inner.guides-hidden .guideLine,
   .stage-inner.guides-hidden .stageWarning{display:none !important}
@@ -158,7 +158,7 @@
   .image-layer.dragging{cursor:grabbing}
   .image-layer img{display:block; user-select:none; pointer-events:none}
 
-  .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
+  .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow:none; background:transparent}
   .guideLine{position:absolute; pointer-events:none; z-index:34; opacity:0.65; transition:opacity .18s ease, border-color .18s ease}
   .guideLine.vertical{top:0; bottom:0; border-left:1px dashed rgba(255,255,255,0.65)}
   .guideLine.horizontal{left:0; right:0; border-top:1px dashed rgba(255,255,255,0.65)}
@@ -239,6 +239,28 @@
   .heroGradientAngle label{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
   .heroPanelRow .seg{flex-wrap:nowrap}
   .heroPanelRow .colorField{width:150px}
+  .heroPanelStyleControl{min-width:150px}
+  .heroPanelStyleControl .seg{flex-wrap:nowrap}
+  .heroPanelStyleControl .seg button{min-width:72px}
+  .heroShadowRow{display:flex; flex-wrap:wrap; align-items:center; gap:12px; position:relative}
+  .heroShadowSwitch{margin-right:6px}
+  .heroShadowButton .btn-ico{width:18px; height:18px}
+  .heroShadowPopover{position:absolute; top:calc(100% + 8px); left:0; min-width:260px; background:var(--stageInner); border:1px solid var(--border); border-radius:16px; box-shadow:0 24px 48px rgba(15,23,42,0.24); padding:16px; display:none; z-index:70}
+  .heroShadowPopover[data-open="true"]{display:grid}
+  .heroShadowHeader{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+  .heroShadowClose{all:unset; display:inline-grid; place-items:center; width:28px; height:28px; border-radius:10px; border:1px solid var(--border); background:var(--chip-bg); cursor:pointer; transition:background .18s ease, border-color .18s ease}
+  .heroShadowClose:hover{background:rgba(148,163,184,0.16)}
+  .heroShadowClose:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .heroShadowGrid{display:grid; gap:12px}
+  .heroShadowField{display:grid; gap:6px; font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+  .heroShadowRange{display:flex; align-items:center; gap:10px}
+  .heroShadowRange input[type="range"]{flex:1}
+  .heroShadowSplit{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
+  .heroShadowField input[type="number"]{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); font-size:13px; color:var(--ink); box-shadow:0 4px 10px rgba(15,23,42,0.08); transition:border-color .18s ease, box-shadow .18s ease}
+  .heroShadowField input[type="number"]:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .heroShadowPopover .colorField{width:100%}
+  .heroText[data-panel-style="segments"]{background:transparent !important; box-shadow:none !important; padding:0 !important}
+  .heroText[data-panel-style="segments"] .heroInner{display:inline; padding:12px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18); box-decoration-break:clone; -webkit-box-decoration-break:clone}
   .textFieldRow{display:grid; gap:10px}
   .textFieldRow label{font-size:13px; font-weight:600}
   .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
@@ -369,7 +391,7 @@
   .gradientHexInput::placeholder{color:var(--muted); letter-spacing:0.04em}
   .gradientHexInput[data-color]{border-color:rgba(15,23,42,0.12); box-shadow:0 6px 16px rgba(15,23,42,0.08)}
   .gradientHexInput:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
-  .gradientColorOverlay{position:absolute; inset:0; opacity:0; cursor:pointer}
+  .gradientColorOverlay{position:absolute; inset:0; opacity:0; pointer-events:none}
   .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
@@ -416,6 +438,7 @@
   .modalFooterStart,.modalFooterEnd{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
   .modalIntro{font-size:13px; color:var(--muted); background:var(--chip-bg); border:1px dashed var(--border); border-radius:14px; padding:16px 18px; line-height:1.5}
   .modalNotice{margin:12px 0 0 0; font-size:12px; color:var(--muted); line-height:1.5}
+  .modalFootnote{margin:0; font-size:12px; color:var(--muted); line-height:1.6; background:rgba(148,163,184,0.12); border-radius:12px; padding:12px 16px}
   .partnerRows{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
   .partnerRow{display:grid; grid-template-columns:minmax(0,72px) 1fr auto; gap:16px; align-items:flex-start; padding:16px; border:1px solid var(--border); border-radius:16px; background:var(--card); box-shadow:0 14px 32px rgba(15,23,42,0.12)}
   .partnerRow img{width:60px; height:60px; object-fit:contain; border-radius:14px; background:#fff; box-shadow:inset 0 1px 2px rgba(15,23,42,0.08)}
@@ -495,6 +518,14 @@
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
   .exitFullscreenBtn{position:absolute; top:12px; right:12px; z-index:62; display:none}
   .stage-inner.fullscreen-active .exitFullscreenBtn{display:inline-flex}
+  .fullscreenToolbar{position:absolute; top:12px; left:12px; display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:16px; background:rgba(255,255,255,0.88); box-shadow:0 20px 40px rgba(15,23,42,0.22); z-index:62; opacity:0; pointer-events:none; transform:translateY(-6px); transition:opacity .2s ease, transform .2s ease}
+  .fullscreenToolbar .miniBtn{all:unset; display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:12px; border:1px solid var(--border); background:var(--chip-bg); color:var(--ink); cursor:pointer; box-shadow:0 6px 16px rgba(15,23,42,0.12); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
+  .fullscreenToolbar .miniBtn:hover{transform:translateY(-1px); box-shadow:0 12px 24px rgba(15,23,42,0.18)}
+  .fullscreenToolbar .miniBtn:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .fullscreenToolbar .miniBtn[aria-pressed="true"]{border-color:rgba(59,130,246,0.55); background:rgba(59,130,246,0.12)}
+  .fullscreenToolbar .miniBtn .btn-ico{width:18px; height:18px; stroke:currentColor}
+  .fullscreenToolbar .toolbarGroup{display:flex; align-items:center; gap:6px}
+  #stage.fullscreen-active .fullscreenToolbar{opacity:1; pointer-events:auto; transform:translateY(0)}
 
   .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:flex-start; gap:0; min-width:56px; max-width:56px; height:56px; padding:0 12px; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .36s cubic-bezier(.4,0,.2,1), padding .36s cubic-bezier(.4,0,.2,1), gap .36s cubic-bezier(.4,0,.2,1), border-radius .36s cubic-bezier(.4,0,.2,1), transform .36s cubic-bezier(.22,.61,.36,1), box-shadow .36s cubic-bezier(.22,.61,.36,1), background .3s ease, color .3s ease;}
   .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .3s cubic-bezier(.22,.61,.36,1)}
@@ -508,6 +539,8 @@
   #downloadApp{bottom:110px; border-color:rgba(148,163,184,0.45)}
   #downloadApp .fab-label{color:var(--ink)}
   #downloadApp:hover{background:rgba(255,255,255,0.92)}
+  .fab-download{padding-left:16px; padding-right:16px}
+  .fab-download .btn-ico{margin-left:4px}
   :root[data-theme="dark"] #downloadApp{background:rgba(9,20,41,0.72); border-color:rgba(46,63,98,0.65); box-shadow:0 26px 50px rgba(1,5,19,0.6)}
   :root[data-theme="dark"] #downloadApp:hover{background:rgba(15,32,58,0.85)}
 
@@ -537,6 +570,13 @@
   :root[data-theme="dark"] .seg{background:linear-gradient(135deg,rgba(30,64,175,0.55),rgba(17,94,205,0.28)); border:1px solid rgba(96,165,250,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
+  :root[data-theme="dark"] .fullscreenToolbar{background:rgba(9,20,41,0.82); box-shadow:0 28px 56px rgba(1,5,19,0.6)}
+  :root[data-theme="dark"] .fullscreenToolbar .miniBtn{background:rgba(15,23,42,0.85); border-color:rgba(71,85,105,0.65); color:#e2e8f0}
+  :root[data-theme="dark"] .fullscreenToolbar .miniBtn[aria-pressed="true"]{background:rgba(37,99,235,0.25); border-color:rgba(59,130,246,0.55)}
+  :root[data-theme="dark"] .heroShadowPopover{background:rgba(9,20,41,0.94); border-color:rgba(46,63,98,0.65); box-shadow:0 30px 56px rgba(1,5,19,0.65)}
+  :root[data-theme="dark"] .heroShadowField input[type="number"]{background:rgba(15,23,42,0.85); border-color:rgba(71,85,105,0.65); color:#e2e8f0; box-shadow:0 4px 10px rgba(1,5,19,0.45)}
+  :root[data-theme="dark"] .heroShadowClose{background:rgba(15,23,42,0.85); border-color:rgba(71,85,105,0.65); color:#e2e8f0}
+  :root[data-theme="dark"] .heroShadowClose:hover{background:rgba(59,130,246,0.24)}
   :root[data-theme="dark"] .dropOverlay{background:rgba(14,165,233,0.22); color:#e0f2fe}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
   :root[data-theme="dark"] .switchGroup{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 16px 36px rgba(2,6,23,0.6)}
@@ -577,6 +617,7 @@
   :root[data-theme="dark"] .modalHeader{background:linear-gradient(135deg,rgba(30,41,59,0.85),rgba(37,99,235,0.28)); border-bottom-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .modalFooter{background:rgba(15,23,42,0.75); border-top-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .modalIntro{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.7); color:rgba(226,232,240,0.82)}
+  :root[data-theme="dark"] .modalFootnote{background:rgba(9,17,31,0.55); color:rgba(226,232,240,0.82)}
   :root[data-theme="dark"] .modalNotice{color:rgba(200,212,242,0.82)}
   :root[data-theme="dark"] .partnerRow{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 22px 48px rgba(2,6,23,0.7)}
   :root[data-theme="dark"] .partnerRowFields input{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.75); color:#e2e8f0}
@@ -629,7 +670,7 @@
       <div class="scroll">
         <!-- Step 1: Upload -->
         <div class="section">
-          <div class="section-title"><span class="badge">1</span> Upload image(s)</div>
+          <div class="section-title"><span class="badge" id="badgeUpload">1</span> Upload image(s)</div>
           <div class="uploadGrid">
             <div class="uploadCell">
               <label class="btn primary uploadAction" title="Upload image">
@@ -675,7 +716,7 @@
 
         <!-- Step 2: Format -->
         <div class="section">
-          <div class="section-title"><span class="badge">2</span> Choose format</div>
+          <div class="section-title"><span class="badge" id="badgeFormat">2</span> Choose format</div>
           <div class="stack" id="formatRow"></div>
           <div class="row" id="vertSizeRow" style="display:none; margin-top:18px">
             <div class="seg" id="vertSizeSeg">
@@ -687,7 +728,7 @@
         </div>
 
         <div class="section" id="bgSourceSection" aria-hidden="true">
-          <div class="section-title"><span class="badge">2b</span> Background source</div>
+          <div class="section-title"><span class="badge" id="badgeBackground">3</span> Background source</div>
           <div class="stack">
             <div class="bgGuidance" id="bgGuidance" aria-live="polite">
               <div class="bgGuidanceTitle">Background tips</div>
@@ -824,7 +865,7 @@
 
         <!-- Step 3: Adjust -->
         <div class="section">
-          <div class="section-title"><span class="badge">3</span> Adjust image</div>
+          <div class="section-title"><span class="badge" id="badgeAdjust">3</span> Adjust image</div>
           <div class="adjust-grid">
             <div class="adjust-card">
               <label for="brightness">Brightness</label>
@@ -878,7 +919,7 @@
 
         <!-- Step 4: Frosted bar -->
         <div class="section" id="frostSection">
-          <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
+          <div class="section-title"><span class="badge" id="badgeFrost">4</span> Frosted Bar </div>
           <div class="switchGroup">
             <div class="switchGroupRow">
               <label class="switch"><input type="checkbox" id="toggleFrost" checked><span class="tgl"><span class="knob"></span></span><span class="lbl">Frosted blur</span></label>
@@ -989,72 +1030,101 @@
         </div>
         <!-- Step 4b: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
+          <div class="section-title"><span class="badge" id="badgeSquareLogo">4</span> Square logo (top-right)</div>
           <div class="stack">
             <div class="row" style="gap:16px">
               <label class="switch"><input type="checkbox" id="toggleSqLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
             </div>
-            <div id="sqLogoBlock" class="stack" style="display:none; margin-top:10px">
-              <div class="row">
-                <label class="btn ghost uploadAction">
-                  <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                  <span class="btn-text">Square logo</span>
-                  <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
-                </label>
-                <div class="seg" id="sqLogoSeg">
-                  <button data-size="S" class="active">S</button>
-                  <button data-size="M">M</button>
-                  <button data-size="L">L</button>
+            <div id="sqLogoBlock" class="logoSection" style="display:none; margin-top:10px">
+              <div class="logoSectionHead">
+                <div class="logoSectionHeading">
+                  <span class="title">Square logo</span>
+                  <span class="meta">Top-right placement</span>
                 </div>
-                <div class="seg" id="sqLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+                <div class="logoSectionActions">
+                  <label class="btn ghost uploadAction">
+                    <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                    <span class="btn-text">Upload square logo</span>
+                    <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
+                  </label>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing</span>
               </div>
-              <div class="libWrap">
-                <div class="libHeader">
-                  <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
-                  <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                    <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
-                  </button>
+              <div class="logoSectionInner">
+                <div class="logoControls" role="group" aria-label="Square logo controls">
+                  <div class="logoControlGroup">
+                    <span class="logoControlLabel">Size</span>
+                    <div class="seg" id="sqLogoSeg">
+                      <button data-size="S" class="active">S</button>
+                      <button data-size="M">M</button>
+                      <button data-size="L">L</button>
+                    </div>
+                  </div>
+                  <div class="logoControlGroup">
+                    <span class="logoControlLabel">Tone</span>
+                    <div class="seg" id="sqLogoToneSeg">
+                      <button data-tone="orig" class="active">Original</button>
+                      <button data-tone="white">White</button>
+                      <button data-tone="black">Black</button>
+                    </div>
+                    <span class="toneHint">Check partner brand rules before changing</span>
+                  </div>
                 </div>
-                <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
+                <div class="libWrap">
+                  <div class="libHeader">
+                    <input id="sqLogoSearch" type="search" placeholder="Search partners…" />
+                    <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                      <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div id="sqLogoGallery" class="libScroller" aria-label="Logo library"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div class="section" id="bannerLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4c</span> Banner logo (top-left)</div>
+          <div class="section-title"><span class="badge" id="badgeBannerLogo">4</span> Banner logo (top-left)</div>
           <div class="stack">
             <div class="row" style="gap:16px">
               <label class="switch"><input type="checkbox" id="toggleBannerLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
             </div>
-            <div id="bannerLogoBlock" class="stack" style="display:none; margin-top:10px">
-              <div class="row">
-                <label class="btn ghost uploadAction">
-                  <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                  <span class="btn-text">Banner logo</span>
-                  <input id="bannerLogoInput" type="file" accept="image/*" style="display:none"/>
-                </label>
-                <div class="seg" id="bannerLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+            <div id="bannerLogoBlock" class="logoSection" style="display:none; margin-top:10px">
+              <div class="logoSectionHead">
+                <div class="logoSectionHeading">
+                  <span class="title">Banner logo</span>
+                  <span class="meta">Top-left placement</span>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing</span>
+                <div class="logoSectionActions">
+                  <label class="btn ghost uploadAction">
+                    <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                    <span class="btn-text">Upload banner logo</span>
+                    <input id="bannerLogoInput" type="file" accept="image/*" style="display:none"/>
+                  </label>
+                </div>
               </div>
-              <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
-              <div class="libWrap">
-                <div class="libHeader">
-                  <input id="bannerLogoSearch" type="search" placeholder="Search partners…" />
-                  <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                    <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
-                  </button>
+              <div class="logoSectionInner">
+                <div class="logoControls" role="group" aria-label="Banner logo controls">
+                  <div class="logoControlGroup">
+                    <span class="logoControlLabel">Tone</span>
+                    <div class="seg" id="bannerLogoToneSeg">
+                      <button data-tone="orig" class="active">Original</button>
+                      <button data-tone="white">White</button>
+                      <button data-tone="black">Black</button>
+                    </div>
+                    <span class="toneHint">Check partner brand rules before changing</span>
+                  </div>
                 </div>
-                <div id="bannerLogoGallery" class="libScroller" aria-label="Logo library"></div>
+                <div class="libWrap">
+                  <div class="libHeader">
+                    <input id="bannerLogoSearch" type="search" placeholder="Search partners…" />
+                    <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                      <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div id="bannerLogoGallery" class="libScroller" aria-label="Logo library"></div>
+                </div>
+                <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
               </div>
             </div>
           </div>
@@ -1062,45 +1132,63 @@
 
         <!-- Step 4c: Vertical logo -->
         <div class="section" id="verticalLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4d</span> Vertical logo (top-left)</div>
-          <div class="row" style="gap:16px">
-            <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
-          </div>
-          <div id="vertLogoBlock" class="stack" style="display:none; margin-top:10px">
-            <div class="row">
-              <label class="btn ghost uploadAction">
-                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                <span class="btn-text">Vertical logo</span>
-                <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
-              </label>
-              <div class="seg" id="vertLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
-              </div>
-              <div class="seg" id="vertLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
-              </div>
-              <button class="btn small ghost" id="removeVertLogo">Remove</button>
+          <div class="section-title"><span class="badge" id="badgeVerticalLogo">4</span> Vertical logo (top-left)</div>
+          <div class="stack">
+            <div class="row" style="gap:16px">
+              <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
             </div>
-            <div class="toneHint">Check partner brand rules before changing</div>
-            <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
-            <div class="libWrap">
-              <div class="libHeader">
-                <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
-                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
-                </button>
+            <div id="vertLogoBlock" class="logoSection" style="display:none; margin-top:10px">
+              <div class="logoSectionHead">
+                <div class="logoSectionHeading">
+                  <span class="title">Vertical logo</span>
+                  <span class="meta">Top-left placement</span>
+                </div>
+                <div class="logoSectionActions">
+                  <label class="btn ghost uploadAction">
+                    <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                    <span class="btn-text">Upload vertical logo</span>
+                    <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
+                  </label>
+                  <button class="btn small ghost" id="removeVertLogo">Remove</button>
+                </div>
               </div>
-              <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              <div class="logoSectionInner">
+                <div class="logoControls" role="group" aria-label="Vertical logo controls">
+                  <div class="logoControlGroup">
+                    <span class="logoControlLabel">Size</span>
+                    <div class="seg" id="vertLogoSeg">
+                      <button data-size="S" class="active">S</button>
+                      <button data-size="M">M</button>
+                      <button data-size="L">L</button>
+                    </div>
+                  </div>
+                  <div class="logoControlGroup">
+                    <span class="logoControlLabel">Tone</span>
+                    <div class="seg" id="vertLogoToneSeg">
+                      <button data-tone="orig" class="active">Original</button>
+                      <button data-tone="white">White</button>
+                      <button data-tone="black">Black</button>
+                    </div>
+                    <span class="toneHint">Check partner brand rules before changing</span>
+                  </div>
+                </div>
+                <div class="libWrap">
+                  <div class="libHeader">
+                    <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+                    <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                      <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+                </div>
+                <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="section" id="textSettingsSection" style="display:none">
-          <div class="section-title"><span class="badge">4e</span> Text settings</div>
+          <div class="section-title"><span class="badge" id="badgeText">5</span> Text settings</div>
           <div class="textSettingsWrap">
             <div class="textToggleBar">
               <label class="switch"><input type="checkbox" id="toggleSerial"><span class="tgl"><span class="knob"></span></span><span class="lbl">Serial code</span></label>
@@ -1251,6 +1339,64 @@
                       <span class="serialOpacityValue" id="heroPanelOpacityVal">70%</span>
                     </div>
                   </div>
+                  <div class="heroControl heroPanelStyleControl">
+                    <span class="logoControlLabel">Panel layout</span>
+                    <div class="seg" id="heroPanelStyleSeg">
+                      <button type="button" data-style="block" class="active">Single</button>
+                      <button type="button" data-style="segments">Line wrap</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="heroRow heroShadowRow">
+                  <label class="switch heroShadowSwitch"><input type="checkbox" id="heroShadowEnable"><span class="tgl"><span class="knob"></span></span><span class="lbl">Enable shadow</span></label>
+                  <button type="button" class="btn ghost heroShadowButton" id="heroShadowButton" aria-expanded="false">
+                    <i data-lucide="aperture" class="btn-ico" aria-hidden="true"></i>
+                    <span class="btn-text">Shadow settings</span>
+                  </button>
+                  <div class="heroShadowPopover" id="heroShadowPopover" role="dialog" aria-hidden="true">
+                    <div class="heroShadowHeader">
+                      <span>Shadow controls</span>
+                      <button type="button" class="heroShadowClose" id="heroShadowClose" aria-label="Close shadow settings">
+                        <i data-lucide="x" class="btn-ico" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <div class="heroShadowGrid">
+                      <label class="heroShadowField">
+                        <span>Colour</span>
+                        <div class="colorField">
+                          <input id="heroShadowColor" type="text" value="#000000" maxlength="7" class="colorHexInput" />
+                          <input id="heroShadowColorPicker" type="color" class="colorOverlay" value="#000000" />
+                        </div>
+                      </label>
+                      <label class="heroShadowField">
+                        <span>Opacity</span>
+                        <div class="heroShadowRange">
+                          <input id="heroShadowOpacity" type="range" min="0" max="100" value="75" />
+                          <span class="serialOpacityValue" id="heroShadowOpacityVal">75%</span>
+                        </div>
+                      </label>
+                      <div class="heroShadowSplit">
+                        <label class="heroShadowField">
+                          <span>Angle</span>
+                          <input id="heroShadowAngle" type="number" value="120" />
+                        </label>
+                        <label class="heroShadowField">
+                          <span>Distance</span>
+                          <input id="heroShadowDistance" type="number" value="8" />
+                        </label>
+                      </div>
+                      <div class="heroShadowSplit">
+                        <label class="heroShadowField">
+                          <span>Spread</span>
+                          <input id="heroShadowSpread" type="number" value="0" />
+                        </label>
+                        <label class="heroShadowField">
+                          <span>Size</span>
+                          <input id="heroShadowSize" type="number" value="12" />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1259,7 +1405,7 @@
 
         <!-- Step 5: Export -->
         <div class="section">
-          <div class="section-title"><span class="badge">5</span> Mockup Master</div>
+          <div class="section-title"><span class="badge" id="badgeMockup">6</span> Mockup Master</div>
           <div class="mockupBlock">
             <label class="switch"><input type="checkbox" checked disabled><span class="tgl"><span class="knob"></span></span><span class="lbl">Depth auto-balance</span></label>
             <label class="switch"><input type="checkbox" disabled><span class="tgl"><span class="knob"></span></span><span class="lbl">Smart product lighting</span></label>
@@ -1273,7 +1419,7 @@
 
         <!-- Step 6: Export -->
         <div class="section">
-          <div class="section-title"><span class="badge">6</span> Export</div>
+          <div class="section-title"><span class="badge" id="badgeExport">7</span> Export</div>
           <div class="exportActions">
             <button class="btn primary" id="exportBtn" disabled>
               <i data-lucide="download" class="btn-ico" aria-hidden="true"></i>
@@ -1315,15 +1461,28 @@
           </div>
         </div>
       </div>
-      <div class="stage">
-        <div class="stage-inner" id="stage">
-          <button class="btn small ghost exitFullscreenBtn" type="button" id="exitFullscreenBtn">
-            <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
-            <span class="btn-text">Exit full screen</span>
-          </button>
-          <div class="image-layer" id="imageLayer">
-            <img id="img" alt="uploaded" />
-          </div>
+        <div class="stage">
+          <div class="stage-inner" id="stage">
+            <button class="btn small ghost exitFullscreenBtn" type="button" id="exitFullscreenBtn">
+              <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Exit full screen</span>
+            </button>
+            <div class="fullscreenToolbar" id="fullscreenToolbar" aria-hidden="true">
+              <button type="button" class="miniBtn" id="fullscreenGuidesBtn" aria-pressed="false" aria-label="Toggle rulers">
+                <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
+              </button>
+              <div class="toolbarGroup">
+                <button type="button" class="miniBtn" id="fullscreenZoomOut" aria-label="Zoom out">
+                  <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="miniBtn" id="fullscreenZoomIn" aria-label="Zoom in">
+                  <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="image-layer" id="imageLayer">
+              <img id="img" alt="uploaded" />
+            </div>
           <div class="frame" id="frame"></div>
           <div class="guideLine vertical" id="guideVertical" aria-hidden="true"></div>
           <div class="guideLine horizontal" id="guideHorizontal" aria-hidden="true"></div>
@@ -1404,6 +1563,7 @@
       <div class="modalBody">
         <div class="modalIntro">Curate partner logos, rename entries, or paste fresh image URLs. Everything saves directly into this file so you can ship updates without leaving Frozone.</div>
         <div class="modalNotice">Before adding remote logos, confirm they follow partner brand guidelines and have transparent backgrounds when required.</div>
+        <div class="modalFootnote">Logo edits are stored locally in functional cookies for your browser. Use the same browser to keep a consistent library—your changes stay private and will never replace another teammate’s logos.</div>
         <div id="partnerSettingsList" class="partnerRows"></div>
       </div>
       <div class="modalFooter">
@@ -1640,6 +1800,7 @@
     heroPanelCustomPicker: document.getElementById('heroPanelCustomPicker'),
     heroPanelOpacity: document.getElementById('heroPanelOpacity'),
     heroPanelOpacityVal: document.getElementById('heroPanelOpacityVal'),
+    heroPanelStyleSeg: document.getElementById('heroPanelStyleSeg'),
 
     serialPreview: document.getElementById('serialPreview'),
     serialTextPreview: document.getElementById('serialTextPreview'),
@@ -1647,12 +1808,28 @@
     serialOpacityValue: document.getElementById('serialOpacityValue'),
     heroTextPreview: document.getElementById('heroTextPreview'),
     heroInnerText: document.getElementById('heroInnerText'),
+    heroShadowEnable: document.getElementById('heroShadowEnable'),
+    heroShadowButton: document.getElementById('heroShadowButton'),
+    heroShadowPopover: document.getElementById('heroShadowPopover'),
+    heroShadowClose: document.getElementById('heroShadowClose'),
+    heroShadowColor: document.getElementById('heroShadowColor'),
+    heroShadowColorPicker: document.getElementById('heroShadowColorPicker'),
+    heroShadowOpacity: document.getElementById('heroShadowOpacity'),
+    heroShadowOpacityVal: document.getElementById('heroShadowOpacityVal'),
+    heroShadowAngle: document.getElementById('heroShadowAngle'),
+    heroShadowDistance: document.getElementById('heroShadowDistance'),
+    heroShadowSpread: document.getElementById('heroShadowSpread'),
+    heroShadowSize: document.getElementById('heroShadowSize'),
     heroInlineEditor: document.getElementById('heroInlineEditor'),
     heroHandles: Array.from(document.querySelectorAll('.heroHandle')),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
     fullscreenBtn: document.getElementById('fullscreenBtn'),
     exitFullscreenBtn: document.getElementById('exitFullscreenBtn'),
+    fullscreenToolbar: document.getElementById('fullscreenToolbar'),
+    fullscreenGuidesBtn: document.getElementById('fullscreenGuidesBtn'),
+    fullscreenZoomOut: document.getElementById('fullscreenZoomOut'),
+    fullscreenZoomIn: document.getElementById('fullscreenZoomIn'),
     toggleGuidesBtn: document.getElementById('toggleGuidesBtn'),
     guideVertical: document.getElementById('guideVertical'),
     guideHorizontal: document.getElementById('guideHorizontal'),
@@ -1699,6 +1876,32 @@
   const EXPORT_MIN_QUALITY = 0.74;
   const EXPORT_QUALITY_STEP = 0.01;
   const UNSPLASH_KEY = 'lS5t0PyTTNcbftZPooe7sNzTb7zLx5K82dY5UZGh6gw';
+  const STEP_BADGE_MAP = {
+    HORIZ:['badgeUpload','badgeFormat','badgeAdjust','badgeFrost','badgeText','badgeMockup','badgeExport'],
+    SQUARE:['badgeUpload','badgeFormat','badgeAdjust','badgeSquareLogo','badgeText','badgeMockup','badgeExport'],
+    VERT:['badgeUpload','badgeFormat','badgeAdjust','badgeVerticalLogo','badgeText','badgeMockup','badgeExport'],
+    BANNER:['badgeUpload','badgeFormat','badgeBackground','badgeAdjust','badgeBannerLogo','badgeMockup','badgeExport']
+  };
+  const ALL_BADGE_IDS = Array.from(new Set(Object.values(STEP_BADGE_MAP).flat()));
+
+  function normalizeHeroShadow(shadow = {}){
+    const base = { enabled:false, color:'#000000', opacity:0.75, angle:120, distance:8, spread:0, size:12 };
+    const out = { ...base };
+    if(shadow && typeof shadow === 'object'){
+      out.enabled = !!shadow.enabled;
+      if(typeof shadow.color === 'string' && shadow.color.trim()){ out.color = shadow.color.trim(); }
+      if(Number.isFinite(shadow.opacity)){ out.opacity = Math.max(0, Math.min(1, shadow.opacity)); }
+      if(Number.isFinite(shadow.angle)){ const raw = shadow.angle; out.angle = ((raw % 360) + 360) % 360; }
+      if(Number.isFinite(shadow.distance)){ out.distance = shadow.distance; }
+      if(Number.isFinite(shadow.spread)){ out.spread = Math.max(0, shadow.spread); }
+      if(Number.isFinite(shadow.size)){ out.size = Math.max(0, shadow.size); }
+    }
+    return out;
+  }
+
+  function normalizePanelStyle(style){
+    return style === 'segments' ? 'segments' : 'block';
+  }
 
   function defaultTextState(){
     return {
@@ -1719,17 +1922,24 @@
         position:{ x:0.5, y:0.42 },
         panel:'none',
         panelCustom:'#111827',
-        panelOpacity:0.7
+        panelOpacity:0.7,
+        panelStyle:normalizePanelStyle('block'),
+        shadow: normalizeHeroShadow()
       }
     };
   }
 
   function cloneTextSettings(src){
+    let clone;
     try{
-      return JSON.parse(JSON.stringify(src || defaultTextState()));
+      clone = JSON.parse(JSON.stringify(src || defaultTextState()));
     }catch(err){
-      return defaultTextState();
+      clone = defaultTextState();
     }
+    if(!clone.hero){ clone.hero = defaultTextState().hero; }
+    clone.hero.panelStyle = normalizePanelStyle(clone.hero.panelStyle);
+    clone.hero.shadow = normalizeHeroShadow(clone.hero.shadow);
+    return clone;
   }
 
   function cloneSerialSettings(){
@@ -1771,6 +1981,43 @@
     const b = parseInt(color.slice(4,6), 16);
     const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
     return luminance > 160 ? '#0f172a' : '#ffffff';
+  }
+
+  function computeHeroShadow(shadow){
+    const normalized = normalizeHeroShadow(shadow);
+    if(!normalized.enabled){ return { enabled:false }; }
+    const colorHex = normalizeHex(normalized.color || '#000000', '#000000');
+    const rgb = hexToRgb(colorHex);
+    if(!rgb){ return { enabled:false }; }
+    const opacity = Math.max(0, Math.min(1, Number(normalized.opacity ?? 0.75)));
+    const angle = Number.isFinite(normalized.angle) ? normalized.angle : 120;
+    const distance = Number.isFinite(normalized.distance) ? normalized.distance : 8;
+    const size = Math.max(0, Number.isFinite(normalized.size) ? normalized.size : 12);
+    const spread = Math.max(0, Number.isFinite(normalized.spread) ? normalized.spread : 0);
+    const angleRad = angle * Math.PI / 180;
+    const offsetX = distance * Math.cos(angleRad);
+    const offsetY = distance * Math.sin(angleRad);
+    const blur = size;
+    const innerBlur = Math.max(0, blur - spread);
+    const rgba = `rgba(${rgb.r},${rgb.g},${rgb.b},${opacity.toFixed(3)})`;
+    const textShadowParts = [`${offsetX.toFixed(2)}px ${offsetY.toFixed(2)}px ${blur.toFixed(2)}px ${rgba}`];
+    const filterParts = [`drop-shadow(${offsetX.toFixed(2)}px ${offsetY.toFixed(2)}px ${blur.toFixed(2)}px ${rgba})`];
+    if(spread > 0 && innerBlur !== blur){
+      textShadowParts.push(`${offsetX.toFixed(2)}px ${offsetY.toFixed(2)}px ${innerBlur.toFixed(2)}px ${rgba}`);
+      filterParts.push(`drop-shadow(${offsetX.toFixed(2)}px ${offsetY.toFixed(2)}px ${innerBlur.toFixed(2)}px ${rgba})`);
+    }
+    return {
+      enabled:true,
+      offsetX,
+      offsetY,
+      blur,
+      innerBlur,
+      rgba,
+      opacity,
+      colorHex,
+      cssTextShadow: textShadowParts.join(', '),
+      cssFilter: filterParts.join(' ')
+    };
   }
 
   function applyHexInputStyle(input, hex){
@@ -1918,7 +2165,7 @@
       await applyLogoSnapshot(data.frost.logo2, els.logo2Prev, state.frost.logo2, 'logo2');
       if(typeof data.frost.logo2Active === 'boolean' && els.toggleLogo2){
         els.toggleLogo2.checked = data.frost.logo2Active;
-        els.logo2Block.style.display = data.frost.logo2Active ? 'grid' : 'none';
+        els.logo2Block.style.display = data.frost.logo2Active ? 'flex' : 'none';
       }
     }
     if(data.squareLogo){
@@ -1933,7 +2180,7 @@
       state.vertLogo.sizeKey = data.vertLogo.sizeKey || state.vertLogo.sizeKey;
       state.vertLogo.tone = data.vertLogo.tone || state.vertLogo.tone;
       await applyLogoSnapshot(data.vertLogo, els.vertLogoPrev, state.vertLogo, 'vertLogo');
-      if(els.toggleVertLogo){ els.toggleVertLogo.checked = state.vertLogo.enabled; els.vertLogoBlock.style.display = state.vertLogo.enabled ? 'grid' : 'none'; }
+      if(els.toggleVertLogo){ els.toggleVertLogo.checked = state.vertLogo.enabled; els.vertLogoBlock.style.display = state.vertLogo.enabled ? 'flex' : 'none'; }
     }
     if(data.bannerLogo){
       state.bannerLogo.enabled = !!data.bannerLogo.enabled;
@@ -1994,6 +2241,15 @@
   let frostPreviewCache = { key:null, data:null };
   let resizeState = null;
   let gradientPreviewFrame = null;
+  let heroShadowPopoverOpen = false;
+
+  function ensureHeroShadowState(){
+    const normalized = normalizeHeroShadow(state.text?.hero?.shadow);
+    state.text.hero.shadow = normalized;
+    return normalized;
+  }
+
+  ensureHeroShadowState();
 
   if(els.img){
     els.img.crossOrigin = 'anonymous';
@@ -2142,6 +2398,21 @@
     state.offset.y = Math.max(-state.limits.y, Math.min(state.offset.y, state.limits.y));
   }
 
+  function updateStepBadges(){
+    const map = STEP_BADGE_MAP[state.format.key] || [];
+    const active = new Set(map);
+    ALL_BADGE_IDS.forEach((id)=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      if(!active.has(id)){ el.textContent = '—'; }
+    });
+    map.forEach((id, index)=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.textContent = String(index + 1);
+    });
+  }
+
   function updateControls(){
     const isBanner = state.format.key==='BANNER';
     if(els.bgSourceSection){
@@ -2184,7 +2455,7 @@
       els.squareLogoSection.style.display = isSquare ? 'block' : 'none';
       const sqEnabled = state.squareLogo.enabled || !!state.squareLogo.src;
       if(els.toggleSqLogo){ els.toggleSqLogo.checked = sqEnabled; }
-      if(els.sqLogoBlock){ els.sqLogoBlock.style.display = sqEnabled ? 'grid' : 'none'; }
+      if(els.sqLogoBlock){ els.sqLogoBlock.style.display = sqEnabled ? 'flex' : 'none'; }
     }
     if(els.frostSection){ els.frostSection.style.display = isHorizontal ? 'block' : 'none'; }
     if(els.toggleFrost){
@@ -2200,14 +2471,14 @@
     if(isVertical){
       const vertEnabled = state.vertLogo.enabled || !!state.vertLogo.src;
       if(els.toggleVertLogo){ els.toggleVertLogo.checked = vertEnabled; }
-      if(els.vertLogoBlock){ els.vertLogoBlock.style.display = vertEnabled ? 'grid' : 'none'; }
+      if(els.vertLogoBlock){ els.vertLogoBlock.style.display = vertEnabled ? 'flex' : 'none'; }
     }
     if(els.bannerLogoSection){
       els.bannerLogoSection.style.display = isBannerFormat ? 'block' : 'none';
       if(isBannerFormat){
         const bannerEnabled = state.bannerLogo.enabled || !!state.bannerLogo.src;
         if(els.toggleBannerLogo){ els.toggleBannerLogo.checked = bannerEnabled; }
-        if(els.bannerLogoBlock){ els.bannerLogoBlock.style.display = bannerEnabled ? 'grid' : 'none'; }
+        if(els.bannerLogoBlock){ els.bannerLogoBlock.style.display = bannerEnabled ? 'flex' : 'none'; }
       }
     }
     if(els.textSettingsSection){ els.textSettingsSection.style.display = isTextFormat ? 'block' : 'none'; }
@@ -2307,6 +2578,54 @@
         els.heroPanelOpacity.value = pct.toString();
         if(els.heroPanelOpacityVal){ els.heroPanelOpacityVal.textContent = `${pct}%`; }
       }
+      if(els.heroPanelStyleSeg){
+        const panelStyle = normalizePanelStyle(state.text.hero.panelStyle);
+        state.text.hero.panelStyle = panelStyle;
+        const panelActive = state.text.hero.panel !== 'none';
+        [...els.heroPanelStyleSeg.querySelectorAll('button')].forEach(btn=>{
+          const style = btn.dataset.style || 'block';
+          const isActive = panelStyle === style;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+          btn.disabled = !panelActive;
+        });
+      }
+
+      const heroShadow = ensureHeroShadowState();
+      if(els.heroShadowEnable){
+        els.heroShadowEnable.checked = !!heroShadow.enabled;
+        els.heroShadowEnable.disabled = !state.text.hero.enabled;
+      }
+      if(els.heroShadowButton){
+        const disabled = !state.text.hero.enabled;
+        els.heroShadowButton.disabled = disabled;
+        if(disabled){ setHeroShadowPopover(false); }
+      }
+      if(els.heroShadowColor){
+        const color = normalizeHex(heroShadow.color || '#000000', '#000000');
+        applyHexInputStyle(els.heroShadowColor, color);
+        if(els.heroShadowColorPicker){ els.heroShadowColorPicker.value = color; }
+      }
+      if(els.heroShadowOpacity){
+        const pct = Math.round(Math.max(0, Math.min(1, heroShadow.opacity ?? 0.75)) * 100);
+        els.heroShadowOpacity.value = pct.toString();
+        if(els.heroShadowOpacityVal){ els.heroShadowOpacityVal.textContent = `${pct}%`; }
+      }
+      if(els.heroShadowAngle){ els.heroShadowAngle.value = Math.round(heroShadow.angle ?? 120); }
+      if(els.heroShadowDistance){ els.heroShadowDistance.value = Math.round(heroShadow.distance ?? 8); }
+      if(els.heroShadowSpread){ els.heroShadowSpread.value = Math.round(heroShadow.spread ?? 0); }
+      if(els.heroShadowSize){ els.heroShadowSize.value = Math.round(heroShadow.size ?? 12); }
+      const heroShadowDisabled = !state.text.hero.enabled || !heroShadow.enabled;
+      [
+        els.heroShadowColor,
+        els.heroShadowOpacity,
+        els.heroShadowAngle,
+        els.heroShadowDistance,
+        els.heroShadowSpread,
+        els.heroShadowSize
+      ].forEach(input=>{ if(input){ input.disabled = heroShadowDisabled; } });
+      if(els.heroShadowColorPicker){ els.heroShadowColorPicker.disabled = heroShadowDisabled; }
+      updateHeroShadowVisibility(heroShadow);
     }
 
     els.bVal.textContent = state.brightness;
@@ -2366,6 +2685,8 @@
       els.stageHint.style.display = state.imageSrc ? 'none' : 'flex';
     }
 
+    updateStepBadges();
+
   }
 
   function fitPreviewZoomToStage(){
@@ -2401,6 +2722,37 @@
     if(!opts.skipRender){ render(); }
   }
 
+  function setGuidesHidden(next){
+    const target = typeof next === 'boolean' ? next : !state.guidesHidden;
+    state.guidesHidden = !!target;
+    guideSnapActive = { vertical:false, horizontal:false };
+    render();
+  }
+
+  function setHeroShadowPopover(open){
+    const heroShadow = ensureHeroShadowState();
+    const canOpen = !!open && state.text.hero.enabled && heroShadow.enabled;
+    heroShadowPopoverOpen = canOpen;
+    if(els.heroShadowPopover){
+      els.heroShadowPopover.dataset.open = canOpen ? 'true' : 'false';
+      els.heroShadowPopover.setAttribute('aria-hidden', canOpen ? 'false' : 'true');
+    }
+    if(els.heroShadowButton){
+      els.heroShadowButton.setAttribute('aria-expanded', canOpen ? 'true' : 'false');
+      els.heroShadowButton.classList.toggle('active', canOpen);
+    }
+  }
+
+  function updateHeroShadowVisibility(heroShadow){
+    const canOpen = state.text.hero.enabled && heroShadow?.enabled;
+    if(!canOpen){ heroShadowPopoverOpen = false; }
+    setHeroShadowPopover(canOpen && heroShadowPopoverOpen);
+  }
+
+  function openHeroShadow(){ setHeroShadowPopover(true); }
+  function closeHeroShadow(){ setHeroShadowPopover(false); }
+  function toggleHeroShadow(){ setHeroShadowPopover(!heroShadowPopoverOpen); }
+
   function applyLogoPreviewTone(el, tone){
     if(tone==='white') el.style.filter = 'brightness(0) invert(1)';
     else if(tone==='black') el.style.filter = 'brightness(0)';
@@ -2435,6 +2787,10 @@
       els.stage.classList.toggle('guides-hidden', !!state.guidesHidden);
       els.stage.classList.toggle('fullscreen-active', !!state.fullscreen);
     }
+    if(els.fullscreenToolbar){
+      const toolbarVisible = !!state.fullscreen;
+      els.fullscreenToolbar.setAttribute('aria-hidden', toolbarVisible ? 'false' : 'true');
+    }
     if(els.toggleGuidesBtn){
       const pressed = !!state.guidesHidden;
       els.toggleGuidesBtn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
@@ -2442,6 +2798,20 @@
       if(textEl){ textEl.textContent = pressed ? 'Show rulers' : 'Hide rulers'; }
       const iconEl = els.toggleGuidesBtn.querySelector('i[data-lucide]');
       if(iconEl){ iconEl.setAttribute('data-lucide', pressed ? 'eye' : 'eye-off'); }
+    }
+    if(els.fullscreenGuidesBtn){
+      const pressed = !!state.guidesHidden;
+      els.fullscreenGuidesBtn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      const icon = els.fullscreenGuidesBtn.querySelector('i[data-lucide]');
+      if(icon){ icon.setAttribute('data-lucide', pressed ? 'eye' : 'eye-off'); }
+    }
+    if(els.fullscreenZoomIn){
+      const canZoomIn = state.previewZoom < (state.previewZoomMax || 3) - 0.01;
+      els.fullscreenZoomIn.disabled = !canZoomIn;
+    }
+    if(els.fullscreenZoomOut){
+      const canZoomOut = state.previewZoom > 0.51;
+      els.fullscreenZoomOut.disabled = !canZoomOut;
     }
     const scaleYPreview = (state.format.hPreview/state.format.hExport) * state.previewZoom;
     const barHPrevPx = state.format.key==='HORIZ' ? state.frost.barHExp * scaleYPreview : 0;
@@ -2605,6 +2975,10 @@
       const panelMode = state.text.hero.panel || 'none';
       els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
       els.heroTextPreview.dataset.panel = panelMode;
+      const panelStyle = normalizePanelStyle(state.text.hero.panelStyle);
+      state.text.hero.panelStyle = panelStyle;
+      const effectivePanelStyle = panelMode === 'none' ? 'block' : panelStyle;
+      els.heroTextPreview.dataset.panelStyle = effectivePanelStyle;
       inner.textContent = state.text.hero.value;
       inner.style.fontSize = fontPx.toFixed(2) + 'px';
       inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
@@ -2636,18 +3010,43 @@
       }
       const basePanelColor = panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
       const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
+      const heroShadow = computeHeroShadow(state.text.hero.shadow);
+      if(heroShadow.enabled){
+        inner.style.textShadow = heroShadow.cssTextShadow;
+        inner.style.filter = heroShadow.cssFilter;
+      } else {
+        inner.style.textShadow = 'none';
+        inner.style.filter = 'none';
+      }
+      const rgb = hexToRgb(basePanelColor);
+      const bg = rgb ? `rgba(${rgb.r},${rgb.g},${rgb.b},${panelOpacity.toFixed(2)})` : 'rgba(255,255,255,0.65)';
       if(panelMode === 'none'){
         els.heroTextPreview.style.background = 'transparent';
         els.heroTextPreview.style.boxShadow = 'none';
         els.heroTextPreview.style.padding = '0';
         els.heroTextPreview.style.borderRadius = '0';
+        inner.style.background = 'transparent';
+        inner.style.boxShadow = 'none';
+        inner.style.padding = '0';
+        inner.style.borderRadius = '0';
+      } else if(panelStyle === 'segments'){
+        els.heroTextPreview.style.background = 'transparent';
+        els.heroTextPreview.style.boxShadow = 'none';
+        els.heroTextPreview.style.padding = '0';
+        els.heroTextPreview.style.borderRadius = '0';
+        inner.style.background = bg;
+        inner.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
+        inner.style.padding = '12px 18px';
+        inner.style.borderRadius = '18px';
       } else {
-        const rgb = hexToRgb(basePanelColor);
-        const bg = rgb ? `rgba(${rgb.r},${rgb.g},${rgb.b},${panelOpacity.toFixed(2)})` : 'rgba(255,255,255,0.65)';
         els.heroTextPreview.style.background = bg;
         els.heroTextPreview.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
         els.heroTextPreview.style.padding = '14px 18px';
         els.heroTextPreview.style.borderRadius = '18px';
+        inner.style.background = 'transparent';
+        inner.style.boxShadow = 'none';
+        inner.style.padding = '0';
+        inner.style.borderRadius = '0';
       }
       if(heroEditing && els.heroInlineEditor){
         const editorStyle = els.heroInlineEditor.style;
@@ -2670,9 +3069,19 @@
     } else {
       els.heroTextPreview.style.display = 'none';
       els.heroTextPreview.dataset.panel = 'none';
+      els.heroTextPreview.dataset.panelStyle = 'block';
       els.heroTextPreview.style.background = 'transparent';
       els.heroTextPreview.style.boxShadow = 'none';
       els.heroTextPreview.style.padding = '0';
+      els.heroTextPreview.style.borderRadius = '0';
+      if(els.heroInnerText){
+        els.heroInnerText.style.background = 'transparent';
+        els.heroInnerText.style.boxShadow = 'none';
+        els.heroInnerText.style.padding = '0';
+        els.heroInnerText.style.borderRadius = '0';
+        els.heroInnerText.style.textShadow = 'none';
+        els.heroInnerText.style.filter = 'none';
+      }
     }
     refreshIcons();
   }
@@ -4162,7 +4571,7 @@
   els.toggleVertLogo.addEventListener('change', ()=>{
     const checked = !!els.toggleVertLogo.checked;
     state.vertLogo.enabled = checked;
-    els.vertLogoBlock.style.display = checked ? 'grid' : 'none';
+    els.vertLogoBlock.style.display = checked ? 'flex' : 'none';
     if(!checked){
       state.vertLogo={enabled:false, src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
       els.vertLogoPrev.style.display='none';
@@ -4172,7 +4581,7 @@
   els.toggleSqLogo?.addEventListener('change', ()=>{
     const checked = !!els.toggleSqLogo.checked;
     state.squareLogo.enabled = checked;
-    if(els.sqLogoBlock) els.sqLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(els.sqLogoBlock) els.sqLogoBlock.style.display = checked ? 'flex' : 'none';
     if(!checked){
       state.squareLogo = { enabled:false, src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone: state.squareLogo.tone||'orig', source:'none', chosen:"" };
       els.sqLogoPrev.style.display='none';
@@ -4182,7 +4591,7 @@
   els.toggleBannerLogo?.addEventListener('change', ()=>{
     const checked = !!els.toggleBannerLogo.checked;
     state.bannerLogo.enabled = checked;
-    if(els.bannerLogoBlock) els.bannerLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(els.bannerLogoBlock) els.bannerLogoBlock.style.display = checked ? 'flex' : 'none';
     if(!checked){
       state.bannerLogo = { enabled:false, src:null,w:0,h:0,tone:state.bannerLogo.tone||'orig', source:'none', chosen:"" };
       els.bannerLogoPrev.style.display='none';
@@ -4343,6 +4752,14 @@
     commitTextState({ refreshControls:false });
     updateControls();
   });
+  els.heroPanelStyleSeg?.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button'); if(!btn) return;
+    if(state.text.hero.panel === 'none') return;
+    const style = normalizePanelStyle(btn.dataset.style || 'block');
+    state.text.hero.panelStyle = style;
+    commitTextState({ refreshControls:false });
+    updateControls();
+  });
   els.heroPanelCustomHex?.addEventListener('input', (e)=>{
     const val = normalizeHex(e.target.value, state.text.hero.panelCustom || '#111827');
     state.text.hero.panelCustom = val;
@@ -4368,6 +4785,86 @@
     state.text.hero.panelOpacity = pct / 100;
     if(els.heroPanelOpacityVal){ els.heroPanelOpacityVal.textContent = `${pct}%`; }
     commitTextState({ refreshControls:false });
+  });
+  const commitHeroShadowColor = (val)=>{
+    const heroShadow = ensureHeroShadowState();
+    const normalized = normalizeHex(val, heroShadow.color || '#000000');
+    heroShadow.color = normalized;
+    if(els.heroShadowColor){ applyHexInputStyle(els.heroShadowColor, normalized); }
+    if(els.heroShadowColorPicker){ els.heroShadowColorPicker.value = normalized; }
+    commitTextState({ refreshControls:false });
+  };
+  els.heroShadowEnable?.addEventListener('change', ()=>{
+    const heroShadow = ensureHeroShadowState();
+    heroShadow.enabled = !!els.heroShadowEnable.checked;
+    if(!heroShadow.enabled){ closeHeroShadow(); }
+    commitTextState();
+  });
+  els.heroShadowButton?.addEventListener('click', ()=>{
+    const heroShadow = ensureHeroShadowState();
+    if(!state.text.hero.enabled || !heroShadow.enabled) return;
+    toggleHeroShadow();
+  });
+  els.heroShadowClose?.addEventListener('click', ()=>{
+    closeHeroShadow();
+    try{ els.heroShadowButton?.focus({ preventScroll:true }); }catch(err){ els.heroShadowButton?.focus(); }
+  });
+  els.heroShadowColor?.addEventListener('input', (e)=>{ commitHeroShadowColor(e.target.value); });
+  els.heroShadowColorPicker?.addEventListener('input', (e)=>{ commitHeroShadowColor(e.target.value); });
+  els.heroShadowOpacity?.addEventListener('input', (e)=>{
+    const heroShadow = ensureHeroShadowState();
+    const pct = Math.max(0, Math.min(100, Number(e.target.value)||0));
+    heroShadow.opacity = pct / 100;
+    if(els.heroShadowOpacityVal){ els.heroShadowOpacityVal.textContent = `${pct}%`; }
+    commitTextState({ refreshControls:false });
+  });
+  els.heroShadowAngle?.addEventListener('input', (e)=>{
+    const heroShadow = ensureHeroShadowState();
+    const raw = Number(e.target.value);
+    if(Number.isFinite(raw)){
+      heroShadow.angle = ((raw % 360) + 360) % 360;
+      e.target.value = Math.round(heroShadow.angle);
+      commitTextState({ refreshControls:false });
+    }
+  });
+  els.heroShadowDistance?.addEventListener('input', (e)=>{
+    const heroShadow = ensureHeroShadowState();
+    const raw = Number(e.target.value);
+    if(Number.isFinite(raw)){
+      heroShadow.distance = Math.max(0, Math.min(500, raw));
+      e.target.value = Math.round(heroShadow.distance);
+      commitTextState({ refreshControls:false });
+    }
+  });
+  els.heroShadowSpread?.addEventListener('input', (e)=>{
+    const heroShadow = ensureHeroShadowState();
+    const raw = Number(e.target.value);
+    if(Number.isFinite(raw)){
+      heroShadow.spread = Math.max(0, Math.min(200, raw));
+      e.target.value = Math.round(heroShadow.spread);
+      commitTextState({ refreshControls:false });
+    }
+  });
+  els.heroShadowSize?.addEventListener('input', (e)=>{
+    const heroShadow = ensureHeroShadowState();
+    const raw = Number(e.target.value);
+    if(Number.isFinite(raw)){
+      heroShadow.size = Math.max(0, Math.min(400, raw));
+      e.target.value = Math.round(heroShadow.size);
+      commitTextState({ refreshControls:false });
+    }
+  });
+  document.addEventListener('mousedown', (e)=>{
+    if(!heroShadowPopoverOpen) return;
+    if(els.heroShadowPopover && els.heroShadowPopover.contains(e.target)) return;
+    if(els.heroShadowButton && els.heroShadowButton.contains(e.target)) return;
+    closeHeroShadow();
+  });
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && heroShadowPopoverOpen){
+      closeHeroShadow();
+      try{ els.heroShadowButton?.focus({ preventScroll:true }); }catch(err){ els.heroShadowButton?.focus(); }
+    }
   });
   let heroDrag = null;
   let heroResize = null;
@@ -4625,11 +5122,10 @@
     updateControls();
     render();
   });
-  els.toggleGuidesBtn?.addEventListener('click', ()=>{
-    state.guidesHidden = !state.guidesHidden;
-    guideSnapActive = { vertical:false, horizontal:false };
-    render();
-  });
+  els.toggleGuidesBtn?.addEventListener('click', ()=>{ setGuidesHidden(); });
+  els.fullscreenGuidesBtn?.addEventListener('click', ()=>{ setGuidesHidden(); });
+  els.fullscreenZoomIn?.addEventListener('click', ()=>{ setPreviewZoom(state.previewZoom + 0.1); });
+  els.fullscreenZoomOut?.addEventListener('click', ()=>{ setPreviewZoom(state.previewZoom - 0.1); });
   const fullscreenTarget = ()=> els.stage?.parentElement || els.stage;
   function syncFullscreenState(){
     const target = fullscreenTarget();
@@ -5041,18 +5537,43 @@
       const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
       const padScale = Math.sqrt(scaleX * scaleY);
       const panelMode = state.text.hero.panel || 'none';
-      const padX = panelMode === 'none' ? 0 : 18 * padScale;
-      const padY = panelMode === 'none' ? 0 : 14 * padScale;
+      const panelStyle = normalizePanelStyle(state.text.hero.panelStyle);
+      state.text.hero.panelStyle = panelStyle;
+      const basePanelColor = panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
+      const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
+      const rgbPanel = hexToRgb(basePanelColor);
+      const panelColor = rgbPanel ? `rgba(${rgbPanel.r},${rgbPanel.g},${rgbPanel.b},${panelOpacity})` : `rgba(255,255,255,${panelOpacity})`;
+      const padBlockX = panelMode === 'none' ? 0 : 18 * padScale;
+      const padBlockY = panelMode === 'none' ? 0 : 14 * padScale;
+      const padSegmentX = panelMode === 'none' ? 0 : 18 * padScale;
+      const padSegmentY = panelMode === 'none' ? 0 : 12 * padScale;
       const radius = panelMode === 'none' ? 0 : 18 * padScale;
+      const lineSpacing = Math.max(0, lineHeightPx - fontSize);
       if(panelMode !== 'none'){
         ctx.save();
-        const basePanelColor = panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
-        const rgbPanel = hexToRgb(basePanelColor);
-        const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
-        const panelColor = rgbPanel ? `rgba(${rgbPanel.r},${rgbPanel.g},${rgbPanel.b},${panelOpacity})` : `rgba(255,255,255,${panelOpacity})`;
-        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
         ctx.fillStyle = panelColor;
-        ctx.fill();
+        if(panelStyle === 'segments'){
+          let segTop = baseTop;
+          for(let i=0;i<lines.length;i++){
+            const line = lines[i];
+            const width = lineWidths[i];
+            const trimmed = (line || '').trim();
+            const justifyLine = align === 'justify' && i < lines.length - 1 && trimmed.includes(' ');
+            const effectiveWidth = justifyLine ? maxWidth : width;
+            const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
+            const drawLeft = justifyLine ? baseLeft : lineLeft;
+            const segLeft = drawLeft - padSegmentX;
+            const segY = segTop - padSegmentY - (lineSpacing/2);
+            const segWidth = effectiveWidth + padSegmentX * 2;
+            const segHeight = fontSize + padSegmentY * 2 + lineSpacing;
+            drawRoundedRect(ctx, segLeft, segY, segWidth, segHeight, radius);
+            ctx.fill();
+            segTop += lineHeightPx;
+          }
+        } else {
+          drawRoundedRect(ctx, baseLeft - padBlockX, baseTop - padBlockY, maxWidth + padBlockX * 2, totalHeight + padBlockY * 2, radius);
+          ctx.fill();
+        }
         ctx.restore();
       }
       let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
@@ -5071,7 +5592,6 @@
         grad.addColorStop(1, end);
         fillStyle = grad;
       }
-      ctx.fillStyle = fillStyle;
       const drawLine = (text, startX, startY, width, isLastLine)=>{
         if(!text){ return; }
         const shouldJustify = align === 'justify' && !isLastLine && text.trim().includes(' ');
@@ -5105,14 +5625,42 @@
           x += ctx.measureText(ch).width + letterSpacing;
         }
       };
-      let y = baseTop;
-      for(let i=0;i<lines.length;i++){
-        const line = lines[i];
-        const width = lineWidths[i];
-        const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
-        drawLine(line, align === 'justify' ? baseLeft : lineLeft, y, width, i === lines.length - 1);
-        y += lineHeightPx;
+      const paintLines = ()=>{
+        let y = baseTop;
+        for(let i=0;i<lines.length;i++){
+          const line = lines[i];
+          const width = lineWidths[i];
+          const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
+          drawLine(line, align === 'justify' ? baseLeft : lineLeft, y, width, i === lines.length - 1);
+          y += lineHeightPx;
+        }
+      };
+      const heroShadow = computeHeroShadow(state.text.hero.shadow);
+      if(heroShadow.enabled){
+        const paintShadow = (blurValue)=>{
+          if(blurValue <= 0) return;
+          ctx.save();
+          ctx.fillStyle = fillStyle;
+          ctx.shadowColor = heroShadow.rgba;
+          ctx.shadowBlur = blurValue;
+          ctx.shadowOffsetX = heroShadow.offsetX;
+          ctx.shadowOffsetY = heroShadow.offsetY;
+          paintLines();
+          ctx.restore();
+        };
+        paintShadow(heroShadow.blur);
+        if(heroShadow.innerBlur > 0 && heroShadow.innerBlur !== heroShadow.blur){
+          paintShadow(heroShadow.innerBlur);
+        }
       }
+      ctx.save();
+      ctx.fillStyle = fillStyle;
+      ctx.shadowColor = 'transparent';
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+      paintLines();
+      ctx.restore();
       ctx.restore();
     }
 
@@ -5276,8 +5824,29 @@
     if(!state.dragging) return;
     const dx = (e.clientX - state.dragging.startX)/state.previewZoom;
     const dy = (e.clientY - state.dragging.startY)/state.previewZoom;
-    state.offset.x = Math.max(-state.limits.x, Math.min(state.dragging.ox + dx, state.limits.x));
-    state.offset.y = Math.max(-state.limits.y, Math.min(state.dragging.oy + dy, state.limits.y));
+    let nextX = Math.max(-state.limits.x, Math.min(state.dragging.ox + dx, state.limits.x));
+    let nextY = Math.max(-state.limits.y, Math.min(state.dragging.oy + dy, state.limits.y));
+    guideSnapActive = { vertical:false, horizontal:false };
+    if(!state.guidesHidden && els.stage){
+      const stageW = els.stage.clientWidth;
+      const stageH = els.stage.clientHeight;
+      if(stageW > 0 && stageH > 0){
+        const centerX = stageW / 2 + (nextX * state.previewZoom);
+        const centerY = stageH / 2 + (nextY * state.previewZoom);
+        if(typeof guidePositions.vertical === 'number' && Math.abs(centerX - guidePositions.vertical) <= HERO_SNAP_THRESHOLD){
+          const snapOffset = (guidePositions.vertical - stageW / 2) / state.previewZoom;
+          nextX = Math.max(-state.limits.x, Math.min(state.limits.x, snapOffset));
+          guideSnapActive.vertical = true;
+        }
+        if(typeof guidePositions.horizontal === 'number' && Math.abs(centerY - guidePositions.horizontal) <= HERO_SNAP_THRESHOLD){
+          const snapOffset = (guidePositions.horizontal - stageH / 2) / state.previewZoom;
+          nextY = Math.max(-state.limits.y, Math.min(state.limits.y, snapOffset));
+          guideSnapActive.horizontal = true;
+        }
+      }
+    }
+    state.offset.x = nextX;
+    state.offset.y = nextY;
     render();
   });
   window.addEventListener('mouseup', ()=>{
@@ -5285,7 +5854,9 @@
       state.dragging=null;
       els.imageLayer.classList.remove('dragging');
       els.stage.classList.remove('dragging');
+      guideSnapActive = { vertical:false, horizontal:false };
       serializeCurrent();
+      render();
     }
   });
   window.addEventListener('keydown', (e)=>{
@@ -5340,20 +5911,20 @@
     if(els.toggleVertLogo){
       els.toggleVertLogo.checked = true;
       state.vertLogo.enabled = true;
-      if(els.vertLogoBlock){ els.vertLogoBlock.style.display = 'grid'; }
+      if(els.vertLogoBlock){ els.vertLogoBlock.style.display = 'flex'; }
     }
   } else {
     if(els.toggleLogo2 && els.logo2Block){
-      els.logo2Block.style.display = els.toggleLogo2.checked ? 'grid' : 'none';
+      els.logo2Block.style.display = els.toggleLogo2.checked ? 'flex' : 'none';
     }
     if(els.toggleVertLogo && els.vertLogoBlock){
-      els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'grid' : 'none';
+      els.vertLogoBlock.style.display = els.toggleVertLogo.checked ? 'flex' : 'none';
     }
     if(els.toggleSqLogo && els.sqLogoBlock){
-      els.sqLogoBlock.style.display = els.toggleSqLogo.checked ? 'grid' : 'none';
+      els.sqLogoBlock.style.display = els.toggleSqLogo.checked ? 'flex' : 'none';
     }
     if(els.toggleBannerLogo && els.bannerLogoBlock){
-      els.bannerLogoBlock.style.display = els.toggleBannerLogo.checked ? 'grid' : 'none';
+      els.bannerLogoBlock.style.display = els.toggleBannerLogo.checked ? 'flex' : 'none';
     }
   }
   fitPreviewZoomToStage();
