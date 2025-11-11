@@ -151,10 +151,28 @@
   .image-layer img{display:block; user-select:none; pointer-events:none}
 
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
+  #stageShell{position:relative}
+  #stageShell.fullscreen-sim{position:fixed; inset:0; z-index:120; background:var(--stageBg); padding:24px; display:flex; align-items:center; justify-content:center}
+  #stageShell.fullscreen-sim .stage-inner{margin:0; width:100%; height:100%; max-width:1200px; max-height:100%; border-radius:18px}
+  body.fullscreen-lock{overflow:hidden}
+  #stageShell:fullscreen{padding:24px; display:flex; align-items:center; justify-content:center}
+  #stageShell:fullscreen .stage-inner{margin:0; width:100%; height:100%; max-width:1200px; max-height:100%; border-radius:18px}
+  .stageOverlayBtn{position:absolute; top:16px; right:16px; z-index:70; display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:10px; border:1px solid rgba(148,163,184,0.35); background:rgba(15,23,42,0.6); color:#fff; font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; cursor:pointer; backdrop-filter:blur(12px); box-shadow:0 10px 30px rgba(15,23,42,0.3); transition:background .2s ease, color .2s ease, transform .2s ease}
+  .stageOverlayBtn:hover{transform:translateY(-1px); background:rgba(59,130,246,0.72)}
+  .stageOverlayBtn .btn-ico{width:16px; height:16px; stroke:currentColor; flex-shrink:0}
+  .stageOverlayBtn[hidden]{display:none}
+  .stageRuler{position:absolute; pointer-events:none; z-index:38; opacity:0.45; transition:opacity .18s ease, border-color .18s ease}
+  .stageRuler.vertical{top:0; bottom:0; border-left:1px dashed rgba(255,255,255,0.65)}
+  .stageRuler.horizontal{left:0; right:0; border-top:1px dashed rgba(255,255,255,0.65)}
+  .stageRuler.active{opacity:0.9; border-color:rgba(96,165,250,0.95)}
+  .stage-inner.guides-hidden .frame{border-color:transparent; box-shadow:0 0 0 9999px rgba(148,163,184,0.55)}
+  .stage-inner.guides-hidden .stageRuler{display:none}
+  .stage-inner.guides-hidden .resizeHandle{display:none !important}
+  .stage-inner.guides-hidden .stageHint{display:none}
 
   .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -6px 28px rgba(2,6,23,0.24); pointer-events:none; z-index:40;}
   .frostBg{position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; transition:background-image .2s ease, opacity .2s ease; filter:none;}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(15,23,42,0.28),rgba(15,23,42,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -12px 24px rgba(2,6,23,0.3)}
+  .veil{position:absolute; inset:0; pointer-events:none; mix-blend-mode:normal; transition:opacity .2s ease, background .2s ease}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
@@ -162,7 +180,7 @@
   .serialPreview{position:absolute; font-family:'SF Pro Text', ui-sans-serif, system-ui; font-size:16px; letter-spacing:0.08em; text-transform:uppercase; font-weight:600; z-index:44; display:none; pointer-events:none; white-space:nowrap; text-shadow:0 1px 2px rgba(15,23,42,0.28)}
   .serialPreview span{display:inline-block}
   .heroText{position:absolute; z-index:32; min-width:120px; display:none; cursor:grab; user-select:none; transition:box-shadow .15s ease, transform .15s ease; transform:translate(-50%,-50%); pointer-events:auto}
-  .heroText::after{content:""; position:absolute; inset:-10px; border-radius:22px; border:1.5px dashed rgba(255,255,255,0.65); box-shadow:0 8px 20px rgba(15,23,42,0.16); opacity:0; pointer-events:none; transition:opacity .18s ease}
+  .heroText::after{content:""; position:absolute; inset:-8px; border-radius:22px; border:1.5px dashed rgba(255,255,255,0.65); box-shadow:0 8px 20px rgba(15,23,42,0.16); opacity:0; pointer-events:none; transition:opacity .18s ease}
   .heroText:focus::after, .heroText:focus-within::after, .heroText.dragging::after, .heroText.resizing::after, .heroText.editing::after{opacity:1}
   .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText.resizing{cursor:nwse-resize}
@@ -171,9 +189,10 @@
   .heroText[data-align="center"] .heroInner{text-align:center}
   .heroText[data-align="right"] .heroInner{text-align:right}
   .heroText[data-panel="none"]{padding:0; background:transparent; border-radius:0; box-shadow:none}
-  .heroText[data-panel="light"], .heroText[data-panel="dark"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
-  .heroText[data-panel="light"]{background:rgba(255,255,255,0.68)}
-  .heroText[data-panel="dark"]{background:rgba(15,23,42,0.68)}
+  .heroText[data-panel="light"], .heroText[data-panel="dark"], .heroText[data-panel="custom"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
+  .heroText[data-panel="light"],
+  .heroText[data-panel="dark"],
+  .heroText[data-panel="custom"]{background:var(--hero-panel-bg, rgba(255,255,255,0.8))}
   .heroEditor{position:absolute; inset:0; min-width:100%; min-height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor; overflow:hidden; pointer-events:auto}
   .heroText.editing .heroEditor{display:block}
   .heroText.editing .heroInner{visibility:hidden}
@@ -182,11 +201,10 @@
   .heroText[data-active="true"] .heroHandle{pointer-events:auto}
   .heroText[data-active="false"] .heroHandle{display:none}
   .heroText:hover .heroHandle, .heroText.dragging .heroHandle, .heroText.resizing .heroHandle{opacity:1}
-  .heroHandle[data-corner="nw"], .heroHandle[data-corner="ne"], .heroHandle[data-corner="se"], .heroHandle[data-corner="sw"]{transform:translate(-50%,-50%)}
-  .heroHandle[data-corner="nw"]{top:-10px; left:-10px; cursor:nwse-resize}
-  .heroHandle[data-corner="ne"]{top:-10px; right:-10px; cursor:nesw-resize}
-  .heroHandle[data-corner="se"]{bottom:-10px; right:-10px; cursor:nwse-resize}
-  .heroHandle[data-corner="sw"]{bottom:-10px; left:-10px; cursor:nesw-resize}
+  .heroHandle[data-corner="nw"], .heroHandle[data-corner="ne"], .heroHandle[data-corner="se"], .heroHandle[data-corner="sw"]{top:-8px; left:-8px; transform:none}
+  .heroHandle[data-corner="ne"]{left:calc(100% + 8px); cursor:nesw-resize}
+  .heroHandle[data-corner="se"]{top:calc(100% + 8px); left:calc(100% + 8px); cursor:nwse-resize}
+  .heroHandle[data-corner="sw"]{top:calc(100% + 8px); cursor:nesw-resize}
   .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
   .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
   .toneHint{display:block; font-size:12px; color:var(--muted); margin-top:6px}
@@ -225,6 +243,12 @@
   .heroGradientAngle{display:grid; gap:6px}
   .heroGradientAngle label{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
   .heroPanelRow .seg{flex-wrap:nowrap}
+  .heroPanelControls{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .heroPanelOpacity{display:grid; gap:6px; min-width:160px}
+  .heroPanelOpacity label{font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted)}
+  .heroPanelOpacityControl{display:flex; align-items:center; gap:10px}
+  .heroPanelOpacityControl input[type="range"]{flex:1}
+  .heroPanelOpacityValue{font-size:12px; font-weight:600; color:var(--muted); min-width:42px; text-align:right}
   .textFieldRow{display:grid; gap:10px}
   .textFieldRow label{font-size:13px; font-weight:600}
   .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
@@ -233,12 +257,15 @@
   .cornerPicker button.active{border-color:var(--brand); box-shadow:0 6px 16px rgba(14,165,233,0.18)}
   .cornerPicker button.active svg{stroke:var(--brand2)}
   .serialColorRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
-  .serialColorRow .seg{flex-shrink:0}
-  .serialColorRow input[type="text"]{width:120px}
+  .serialColorRow .logoControlLabel{margin-right:4px}
+  .serialColorRow .seg{flex-wrap:nowrap}
+  .serialColorRow .colorField{flex:0 0 140px}
   .heroGrid{display:grid; gap:14px}
   .heroRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
   .heroRow label{font-size:13px; font-weight:600}
   .heroRow select, .heroRow input[type="number"], .heroRow input[type="text"]{min-width:110px}
+  .heroFontRow{align-items:flex-end}
+  .heroFontRow .inputStack{flex:1; min-width:140px}
   .alignSeg{display:inline-flex; gap:6px; padding:4px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
   .alignSeg button{all:unset; display:grid; place-items:center; padding:8px 12px; border-radius:10px; cursor:pointer; color:var(--muted); transition:all .15s ease}
   .alignSeg button svg{width:18px; height:18px; stroke:currentColor; stroke-width:1.8}
@@ -372,10 +399,10 @@
 
   .switchGroup{display:flex; flex-direction:column; gap:12px; align-items:stretch; margin-bottom:20px; padding:14px 16px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
   .switchGroupRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
-  .overlaySliderLabel{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; padding:10px 14px; border-radius:14px; border:1px solid var(--border); background:var(--chip-bg); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
-  .overlaySliderLabel .overlayLabelText{white-space:nowrap}
-  .overlaySliderLabel input{grid-column:2/3; width:100%; margin:0}
-  .overlaySliderLabel .overlayValue{font-size:13px; color:var(--ink); letter-spacing:normal; text-transform:none; justify-self:end; min-width:48px; text-align:right}
+  .toneSliderLabel{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; padding:10px 14px; border-radius:14px; border:1px solid var(--border); background:var(--chip-bg); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+  .toneSliderLabel .toneLabelText{white-space:nowrap}
+  .toneSliderLabel input{grid-column:2/3; width:100%; margin:0}
+  .toneSliderLabel .toneValue{font-size:13px; color:var(--ink); letter-spacing:normal; text-transform:none; justify-self:end; min-width:48px; text-align:right}
   .logoSection{position:relative; border:1px solid var(--border); border-radius:20px; background:var(--stageInner); box-shadow:0 14px 32px rgba(15,23,42,0.08); overflow:hidden; display:flex; flex-direction:column; gap:0}
   .logoSection::before{content:""; position:absolute; inset:0 0 auto 0; height:6px; background:linear-gradient(90deg,var(--brand),var(--brand2)); opacity:0.8}
   .logoSection + .logoSection{margin-top:18px}
@@ -454,6 +481,8 @@
   .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
   .previewControlRow{display:flex; flex-wrap:wrap; align-items:center; gap:16px}
+  .previewActions{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-left:auto}
+  .previewActions .btn{white-space:nowrap}
   .previewZoomControl{display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:1 1 auto; min-width:220px; flex-wrap:nowrap}
   .previewZoomControl .muted{font-size:13px; white-space:nowrap}
   .previewZoomControl input[type="range"]{flex:1 1 auto; min-width:120px; width:auto}
@@ -475,12 +504,13 @@
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
 
-  .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:center; gap:0; min-width:56px; max-width:56px; height:56px; padding:0; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .36s cubic-bezier(.4,0,.2,1), padding .36s cubic-bezier(.4,0,.2,1), border-radius .36s cubic-bezier(.4,0,.2,1), transform .36s cubic-bezier(.22,.61,.36,1), box-shadow .36s cubic-bezier(.22,.61,.36,1), background .3s ease, color .3s ease;}
+  .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:flex-start; gap:12px; min-width:56px; max-width:220px; height:56px; padding:0 18px; border-radius:999px; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .36s cubic-bezier(.4,0,.2,1), padding .36s cubic-bezier(.4,0,.2,1), border-radius .36s cubic-bezier(.4,0,.2,1), transform .4s cubic-bezier(.22,.61,.36,1), box-shadow .4s cubic-bezier(.22,.61,.36,1), background .3s ease, color .3s ease;}
   .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .3s cubic-bezier(.22,.61,.36,1)}
-  .floatingFab .fab-label{font-size:13px; font-weight:600; opacity:0; max-width:0; transform:translateX(8px); transition:opacity .28s ease, transform .28s ease, max-width .36s cubic-bezier(.4,0,.2,1); white-space:nowrap}
-  .floatingFab:hover, .floatingFab:focus-visible{max-width:220px; padding:0 20px 0 18px; border-radius:999px; justify-content:flex-start; gap:12px}
+  .floatingFab .fab-label{font-size:13px; font-weight:600; opacity:0; max-width:0; transform:translateX(12px); transition:opacity .28s ease, transform .32s ease, max-width .36s cubic-bezier(.4,0,.2,1); white-space:nowrap}
+  .floatingFab:not(:hover):not(:focus-visible){max-width:56px; padding:0; border-radius:50%; justify-content:center; gap:0}
+  .floatingFab:not(:hover):not(:focus-visible) .fab-label{opacity:0; transform:translateX(12px); max-width:0}
   .floatingFab:hover .fab-label, .floatingFab:focus-visible .fab-label{opacity:1; transform:translateX(0); max-width:160px}
-  .floatingFab:hover{transform:translateY(-2px); box-shadow:0 26px 46px rgba(15,23,42,0.22)}
+  .floatingFab:hover{transform:translate3d(0,-4px,0); box-shadow:0 24px 44px rgba(15,23,42,0.22)}
   .floatingFab:focus-visible{outline:3px solid rgba(14,165,233,0.45); outline-offset:3px}
   .floatingFab .fabIconWrap{display:inline-grid; place-items:center; width:32px; height:32px; position:relative; flex-shrink:0}
 
@@ -517,7 +547,7 @@
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
   :root[data-theme="dark"] .dropOverlay{background:rgba(14,165,233,0.22); color:#e0f2fe}
-  :root[data-theme="dark"] .veil{box-shadow:inset 0 2px 6px rgba(2,6,23,0.5)}
+  :root[data-theme="dark"] .veil{mix-blend-mode:normal}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
   :root[data-theme="dark"] .switchGroup{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 16px 36px rgba(2,6,23,0.6)}
   :root[data-theme="dark"] input[type="search"], :root[data-theme="dark"] input[type="url"], :root[data-theme="dark"] select{border-color:rgba(148,163,184,0.45); box-shadow:0 10px 26px rgba(1,9,23,0.35)}
@@ -577,7 +607,7 @@
       <h2>Frozone</h2>
       <p class="introTagline">LiveOps creative toolkit</p>
     </div>
-    <span class="introVersion">v6.18</span>
+    <span class="introVersion">v2.24</span>
   </div>
   <header id="appHeader">
     <div class="wrap inner">
@@ -865,10 +895,10 @@
               <label class="switch"><input type="checkbox" id="togglePlay"><span class="tgl"><span class="knob"></span></span><span class="lbl">Play button</span></label>
               <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
             </div>
-            <label id="overlayLabel" class="overlaySliderLabel" for="overlayAlpha">
-              <span class="overlayLabelText">Overlay opacity</span>
-              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
-              <span class="overlayValue"><span id="overlayAlphaVal">30</span>%</span>
+            <label id="frostToneLabel" class="toneSliderLabel" for="frostTone">
+              <span class="toneLabelText">Frost tone</span>
+              <input id="frostTone" type="range" min="0" max="100" value="50">
+              <span class="toneValue"><span id="frostToneVal">0</span></span>
             </label>
           </div>
 
@@ -903,7 +933,7 @@
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
-                  <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                  <span class="toneHint">Check partner brand rules before changing.</span>
                 </div>
               </div>
               <div class="libWrap">
@@ -950,7 +980,7 @@
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
-                  <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                  <span class="toneHint">Check partner brand rules before changing.</span>
                 </div>
               </div>
               <div class="libWrap">
@@ -991,7 +1021,7 @@
                   <button data-tone="white">White</button>
                   <button data-tone="black">Black</button>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                <span class="toneHint">Check partner brand rules before changing.</span>
               </div>
               <div class="libWrap">
                 <div class="libHeader">
@@ -1024,7 +1054,7 @@
                   <button data-tone="white">White</button>
                   <button data-tone="black">Black</button>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                <span class="toneHint">Check partner brand rules before changing.</span>
               </div>
               <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
               <div class="libWrap">
@@ -1065,7 +1095,7 @@
               </div>
               <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
-            <div class="toneHint">Check partner brand rules before changing logo colours.</div>
+            <div class="toneHint">Check partner brand rules before changing.</div>
             <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
             <div class="libWrap">
               <div class="libHeader">
@@ -1102,17 +1132,15 @@
                 </div>
               </div>
               <div class="serialColorRow">
-                <div class="serialOptions">
-                  <span class="logoControlLabel">Colour</span>
-                  <div class="seg" id="serialColorSeg">
-                    <button type="button" data-color="black" class="active">Black</button>
-                    <button type="button" data-color="white">White</button>
-                    <button type="button" data-color="custom">Custom</button>
-                  </div>
+                <span class="logoControlLabel">Colour</span>
+                <div class="seg" id="serialColorSeg">
+                  <button type="button" data-color="black" class="active">Black</button>
+                  <button type="button" data-color="white">White</button>
+                  <button type="button" data-color="custom">Custom</button>
                 </div>
-                <div class="colorField" id="serialCustomWrap" style="display:none">
-                  <input id="serialCustomColor" type="text" placeholder="#111111" maxlength="7" class="colorHexInput" />
-                  <input id="serialCustomPicker" type="color" class="colorOverlay" value="#0f172a" />
+                <div class="colorField" id="serialColorField">
+                  <input id="serialColorHex" type="text" placeholder="#111111" maxlength="7" class="colorHexInput" />
+                  <input id="serialColorPicker" type="color" class="colorOverlay" value="#0f172a" />
                 </div>
               </div>
               <div class="serialFieldRow">
@@ -1132,27 +1160,31 @@
                 <textarea id="heroTextInput" rows="3" placeholder="Type hero message…"></textarea>
               </div>
               <div class="heroGrid">
-                <div class="heroRow">
-                  <label for="heroFontSelect">Font</label>
-                  <select id="heroFontSelect">
-                    <option>SF Pro Text</option>
-                    <option>Inter</option>
-                    <option>Roboto</option>
-                    <option>Helvetica Neue</option>
-                    <option>Arial</option>
-                    <option>Neue Frutigier World</option>
-                  </select>
-                  <label for="heroWeightSelect">Weight</label>
-                  <select id="heroWeightSelect">
-                    <option>Thin</option>
-                    <option>Light</option>
-                    <option>Regular</option>
-                    <option>Medium</option>
-                    <option>Semibold</option>
-                    <option selected>Heavy</option>
-                    <option>Bold</option>
-                    <option>Black</option>
-                  </select>
+                <div class="heroRow heroFontRow">
+                  <div class="inputStack">
+                    <label for="heroFontSelect">Font</label>
+                    <select id="heroFontSelect">
+                      <option>SF Pro Text</option>
+                      <option>Inter</option>
+                      <option>Roboto</option>
+                      <option>Helvetica Neue</option>
+                      <option>Arial</option>
+                      <option>Neue Frutigier World</option>
+                    </select>
+                  </div>
+                  <div class="inputStack">
+                    <label for="heroWeightSelect">Weight</label>
+                    <select id="heroWeightSelect">
+                      <option>Thin</option>
+                      <option>Light</option>
+                      <option>Regular</option>
+                      <option>Medium</option>
+                      <option>Semibold</option>
+                      <option selected>Heavy</option>
+                      <option>Bold</option>
+                      <option>Black</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="heroMetricGrid">
                   <div class="heroControl">
@@ -1173,6 +1205,7 @@
                       <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
                       <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
                       <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                      <button type="button" data-align="justify" aria-label="Align full width"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="22" y2="14"></line><line x1="6" y1="20" x2="22" y2="20"></line></svg></button>
                     </div>
                   </div>
                 </div>
@@ -1209,10 +1242,24 @@
                 </div>
                 <div class="heroRow heroPanelRow">
                   <span class="logoControlLabel">Background panel</span>
-                  <div class="seg" id="heroPanelSeg">
-                    <button type="button" data-panel="none" class="active">None</button>
-                    <button type="button" data-panel="light">Light</button>
-                    <button type="button" data-panel="dark">Dark</button>
+                  <div class="heroPanelControls">
+                    <div class="seg" id="heroPanelSeg">
+                      <button type="button" data-panel="none" class="active">None</button>
+                      <button type="button" data-panel="light">Light</button>
+                      <button type="button" data-panel="dark">Dark</button>
+                      <button type="button" data-panel="custom">Custom</button>
+                    </div>
+                    <div class="colorField" id="heroPanelColorField" style="display:none">
+                      <input id="heroPanelHex" type="text" value="#0f172a" maxlength="7" class="colorHexInput" />
+                      <input id="heroPanelPicker" type="color" class="colorOverlay" value="#0f172a" />
+                    </div>
+                  </div>
+                </div>
+                <div class="heroPanelOpacity" id="heroPanelOpacityWrap" style="display:none">
+                  <label for="heroPanelOpacity">Panel transparency</label>
+                  <div class="heroPanelOpacityControl">
+                    <input id="heroPanelOpacity" type="range" min="5" max="100" value="75" />
+                    <span class="heroPanelOpacityValue" id="heroPanelOpacityValue">75%</span>
                   </div>
                 </div>
               </div>
@@ -1266,13 +1313,29 @@
             <span class="muted"><span id="zoomLabel">1.00</span>×</span>
             <input id="previewZoom" type="range" min="0.5" max="3" step="0.1" value="1">
           </div>
+          <div class="previewActions">
+            <button class="btn small ghost" type="button" id="fullscreenBtn">
+              <i data-lucide="maximize-2" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Full screen</span>
+            </button>
+            <button class="btn small ghost" type="button" id="toggleGuidesBtn">
+              <i data-lucide="grid" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Hide rulers</span>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="stage">
+      <div class="stage" id="stageShell">
         <div class="stage-inner" id="stage">
+          <button type="button" class="stageOverlayBtn" id="exitFullscreenBtn" hidden>
+            <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
+            Exit full screen
+          </button>
           <div class="image-layer" id="imageLayer">
             <img id="img" alt="uploaded" />
           </div>
+          <div class="stageRuler vertical" id="verticalRuler" aria-hidden="true"></div>
+          <div class="stageRuler horizontal" id="horizontalRuler" aria-hidden="true"></div>
           <div class="frame" id="frame"></div>
           <div class="resizeHandle" data-corner="nw" aria-hidden="true"></div>
           <div class="resizeHandle" data-corner="ne" aria-hidden="true"></div>
@@ -1293,7 +1356,7 @@
             <div class="playBg" id="playBg"></div>
             <div class="playTri" aria-hidden="true">
               <svg viewBox="0 0 59 63" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 14 L44 31.5 L18 49 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
+                <path d="M18 14 L48 31.5 L18 49 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
               </svg>
             </div>
           </div>
@@ -1372,7 +1435,7 @@
       </div>
     </div>
   </div>
-  <div class="versionTag">V6.18</div>
+  <div class="versionTag">V2.24</div>
 
   <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -1468,14 +1531,20 @@
     moveX: document.getElementById('moveX'), xVal: document.getElementById('xVal'),
     moveY: document.getElementById('moveY'), yVal: document.getElementById('yVal'),
     previewZoom: document.getElementById('previewZoom'), zoomLabel: document.getElementById('zoomLabel'),
+    fullscreenBtn: document.getElementById('fullscreenBtn'),
+    toggleGuidesBtn: document.getElementById('toggleGuidesBtn'),
     exportBtn: document.getElementById('exportBtn'), exportAllBtn: document.getElementById('exportAllBtn'),
     outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
     batchMeta: document.getElementById('batchMeta'),
 
+    stageShell: document.getElementById('stageShell'),
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
     frame: document.getElementById('frame'),
     stageHint: document.getElementById('stageHint'),
+    verticalRuler: document.getElementById('verticalRuler'),
+    horizontalRuler: document.getElementById('horizontalRuler'),
+    exitFullscreenBtn: document.getElementById('exitFullscreenBtn'),
     bgSourceSection: document.getElementById('bgSourceSection'),
     bgGuidance: document.getElementById('bgGuidance'),
     bgTip3d: document.getElementById('bgTip3d'),
@@ -1558,9 +1627,9 @@
     serialCodeInput: document.getElementById('serialCodeInput'),
     serialCornerPicker: document.getElementById('serialCornerPicker'),
     serialColorSeg: document.getElementById('serialColorSeg'),
-    serialCustomWrap: document.getElementById('serialCustomWrap'),
-    serialCustomColor: document.getElementById('serialCustomColor'),
-    serialCustomPicker: document.getElementById('serialCustomPicker'),
+    serialColorField: document.getElementById('serialColorField'),
+    serialColorHex: document.getElementById('serialColorHex'),
+    serialColorPicker: document.getElementById('serialColorPicker'),
     serialApplyAll: document.getElementById('serialApplyAll'),
 
     toggleHero: document.getElementById('toggleHero'),
@@ -1583,6 +1652,12 @@
     heroGradEndPicker: document.getElementById('heroGradEndPicker'),
     heroGradAngle: document.getElementById('heroGradAngle'),
     heroPanelSeg: document.getElementById('heroPanelSeg'),
+    heroPanelColorField: document.getElementById('heroPanelColorField'),
+    heroPanelHex: document.getElementById('heroPanelHex'),
+    heroPanelPicker: document.getElementById('heroPanelPicker'),
+    heroPanelOpacity: document.getElementById('heroPanelOpacity'),
+    heroPanelOpacityValue: document.getElementById('heroPanelOpacityValue'),
+    heroPanelOpacityWrap: document.getElementById('heroPanelOpacityWrap'),
 
     serialPreview: document.getElementById('serialPreview'),
     serialTextPreview: document.getElementById('serialTextPreview'),
@@ -1593,7 +1668,7 @@
     heroInlineEditor: document.getElementById('heroInlineEditor'),
     heroHandles: Array.from(document.querySelectorAll('.heroHandle')),
 
-    overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
+    frostTone: document.getElementById('frostTone'), frostToneVal: document.getElementById('frostToneVal'), frostToneLabel: document.getElementById('frostToneLabel'),
 
     carousel: document.getElementById('imageCarousel'), carouselEmpty: document.getElementById('carouselEmpty'),
     deleteAllBtn: document.getElementById('deleteAllBtn'),
@@ -1638,6 +1713,11 @@
   const EXPORT_QUALITY_STEP = 0.01;
   const UNSPLASH_KEY = 'lS5t0PyTTNcbftZPooe7sNzTb7zLx5K82dY5UZGh6gw';
 
+  const HERO_POSITION_MARGIN = 0.35;
+  const SNAP_THRESHOLD_PX = 12;
+  const heroSnapTargets = { x: [], y: [] };
+  const rulerHighlight = { vertical:false, horizontal:false };
+
   function defaultTextState(){
     return {
       serial: { enabled:false, value:'', corner:'top-left', color:'black', custom:'#0f172a', opacity:100, applyAll:false },
@@ -1655,7 +1735,9 @@
         solid:'#ffffff',
         gradient:{ start:'#0ea5e9', end:'#6366f1', angle:0 },
         position:{ x:0.5, y:0.42 },
-        panel:'none'
+        panel:'none',
+        panelColor:'#0f172a',
+        panelOpacity:75
       }
     };
   }
@@ -1779,6 +1861,7 @@
     return {
       frost: {
         enabled: state.frost.enabled,
+        tone: state.frost.tone,
         logo1: serializeLogoStore(state.frost.logo1),
         logo2: serializeLogoStore(state.frost.logo2),
         logo2Active: !!els.toggleLogo2?.checked
@@ -1846,6 +1929,7 @@
 
     if(data.frost){
       if(typeof data.frost.enabled === 'boolean'){ state.frost.enabled = data.frost.enabled; if(els.toggleFrost) els.toggleFrost.checked = state.frost.enabled; }
+      if(typeof data.frost.tone === 'number'){ state.frost.tone = Math.max(-1, Math.min(1, data.frost.tone)); }
       await applyLogoSnapshot(data.frost.logo1, els.logo1Prev, state.frost.logo1, 'logo1');
       await applyLogoSnapshot(data.frost.logo2, els.logo2Prev, state.frost.logo2, 'logo2');
       if(typeof data.frost.logo2Active === 'boolean' && els.toggleLogo2){
@@ -1895,7 +1979,7 @@
 
     frost: {
       enabled: true,
-      overlayAlpha: 0.30,
+      tone: 0,
       barHExp: 90, padYExp: 16, dockHExp: 65, padRightExp: 24, gapExp: 24,
       logo1: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
       logo2: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
@@ -1916,12 +2000,17 @@
       gradient:{ colors:['#38bdf8','#6366f1','#f472b6'], type:'linear', dataUrl:null, previewUrl:null, sourceName:'' },
       lastSelection:null
     },
+    ui: {
+      guidesHidden:false,
+      fullscreen:false
+    }
   };
 
   let frameMetrics = { left:0, top:0, width:0, height:0 };
   let frostPreviewCache = { key:null, data:null };
   let resizeState = null;
   let gradientPreviewFrame = null;
+  let fullscreenSim = false;
 
   if(els.img){
     els.img.crossOrigin = 'anonymous';
@@ -2108,6 +2197,28 @@
     const isBannerFormat = state.format.key==='BANNER';
     const isTextFormat = isHorizontal || isSquare || isVertical;
 
+    if(els.toggleGuidesBtn){
+      const hidden = !!state.ui.guidesHidden;
+      const textEl = els.toggleGuidesBtn.querySelector('.btn-text');
+      if(textEl){ textEl.textContent = hidden ? 'Show rulers' : 'Hide rulers'; }
+      els.toggleGuidesBtn.setAttribute('aria-pressed', hidden ? 'true' : 'false');
+    }
+    if(els.fullscreenBtn){
+      const active = !!state.ui.fullscreen;
+      const textEl = els.fullscreenBtn.querySelector('.btn-text');
+      if(textEl){ textEl.textContent = active ? 'Exit full screen' : 'Full screen'; }
+      els.fullscreenBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      const iconEl = els.fullscreenBtn.querySelector('[data-lucide]');
+      const desiredIcon = active ? 'minimize-2' : 'maximize-2';
+      if(iconEl && iconEl.getAttribute('data-lucide') !== desiredIcon){
+        iconEl.setAttribute('data-lucide', desiredIcon);
+        refreshIcons();
+      }
+    }
+    if(els.exitFullscreenBtn){
+      els.exitFullscreenBtn.hidden = !state.ui.fullscreen;
+    }
+
     if(els.squareLogoSection){
       els.squareLogoSection.style.display = isSquare ? 'block' : 'none';
       const sqEnabled = state.squareLogo.enabled || !!state.squareLogo.src;
@@ -2147,15 +2258,20 @@
           btn.classList.toggle('active', color === state.text.serial.color);
         });
       }
-      if(els.serialCustomWrap){ els.serialCustomWrap.style.display = state.text.serial.color === 'custom' ? 'inline-flex' : 'none'; }
-      if(els.serialCustomColor){
-        const custom = normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
-        els.serialCustomColor.value = custom;
-        applyHexInputStyle(els.serialCustomColor, custom);
-      }
-      if(els.serialCustomPicker){
-        const pick = normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
-        els.serialCustomPicker.value = pick;
+      if(els.serialColorField){
+        const baseColor = state.text.serial.color === 'white'
+          ? '#ffffff'
+          : state.text.serial.color === 'black'
+            ? '#111111'
+            : normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
+        if(state.text.serial.color !== 'custom'){
+          state.text.serial.custom = baseColor;
+        }
+        if(els.serialColorHex){
+          els.serialColorHex.value = baseColor.toUpperCase();
+          applyHexInputStyle(els.serialColorHex, baseColor);
+        }
+        if(els.serialColorPicker){ els.serialColorPicker.value = normalizeHex(baseColor, '#0f172a'); }
       }
       if(els.serialOpacity){
         const opacity = Math.max(30, Math.min(100, Number(state.text.serial.opacity ?? 100)));
@@ -2211,6 +2327,27 @@
           btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
       }
+      if(els.heroPanelColorField){
+        const panel = state.text.hero.panel || 'none';
+        const showColor = panel === 'custom';
+        els.heroPanelColorField.style.display = showColor ? 'inline-flex' : 'none';
+        const panelHex = normalizeHex(state.text.hero.panelColor || '#0f172a', '#0f172a');
+        if(els.heroPanelHex){
+          els.heroPanelHex.value = panelHex.toUpperCase();
+          applyHexInputStyle(els.heroPanelHex, panelHex);
+        }
+        if(els.heroPanelPicker){ els.heroPanelPicker.value = panelHex; }
+      }
+      if(els.heroPanelOpacityWrap){
+        const panel = state.text.hero.panel || 'none';
+        const showOpacity = panel !== 'none';
+        els.heroPanelOpacityWrap.style.display = showOpacity ? 'grid' : 'none';
+        if(els.heroPanelOpacity){
+          const val = Math.max(5, Math.min(100, Number(state.text.hero.panelOpacity ?? 75)));
+          els.heroPanelOpacity.value = val;
+          if(els.heroPanelOpacityValue){ els.heroPanelOpacityValue.textContent = `${val}%`; }
+        }
+      }
     }
 
     els.bVal.textContent = state.brightness;
@@ -2238,16 +2375,47 @@
     const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || anyLogos);
     els.frostBar.style.display = shouldShowBar ? 'block' : 'none';
     els.frostBg.style.display = state.frost.enabled ? 'block' : 'none';
-    els.frostVeil.style.display = (state.frost.enabled && state.frost.overlayAlpha>0) ? 'block' : 'none';
+
+    const tone = Number.isFinite(state.frost.tone) ? state.frost.tone : 0;
+    const toneAbs = Math.abs(tone);
+    const showTone = state.frost.enabled && toneAbs > 0.01;
+    if(els.frostVeil){
+      if(showTone){
+        const absTone = Math.min(1, toneAbs);
+        if(tone >= 0){
+          const top = 0;
+          const mid = (0.18*absTone).toFixed(3);
+          const bottom = (0.34*absTone).toFixed(3);
+          els.frostVeil.style.background = `linear-gradient(180deg, rgba(255,255,255,0) ${top}%, rgba(255,255,255,${mid}) 55%, rgba(255,255,255,${bottom}) 100%)`;
+          els.frostVeil.style.mixBlendMode = 'screen';
+        } else {
+          const mid = (0.2*absTone).toFixed(3);
+          const bottom = (0.34*absTone).toFixed(3);
+          els.frostVeil.style.background = `linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,${mid}) 55%, rgba(15,23,42,${bottom}) 100%)`;
+          els.frostVeil.style.mixBlendMode = 'multiply';
+        }
+        els.frostVeil.style.display = 'block';
+        els.frostVeil.style.opacity = '1';
+      } else {
+        els.frostVeil.style.display = 'none';
+        els.frostVeil.style.background = 'transparent';
+        els.frostVeil.style.mixBlendMode = 'normal';
+      }
+    }
 
     els.playWrap.style.display = (state.format.key==='HORIZ' && state.play.enabled) ? 'block' : 'none';
 
-    els.overlayAlpha.disabled = !state.frost.enabled;
-    els.overlayLabel.classList.toggle('dim', !state.frost.enabled);
-    if(els.overlayAlpha){
-      const pct = Math.round(state.frost.overlayAlpha * 100);
-      els.overlayAlpha.value = pct.toString();
-      if(els.overlayAlphaVal){ els.overlayAlphaVal.textContent = pct.toString(); }
+    if(els.frostTone){
+      els.frostTone.disabled = !state.frost.enabled;
+      const sliderVal = Math.round(tone * 50 + 50);
+      const clamped = Math.max(0, Math.min(100, sliderVal));
+      if(Number(els.frostTone.value) !== clamped){ els.frostTone.value = clamped.toString(); }
+      if(els.frostToneVal){
+        const display = Math.round(((clamped - 50) / 50) * 50);
+        const prefix = display > 0 ? '+' : '';
+        els.frostToneVal.textContent = `${prefix}${display}`;
+      }
+      if(els.frostToneLabel){ els.frostToneLabel.classList.toggle('dim', !state.frost.enabled); }
     }
 
     [...els.logo1Seg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.size===state.frost.logo1.sizeKey));
@@ -2287,6 +2455,73 @@
     }
   }
 
+  function isNativeFullscreen(){
+    return !!document.fullscreenElement && document.fullscreenElement === els.stageShell;
+  }
+
+  function applyFullscreenState({ simulate } = {}){
+    const stage = els.stageShell;
+    const active = !!state.ui.fullscreen;
+    const useSim = simulate !== undefined ? simulate : fullscreenSim;
+    if(active){
+      document.body.classList.add('fullscreen-lock');
+      if(stage){
+        if(useSim){ stage.classList.add('fullscreen-sim'); fullscreenSim = true; }
+        else { stage.classList.remove('fullscreen-sim'); fullscreenSim = false; }
+      }
+    } else {
+      document.body.classList.remove('fullscreen-lock');
+      if(stage){ stage.classList.remove('fullscreen-sim'); }
+      fullscreenSim = false;
+    }
+  }
+
+  async function enterFullscreen(){
+    if(!els.stageShell) return;
+    state.ui.fullscreen = true;
+    if(els.stageShell.requestFullscreen){
+      try{
+        await els.stageShell.requestFullscreen();
+        fullscreenSim = false;
+        applyFullscreenState({ simulate:false });
+      } catch(err){
+        fullscreenSim = true;
+        applyFullscreenState({ simulate:true });
+      }
+    } else {
+      fullscreenSim = true;
+      applyFullscreenState({ simulate:true });
+    }
+    updateControls();
+    render();
+  }
+
+  async function exitFullscreen(){
+    if(isNativeFullscreen()){
+      try{ await document.exitFullscreen(); }catch(err){}
+      return;
+    }
+    if(state.ui.fullscreen || fullscreenSim){
+      state.ui.fullscreen = false;
+      applyFullscreenState({ simulate:false });
+      updateControls();
+      render();
+    }
+  }
+
+  function handleFullscreenChange(){
+    if(isNativeFullscreen()){
+      state.ui.fullscreen = true;
+      fullscreenSim = false;
+      applyFullscreenState({ simulate:false });
+    } else if(!fullscreenSim && state.ui.fullscreen){
+      state.ui.fullscreen = false;
+      applyFullscreenState({ simulate:false });
+    }
+    updateControls();
+    render();
+  }
+
   function setPreviewZoom(value, opts = {}){
     const maxZoom = state.previewZoomMax || 3;
     const clamped = Math.max(0.5, Math.min(maxZoom, value));
@@ -2313,6 +2548,7 @@
     Object.assign(els.frame.style, { width: fwPx+"px", height: fhPx+"px" });
 
     if(els.stage){
+      els.stage.classList.toggle('guides-hidden', !!state.ui.guidesHidden);
       els.stage.style.cursor = state.imageSrc ? 'grab' : 'default';
     }
 
@@ -2329,6 +2565,21 @@
     const frameLeftPx = (els.stage.clientWidth - fwPx)/2;
     const frameTopPx = (els.stage.clientHeight - fhPx)/2;
     frameMetrics = { left: frameLeftPx, top: frameTopPx, width: fwPx, height: fhPx };
+
+    heroSnapTargets.x.length = 0;
+    heroSnapTargets.y.length = 0;
+    rulerHighlight.vertical = false;
+    rulerHighlight.horizontal = false;
+
+    if(els.verticalRuler){
+      const stageMidX = frameLeftPx + fwPx/2;
+      els.verticalRuler.style.left = `${stageMidX}px`;
+      heroSnapTargets.x.push({ frame: fwPx/2, stage: stageMidX });
+    }
+
+    if(els.horizontalRuler){
+      els.horizontalRuler.hidden = state.format.key !== 'HORIZ';
+    }
 
     if(els.resizeHandles){
       const offset = (els.resizeHandles[0]?.offsetWidth || 18) / 2;
@@ -2361,11 +2612,25 @@
       const scaleYPrev = (state.format.hPreview/635) * state.previewZoom;
       const barHPrevPx = state.frost.barHExp * scaleYPrev;
       const barTopPx = frameTopPx + fhPx - barHPrevPx;
+      if(els.horizontalRuler){
+        const relMid = (barTopPx - frameTopPx) / 2;
+        const stageMidY = frameTopPx + relMid;
+        els.horizontalRuler.style.top = `${stageMidY}px`;
+        if(heroSnapTargets.y.length){
+          heroSnapTargets.y[0] = { frame: relMid, stage: stageMidY };
+        } else {
+          heroSnapTargets.y.push({ frame: relMid, stage: stageMidY });
+        }
+      }
       Object.assign(els.frostBar.style, { width: fwPx+'px', height: barHPrevPx+'px', top: barTopPx+'px' });
       els.logoDockPrev.style.paddingRight = (state.frost.padRightExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
       els.logoDockPrev.style.gap = (state.frost.gapExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
-      els.frostVeil.style.opacity = state.frost.overlayAlpha;
-      updateFrostPreviewTexture();
+      if(state.frost.enabled){
+        updateFrostPreviewTexture();
+      } else {
+        frostPreviewCache = { key:null, data:null };
+        els.frostBg.style.backgroundImage = '';
+      }
 
       const h1 = SIZE_MAP[state.frost.logo1.sizeKey] * scaleYPrev;
       const h2 = SIZE_MAP[state.frost.logo2.sizeKey] * scaleYPrev;
@@ -2470,7 +2735,25 @@
       els.heroTextPreview.dataset.align = state.text.hero.align || 'center';
       els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
       els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
-      els.heroTextPreview.dataset.panel = state.text.hero.panel || 'none';
+      const panelMode = state.text.hero.panel || 'none';
+      els.heroTextPreview.dataset.panel = panelMode;
+      const panelOpacityVal = Math.max(5, Math.min(100, Number(state.text.hero.panelOpacity ?? 75))) / 100;
+      const panelCustomHex = normalizeHex(state.text.hero.panelColor || '#0f172a', '#0f172a');
+      if(panelMode === 'none'){
+        els.heroTextPreview.style.removeProperty('--hero-panel-bg');
+      } else {
+        let panelColor = 'rgba(255,255,255,0.8)';
+        if(panelMode === 'light'){
+          panelColor = `rgba(255,255,255,${panelOpacityVal.toFixed(3)})`;
+        } else if(panelMode === 'dark'){
+          const {r,g,b} = hexToRgb('#050a14');
+          panelColor = `rgba(${r},${g},${b},${panelOpacityVal.toFixed(3)})`;
+        } else if(panelMode === 'custom'){
+          const {r,g,b} = hexToRgb(panelCustomHex);
+          panelColor = `rgba(${r},${g},${b},${panelOpacityVal.toFixed(3)})`;
+        }
+        els.heroTextPreview.style.setProperty('--hero-panel-bg', panelColor);
+      }
       inner.textContent = state.text.hero.value;
       inner.style.fontSize = fontPx.toFixed(2) + 'px';
       inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
@@ -2497,6 +2780,12 @@
         inner.style.webkitBackgroundClip = 'initial';
         inner.style.backgroundClip = 'initial';
       }
+      if(heroSnapTargets.x.length){
+        rulerHighlight.vertical = heroSnapTargets.x.some(target=>Math.abs(left - target.stage) <= SNAP_THRESHOLD_PX);
+      }
+      if(heroSnapTargets.y.length){
+        rulerHighlight.horizontal = heroSnapTargets.y.some(target=>Math.abs(top - target.stage) <= SNAP_THRESHOLD_PX);
+      }
       if(heroEditing && els.heroInlineEditor){
         const editorStyle = els.heroInlineEditor.style;
         editorStyle.fontSize = inner.style.fontSize;
@@ -2519,11 +2808,18 @@
       els.heroTextPreview.style.display = 'none';
       els.heroTextPreview.dataset.panel = 'none';
     }
+
+    if(els.verticalRuler){
+      els.verticalRuler.classList.toggle('active', !!rulerHighlight.vertical);
+    }
+    if(els.horizontalRuler){
+      els.horizontalRuler.classList.toggle('active', !!rulerHighlight.horizontal);
+    }
   }
 
   function updateFrostPreviewTexture(){
-    const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
-    if(!shouldShowBar || !state.imageSrc){
+    const shouldShowBar = (state.format.key==='HORIZ') && state.frost.enabled && state.imageSrc;
+    if(!shouldShowBar){
       frostPreviewCache = { key:null, data:null };
       els.frostBg.style.backgroundImage = '';
       return;
@@ -2538,7 +2834,8 @@
       state.previewZoom.toFixed(2),
       state.brightness,
       state.saturation,
-      state.contrast
+      state.contrast,
+      state.frost.tone.toFixed(3)
     ].join('|');
 
     if(frostPreviewCache.key === cacheKey && frostPreviewCache.data){
@@ -2579,13 +2876,13 @@
     sctx.drawImage(els.img, dx, dy, imgW, imgH);
     sctx.restore();
 
-    const frostCanvas = buildFrostCanvas(sampleCanvas, Math.max(4, Math.round(state.frost.barHExp * scale)));
+    const frostCanvas = buildFrostCanvas(sampleCanvas, Math.max(4, Math.round(state.frost.barHExp * scale)), state.frost.tone || 0);
     const dataURL = frostCanvas.toDataURL('image/png');
     frostPreviewCache = { key: cacheKey, data: dataURL };
     els.frostBg.style.backgroundImage = `url(${dataURL})`;
   }
 
-  function buildFrostCanvas(baseCanvas, barH){
+  function buildFrostCanvas(baseCanvas, barH, tone = 0){
     const fw = baseCanvas.width;
     const frostCanvas = document.createElement('canvas');
     frostCanvas.width = fw;
@@ -2603,6 +2900,26 @@
     const band = Math.max(1, Math.round(fw / (stops * 2.2)));
     const depth = Math.max(2, Math.round(captureH * 0.55));
     const colors = [];
+    const toneClamped = Math.max(-1, Math.min(1, Number.isFinite(tone) ? tone : 0));
+    const adjustTone = (rgb)=>{
+      if(toneClamped > 0){
+        const mix = toneClamped * 0.55;
+        return [
+          Math.round(rgb[0] + (255 - rgb[0]) * mix),
+          Math.round(rgb[1] + (255 - rgb[1]) * mix),
+          Math.round(rgb[2] + (255 - rgb[2]) * mix)
+        ];
+      }
+      if(toneClamped < 0){
+        const mix = Math.abs(toneClamped) * 0.55;
+        return [
+          Math.round(rgb[0] * (1 - mix)),
+          Math.round(rgb[1] * (1 - mix)),
+          Math.round(rgb[2] * (1 - mix))
+        ];
+      }
+      return rgb;
+    };
     for(let i=0;i<stops;i++){
       const t = stops===1 ? 0.5 : i/(stops-1);
       const cx = Math.round(t * (fw-1));
@@ -2616,8 +2933,8 @@
           count++;
         }
       }
-      if(count===0){ colors.push([240,244,248]); }
-      else { colors.push([Math.round(r/count), Math.round(g/count), Math.round(b/count)]); }
+      if(count===0){ colors.push(adjustTone([240,244,248])); }
+      else { colors.push(adjustTone([Math.round(r/count), Math.round(g/count), Math.round(b/count)])); }
     }
 
     const gradCanvas = document.createElement('canvas');
@@ -2641,28 +2958,33 @@
     }
 
     frostCtx.save();
-    frostCtx.filter = 'blur(18px)';
+    frostCtx.filter = 'blur(22px)';
     frostCtx.drawImage(gradCanvas, 0, 0);
     frostCtx.restore();
 
-    const tint = frostCtx.createLinearGradient(0, 0, 0, frostCanvas.height);
-    tint.addColorStop(0, 'rgba(18,27,45,0.36)');
-    tint.addColorStop(0.55, 'rgba(22,32,52,0.28)');
-    tint.addColorStop(1, 'rgba(10,16,30,0.4)');
-    frostCtx.fillStyle = tint;
-    frostCtx.fillRect(0, 0, fw, frostCanvas.height);
-
-    const edgeFade = frostCtx.createLinearGradient(0, 0, fw, 0);
-    edgeFade.addColorStop(0, 'rgba(10,16,30,0.24)');
-    edgeFade.addColorStop(0.5, 'rgba(10,16,30,0)');
-    edgeFade.addColorStop(1, 'rgba(10,16,30,0.24)');
-    frostCtx.fillStyle = edgeFade;
-    frostCtx.fillRect(0, 0, fw, frostCanvas.height);
-
-    frostCtx.fillStyle = 'rgba(255,255,255,0.18)';
-    frostCtx.fillRect(0, 0, fw, 1);
-    frostCtx.fillStyle = 'rgba(6,10,20,0.36)';
-    frostCtx.fillRect(0, frostCanvas.height-2, fw, 2);
+    if(toneClamped !== 0){
+      const absTone = Math.min(1, Math.abs(toneClamped));
+      const toneGrad = frostCtx.createLinearGradient(0, 0, 0, frostCanvas.height);
+      if(toneClamped > 0){
+        toneGrad.addColorStop(0, 'rgba(255,255,255,0)');
+        toneGrad.addColorStop(0.55, `rgba(255,255,255,${(0.18*absTone).toFixed(3)})`);
+        toneGrad.addColorStop(1, `rgba(255,255,255,${(0.32*absTone).toFixed(3)})`);
+        frostCtx.save();
+        frostCtx.globalCompositeOperation = 'screen';
+        frostCtx.fillStyle = toneGrad;
+        frostCtx.fillRect(0, 0, fw, frostCanvas.height);
+        frostCtx.restore();
+      } else {
+        toneGrad.addColorStop(0, 'rgba(15,23,42,0)');
+        toneGrad.addColorStop(0.55, `rgba(15,23,42,${(0.22*absTone).toFixed(3)})`);
+        toneGrad.addColorStop(1, `rgba(15,23,42,${(0.36*absTone).toFixed(3)})`);
+        frostCtx.save();
+        frostCtx.globalCompositeOperation = 'multiply';
+        frostCtx.fillStyle = toneGrad;
+        frostCtx.fillRect(0, 0, fw, frostCanvas.height);
+        frostCtx.restore();
+      }
+    }
 
     return frostCanvas;
   }
@@ -3987,7 +4309,30 @@
   els.moveY.addEventListener('input', e=>{ state.offset.y = +e.target.value; els.yVal.textContent = Math.round(state.offset.y); render(); serializeCurrent(); });
   els.previewZoom.addEventListener('input', e=>{ setPreviewZoom(+e.target.value, {force:true}); });
 
-  els.toggleFrost.addEventListener('change', ()=>{ state.frost.enabled = els.toggleFrost.checked; updateControls(); render(); });
+  els.toggleGuidesBtn?.addEventListener('click', ()=>{
+    state.ui.guidesHidden = !state.ui.guidesHidden;
+    render();
+    updateControls();
+  });
+
+  els.fullscreenBtn?.addEventListener('click', ()=>{
+    if(state.ui.fullscreen || fullscreenSim || isNativeFullscreen()){
+      exitFullscreen();
+    } else {
+      enterFullscreen();
+    }
+  });
+  els.exitFullscreenBtn?.addEventListener('click', ()=>{ exitFullscreen(); });
+
+  els.toggleFrost.addEventListener('change', ()=>{ state.frost.enabled = els.toggleFrost.checked; updateControls(); render(); persistLogoState(); });
+  els.frostTone?.addEventListener('input', (e)=>{
+    const sliderValue = Math.max(0, Math.min(100, Number(e.target.value)||50));
+    const normalized = (sliderValue - 50) / 50;
+    state.frost.tone = Math.max(-1, Math.min(1, normalized));
+    updateControls();
+    render();
+    persistLogoState();
+  });
   els.togglePlay.addEventListener('change', ()=>{ state.play.enabled = els.togglePlay.checked; updateControls(); render(); });
   els.toggleLogo2.addEventListener('change', ()=>{
     els.logo2Block.style.display = els.toggleLogo2.checked?'grid':'none';
@@ -4044,24 +4389,32 @@
   els.serialColorSeg?.addEventListener('click', (e)=>{
     const btn = e.target.closest('button'); if(!btn) return;
     const color = btn.dataset.color || 'black';
-    state.text.serial.color = color;
-    if(color !== 'custom'){ state.text.serial.custom = color === 'white' ? '#ffffff' : '#0f172a'; }
+    if(color === 'white'){
+      state.text.serial.color = 'white';
+      state.text.serial.custom = '#ffffff';
+    } else if(color === 'black'){
+      state.text.serial.color = 'black';
+      state.text.serial.custom = '#111111';
+    } else {
+      state.text.serial.color = 'custom';
+    }
     commitTextState({ propagateSerial: state.text.serial.applyAll });
   });
-  els.serialCustomColor?.addEventListener('input', (e)=>{
-    const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
-    if(val !== state.text.serial.custom){
-      state.text.serial.custom = val;
-      commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
-      applyHexInputStyle(els.serialCustomColor, val);
-    }
-  });
-  els.serialCustomPicker?.addEventListener('input', (e)=>{
+  els.serialColorHex?.addEventListener('input', (e)=>{
     const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
     state.text.serial.custom = val;
-    if(els.serialCustomColor){
-      els.serialCustomColor.value = val;
-      applyHexInputStyle(els.serialCustomColor, val);
+    state.text.serial.color = 'custom';
+    applyHexInputStyle(els.serialColorHex, val);
+    if(els.serialColorPicker){ els.serialColorPicker.value = val; }
+    commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+  });
+  els.serialColorPicker?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
+    state.text.serial.custom = val;
+    state.text.serial.color = 'custom';
+    if(els.serialColorHex){
+      els.serialColorHex.value = val.toUpperCase();
+      applyHexInputStyle(els.serialColorHex, val);
     }
     commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
   });
@@ -4175,24 +4528,72 @@
     state.text.hero.panel = panel;
     commitTextState({ refreshControls:false });
   });
+  els.heroPanelHex?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.hero.panelColor || '#0f172a');
+    state.text.hero.panelColor = val;
+    state.text.hero.panel = 'custom';
+    applyHexInputStyle(els.heroPanelHex, val);
+    if(els.heroPanelPicker){ els.heroPanelPicker.value = val; }
+    commitTextState({ refreshControls:false });
+  });
+  els.heroPanelPicker?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.hero.panelColor || '#0f172a');
+    state.text.hero.panelColor = val;
+    state.text.hero.panel = 'custom';
+    if(els.heroPanelHex){
+      els.heroPanelHex.value = val.toUpperCase();
+      applyHexInputStyle(els.heroPanelHex, val);
+    }
+    commitTextState({ refreshControls:false });
+  });
+  els.heroPanelOpacity?.addEventListener('input', (e)=>{
+    const raw = Math.max(5, Math.min(100, Number(e.target.value)||75));
+    state.text.hero.panelOpacity = raw;
+    if(els.heroPanelOpacityValue){ els.heroPanelOpacityValue.textContent = `${raw}%`; }
+    commitTextState({ refreshControls:false });
+  });
   let heroDrag = null;
   let heroResize = null;
   let heroEditing = false;
   function updateHeroPositionFromPointer(e){
     if(!frameMetrics.width || !frameMetrics.height) return;
     const stageRect = els.stage.getBoundingClientRect();
-    const x = e.clientX - stageRect.left - frameMetrics.left;
-    const y = e.clientY - stageRect.top - frameMetrics.top;
-    const normX = Math.max(0, Math.min(1, x / frameMetrics.width));
-    const normY = Math.max(0, Math.min(1, y / frameMetrics.height));
+    const pointerX = e.clientX - stageRect.left - frameMetrics.left;
+    const pointerY = e.clientY - stageRect.top - frameMetrics.top;
+    let targetX = pointerX;
+    let targetY = pointerY;
+    if(heroDrag && e.pointerId === heroDrag.id){
+      heroDrag.moved = true;
+      targetX += heroDrag.offsetX;
+      targetY += heroDrag.offsetY;
+    }
+    const margin = HERO_POSITION_MARGIN;
+    const minX = -frameMetrics.width * margin;
+    const maxX = frameMetrics.width * (1 + margin);
+    const minY = -frameMetrics.height * margin;
+    const maxY = frameMetrics.height * (1 + margin);
+    targetX = Math.max(minX, Math.min(maxX, targetX));
+    targetY = Math.max(minY, Math.min(maxY, targetY));
+    if(heroSnapTargets.x.length){
+      for(const snap of heroSnapTargets.x){
+        if(Math.abs(targetX - snap.frame) <= SNAP_THRESHOLD_PX){ targetX = snap.frame; break; }
+      }
+    }
+    if(heroSnapTargets.y.length){
+      for(const snap of heroSnapTargets.y){
+        if(Math.abs(targetY - snap.frame) <= SNAP_THRESHOLD_PX){ targetY = snap.frame; break; }
+      }
+    }
+    const normX = targetX / frameMetrics.width;
+    const normY = targetY / frameMetrics.height;
     state.text.hero.position = { x: normX, y: normY };
     state.text.hero.vAlign = 'middle';
     render();
   }
   const endHeroDrag = (e)=>{
-    if(heroDrag === null) return;
+    if(!heroDrag || (e && e.pointerId !== heroDrag.id)) return;
     if(els.heroTextPreview){
-      try{ els.heroTextPreview.releasePointerCapture(heroDrag); }catch(err){}
+      try{ els.heroTextPreview.releasePointerCapture(heroDrag.id); }catch(err){}
       els.heroTextPreview.classList.remove('dragging');
     }
     heroDrag = null;
@@ -4205,14 +4606,24 @@
     if(document.activeElement !== els.heroTextPreview){
       try{ els.heroTextPreview.focus({ preventScroll:true }); }catch(err){ els.heroTextPreview.focus(); }
     }
-    heroDrag = e.pointerId;
+    const stageRect = els.stage.getBoundingClientRect();
+    const pointerX = e.clientX - stageRect.left - frameMetrics.left;
+    const pointerY = e.clientY - stageRect.top - frameMetrics.top;
+    const pos = state.text.hero.position || { x:0.5, y:0.5 };
+    const centerX = (pos.x || 0.5) * frameMetrics.width;
+    const centerY = (pos.y || 0.5) * frameMetrics.height;
+    heroDrag = {
+      id: e.pointerId,
+      offsetX: centerX - pointerX,
+      offsetY: centerY - pointerY,
+      moved: false
+    };
     els.heroTextPreview.classList.add('dragging');
     els.heroTextPreview.setPointerCapture(e.pointerId);
-    updateHeroPositionFromPointer(e);
     e.preventDefault();
   });
   els.heroTextPreview?.addEventListener('pointermove', (e)=>{
-    if(heroDrag === null || e.pointerId !== heroDrag) return;
+    if(!heroDrag || e.pointerId !== heroDrag.id) return;
     updateHeroPositionFromPointer(e);
   });
   els.heroTextPreview?.addEventListener('pointerup', endHeroDrag);
@@ -4288,6 +4699,11 @@
     const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
     return getReadableInk(start);
   }
+  function syncHeroEditorSize(){
+    if(!els.heroInlineEditor) return;
+    els.heroInlineEditor.style.height = 'auto';
+    els.heroInlineEditor.style.height = `${Math.max(1, els.heroInlineEditor.scrollHeight)}px`;
+  }
   function openHeroEditor(){
     if(heroEditing) return;
     if(!els.heroInlineEditor || !els.heroTextPreview) return;
@@ -4310,12 +4726,13 @@
     const height = Math.max(1, containerRect.height);
     editorStyle.width = `${width}px`;
     editorStyle.minWidth = `${width}px`;
-    editorStyle.height = `${height}px`;
+    editorStyle.height = 'auto';
     editorStyle.minHeight = `${height}px`;
-    editorStyle.overflow = 'hidden';
+    editorStyle.overflow = 'visible';
     editorStyle.color = heroEditorTextColor();
     editorStyle.background = 'transparent';
     editorStyle.boxShadow = 'none';
+    syncHeroEditorSize();
     requestAnimationFrame(()=>{
       if(!els.heroInlineEditor) return;
       els.heroInlineEditor.focus({ preventScroll:true });
@@ -4332,6 +4749,7 @@
     els.heroInlineEditor.style.height = '';
     els.heroInlineEditor.style.minWidth = '';
     els.heroInlineEditor.style.minHeight = '';
+    els.heroInlineEditor.style.overflow = '';
     const nextValue = els.heroInlineEditor.value.replace(/\r\n/g,'\n');
     if(commit && nextValue !== state.text.hero.value){
       state.text.hero.value = nextValue;
@@ -4370,6 +4788,12 @@
       closeHeroEditor({ commit:true });
     }
   });
+  els.heroInlineEditor?.addEventListener('input', (e)=>{
+    state.text.hero.value = e.target.value;
+    if(els.heroTextInput){ els.heroTextInput.value = e.target.value; }
+    syncHeroEditorSize();
+    render();
+  });
   els.heroInlineEditor?.addEventListener('blur', ()=>{
     if(heroEditing){ closeHeroEditor({ commit:true }); }
   });
@@ -4383,8 +4807,6 @@
     applyVerticalVariant(v);
     fitPreviewZoomToStage(); render(); updateControls(); buildFormatChips();
   });
-
-  els.overlayAlpha.addEventListener('input', (e)=>{ state.frost.overlayAlpha = (+e.target.value)/100; els.overlayAlphaVal.textContent = Math.round(state.frost.overlayAlpha*100); updateControls(); render(); });
 
   function segSizeHandler(segEl, which, map){
     if(!segEl) return;
@@ -4628,37 +5050,10 @@
       const barH = state.frost.barHExp;
       const barY = fh - barH;
 
-      const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
-
-      if(shouldShowBar){
-        const frostCanvas = buildFrostCanvas(baseLayer, barH);
+      const frostActive = !!state.frost.enabled;
+      if(frostActive){
+        const frostCanvas = buildFrostCanvas(baseLayer, barH, state.frost.tone || 0);
         ctx.drawImage(frostCanvas, 0, barY);
-      }
-
-      if(state.frost.enabled){
-        const overlayStrength = Math.max(0, Math.min(1, state.frost.overlayAlpha));
-        if(overlayStrength > 0){
-          ctx.save();
-          const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.08 + overlayStrength*0.18})`);
-          grad.addColorStop(0.55, `rgba(24,33,52,${0.22 + overlayStrength*0.2})`);
-          grad.addColorStop(1, `rgba(9,14,26,${0.32 + overlayStrength*0.22})`);
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, barY, fw, barH);
-          ctx.restore();
-        }
-        ctx.save();
-        const edgeShade = ctx.createLinearGradient(0, barY, fw, barY);
-        const edgeAlpha = 0.18 + overlayStrength*0.12;
-        edgeShade.addColorStop(0, `rgba(8,12,24,${edgeAlpha})`);
-        edgeShade.addColorStop(0.5, 'rgba(8,12,24,0)');
-        edgeShade.addColorStop(1, `rgba(8,12,24,${edgeAlpha})`);
-        ctx.fillStyle = edgeShade;
-        ctx.fillRect(0, barY, fw, barH);
-        ctx.restore();
-
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.12; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.28 + overlayStrength*0.18; ctx.fillStyle = 'rgba(6,10,20,1)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
@@ -4682,42 +5077,6 @@
       if(state.frost.logo1.src && state.frost.logo2.src){ x -= gap; ctx.fillStyle='rgba(98,101,106,1)'; ctx.fillRect(x, barY + Math.round((state.frost.barHExp - sepH)/2), 1, sepH); x -= gap; }
       if(state.frost.logo1.src){ const m1 = await drawLogo(ctx, state.frost.logo1.src, h1, state.frost.logo1.tone, x); x -= m1.w; }
 
-      // Play badge (fake background blur)
-      if(state.play.enabled){
-        const d = state.play.sizeExp;
-        const cy = (fh - state.frost.barHExp)/2; const cx = fw/2; const r = d/2;
-
-        const pad = Math.round(d * 0.45);
-        const sampleSize = d + pad*2;
-        const sx = Math.max(0, Math.round(cx - sampleSize/2));
-        const sy = Math.max(0, Math.round(cy - sampleSize/2));
-        const sw = Math.min(sampleSize, fw - sx);
-        const sh = Math.min(sampleSize, fh - sy);
-        const sampleCanvas = document.createElement('canvas');
-        sampleCanvas.width = sampleSize; sampleCanvas.height = sampleSize;
-        const sampleCtx = sampleCanvas.getContext('2d');
-        sampleCtx.drawImage(baseLayer, sx, sy, sw, sh, 0, 0, sampleSize, sampleSize);
-
-        ctx.save();
-        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-        ctx.filter = `blur(${Math.max(12, Math.round(d*0.16))}px)`;
-        ctx.drawImage(sampleCanvas, cx - sampleSize/2, cy - sampleSize/2);
-        ctx.globalAlpha = 0.4;
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(cx - r, cy - r, d, d);
-        ctx.restore();
-
-        ctx.save(); ctx.globalAlpha = 0.35; ctx.strokeStyle = 'rgba(255,255,255,0.28)'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(cx, cy, r-1.2, 0, Math.PI*2); ctx.stroke(); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.25; ctx.strokeStyle = 'rgba(0,0,0,0.55)'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(cx, cy, r-0.6, 0, Math.PI*2); ctx.stroke(); ctx.restore();
-
-        ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
-        const scale = Math.min(d*0.55/59, d*0.55/63);
-        ctx.translate(cx - (59*scale)/2 - 1.5*scale, cy - (63*scale)/2);
-        ctx.scale(scale, scale);
-        const path = new Path2D('M18 14 L44 31.5 L18 49 Z');
-        ctx.fill(path); ctx.stroke(path);
-        ctx.restore();
-      }
     }
 
     // Square corner logo
@@ -4828,13 +5187,22 @@
       const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
       const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
       const padScale = Math.sqrt(scaleX * scaleY);
-      const panel = state.text.hero.panel || 'none';
-      const padX = panel === 'none' ? 0 : 18 * padScale;
-      const padY = panel === 'none' ? 0 : 14 * padScale;
-      const radius = panel === 'none' ? 0 : 18 * padScale;
-      if(panel !== 'none'){
+      const panelMode = state.text.hero.panel || 'none';
+      const padX = panelMode === 'none' ? 0 : 18 * padScale;
+      const padY = panelMode === 'none' ? 0 : 14 * padScale;
+      const radius = panelMode === 'none' ? 0 : 18 * padScale;
+      if(panelMode !== 'none'){
         ctx.save();
-        const panelColor = panel === 'dark' ? 'rgba(15,23,42,0.68)' : 'rgba(255,255,255,0.7)';
+        const panelOpacity = Math.max(5, Math.min(100, Number(state.text.hero.panelOpacity ?? 75))) / 100;
+        let panelColor = `rgba(255,255,255,${panelOpacity.toFixed(3)})`;
+        if(panelMode === 'dark'){
+          const {r,g,b} = hexToRgb('#050a14');
+          panelColor = `rgba(${r},${g},${b},${panelOpacity.toFixed(3)})`;
+        } else if(panelMode === 'custom'){
+          const customHex = normalizeHex(state.text.hero.panelColor || '#0f172a', '#0f172a');
+          const {r,g,b} = hexToRgb(customHex);
+          panelColor = `rgba(${r},${g},${b},${panelOpacity.toFixed(3)})`;
+        }
         drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
         ctx.fillStyle = panelColor;
         ctx.fill();
@@ -4866,14 +5234,74 @@
           x += ctx.measureText(ch).width + letterSpacing;
         }
       };
+      const drawJustifiedLine = (text, startX, startY, extraWidth)=>{
+        const spaces = (text.match(/ /g) || []).length;
+        if(spaces === 0 || extraWidth <= 0){ drawLine(text, startX, startY); return; }
+        const extraPerSpace = extraWidth / spaces;
+        let x = startX;
+        for(let i=0;i<text.length;i++){
+          const ch = text[i];
+          ctx.fillText(ch, x, startY);
+          let advance = ctx.measureText(ch).width + (letterSpacing || 0);
+          if(ch === ' '){ advance += extraPerSpace; }
+          x += advance;
+        }
+      };
       let y = baseTop;
       for(let i=0;i<lines.length;i++){
         const line = lines[i];
         const width = lineWidths[i];
-        const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
-        drawLine(line, lineLeft, y);
+        if(align === 'justify'){
+          const justifyLine = (lines.length === 1) || (i < lines.length - 1);
+          const lineLeft = baseLeft;
+          if(justifyLine){
+            const extra = Math.max(0, maxWidth - width);
+            drawJustifiedLine(line, lineLeft, y, extra);
+          } else {
+            drawLine(line, lineLeft, y);
+          }
+        } else {
+          const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
+          drawLine(line, lineLeft, y);
+        }
         y += lineHeightPx;
       }
+      ctx.restore();
+    }
+
+    if(state.format.key==='HORIZ' && state.play.enabled){
+      const d = state.play.sizeExp;
+      const barH = state.frost.barHExp;
+      const cy = (fh - barH)/2; const cx = fw/2; const r = d/2;
+      const pad = Math.round(d * 0.45);
+      const sampleSize = d + pad*2;
+      const sx = Math.max(0, Math.round(cx - sampleSize/2));
+      const sy = Math.max(0, Math.round(cy - sampleSize/2));
+      const sw = Math.min(sampleSize, fw - sx);
+      const sh = Math.min(sampleSize, fh - sy);
+      const sampleCanvas = document.createElement('canvas');
+      sampleCanvas.width = sampleSize; sampleCanvas.height = sampleSize;
+      const sampleCtx = sampleCanvas.getContext('2d');
+      sampleCtx.drawImage(baseLayer, sx, sy, sw, sh, 0, 0, sampleSize, sampleSize);
+
+      ctx.save();
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
+      ctx.filter = `blur(${Math.max(12, Math.round(d*0.16))}px)`;
+      ctx.drawImage(sampleCanvas, cx - sampleSize/2, cy - sampleSize/2);
+      ctx.globalAlpha = 0.4;
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(cx - r, cy - r, d, d);
+      ctx.restore();
+
+      ctx.save(); ctx.globalAlpha = 0.35; ctx.strokeStyle = 'rgba(255,255,255,0.28)'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(cx, cy, r-1.2, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+      ctx.save(); ctx.globalAlpha = 0.25; ctx.strokeStyle = 'rgba(0,0,0,0.55)'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(cx, cy, r-0.6, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+
+      ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
+      const scale = Math.min(d*0.55/59, d*0.55/63);
+      ctx.translate(cx - (59*scale)/2 - 1.5*scale, cy - (63*scale)/2);
+      ctx.scale(scale, scale);
+      const path = new Path2D('M18 14 L48 31.5 L18 49 Z');
+      ctx.fill(path); ctx.stroke(path);
       ctx.restore();
     }
 
@@ -5006,11 +5434,13 @@
   const ro = new ResizeObserver(()=>{ fitPreviewZoomToStage(); render(); });
   ro.observe(els.stage);
   window.addEventListener('resize', ()=>{ syncHeaderHeight(); fitPreviewZoomToStage(); render(); });
+  document.addEventListener('fullscreenchange', handleFullscreenChange);
 
   // Init
   initTheme();
   runIntroScreen();
   syncHeaderHeight();
+  applyFullscreenState({ simulate:false });
   buildFormatChips();
   setBannerMode(state.banner.mode);
   updateBannerUploadChip();
