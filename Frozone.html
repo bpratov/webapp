@@ -143,13 +143,22 @@
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .stage-inner.guides-hidden{box-shadow:none; border-color:transparent;}
-  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(148,163,184,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease;}
+  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(15,23,42,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease;}
   .stage-inner.guides-hidden .frame,
   .stage-inner.guides-hidden .resizeHandle,
   .stage-inner.guides-hidden .guideLine,
   .stage-inner.guides-hidden .stageWarning{display:none !important}
   .stage-inner.guides-hidden .heroText::after{opacity:0}
   .stage-inner.guides-hidden .heroHandle{display:none !important}
+  .stageControls{position:absolute; top:18px; right:18px; display:flex; gap:10px; align-items:center; opacity:0; pointer-events:none; transform:translateY(-6px); transition:opacity .2s ease, transform .2s ease; z-index:50}
+  #stage.fullscreen-active .stageControls{opacity:1; pointer-events:auto; transform:translateY(0)}
+  .stageControlButton{all:unset; display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:14px; border:1px solid rgba(148,163,184,0.55); background:rgba(248,250,252,0.9); box-shadow:0 10px 24px rgba(15,23,42,0.12); color:var(--ink); cursor:pointer; transition:transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease}
+  .stageControlButton:hover{transform:translateY(-1px); box-shadow:0 16px 32px rgba(15,23,42,0.18); background:#fff}
+  .stageControlButton:active{transform:translateY(1px)}
+  .stageControlButton[aria-pressed="true"]{border-color:rgba(14,165,233,0.65); color:var(--brand2); box-shadow:0 16px 32px rgba(14,165,233,0.18)}
+  .stageControlButton i{width:20px; height:20px; stroke:currentColor}
+  :root[data-theme="dark"] .stageControlButton{background:rgba(15,23,42,0.82); border-color:rgba(71,85,105,0.75); box-shadow:0 18px 38px rgba(1,5,19,0.65); color:#e2e8f0}
+  :root[data-theme="dark"] .stageControlButton:hover{background:rgba(30,41,59,0.92); box-shadow:0 24px 46px rgba(1,5,19,0.75)}
   .dropOverlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; color:var(--brand2); background:rgba(14,165,233,0.14); backdrop-filter:blur(18px); opacity:0; transition:opacity .2s ease; pointer-events:none; text-align:center; padding:24px; z-index:20}
   .stage-inner.drag-over .dropOverlay{opacity:1}
   .stageHint{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:24px; font-size:14px; color:var(--muted); text-align:center; pointer-events:none; opacity:0.85}
@@ -187,6 +196,29 @@
   .heroText[data-panel="light"], .heroText[data-panel="dark"], .heroText[data-panel="custom"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText[data-panel="light"]{background:rgba(255,255,255,0.68)}
   .heroText[data-panel="dark"]{background:rgba(5,11,25,0.78)}
+  .heroInner.multi-panel{display:inline-flex; flex-direction:column; align-items:flex-start; gap:0; width:100%}
+  .heroInner.multi-panel[data-align="center"]{align-items:center}
+  .heroInner.multi-panel[data-align="right"]{align-items:flex-end}
+  .heroInner.multi-panel .heroLine{display:inline-flex; align-items:center; justify-content:flex-start; padding:12px 18px; border-radius:999px; margin:0; background:rgba(255,255,255,0.68); box-shadow:0 14px 40px rgba(15,23,42,0.18); line-height:1; position:relative; text-align:inherit; transition:background .18s ease, box-shadow .18s ease}
+  .heroInner.multi-panel .heroLine + .heroLine{margin-top:-10px}
+  .heroInner.multi-panel[data-align="center"] .heroLine{text-align:center; justify-content:center}
+  .heroInner.multi-panel[data-align="right"] .heroLine{text-align:right; justify-content:flex-end}
+  .heroInner.multi-panel .heroLine span{display:inline}
+  .heroShadowRow{position:relative}
+  .heroShadowPopover{position:absolute; right:0; top:calc(100% + 8px); z-index:70; min-width:260px; padding:18px; border-radius:16px; border:1px solid var(--border); background:var(--stageInner); box-shadow:0 18px 36px rgba(15,23,42,0.18); display:grid; gap:12px}
+  .heroShadowPopover.hidden{display:none}
+  .heroShadowPopover h5{margin:0; font-size:13px; letter-spacing:0.04em; text-transform:uppercase; color:var(--muted)}
+  .heroShadowGrid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px}
+  .heroShadowGrid label{display:grid; gap:6px; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
+  .heroShadowGrid input[type="number"], .heroShadowGrid input[type="text"]{width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:10px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06); font-size:13px}
+  .heroShadowToggle{display:inline-flex; align-items:center; gap:10px}
+  .heroShadowToggle .seg{margin-left:auto}
+  .heroShadowColor{display:flex; flex-direction:column; gap:6px}
+  .heroShadowColor input[type="text"]{width:100%; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:10px 12px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06); text-transform:uppercase; letter-spacing:0.04em}
+  .heroShadowColor input[type="text"][data-color]{color:var(--ink)}
+  .heroShadowColor .colorOverlay{position:absolute; inset:0; pointer-events:none}
+  .heroShadowActions{display:flex; justify-content:flex-end}
+  .heroShadowActions button{min-width:0}
   .heroEditor{position:absolute; inset:0; min-width:100%; min-height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor; overflow:visible; pointer-events:auto}
   .heroText.editing .heroEditor{display:block}
   .heroText.editing .heroInner{visibility:hidden}
@@ -369,7 +401,7 @@
   .gradientHexInput::placeholder{color:var(--muted); letter-spacing:0.04em}
   .gradientHexInput[data-color]{border-color:rgba(15,23,42,0.12); box-shadow:0 6px 16px rgba(15,23,42,0.08)}
   .gradientHexInput:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
-  .gradientColorOverlay{position:absolute; inset:0; opacity:0; cursor:pointer}
+  .gradientColorOverlay{position:absolute; inset:0; opacity:0; pointer-events:none}
   .gradientActionButtons{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:flex-start}
   .bgSourceNote{font-size:12px; color:var(--muted)}
   .bgSourceNote.success{color:#16a34a}
@@ -511,6 +543,9 @@
   :root[data-theme="dark"] #downloadApp{background:rgba(9,20,41,0.72); border-color:rgba(46,63,98,0.65); box-shadow:0 26px 50px rgba(1,5,19,0.6)}
   :root[data-theme="dark"] #downloadApp:hover{background:rgba(15,32,58,0.85)}
 
+  #downloadApp{bottom:104px; justify-content:center}
+  #downloadApp .btn-ico{margin-right:0}
+  #downloadApp .fab-label{margin-left:10px}
   #themeToggle{bottom:32px; background:linear-gradient(135deg,var(--brand),var(--brand2)); border:none; box-shadow:0 18px 36px rgba(15,23,42,0.22); color:#fff; z-index:62}
   #themeToggle .btn-ico{width:26px; height:26px; stroke:#fff}
   #themeToggle .fab-label{color:#fff}
@@ -539,6 +574,8 @@
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
   :root[data-theme="dark"] .dropOverlay{background:rgba(14,165,233,0.22); color:#e0f2fe}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+  :root[data-theme="dark"] .heroInner.multi-panel .heroLine{background:rgba(5,11,25,0.78); box-shadow:0 18px 44px rgba(2,6,23,0.55)}
+  :root[data-theme="dark"] .heroShadowPopover{background:rgba(9,20,41,0.9); border-color:rgba(46,63,98,0.65); box-shadow:0 24px 48px rgba(1,5,19,0.75)}
   :root[data-theme="dark"] .switchGroup{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 16px 36px rgba(2,6,23,0.6)}
   :root[data-theme="dark"] input[type="search"], :root[data-theme="dark"] input[type="url"], :root[data-theme="dark"] select{border-color:rgba(148,163,184,0.45); box-shadow:0 10px 26px rgba(1,9,23,0.35)}
   :root[data-theme="dark"] .bg-source-block{background:rgba(15,23,42,0.65); border-color:rgba(71,85,105,0.75)}
@@ -989,29 +1026,41 @@
         </div>
         <!-- Step 4b: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
-          <div class="stack">
-            <div class="row" style="gap:16px">
-              <label class="switch"><input type="checkbox" id="toggleSqLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
-            </div>
-            <div id="sqLogoBlock" class="stack" style="display:none; margin-top:10px">
-              <div class="row">
+          <div class="section-title"><span class="badge">4</span> Square logo (top-right)</div>
+          <div class="logoSection">
+            <div class="logoSectionHead">
+              <div class="logoSectionHeading">
+                <span class="title">Square format logo</span>
+                <span class="meta">Carousel &amp; story badge</span>
+              </div>
+              <div class="logoSectionActions">
+                <label class="switch"><input type="checkbox" id="toggleSqLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
                 <label class="btn ghost uploadAction">
                   <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                  <span class="btn-text">Square logo</span>
+                  <span class="btn-text">Upload square</span>
                   <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
                 </label>
-                <div class="seg" id="sqLogoSeg">
-                  <button data-size="S" class="active">S</button>
-                  <button data-size="M">M</button>
-                  <button data-size="L">L</button>
+              </div>
+            </div>
+            <div class="logoSectionInner" id="sqLogoBlock" style="display:none">
+              <div class="logoControls" role="group" aria-label="Square logo controls">
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Size</span>
+                  <div class="seg" id="sqLogoSeg">
+                    <button data-size="S" class="active">S</button>
+                    <button data-size="M">M</button>
+                    <button data-size="L">L</button>
+                  </div>
                 </div>
-                <div class="seg" id="sqLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Tone</span>
+                  <div class="seg" id="sqLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="toneHint">Check partner brand rules before changing</span>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing</span>
               </div>
               <div class="libWrap">
                 <div class="libHeader">
@@ -1027,24 +1076,33 @@
         </div>
 
         <div class="section" id="bannerLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4c</span> Banner logo (top-left)</div>
-          <div class="stack">
-            <div class="row" style="gap:16px">
-              <label class="switch"><input type="checkbox" id="toggleBannerLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
-            </div>
-            <div id="bannerLogoBlock" class="stack" style="display:none; margin-top:10px">
-              <div class="row">
+          <div class="section-title"><span class="badge">4</span> Banner logo (top-left)</div>
+          <div class="logoSection">
+            <div class="logoSectionHead">
+              <div class="logoSectionHeading">
+                <span class="title">Banner background logo</span>
+                <span class="meta">3D info banner overlay</span>
+              </div>
+              <div class="logoSectionActions">
+                <label class="switch"><input type="checkbox" id="toggleBannerLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
                 <label class="btn ghost uploadAction">
                   <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                  <span class="btn-text">Banner logo</span>
+                  <span class="btn-text">Upload banner</span>
                   <input id="bannerLogoInput" type="file" accept="image/*" style="display:none"/>
                 </label>
-                <div class="seg" id="bannerLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+              </div>
+            </div>
+            <div class="logoSectionInner" id="bannerLogoBlock" style="display:none">
+              <div class="logoControls" role="group" aria-label="Banner logo controls">
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Tone</span>
+                  <div class="seg" id="bannerLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="toneHint">Check partner brand rules before changing</span>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing</span>
               </div>
               <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
               <div class="libWrap">
@@ -1060,41 +1118,54 @@
           </div>
         </div>
 
-        <!-- Step 4c: Vertical logo -->
         <div class="section" id="verticalLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4d</span> Vertical logo (top-left)</div>
-          <div class="row" style="gap:16px">
-            <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
-          </div>
-          <div id="vertLogoBlock" class="stack" style="display:none; margin-top:10px">
-            <div class="row">
-              <label class="btn ghost uploadAction">
-                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                <span class="btn-text">Vertical logo</span>
-                <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
-              </label>
-              <div class="seg" id="vertLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+          <div class="section-title"><span class="badge">4</span> Vertical logo (top-left)</div>
+          <div class="logoSection">
+            <div class="logoSectionHead">
+              <div class="logoSectionHeading">
+                <span class="title">Vertical format logo</span>
+                <span class="meta">Interstitial top badge</span>
               </div>
-              <div class="seg" id="vertLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
+              <div class="logoSectionActions">
+                <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
+                <label class="btn ghost uploadAction">
+                  <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                  <span class="btn-text">Upload vertical</span>
+                  <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
+                </label>
               </div>
-              <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
-            <div class="toneHint">Check partner brand rules before changing</div>
-            <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
-            <div class="libWrap">
-              <div class="libHeader">
-                <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
-                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
-                </button>
+            <div class="logoSectionInner" id="vertLogoBlock" style="display:none">
+              <div class="logoControls" role="group" aria-label="Vertical logo controls">
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Size</span>
+                  <div class="seg" id="vertLogoSeg">
+                    <button data-size="S" class="active">S</button>
+                    <button data-size="M">M</button>
+                    <button data-size="L">L</button>
+                  </div>
+                </div>
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Tone</span>
+                  <div class="seg" id="vertLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="toneHint">Check partner brand rules before changing</span>
+                </div>
+                <button class="btn small ghost" id="removeVertLogo">Remove logo</button>
               </div>
-              <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+                  <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                    <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1252,6 +1323,46 @@
                     </div>
                   </div>
                 </div>
+                <div class="heroRow" id="heroPanelLayoutRow" style="display:none">
+                  <label class="switch"><input type="checkbox" id="heroPanelShapeToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Line hugging panels</span></label>
+                </div>
+                <div class="heroRow heroShadowRow">
+                  <div class="heroShadowToggle">
+                    <label class="switch"><input type="checkbox" id="heroShadowEnable"><span class="tgl"><span class="knob"></span></span><span class="lbl">Text shadow</span></label>
+                  </div>
+                  <button class="btn ghost small" type="button" id="heroShadowSettingsBtn">Shadow settings</button>
+                  <div class="heroShadowPopover hidden" id="heroShadowPopover">
+                    <h5>Photoshop shadow</h5>
+                    <div class="heroShadowColor">
+                      <label for="heroShadowHex">Colour</label>
+                      <div class="colorField" style="width:100%">
+                        <input id="heroShadowHex" type="text" value="#000000" maxlength="7" class="colorHexInput" />
+                        <input id="heroShadowPicker" type="color" class="colorOverlay" value="#000000" />
+                      </div>
+                    </div>
+                    <div class="heroShadowGrid">
+                      <label for="heroShadowOpacity">Opacity (%)
+                        <input id="heroShadowOpacity" type="number" value="75" min="0" max="100" step="1" />
+                      </label>
+                      <label for="heroShadowAngle">Angle (°)
+                        <input id="heroShadowAngle" type="number" value="120" min="0" max="360" step="1" />
+                      </label>
+                      <label for="heroShadowDistance">Distance (px)
+                        <input id="heroShadowDistance" type="number" value="10" min="0" step="1" />
+                      </label>
+                      <label for="heroShadowSpread">Spread (%)
+                        <input id="heroShadowSpread" type="number" value="0" min="0" max="100" step="1" />
+                      </label>
+                      <label for="heroShadowSize">Size (px)
+                        <input id="heroShadowSize" type="number" value="12" min="0" step="1" />
+                      </label>
+                      <div></div>
+                    </div>
+                    <div class="heroShadowActions">
+                      <button class="btn ghost small" type="button" id="heroShadowClose">Done</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1317,6 +1428,17 @@
       </div>
       <div class="stage">
         <div class="stage-inner" id="stage">
+          <div class="stageControls" id="stageControls" aria-hidden="true">
+            <button class="stageControlButton" type="button" id="stageGuidesBtn" aria-pressed="false" title="Toggle guides">
+              <i data-lucide="eye-off" aria-hidden="true"></i>
+            </button>
+            <button class="stageControlButton" type="button" id="stageZoomOut" title="Zoom out">
+              <i data-lucide="minus" aria-hidden="true"></i>
+            </button>
+            <button class="stageControlButton" type="button" id="stageZoomIn" title="Zoom in">
+              <i data-lucide="plus" aria-hidden="true"></i>
+            </button>
+          </div>
           <button class="btn small ghost exitFullscreenBtn" type="button" id="exitFullscreenBtn">
             <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
             <span class="btn-text">Exit full screen</span>
@@ -1403,6 +1525,7 @@
       </div>
       <div class="modalBody">
         <div class="modalIntro">Curate partner logos, rename entries, or paste fresh image URLs. Everything saves directly into this file so you can ship updates without leaving Frozone.</div>
+        <div class="modalNotice">Changes you make here are stored on this browser using functional cookies so you can experiment safely. Use the same browser to keep a consistent library—your updates won't affect anyone else.</div>
         <div class="modalNotice">Before adding remote logos, confirm they follow partner brand guidelines and have transparent backgrounds when required.</div>
         <div id="partnerSettingsList" class="partnerRows"></div>
       </div>
@@ -1525,6 +1648,10 @@
     batchMeta: document.getElementById('batchMeta'),
 
     stage: document.getElementById('stage'), dropOverlay: document.getElementById('dropOverlay'),
+    stageControls: document.getElementById('stageControls'),
+    stageGuidesBtn: document.getElementById('stageGuidesBtn'),
+    stageZoomIn: document.getElementById('stageZoomIn'),
+    stageZoomOut: document.getElementById('stageZoomOut'),
     imageLayer: document.getElementById('imageLayer'), img: document.getElementById('img'),
     frame: document.getElementById('frame'),
     stageHint: document.getElementById('stageHint'),
@@ -1640,6 +1767,8 @@
     heroPanelCustomPicker: document.getElementById('heroPanelCustomPicker'),
     heroPanelOpacity: document.getElementById('heroPanelOpacity'),
     heroPanelOpacityVal: document.getElementById('heroPanelOpacityVal'),
+    heroPanelLayoutRow: document.getElementById('heroPanelLayoutRow'),
+    heroPanelShapeToggle: document.getElementById('heroPanelShapeToggle'),
 
     serialPreview: document.getElementById('serialPreview'),
     serialTextPreview: document.getElementById('serialTextPreview'),
@@ -1648,6 +1777,17 @@
     heroTextPreview: document.getElementById('heroTextPreview'),
     heroInnerText: document.getElementById('heroInnerText'),
     heroInlineEditor: document.getElementById('heroInlineEditor'),
+    heroShadowEnable: document.getElementById('heroShadowEnable'),
+    heroShadowSettingsBtn: document.getElementById('heroShadowSettingsBtn'),
+    heroShadowPopover: document.getElementById('heroShadowPopover'),
+    heroShadowHex: document.getElementById('heroShadowHex'),
+    heroShadowPicker: document.getElementById('heroShadowPicker'),
+    heroShadowOpacity: document.getElementById('heroShadowOpacity'),
+    heroShadowAngle: document.getElementById('heroShadowAngle'),
+    heroShadowDistance: document.getElementById('heroShadowDistance'),
+    heroShadowSpread: document.getElementById('heroShadowSpread'),
+    heroShadowSize: document.getElementById('heroShadowSize'),
+    heroShadowClose: document.getElementById('heroShadowClose'),
     heroHandles: Array.from(document.querySelectorAll('.heroHandle')),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
@@ -1719,17 +1859,58 @@
         position:{ x:0.5, y:0.42 },
         panel:'none',
         panelCustom:'#111827',
-        panelOpacity:0.7
+        panelOpacity:0.7,
+        panelShape:'single',
+        shadow:{ enabled:false, color:'#000000', opacity:0.75, angle:120, distance:10, spread:0, size:12 }
       }
     };
   }
 
   function cloneTextSettings(src){
     try{
-      return JSON.parse(JSON.stringify(src || defaultTextState()));
+      return normalizeTextSettings(JSON.parse(JSON.stringify(src || defaultTextState())));
     }catch(err){
       return defaultTextState();
     }
+  }
+
+  function normalizeTextSettings(settings){
+    const defaults = defaultTextState();
+    const out = Object.assign({}, defaults, settings || {});
+    out.serial = Object.assign({}, defaults.serial, settings?.serial || {});
+    out.hero = normalizeHeroState(settings?.hero || defaults.hero);
+    return out;
+  }
+
+  function normalizeHeroState(hero){
+    const defaults = defaultTextState().hero;
+    const shadowDefaults = defaults.shadow;
+    const normalized = Object.assign({}, defaults, hero || {});
+    normalized.panelShape = normalized.panelShape === 'multi' ? 'multi' : 'single';
+    const shadow = Object.assign({}, shadowDefaults, hero?.shadow || {});
+    shadow.enabled = !!shadow.enabled;
+    shadow.color = normalizeHex(typeof shadow.color === 'string' ? shadow.color : shadowDefaults.color, shadowDefaults.color);
+    shadow.opacity = Math.max(0, Math.min(1, Number(shadow.opacity ?? shadowDefaults.opacity)));
+    shadow.angle = Number.isFinite(shadow.angle) ? ((shadow.angle % 360) + 360) % 360 : shadowDefaults.angle;
+    shadow.distance = Math.max(0, Number(shadow.distance ?? shadowDefaults.distance));
+    shadow.spread = Math.max(0, Number(shadow.spread ?? shadowDefaults.spread));
+    shadow.size = Math.max(0, Number(shadow.size ?? shadowDefaults.size));
+    normalized.shadow = shadow;
+    return normalized;
+  }
+
+  function heroShadowCss(shadow, scale = 1){
+    const normalized = normalizeHeroState({ shadow }).shadow;
+    if(!normalized.enabled){ return 'none'; }
+    const rgb = hexToRgb(normalized.color) || { r:0, g:0, b:0 };
+    const opacity = Math.max(0, Math.min(1, normalized.opacity));
+    const angleRad = ((normalized.angle ?? 0) - 90) * Math.PI / 180;
+    const distance = Math.max(0, normalized.distance) * scale;
+    const offsetX = (distance * Math.cos(angleRad)).toFixed(2);
+    const offsetY = (distance * Math.sin(angleRad)).toFixed(2);
+    const spreadAdj = Math.max(0, normalized.spread) * 0.5 * scale;
+    const blur = (Math.max(0, normalized.size) * scale + spreadAdj).toFixed(2);
+    return `${offsetX}px ${offsetY}px ${blur}px rgba(${rgb.r},${rgb.g},${rgb.b},${opacity.toFixed(2)})`;
   }
 
   function cloneSerialSettings(){
@@ -1815,11 +1996,14 @@
   }
 
   function bindHexPaletteTriggers(){
-    document.querySelectorAll('.colorHexInput').forEach(input=>{
-      const field = input.closest('.colorField');
+    document.querySelectorAll('.colorHexInput, .gradientHexInput').forEach(input=>{
+      const el = input;
+      if(el.dataset.paletteBound === 'true') return;
+      const field = el.closest('.colorField, .gradientColorField');
       const picker = field?.querySelector('input[type="color"]');
       if(!picker) return;
-      input.addEventListener('dblclick', ()=>{ picker.click(); });
+      el.addEventListener('dblclick', ()=>{ picker.click(); });
+      el.dataset.paletteBound = 'true';
     });
   }
 
@@ -2142,6 +2326,18 @@
     state.offset.y = Math.max(-state.limits.y, Math.min(state.offset.y, state.limits.y));
   }
 
+  function renumberSteps(){
+    const sections = Array.from(document.querySelectorAll('.panel.sticky .scroll .section'));
+    let counter = 0;
+    sections.forEach(section=>{
+      const badge = section.querySelector('.section-title .badge');
+      if(!badge) return;
+      if(window.getComputedStyle(section).display === 'none') return;
+      counter += 1;
+      badge.textContent = String(counter);
+    });
+  }
+
   function updateControls(){
     const isBanner = state.format.key==='BANNER';
     if(els.bgSourceSection){
@@ -2285,16 +2481,16 @@
         if(els.heroGradEndPicker){ els.heroGradEndPicker.value = end; }
       }
       if(els.heroGradAngle){ els.heroGradAngle.value = state.text.hero.gradient?.angle ?? 0; }
+      const heroPanelMode = state.text.hero.panel || 'none';
       if(els.heroPanelSeg){
-        const panel = state.text.hero.panel || 'none';
         [...els.heroPanelSeg.querySelectorAll('button')].forEach(btn=>{
-          const isActive = (btn.dataset.panel || 'none') === panel;
+          const isActive = (btn.dataset.panel || 'none') === heroPanelMode;
           btn.classList.toggle('active', isActive);
           btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
       }
       if(els.heroPanelCustomField){
-        els.heroPanelCustomField.style.display = state.text.hero.panel === 'custom' ? 'inline-flex' : 'none';
+        els.heroPanelCustomField.style.display = heroPanelMode === 'custom' ? 'inline-flex' : 'none';
       }
       if(els.heroPanelCustomHex){
         const panelCustom = normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
@@ -2307,6 +2503,25 @@
         els.heroPanelOpacity.value = pct.toString();
         if(els.heroPanelOpacityVal){ els.heroPanelOpacityVal.textContent = `${pct}%`; }
       }
+      if(els.heroPanelLayoutRow){
+        els.heroPanelLayoutRow.style.display = heroPanelMode === 'none' ? 'none' : 'flex';
+      }
+      if(els.heroPanelShapeToggle){
+        els.heroPanelShapeToggle.checked = heroPanelMode !== 'none' && state.text.hero.panelShape === 'multi';
+        els.heroPanelShapeToggle.disabled = heroPanelMode === 'none';
+      }
+      const heroShadowState = normalizeHeroState(state.text.hero).shadow;
+      if(els.heroShadowEnable){ els.heroShadowEnable.checked = !!heroShadowState.enabled; }
+      if(els.heroShadowHex){
+        applyHexInputStyle(els.heroShadowHex, heroShadowState.color);
+        if(els.heroShadowPicker){ els.heroShadowPicker.value = heroShadowState.color; }
+      }
+      if(els.heroShadowOpacity){ els.heroShadowOpacity.value = Math.round(heroShadowState.opacity * 100); }
+      if(els.heroShadowAngle){ els.heroShadowAngle.value = Math.round(heroShadowState.angle); }
+      if(els.heroShadowDistance){ els.heroShadowDistance.value = Math.round(heroShadowState.distance); }
+      if(els.heroShadowSpread){ els.heroShadowSpread.value = Math.round(heroShadowState.spread); }
+      if(els.heroShadowSize){ els.heroShadowSize.value = Math.round(heroShadowState.size); }
+      updateHeroShadowPopover();
     }
 
     els.bVal.textContent = state.brightness;
@@ -2366,6 +2581,8 @@
       els.stageHint.style.display = state.imageSrc ? 'none' : 'flex';
     }
 
+    renumberSteps();
+
   }
 
   function fitPreviewZoomToStage(){
@@ -2399,6 +2616,12 @@
     els.previewZoom.value = state.previewZoom;
     els.zoomLabel.textContent = state.previewZoom.toFixed(2);
     if(!opts.skipRender){ render(); }
+  }
+
+  function nudgePreviewZoom(delta){
+    const maxZoom = state.previewZoomMax || 3;
+    const next = Math.max(0.5, Math.min(maxZoom, (state.previewZoom || 1) + delta));
+    setPreviewZoom(Math.round(next * 100) / 100, { force:true });
   }
 
   function applyLogoPreviewTone(el, tone){
@@ -2435,13 +2658,22 @@
       els.stage.classList.toggle('guides-hidden', !!state.guidesHidden);
       els.stage.classList.toggle('fullscreen-active', !!state.fullscreen);
     }
+    const guidesPressed = !!state.guidesHidden;
     if(els.toggleGuidesBtn){
-      const pressed = !!state.guidesHidden;
-      els.toggleGuidesBtn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      els.toggleGuidesBtn.setAttribute('aria-pressed', guidesPressed ? 'true' : 'false');
       const textEl = els.toggleGuidesBtn.querySelector('.btn-text');
-      if(textEl){ textEl.textContent = pressed ? 'Show rulers' : 'Hide rulers'; }
+      if(textEl){ textEl.textContent = guidesPressed ? 'Show rulers' : 'Hide rulers'; }
       const iconEl = els.toggleGuidesBtn.querySelector('i[data-lucide]');
-      if(iconEl){ iconEl.setAttribute('data-lucide', pressed ? 'eye' : 'eye-off'); }
+      if(iconEl){ iconEl.setAttribute('data-lucide', guidesPressed ? 'eye' : 'eye-off'); }
+    }
+    if(els.stageGuidesBtn){
+      els.stageGuidesBtn.setAttribute('aria-pressed', guidesPressed ? 'true' : 'false');
+      const icon = els.stageGuidesBtn.querySelector('i[data-lucide]');
+      if(icon){ icon.setAttribute('data-lucide', guidesPressed ? 'eye' : 'eye-off'); }
+      els.stageGuidesBtn.setAttribute('title', guidesPressed ? 'Show rulers' : 'Hide rulers');
+    }
+    if(els.stageControls){
+      els.stageControls.setAttribute('aria-hidden', state.fullscreen ? 'false' : 'true');
     }
     const scaleYPreview = (state.format.hPreview/state.format.hExport) * state.previewZoom;
     const barHPrevPx = state.format.key==='HORIZ' ? state.frost.barHExp * scaleYPreview : 0;
@@ -2588,8 +2820,11 @@
       els.serialPreview.style.display = 'none';
     }
 
-    els.heroTextPreview?.setAttribute('data-active', (isTextFormat && state.text.hero.enabled && state.text.hero.value) ? 'true' : 'false');
-    if(isTextFormat && state.text.hero.enabled && state.text.hero.value){
+    const heroActive = isTextFormat && state.text.hero.enabled && state.text.hero.value;
+    els.heroTextPreview?.setAttribute('data-active', heroActive ? 'true' : 'false');
+    if(heroActive){
+      const heroValue = state.text.hero.value;
+      const lines = heroValue.split(/\n/);
       const pos = state.text.hero.position || {x:0.5, y:0.5};
       const left = frameLeftPx + (pos.x||0.5) * fwPx;
       const top = frameTopPx + (pos.y||0.5) * fhPx;
@@ -2597,66 +2832,127 @@
       const fontPx = (state.text.hero.size || 120) * scale;
       const spacingPx = (state.text.hero.letterSpacing || 0) * scale;
       const inner = els.heroInnerText;
-      els.heroTextPreview.style.display = 'block';
-      els.heroTextPreview.style.left = left + 'px';
-      els.heroTextPreview.style.top = top + 'px';
-      els.heroTextPreview.dataset.align = state.text.hero.align || 'center';
-      els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
+      const alignMode = state.text.hero.align || 'center';
+      const colorMode = state.text.hero.colorMode === 'gradient' ? 'gradient' : 'solid';
       const panelMode = state.text.hero.panel || 'none';
+      const panelShape = state.text.hero.panelShape === 'multi' ? 'multi' : 'single';
+      const multiPanel = panelMode !== 'none' && panelShape === 'multi';
+      const basePanelColor = panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
+      const rgbPanel = hexToRgb(basePanelColor);
+      const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
+      const panelBg = rgbPanel ? `rgba(${rgbPanel.r},${rgbPanel.g},${rgbPanel.b},${panelOpacity.toFixed(2)})` : `rgba(255,255,255,${panelOpacity.toFixed(2)})`;
+      els.heroTextPreview.style.display = 'block';
+      els.heroTextPreview.style.left = `${left}px`;
+      els.heroTextPreview.style.top = `${top}px`;
+      els.heroTextPreview.dataset.align = alignMode;
+      els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
       els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
       els.heroTextPreview.dataset.panel = panelMode;
-      inner.textContent = state.text.hero.value;
-      inner.style.fontSize = fontPx.toFixed(2) + 'px';
-      inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
-      inner.style.fontWeight = mapHeroWeight(state.text.hero.weight);
-      inner.style.letterSpacing = spacingPx.toFixed(2) + 'px';
-      const lh = state.text.hero.lineHeight || '110%';
-      if(typeof lh === 'string' && lh.trim().endsWith('%')){ inner.style.lineHeight = lh.trim(); }
-      else { const num = parseFloat(lh)||110; inner.style.lineHeight = (num/100).toFixed(2); }
-      const alignMode = state.text.hero.align || 'center';
-      inner.style.textAlign = alignMode === 'justify' ? 'justify' : alignMode;
-      inner.style.textJustify = alignMode === 'justify' ? 'inter-word' : '';
-      inner.style.textAlignLast = alignMode === 'justify' ? 'left' : '';
-      const colorMode = state.text.hero.colorMode === 'gradient' ? 'gradient' : 'solid';
-      if(colorMode === 'gradient'){
-        const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
-        const end = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
-        const angle = state.text.hero.gradient?.angle || 0;
-        const gradient = `linear-gradient(${angle}deg, ${start}, ${end})`;
-        inner.style.backgroundImage = gradient;
-        inner.style.webkitBackgroundClip = 'text';
-        inner.style.backgroundClip = 'text';
-        inner.style.color = 'transparent';
-      } else {
-        const col = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
-        inner.style.color = col;
-        inner.style.backgroundImage = 'none';
-        inner.style.webkitBackgroundClip = 'initial';
-        inner.style.backgroundClip = 'initial';
-      }
-      const basePanelColor = panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
-      const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
-      if(panelMode === 'none'){
-        els.heroTextPreview.style.background = 'transparent';
-        els.heroTextPreview.style.boxShadow = 'none';
-        els.heroTextPreview.style.padding = '0';
-        els.heroTextPreview.style.borderRadius = '0';
-      } else {
-        const rgb = hexToRgb(basePanelColor);
-        const bg = rgb ? `rgba(${rgb.r},${rgb.g},${rgb.b},${panelOpacity.toFixed(2)})` : 'rgba(255,255,255,0.65)';
-        els.heroTextPreview.style.background = bg;
-        els.heroTextPreview.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
-        els.heroTextPreview.style.padding = '14px 18px';
-        els.heroTextPreview.style.borderRadius = '18px';
+      if(inner){
+        inner.style.fontSize = fontPx.toFixed(2) + 'px';
+        inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
+        inner.style.fontWeight = mapHeroWeight(state.text.hero.weight);
+        inner.style.letterSpacing = spacingPx.toFixed(2) + 'px';
+        const lh = state.text.hero.lineHeight || '110%';
+        if(typeof lh === 'string' && lh.trim().endsWith('%')){ inner.style.lineHeight = lh.trim(); }
+        else { const num = parseFloat(lh)||110; inner.style.lineHeight = (num/100).toFixed(2); }
+        inner.style.textAlign = alignMode === 'justify' ? 'justify' : alignMode;
+        inner.style.textJustify = alignMode === 'justify' ? 'inter-word' : '';
+        inner.style.textAlignLast = alignMode === 'justify' ? 'left' : '';
+        if(multiPanel){
+          els.heroTextPreview.style.background = 'transparent';
+          els.heroTextPreview.style.boxShadow = 'none';
+          els.heroTextPreview.style.padding = '0';
+          els.heroTextPreview.style.borderRadius = '0';
+          inner.classList.add('multi-panel');
+          inner.dataset.align = alignMode;
+          inner.innerHTML = '';
+          lines.forEach((line)=>{
+            const lineEl = document.createElement('span');
+            lineEl.className = 'heroLine';
+            const textSpan = document.createElement('span');
+            textSpan.className = 'heroLineText';
+            textSpan.textContent = line || '\u00a0';
+            lineEl.appendChild(textSpan);
+            inner.appendChild(lineEl);
+          });
+        } else {
+          inner.classList.remove('multi-panel');
+          inner.removeAttribute('data-align');
+          inner.textContent = heroValue;
+        }
+        const gradientStart = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
+        const gradientEnd = normalizeHex(state.text.hero.gradient?.end || '#6366f1', '#6366f1');
+        const gradientAngle = state.text.hero.gradient?.angle || 0;
+        const gradientStr = `linear-gradient(${gradientAngle}deg, ${gradientStart}, ${gradientEnd})`;
+        if(multiPanel){
+          const lineNodes = Array.from(inner.querySelectorAll('.heroLine'));
+          lineNodes.forEach((node)=>{
+            node.style.textAlign = alignMode === 'justify' ? 'left' : alignMode;
+            node.style.backgroundColor = panelMode === 'none' ? 'transparent' : panelBg;
+            node.style.boxShadow = panelMode === 'none' ? 'none' : '0 14px 40px rgba(15,23,42,0.18)';
+            const textSpan = node.querySelector('.heroLineText');
+            if(!textSpan) return;
+            if(colorMode === 'gradient'){
+              textSpan.style.backgroundImage = gradientStr;
+              textSpan.style.webkitBackgroundClip = 'text';
+              textSpan.style.backgroundClip = 'text';
+              textSpan.style.color = 'transparent';
+            } else {
+              const solidCol = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+              textSpan.style.backgroundImage = 'none';
+              textSpan.style.webkitBackgroundClip = 'initial';
+              textSpan.style.backgroundClip = 'initial';
+              textSpan.style.color = solidCol;
+            }
+          });
+          inner.style.backgroundImage = 'none';
+          inner.style.webkitBackgroundClip = 'initial';
+          inner.style.backgroundClip = 'initial';
+          inner.style.color = '';
+        } else {
+          if(colorMode === 'gradient'){
+            inner.style.backgroundImage = gradientStr;
+            inner.style.webkitBackgroundClip = 'text';
+            inner.style.backgroundClip = 'text';
+            inner.style.color = 'transparent';
+          } else {
+            const solidCol = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
+            inner.style.color = solidCol;
+            inner.style.backgroundImage = 'none';
+            inner.style.webkitBackgroundClip = 'initial';
+            inner.style.backgroundClip = 'initial';
+          }
+          if(panelMode === 'none'){
+            els.heroTextPreview.style.background = 'transparent';
+            els.heroTextPreview.style.boxShadow = 'none';
+            els.heroTextPreview.style.padding = '0';
+            els.heroTextPreview.style.borderRadius = '0';
+          } else {
+            els.heroTextPreview.style.background = panelBg;
+            els.heroTextPreview.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
+            els.heroTextPreview.style.padding = '14px 18px';
+            els.heroTextPreview.style.borderRadius = '18px';
+          }
+        }
+        const shadowCssVal = heroShadowCss(state.text.hero.shadow, scale);
+        if(multiPanel){
+          const lineNodes = Array.from(inner.querySelectorAll('.heroLine'));
+          lineNodes.forEach((node)=>{ node.style.textShadow = shadowCssVal; });
+        } else {
+          inner.style.textShadow = shadowCssVal;
+        }
       }
       if(heroEditing && els.heroInlineEditor){
         const editorStyle = els.heroInlineEditor.style;
-        editorStyle.fontSize = inner.style.fontSize;
-        editorStyle.fontFamily = inner.style.fontFamily;
-        editorStyle.fontWeight = inner.style.fontWeight;
-        editorStyle.lineHeight = inner.style.lineHeight;
-        editorStyle.letterSpacing = inner.style.letterSpacing;
-        editorStyle.textAlign = inner.style.textAlign;
+        if(inner){
+          editorStyle.fontSize = inner.style.fontSize;
+          editorStyle.fontFamily = inner.style.fontFamily;
+          editorStyle.fontWeight = inner.style.fontWeight;
+          editorStyle.lineHeight = inner.style.lineHeight;
+          editorStyle.letterSpacing = inner.style.letterSpacing;
+          editorStyle.textAlign = inner.style.textAlign;
+        }
         const rect = els.heroTextPreview.getBoundingClientRect();
         editorStyle.width = `${rect.width}px`;
         editorStyle.minWidth = `${rect.width}px`;
@@ -2673,6 +2969,12 @@
       els.heroTextPreview.style.background = 'transparent';
       els.heroTextPreview.style.boxShadow = 'none';
       els.heroTextPreview.style.padding = '0';
+      if(els.heroInnerText){
+        els.heroInnerText.classList.remove('multi-panel');
+        els.heroInnerText.removeAttribute('data-align');
+        els.heroInnerText.textContent = '';
+        els.heroInnerText.style.textShadow = 'none';
+      }
     }
     refreshIcons();
   }
@@ -3418,6 +3720,7 @@
       els.gradientColorCount.textContent = state.banner.gradient.colors.length.toString();
     }
     updateGradientPreview();
+    bindHexPaletteTriggers();
   }
 
   function clampGradientColors(count){
@@ -4148,6 +4451,8 @@
   els.moveX.addEventListener('input', e=>{ state.offset.x = +e.target.value; els.xVal.textContent = Math.round(state.offset.x); render(); serializeCurrent(); });
   els.moveY.addEventListener('input', e=>{ state.offset.y = +e.target.value; els.yVal.textContent = Math.round(state.offset.y); render(); serializeCurrent(); });
   els.previewZoom.addEventListener('input', e=>{ setPreviewZoom(+e.target.value, {force:true}); });
+  els.stageZoomIn?.addEventListener('click', ()=>{ nudgePreviewZoom(0.1); });
+  els.stageZoomOut?.addEventListener('click', ()=>{ nudgePreviewZoom(-0.1); });
 
   els.toggleFrost.addEventListener('change', ()=>{ state.frost.enabled = els.toggleFrost.checked; updateControls(); render(); });
   els.togglePlay.addEventListener('change', ()=>{ state.play.enabled = els.togglePlay.checked; updateControls(); render(); });
@@ -4246,6 +4551,10 @@
   els.toggleHero?.addEventListener('change', ()=>{
     ensureHeroEditorClosed();
     state.text.hero.enabled = !!els.toggleHero.checked;
+    if(!state.text.hero.enabled){
+      heroShadowPopoverVisible = false;
+      updateHeroShadowPopover();
+    }
     commitTextState();
   });
   els.heroTextInput?.addEventListener('input', (e)=>{
@@ -4369,10 +4678,203 @@
     if(els.heroPanelOpacityVal){ els.heroPanelOpacityVal.textContent = `${pct}%`; }
     commitTextState({ refreshControls:false });
   });
+  els.heroPanelShapeToggle?.addEventListener('change', (e)=>{
+    const multi = !!e.target.checked;
+    state.text.hero.panelShape = multi ? 'multi' : 'single';
+    commitTextState({ refreshControls:false });
+    updateControls();
+  });
   let heroDrag = null;
   let heroResize = null;
   let heroEditing = false;
+  let heroShadowPopoverVisible = false;
   const HERO_SNAP_THRESHOLD = 12;
+  const IMAGE_SNAP_THRESHOLD = 12;
+
+  function mutateHeroShadow(mutator){
+    const normalized = normalizeHeroState(state.text.hero);
+    const nextShadow = Object.assign({}, normalized.shadow);
+    if(typeof mutator === 'function'){
+      mutator(nextShadow);
+    }
+    state.text.hero.shadow = nextShadow;
+    return nextShadow;
+  }
+
+  function updateHeroShadowPopover(){
+    if(!els.heroShadowPopover) return;
+    const heroState = normalizeHeroState(state.text.hero);
+    const heroEnabled = !!state.text.hero.enabled;
+    const shadowEnabled = heroEnabled && !!heroState.shadow.enabled;
+    if(!shadowEnabled && heroShadowPopoverVisible){
+      heroShadowPopoverVisible = false;
+    }
+    const shouldShow = shadowEnabled && heroShadowPopoverVisible;
+    els.heroShadowPopover.classList.toggle('hidden', !shouldShow);
+    if(els.heroShadowSettingsBtn){
+      els.heroShadowSettingsBtn.setAttribute('aria-expanded', shouldShow ? 'true' : 'false');
+      els.heroShadowSettingsBtn.setAttribute('aria-controls', els.heroShadowPopover.id);
+    }
+  }
+
+  function setHeroShadowColor(val){
+    const fallback = normalizeHeroState(state.text.hero).shadow.color || '#000000';
+    const normalized = normalizeHex(val, fallback);
+    const next = mutateHeroShadow(shadow=>{ shadow.color = normalized; });
+    if(els.heroShadowHex){ applyHexInputStyle(els.heroShadowHex, next.color); }
+    if(els.heroShadowPicker){ els.heroShadowPicker.value = next.color; }
+    commitTextState({ refreshControls:false });
+    updateHeroShadowPopover();
+  }
+
+  function setHeroShadowOpacity(val){
+    if(!Number.isFinite(val)) return;
+    const clamped = Math.max(0, Math.min(100, Math.round(val)));
+    const next = mutateHeroShadow(shadow=>{ shadow.opacity = clamped / 100; });
+    if(els.heroShadowOpacity){ els.heroShadowOpacity.value = Math.round(next.opacity * 100).toString(); }
+    commitTextState({ refreshControls:false });
+  }
+
+  function setHeroShadowAngle(val){
+    if(!Number.isFinite(val)) return;
+    const normalized = ((val % 360) + 360) % 360;
+    const next = mutateHeroShadow(shadow=>{ shadow.angle = normalized; });
+    if(els.heroShadowAngle){ els.heroShadowAngle.value = Math.round(next.angle).toString(); }
+    commitTextState({ refreshControls:false });
+  }
+
+  function setHeroShadowDistance(val){
+    if(!Number.isFinite(val)) return;
+    const normalized = Math.max(0, Math.round(val));
+    const next = mutateHeroShadow(shadow=>{ shadow.distance = normalized; });
+    if(els.heroShadowDistance){ els.heroShadowDistance.value = Math.round(next.distance).toString(); }
+    commitTextState({ refreshControls:false });
+  }
+
+  function setHeroShadowSpread(val){
+    if(!Number.isFinite(val)) return;
+    const normalized = Math.max(0, Math.min(100, Math.round(val)));
+    const next = mutateHeroShadow(shadow=>{ shadow.spread = normalized; });
+    if(els.heroShadowSpread){ els.heroShadowSpread.value = Math.round(next.spread).toString(); }
+    commitTextState({ refreshControls:false });
+  }
+
+  function setHeroShadowSize(val){
+    if(!Number.isFinite(val)) return;
+    const normalized = Math.max(0, Math.round(val));
+    const next = mutateHeroShadow(shadow=>{ shadow.size = normalized; });
+    if(els.heroShadowSize){ els.heroShadowSize.value = Math.round(next.size).toString(); }
+    commitTextState({ refreshControls:false });
+  }
+
+  const heroShadowHexHandler = (value, { force = false } = {})=>{
+    if(!value){
+      if(force){ setHeroShadowColor(value); }
+      return;
+    }
+    if(!force && value.trim().length < 7) return;
+    setHeroShadowColor(value);
+  };
+
+  const heroShadowOpacityHandler = ()=>{
+    if(!els.heroShadowOpacity) return;
+    const raw = els.heroShadowOpacity.value;
+    if(raw === '') return;
+    setHeroShadowOpacity(Number(raw));
+  };
+
+  const heroShadowAngleHandler = ()=>{
+    if(!els.heroShadowAngle) return;
+    const raw = els.heroShadowAngle.value;
+    if(raw === '') return;
+    setHeroShadowAngle(Number(raw));
+  };
+
+  const heroShadowDistanceHandler = ()=>{
+    if(!els.heroShadowDistance) return;
+    const raw = els.heroShadowDistance.value;
+    if(raw === '') return;
+    setHeroShadowDistance(Number(raw));
+  };
+
+  const heroShadowSpreadHandler = ()=>{
+    if(!els.heroShadowSpread) return;
+    const raw = els.heroShadowSpread.value;
+    if(raw === '') return;
+    setHeroShadowSpread(Number(raw));
+  };
+
+  const heroShadowSizeHandler = ()=>{
+    if(!els.heroShadowSize) return;
+    const raw = els.heroShadowSize.value;
+    if(raw === '') return;
+    setHeroShadowSize(Number(raw));
+  };
+
+  els.heroShadowEnable?.addEventListener('change', (e)=>{
+    const enabled = !!e.target.checked;
+    mutateHeroShadow(shadow=>{ shadow.enabled = enabled; });
+    if(!enabled){ heroShadowPopoverVisible = false; }
+    commitTextState({ refreshControls:false });
+    updateControls();
+  });
+  els.heroShadowHex?.addEventListener('input', (e)=> heroShadowHexHandler(e.target.value));
+  els.heroShadowHex?.addEventListener('change', (e)=> heroShadowHexHandler(e.target.value, { force:true }));
+  els.heroShadowPicker?.addEventListener('input', (e)=> heroShadowHexHandler(e.target.value, { force:true }));
+  els.heroShadowOpacity?.addEventListener('input', heroShadowOpacityHandler);
+  els.heroShadowOpacity?.addEventListener('change', heroShadowOpacityHandler);
+  els.heroShadowAngle?.addEventListener('input', heroShadowAngleHandler);
+  els.heroShadowAngle?.addEventListener('change', heroShadowAngleHandler);
+  els.heroShadowDistance?.addEventListener('input', heroShadowDistanceHandler);
+  els.heroShadowDistance?.addEventListener('change', heroShadowDistanceHandler);
+  els.heroShadowSpread?.addEventListener('input', heroShadowSpreadHandler);
+  els.heroShadowSpread?.addEventListener('change', heroShadowSpreadHandler);
+  els.heroShadowSize?.addEventListener('input', heroShadowSizeHandler);
+  els.heroShadowSize?.addEventListener('change', heroShadowSizeHandler);
+  els.heroShadowSettingsBtn?.addEventListener('click', ()=>{
+    if(!state.text.hero.enabled) return;
+    const currentShadow = normalizeHeroState(state.text.hero).shadow;
+    if(!currentShadow.enabled){
+      mutateHeroShadow(shadow=>{ shadow.enabled = true; });
+      heroShadowPopoverVisible = true;
+      commitTextState({ refreshControls:false });
+      updateControls();
+      window.requestAnimationFrame(()=>{
+        if(!heroShadowPopoverVisible) return;
+        const focusTarget = els.heroShadowPopover?.querySelector('input,button,select,textarea');
+        focusTarget?.focus?.({ preventScroll:true });
+      });
+      return;
+    }
+    heroShadowPopoverVisible = !heroShadowPopoverVisible;
+    updateHeroShadowPopover();
+    if(heroShadowPopoverVisible){
+      const focusTarget = els.heroShadowPopover?.querySelector('input,button,select,textarea');
+      focusTarget?.focus?.({ preventScroll:true });
+    }
+  });
+  els.heroShadowClose?.addEventListener('click', ()=>{
+    heroShadowPopoverVisible = false;
+    updateHeroShadowPopover();
+    els.heroShadowSettingsBtn?.focus?.({ preventScroll:true });
+  });
+  els.heroShadowPopover?.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){ 
+      heroShadowPopoverVisible = false;
+      updateHeroShadowPopover();
+      els.heroShadowSettingsBtn?.focus?.({ preventScroll:true });
+    }
+  });
+  document.addEventListener('click', (e)=>{
+    if(!heroShadowPopoverVisible) return;
+    if(!els.heroShadowPopover) return;
+    const target = e.target;
+    if(!(target instanceof Node)) return;
+    if(els.heroShadowPopover.contains(target)) return;
+    if(els.heroShadowSettingsBtn?.contains(target)) return;
+    heroShadowPopoverVisible = false;
+    updateHeroShadowPopover();
+  });
   function updateHeroPositionFromPointer(e){
     if(!frameMetrics.width || !frameMetrics.height) return;
     const stageRect = els.stage.getBoundingClientRect();
@@ -4625,11 +5127,13 @@
     updateControls();
     render();
   });
-  els.toggleGuidesBtn?.addEventListener('click', ()=>{
+  function toggleGuidesVisibility(){
     state.guidesHidden = !state.guidesHidden;
     guideSnapActive = { vertical:false, horizontal:false };
     render();
-  });
+  }
+  els.toggleGuidesBtn?.addEventListener('click', toggleGuidesVisibility);
+  els.stageGuidesBtn?.addEventListener('click', toggleGuidesVisibility);
   const fullscreenTarget = ()=> els.stage?.parentElement || els.stage;
   function syncFullscreenState(){
     const target = fullscreenTarget();
@@ -5276,8 +5780,26 @@
     if(!state.dragging) return;
     const dx = (e.clientX - state.dragging.startX)/state.previewZoom;
     const dy = (e.clientY - state.dragging.startY)/state.previewZoom;
-    state.offset.x = Math.max(-state.limits.x, Math.min(state.dragging.ox + dx, state.limits.x));
-    state.offset.y = Math.max(-state.limits.y, Math.min(state.dragging.oy + dy, state.limits.y));
+    const candidateX = Math.max(-state.limits.x, Math.min(state.dragging.ox + dx, state.limits.x));
+    const candidateY = Math.max(-state.limits.y, Math.min(state.dragging.oy + dy, state.limits.y));
+    let snapX = candidateX;
+    let snapY = candidateY;
+    guideSnapActive = { vertical:false, horizontal:false };
+    if(!state.guidesHidden && els.stage){
+      const stageRect = els.stage.getBoundingClientRect();
+      const stageCenterX = stageRect.width / 2 + snapX * state.previewZoom;
+      if(typeof guidePositions.vertical === 'number' && Math.abs(stageCenterX - guidePositions.vertical) <= IMAGE_SNAP_THRESHOLD){
+        snapX = (guidePositions.vertical - stageRect.width / 2) / state.previewZoom;
+        guideSnapActive.vertical = true;
+      }
+      const stageCenterY = stageRect.height / 2 + snapY * state.previewZoom;
+      if(typeof guidePositions.horizontal === 'number' && Math.abs(stageCenterY - guidePositions.horizontal) <= IMAGE_SNAP_THRESHOLD){
+        snapY = (guidePositions.horizontal - stageRect.height / 2) / state.previewZoom;
+        guideSnapActive.horizontal = true;
+      }
+    }
+    state.offset.x = Math.max(-state.limits.x, Math.min(snapX, state.limits.x));
+    state.offset.y = Math.max(-state.limits.y, Math.min(snapY, state.limits.y));
     render();
   });
   window.addEventListener('mouseup', ()=>{
@@ -5285,6 +5807,7 @@
       state.dragging=null;
       els.imageLayer.classList.remove('dragging');
       els.stage.classList.remove('dragging');
+      guideSnapActive = { vertical:false, horizontal:false };
       serializeCurrent();
     }
   });
