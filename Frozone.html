@@ -143,7 +143,7 @@
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .stage-inner.guides-hidden{box-shadow:none; border-color:transparent;}
-  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(100,116,139,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease, background .2s ease; background:transparent;}
+  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(0,0,0,0.95); pointer-events:none; opacity:1; transition:box-shadow .2s ease, background .2s ease; background:transparent;}
   .stage-inner.guides-hidden .frame,
   .stage-inner.guides-hidden .resizeHandle,
   .stage-inner.guides-hidden .guideLine,
@@ -180,7 +180,7 @@
   .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText.resizing{cursor:nwse-resize}
   .heroText .heroInner{display:block; pointer-events:none; white-space:pre-wrap}
-  .heroText[data-panel-style="inline"] .heroInner{display:inline; box-decoration-break:clone; -webkit-box-decoration-break:clone}
+  .heroText[data-panel-style="inline"]{min-width:0}
   .heroText[data-align="left"] .heroInner{text-align:left}
   .heroText[data-align="center"] .heroInner{text-align:center}
   .heroText[data-align="right"] .heroInner{text-align:right}
@@ -201,8 +201,7 @@
   .heroHandle[data-corner="ne"]{top:0; right:0; cursor:nesw-resize}
   .heroHandle[data-corner="se"]{bottom:0; right:0; cursor:nwse-resize}
   .heroHandle[data-corner="sw"]{bottom:0; left:0; cursor:nesw-resize}
-  .heroShadowSummary{font-size:12px; color:var(--muted); margin-left:12px}
-  .heroShadowRow{display:flex; align-items:center; gap:12px; position:relative}
+  .heroShadowSummary{margin-left:0; color:inherit; font-size:inherit}
   .heroShadowPopover{position:absolute; top:calc(100% + 10px); right:0; z-index:20; min-width:260px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:0 18px 44px rgba(2,6,23,0.26); display:none; flex-direction:column; gap:12px}
   .heroShadowPopover.show{display:flex}
   .heroShadowPopover header{display:flex; align-items:center; justify-content:space-between; gap:12px}
@@ -219,9 +218,7 @@
   .heroShadowPopover footer{display:flex; justify-content:flex-end}
   .heroShadowPopover button.closeShadow{all:unset; color:var(--muted); font-size:12px; cursor:pointer}
   .heroShadowPopover button.closeShadow:hover{color:var(--ink)}
-  .heroShadowPopover::before{content:""; position:absolute; top:-12px; right:28px; width:20px; height:12px; background:var(--card); border-left:1px solid var(--border); border-top:1px solid var(--border); transform:rotate(45deg);}
-  :root[data-theme="dark"] .heroShadowPopover::before{border-color:var(--border);}
-  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
+  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:30px; left:40px; height:60px; width:auto; object-fit:contain; z-index:45}
   .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
   .toneHint{display:block; font-size:12px; color:var(--muted); margin-top:6px}
   .textSettingsWrap{display:grid; gap:18px}
@@ -238,6 +235,7 @@
   .serialOpacityValue{font-size:12px; font-weight:600; color:var(--muted); min-width:48px; text-align:right}
   .applyAllSwitch{margin-top:4px}
   .colorField{position:relative; display:inline-flex; width:140px}
+  .colorField.disabled{opacity:0.5; pointer-events:none}
   .colorHexInput{width:100%; font-family:'JetBrains Mono','SFMono-Regular',ui-monospace,monospace; padding:10px 12px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 4px 12px rgba(15,23,42,0.06); text-transform:uppercase; letter-spacing:0.04em; transition:border-color .18s ease, box-shadow .18s ease, color .18s ease}
   .colorHexInput::placeholder{color:var(--muted)}
   .colorHexInput:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
@@ -258,8 +256,18 @@
   .gradientField span{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
   .heroGradientAngle{display:grid; gap:6px}
   .heroGradientAngle label{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
-  .heroPanelRow .seg{flex-wrap:nowrap}
-  .heroPanelRow .colorField{width:150px}
+  .heroPanelLayout{display:grid; gap:16px}
+  .heroPanelLayout .panelRow{display:flex; flex-wrap:wrap; align-items:center; gap:14px}
+  .heroPanelLayout .panelRow .rowTitle{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted)}
+  .heroPanelLayout .panelRow.panelHeader .seg{flex:1 1 auto}
+  .heroPanelLayout .panelRow.panelHeader .wrapToggle{margin-left:auto}
+  .heroPanelLayout .panelRow.panelControls{align-items:flex-end}
+  .heroPanelLayout .panelRow.panelControls .colorField{width:150px}
+  .heroPanelLayout .panelRow.panelControls .heroControl{flex:1 1 200px}
+  .heroShadowRow{display:flex; align-items:center; gap:12px; position:relative; flex-wrap:wrap}
+  .heroShadowSettings.btn{display:inline-flex; align-items:center; gap:8px}
+  .heroShadowSettings .btn-ico{stroke-width:1.8}
+  .heroShadowSettings .btn-text{font-weight:600; font-size:13px}
   .textFieldRow{display:grid; gap:10px}
   .textFieldRow label{font-size:13px; font-weight:600}
   .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
@@ -423,6 +431,16 @@
   .logoSectionHeading .meta{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em}
   .logoSectionInner{padding:18px 24px 22px; display:grid; gap:18px}
   .logoSectionActions{display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end}
+  .logoSection.collapsed{gap:0}
+  .logoSection.collapsed::before{opacity:0.45}
+  .logoSection.collapsed .logoSectionHead{padding:18px 20px}
+  .logoSection.collapsed .logoSectionHeading{flex-direction:row; align-items:center; gap:12px}
+  .logoSection.collapsed .logoSectionHeading .meta{display:none}
+  .logoSection.collapsed .logoSectionActions{justify-content:flex-end; gap:10px}
+  .logoSection.collapsed .logoSectionActions .uploadAction{display:none}
+  .logoSection.collapsed .logoSectionInner,
+  .logoSection.collapsed .logoWarning,
+  .logoSection.collapsed .libWrap{display:none}
   .logoControls{display:flex; flex-wrap:wrap; gap:18px; align-items:center}
   .logoControlGroup{display:flex; align-items:center; gap:10px; flex-wrap:nowrap}
   .logoControlLabel{font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
@@ -494,15 +512,17 @@
   .thumbNum{font-size:12px; font-weight:700; color:var(--muted); flex:0 0 auto}
   .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
-  .previewControlRow{display:flex; flex-wrap:wrap; align-items:center; gap:16px}
-  .previewActions{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
-  .previewActions .btn{flex:0 0 auto}
-  .previewZoomControl{display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:1 1 auto; min-width:220px; flex-wrap:nowrap}
-  .previewZoomControl .muted{font-size:13px; white-space:nowrap}
-  .previewZoomControl input[type="range"]{flex:1 1 auto; min-width:120px; width:auto}
+  .previewToolbar{display:flex; flex-wrap:wrap; align-items:center; gap:12px}
+  .previewToolbar .zoomGroup{display:flex; align-items:center; gap:12px; flex:1 1 260px}
+  .previewToolbar .zoomSlider{flex:1; display:flex; align-items:center; gap:12px; padding:8px 14px; border:1px solid var(--border); border-radius:14px; background:var(--stageInner); box-shadow:inset 0 1px 0 rgba(255,255,255,0.55)}
+  .previewToolbar .zoomSlider input[type="range"]{flex:1 1 auto; min-width:120px; width:auto}
+  .previewToolbar .zoomReadout{display:flex; flex-direction:column; gap:2px; font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted)}
+  .previewToolbar .zoomReadout .zoomValue{font-size:14px; font-weight:600; letter-spacing:0; text-transform:none; color:var(--ink)}
+  .previewToolbar .btn{flex:0 0 auto}
+  .previewToolbar .toggleGuidesBtn[aria-pressed="true"]{background:rgba(148,163,184,0.18)}
   @media (max-width: 960px){
-    .previewControlRow{flex-direction:column; align-items:stretch}
-    .previewZoomControl{width:100%; justify-content:space-between}
+    .previewToolbar{flex-direction:column; align-items:stretch}
+    .previewToolbar .zoomGroup{width:100%}
   }
   @media (max-width: 560px){
     .unsplashResults{grid-template-columns:repeat(1, minmax(0,1fr));}
@@ -517,13 +537,13 @@
   .globalDropOverlay.show{opacity:1}
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
-  .exitFullscreenBtn{position:absolute; top:12px; right:12px; z-index:62; display:none}
-  .stage-inner.fullscreen-active .exitFullscreenBtn{display:inline-flex}
-  .fullscreenControlDock{position:absolute; top:16px; right:16px; display:none; gap:10px; align-items:center; z-index:63}
-  .fullscreenControlDock .btn{box-shadow:0 12px 28px rgba(2,6,23,0.28)}
-  .fullscreenZoomGroup{display:flex; gap:8px}
+  .fullscreenControlDock{position:absolute; top:16px; left:50%; transform:translateX(-50%); display:none; align-items:center; gap:12px; padding:10px 18px; border-radius:999px; background:var(--headerBg); border:1px solid var(--border); box-shadow:0 22px 44px rgba(2,6,23,0.32); backdrop-filter:blur(18px); z-index:63}
+  .fullscreenControlDock .btn{box-shadow:none}
+  .fullscreenControlDock .zoomSlider{display:flex; align-items:center; gap:12px; padding:6px 12px; border-radius:12px; border:1px solid rgba(148,163,184,0.35); background:var(--stageInner)}
+  .fullscreenControlDock .zoomSlider input[type="range"]{width:140px}
+  .fullscreenControlDock .zoomSlider .zoomLabel{font-size:13px; font-weight:600; color:var(--ink)}
+  .fullscreenControlDock .toggleGuides[aria-pressed="true"]{background:rgba(148,163,184,0.2)}
   .stage-inner.fullscreen-active .fullscreenControlDock{display:flex}
-  .fullscreenGuideBtn[aria-pressed="true"]{background:rgba(148,163,184,0.25)}
 
   .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:flex-start; gap:0; min-width:56px; max-width:56px; height:56px; padding:0 12px; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .36s cubic-bezier(.4,0,.2,1), padding .36s cubic-bezier(.4,0,.2,1), gap .36s cubic-bezier(.4,0,.2,1), border-radius .36s cubic-bezier(.4,0,.2,1), transform .36s cubic-bezier(.22,.61,.36,1), box-shadow .36s cubic-bezier(.22,.61,.36,1), background .3s ease, color .3s ease;}
   .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .3s cubic-bezier(.22,.61,.36,1)}
@@ -1021,7 +1041,7 @@
         <!-- Step: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none" data-step-key="square-logo">
           <div class="section-title"><span class="badge">5</span> Square logo</div>
-          <div class="logoSection">
+          <div class="logoSection" id="squareLogoCard">
             <div class="logoSectionHead">
               <div class="logoSectionHeading">
                 <span class="title">Square logo</span>
@@ -1071,7 +1091,7 @@
 
         <div class="section" id="bannerLogoSection" style="display:none" data-step-key="banner-logo">
           <div class="section-title"><span class="badge">6</span> Banner logo</div>
-          <div class="logoSection">
+          <div class="logoSection" id="bannerLogoCard">
             <div class="logoSectionHead">
               <div class="logoSectionHeading">
                 <span class="title">Banner logo</span>
@@ -1115,7 +1135,7 @@
         <!-- Step: Vertical logo -->
         <div class="section" id="verticalLogoSection" style="display:none" data-step-key="vertical-logo">
           <div class="section-title"><span class="badge">7</span> Vertical logo</div>
-          <div class="logoSection">
+          <div class="logoSection" id="verticalLogoCard">
             <div class="logoSectionHead">
               <div class="logoSectionHeading">
                 <span class="title">Vertical logo</span>
@@ -1298,41 +1318,43 @@
                     <input id="heroGradAngle" type="number" value="0" step="1" />
                   </div>
                 </div>
-                <div class="heroRow heroPanelRow">
-                  <span class="logoControlLabel">Background panel</span>
-                  <div class="seg" id="heroPanelSeg">
-                    <button type="button" data-panel="none" class="active">None</button>
-                    <button type="button" data-panel="light">Light</button>
-                    <button type="button" data-panel="dark">Dark</button>
-                    <button type="button" data-panel="custom">Custom</button>
+                <div class="heroPanelLayout">
+                  <div class="panelRow panelHeader">
+                    <span class="rowTitle">Background panel</span>
+                    <div class="seg" id="heroPanelSeg">
+                      <button type="button" data-panel="none" class="active">None</button>
+                      <button type="button" data-panel="light">Light</button>
+                      <button type="button" data-panel="dark">Dark</button>
+                      <button type="button" data-panel="custom">Custom</button>
+                    </div>
+                    <label class="switch wrapToggle"><input type="checkbox" id="heroPanelStyleToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Wrap each line</span></label>
                   </div>
-                  <div class="colorField" id="heroPanelCustomField" style="display:none">
-                    <input id="heroPanelCustomHex" type="text" value="#111827" maxlength="7" class="colorHexInput" />
-                    <input id="heroPanelCustomPicker" type="color" class="colorOverlay" value="#111827" />
-                  </div>
-                  <div class="heroControl" id="heroPanelOpacityControl" style="min-width:150px">
-                    <label for="heroPanelOpacity">Panel opacity</label>
-                    <div class="serialOpacityControl">
-                      <input id="heroPanelOpacity" type="range" min="0" max="100" value="70" />
-                      <span class="serialOpacityValue" id="heroPanelOpacityVal">70%</span>
+                  <div class="panelRow panelControls">
+                    <div class="colorField" id="heroPanelCustomField">
+                      <input id="heroPanelCustomHex" type="text" value="#111827" maxlength="7" class="colorHexInput" />
+                      <input id="heroPanelCustomPicker" type="color" class="colorOverlay" value="#111827" />
+                    </div>
+                    <div class="heroControl" id="heroPanelOpacityControl">
+                      <label for="heroPanelOpacity">Panel opacity</label>
+                      <div class="serialOpacityControl">
+                        <input id="heroPanelOpacity" type="range" min="0" max="100" value="70" />
+                        <span class="serialOpacityValue" id="heroPanelOpacityVal">70%</span>
+                      </div>
                     </div>
                   </div>
-                  <div class="heroControl heroPanelStyleControl">
-                    <label class="switch"><input type="checkbox" id="heroPanelStyleToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Wrap each line</span></label>
-                  </div>
-                </div>
-                <div class="heroRow heroShadowRow">
-                  <button class="btn ghost" type="button" id="heroShadowToggle">
-                    <i data-lucide="layers" class="btn-ico" aria-hidden="true"></i>
-                    <span class="btn-text">Text shadow</span>
-                  </button>
-                  <span class="heroShadowSummary" id="heroShadowSummary">Off</span>
-                  <div class="heroShadowPopover" id="heroShadowPopover" aria-hidden="true">
-                    <header>
-                      <label class="switch"><input type="checkbox" id="heroShadowEnable"><span class="tgl"><span class="knob"></span></span><span class="lbl">Enable shadow</span></label>
-                      <button type="button" class="closeShadow" id="heroShadowClose">Close</button>
-                    </header>
-                    <div class="shadowControls">
+                  <div class="panelRow heroShadowRow">
+                    <span class="rowTitle">Text shadows</span>
+                    <label class="switch"><input type="checkbox" id="heroShadowEnable"><span class="tgl"><span class="knob"></span></span><span class="lbl">Enable</span></label>
+                    <button class="btn ghost heroShadowSettings" type="button" id="heroShadowToggle">
+                      <i data-lucide="settings-2" class="btn-ico" aria-hidden="true"></i>
+                      <span class="btn-text" id="heroShadowSummary">Off</span>
+                    </button>
+                    <div class="heroShadowPopover" id="heroShadowPopover" aria-hidden="true">
+                      <header>
+                        <span class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em">Shadow settings</span>
+                        <button type="button" class="closeShadow" id="heroShadowClose">Close</button>
+                      </header>
+                      <div class="shadowControls">
                       <div class="shadowField">
                         <label for="heroShadowColor">Colour</label>
                         <div class="colorField">
@@ -1412,48 +1434,53 @@
           <div id="carouselEmpty" class="carouselEmpty">Upload images to start your carousel.</div>
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
         </div>
-        <div class="previewControlRow">
-          <div class="previewActions">
-            <button class="btn small ghost" type="button" id="toggleGuidesBtn" aria-pressed="false">
-              <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
-              <span class="btn-text">Hide rulers</span>
-            </button>
+        <div class="previewToolbar">
+          <div class="zoomGroup">
             <button class="btn ghost icon" type="button" id="zoomOutBtn" aria-label="Zoom out">
               <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
             </button>
+            <div class="zoomSlider">
+              <input id="previewZoom" type="range" min="0.5" max="3" step="0.1" value="1">
+              <div class="zoomReadout">
+                <span>Preview zoom</span>
+                <span class="zoomValue"><span id="zoomLabel">1.00</span>×</span>
+              </div>
+            </div>
             <button class="btn ghost icon" type="button" id="zoomInBtn" aria-label="Zoom in">
               <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
             </button>
-            <button class="btn small ghost" type="button" id="fullscreenBtn" aria-pressed="false">
-              <i data-lucide="maximize-2" class="btn-ico" aria-hidden="true"></i>
-              <span class="btn-text">Full screen</span>
-            </button>
           </div>
-          <div class="previewZoomControl">
-            <span class="muted">Preview zoom</span>
-            <span class="muted"><span id="zoomLabel">1.00</span>×</span>
-            <input id="previewZoom" type="range" min="0.5" max="3" step="0.1" value="1">
-          </div>
+          <button class="btn small ghost toggleGuidesBtn" type="button" id="toggleGuidesBtn" aria-pressed="false">
+            <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
+            <span class="btn-text">Hide rules</span>
+          </button>
+          <button class="btn small ghost" type="button" id="fullscreenBtn" aria-pressed="false">
+            <i data-lucide="maximize-2" class="btn-ico" aria-hidden="true"></i>
+            <span class="btn-text">Full screen</span>
+          </button>
         </div>
       </div>
         <div class="stage">
           <div class="stage-inner" id="stage">
-            <button class="btn small ghost exitFullscreenBtn" type="button" id="exitFullscreenBtn">
-              <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
-              <span class="btn-text">Exit full screen</span>
-            </button>
             <div class="fullscreenControlDock" id="fullscreenControls" aria-hidden="true">
-              <button class="btn ghost icon fullscreenGuideBtn" type="button" id="fullscreenGuideBtn" aria-pressed="false" aria-label="Toggle rulers in full screen">
-                <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
+              <button class="btn ghost icon" type="button" id="fullscreenZoomOut" aria-label="Zoom out">
+                <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
               </button>
-              <div class="fullscreenZoomGroup">
-                <button class="btn ghost icon" type="button" id="fullscreenZoomOut" aria-label="Zoom out">
-                  <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
-                </button>
-                <button class="btn ghost icon" type="button" id="fullscreenZoomIn" aria-label="Zoom in">
-                  <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
-                </button>
+              <div class="zoomSlider">
+                <input id="fullscreenZoomRange" type="range" min="0.5" max="3" step="0.1" value="1" aria-label="Fullscreen zoom">
+                <span class="zoomLabel" id="fullscreenZoomLabel">1.00×</span>
               </div>
+              <button class="btn ghost icon" type="button" id="fullscreenZoomIn" aria-label="Zoom in">
+                <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
+              </button>
+              <button class="btn small ghost toggleGuides" type="button" id="fullscreenGuideBtn" aria-pressed="false">
+                <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
+                <span class="btn-text">Hide rules</span>
+              </button>
+              <button class="btn small ghost" type="button" id="exitFullscreenBtn">
+                <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
+                <span class="btn-text">Exit full screen</span>
+              </button>
             </div>
           <div class="image-layer" id="imageLayer">
             <img id="img" alt="uploaded" />
@@ -1724,6 +1751,7 @@
     sqLogoInput: document.getElementById('sqLogoInput'), sqLogoSeg: document.getElementById('sqLogoSeg'), sqLogoToneSeg: document.getElementById('sqLogoToneSeg'),
     sqLogoSearch: document.getElementById('sqLogoSearch'),
     sqLogoGallery: document.getElementById('sqLogoGallery'),
+    sqLogoCard: document.getElementById('squareLogoCard'),
 
     bannerLogoSection: document.getElementById('bannerLogoSection'),
     toggleBannerLogo: document.getElementById('toggleBannerLogo'),
@@ -1732,6 +1760,7 @@
     bannerLogoToneSeg: document.getElementById('bannerLogoToneSeg'),
     bannerLogoSearch: document.getElementById('bannerLogoSearch'),
     bannerLogoGallery: document.getElementById('bannerLogoGallery'),
+    bannerLogoCard: document.getElementById('bannerLogoCard'),
 
     verticalLogoSection: document.getElementById('verticalLogoSection'),
     toggleVertLogo: document.getElementById('toggleVertLogo'),
@@ -1741,6 +1770,7 @@
     removeVertLogo: document.getElementById('removeVertLogo'),
     vertLogoSearch: document.getElementById('vertLogoSearch'),
     vertLogoGallery: document.getElementById('vertLogoGallery'),
+    vertLogoCard: document.getElementById('verticalLogoCard'),
 
     textSettingsSection: document.getElementById('textSettingsSection'),
     toggleSerial: document.getElementById('toggleSerial'),
@@ -1812,6 +1842,8 @@
     fullscreenGuideBtn: document.getElementById('fullscreenGuideBtn'),
     fullscreenZoomIn: document.getElementById('fullscreenZoomIn'),
     fullscreenZoomOut: document.getElementById('fullscreenZoomOut'),
+    fullscreenZoomRange: document.getElementById('fullscreenZoomRange'),
+    fullscreenZoomLabel: document.getElementById('fullscreenZoomLabel'),
     fullscreenControls: document.getElementById('fullscreenControls'),
     guideVertical: document.getElementById('guideVertical'),
     guideHorizontal: document.getElementById('guideHorizontal'),
@@ -2385,6 +2417,7 @@
       const sqEnabled = state.squareLogo.enabled || !!state.squareLogo.src;
       if(els.toggleSqLogo){ els.toggleSqLogo.checked = sqEnabled; }
       if(els.sqLogoBlock){ els.sqLogoBlock.style.display = sqEnabled ? 'grid' : 'none'; }
+      if(els.sqLogoCard){ els.sqLogoCard.classList.toggle('collapsed', !sqEnabled); }
     }
     if(els.frostSection){ els.frostSection.style.display = isHorizontal ? 'block' : 'none'; }
     if(els.toggleFrost){
@@ -2401,6 +2434,7 @@
       const vertEnabled = state.vertLogo.enabled || !!state.vertLogo.src;
       if(els.toggleVertLogo){ els.toggleVertLogo.checked = vertEnabled; }
       if(els.vertLogoBlock){ els.vertLogoBlock.style.display = vertEnabled ? 'grid' : 'none'; }
+      if(els.vertLogoCard){ els.vertLogoCard.classList.toggle('collapsed', !vertEnabled); }
     }
     if(els.bannerLogoSection){
       els.bannerLogoSection.style.display = isBannerFormat ? 'block' : 'none';
@@ -2408,6 +2442,7 @@
         const bannerEnabled = state.bannerLogo.enabled || !!state.bannerLogo.src;
         if(els.toggleBannerLogo){ els.toggleBannerLogo.checked = bannerEnabled; }
         if(els.bannerLogoBlock){ els.bannerLogoBlock.style.display = bannerEnabled ? 'grid' : 'none'; }
+        if(els.bannerLogoCard){ els.bannerLogoCard.classList.toggle('collapsed', !bannerEnabled); }
       }
     }
     if(els.textSettingsSection){ els.textSettingsSection.style.display = isTextFormat ? 'block' : 'none'; }
@@ -2494,13 +2529,20 @@
           btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
       }
+      const isCustomPanel = state.text.hero.panel === 'custom';
+      const panelBaseColor = state.text.hero.panel === 'dark' ? '#050b19' : state.text.hero.panel === 'light' ? '#ffffff' : (state.text.hero.panelCustom || '#111827');
+      const panelCustom = normalizeHex(panelBaseColor, '#111827');
       if(els.heroPanelCustomField){
-        els.heroPanelCustomField.style.display = state.text.hero.panel === 'custom' ? 'inline-flex' : 'none';
+        els.heroPanelCustomField.classList.toggle('disabled', !isCustomPanel);
       }
       if(els.heroPanelCustomHex){
-        const panelCustom = normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
         applyHexInputStyle(els.heroPanelCustomHex, panelCustom);
-        if(els.heroPanelCustomPicker){ els.heroPanelCustomPicker.value = panelCustom; }
+        els.heroPanelCustomHex.value = panelCustom.toUpperCase();
+        els.heroPanelCustomHex.disabled = !isCustomPanel;
+      }
+      if(els.heroPanelCustomPicker){
+        els.heroPanelCustomPicker.value = panelCustom;
+        els.heroPanelCustomPicker.disabled = !isCustomPanel;
       }
       if(els.heroPanelOpacity){
         const opacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
@@ -2580,7 +2622,9 @@
     els.moveY.max = (Math.round(state.limits.y)).toString();
     els.moveX.value = state.offset.x; els.moveY.value = state.offset.y;
     els.xVal.textContent = Math.round(state.offset.x); els.yVal.textContent = Math.round(state.offset.y);
-    els.zoomLabel.textContent = state.previewZoom.toFixed(2);
+    if(els.zoomLabel){ els.zoomLabel.textContent = state.previewZoom.toFixed(2); }
+    if(els.fullscreenZoomLabel){ els.fullscreenZoomLabel.textContent = `${state.previewZoom.toFixed(2)}×`; }
+    if(els.fullscreenZoomRange){ els.fullscreenZoomRange.value = state.previewZoom; }
     els.outMeta.textContent = `${state.format.wExport}×${state.format.hExport}px`;
     els.rotLab.textContent = `${((state.rotation%360)+360)%360}°`;
     els.exportBtn.disabled = !state.imageSrc;
@@ -2644,6 +2688,9 @@
     if(els.previewZoom){
       els.previewZoom.max = Math.max(limit, PREVIEW_ZOOM_MIN).toFixed(2);
     }
+    if(els.fullscreenZoomRange){
+      els.fullscreenZoomRange.max = Math.max(limit, PREVIEW_ZOOM_MIN).toFixed(2);
+    }
     const safe = Math.max(PREVIEW_ZOOM_MIN, Math.min(limit, state.previewZoom || 1));
     if(safe < state.previewZoom - 0.01){
       setPreviewZoom(parseFloat(safe.toFixed(2)), {force:true});
@@ -2656,13 +2703,19 @@
     const clamped = Math.max(PREVIEW_ZOOM_MIN, Math.min(maxZoom, value));
     const rounded = Math.round(clamped * 100) / 100;
     if(rounded === state.previewZoom && !opts.force){
-      if(!opts.skipRender){ els.zoomLabel.textContent = state.previewZoom.toFixed(2); }
+      const currentLabel = state.previewZoom.toFixed(2);
+      if(els.zoomLabel){ els.zoomLabel.textContent = currentLabel; }
+      if(els.fullscreenZoomLabel){ els.fullscreenZoomLabel.textContent = `${currentLabel}×`; }
+      if(els.fullscreenZoomRange){ els.fullscreenZoomRange.value = state.previewZoom; }
       updateZoomControls();
       return;
     }
     state.previewZoom = rounded;
     els.previewZoom.value = state.previewZoom;
-    els.zoomLabel.textContent = state.previewZoom.toFixed(2);
+    if(els.fullscreenZoomRange){ els.fullscreenZoomRange.value = state.previewZoom; }
+    const zoomLabel = state.previewZoom.toFixed(2);
+    if(els.zoomLabel){ els.zoomLabel.textContent = zoomLabel; }
+    if(els.fullscreenZoomLabel){ els.fullscreenZoomLabel.textContent = `${zoomLabel}×`; }
     updateZoomControls();
     if(!opts.skipRender){ render(); }
   }
@@ -2723,7 +2776,7 @@
       const pressed = !!state.guidesHidden;
       els.toggleGuidesBtn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
       const textEl = els.toggleGuidesBtn.querySelector('.btn-text');
-      if(textEl){ textEl.textContent = pressed ? 'Show rulers' : 'Hide rulers'; }
+      if(textEl){ textEl.textContent = pressed ? 'Show rules' : 'Hide rules'; }
       const iconEl = els.toggleGuidesBtn.querySelector('i[data-lucide]');
       if(iconEl){ iconEl.setAttribute('data-lucide', pressed ? 'eye' : 'eye-off'); }
     }
@@ -2734,9 +2787,11 @@
       const icon = pressed ? 'eye' : 'eye-off';
       const iconEl = els.fullscreenGuideBtn.querySelector('i[data-lucide]');
       if(iconEl){ iconEl.setAttribute('data-lucide', icon); }
-      const label = pressed ? 'Show rulers' : 'Hide rulers';
+      const label = pressed ? 'Show rules' : 'Hide rules';
       els.fullscreenGuideBtn.setAttribute('aria-label', label);
       els.fullscreenGuideBtn.title = label;
+      const fullText = els.fullscreenGuideBtn.querySelector('.btn-text');
+      if(fullText){ fullText.textContent = label; }
     }
     const scaleYPreview = (state.format.hPreview/state.format.hExport) * state.previewZoom;
     const barHPrevPx = state.format.key==='HORIZ' ? state.frost.barHExp * scaleYPreview : 0;
@@ -2838,10 +2893,10 @@
     if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
       const scaleX = (state.format.wPreview/state.format.wExport) * state.previewZoom;
       const scaleY = (state.format.hPreview/state.format.hExport) * state.previewZoom;
-      const targetH = 30 * scaleY;
+      const targetH = 60 * scaleY;
       const ratio = state.bannerLogo.w && state.bannerLogo.h ? state.bannerLogo.w/state.bannerLogo.h : 1;
-      const left = frameLeftPx + 15 * scaleX;
-      const top = frameTopPx + 15 * scaleY;
+      const left = frameLeftPx + 40 * scaleX;
+      const top = frameTopPx + 30 * scaleY;
       els.bannerLogoPrev.style.display='block';
       els.bannerLogoPrev.style.height = targetH + 'px';
       els.bannerLogoPrev.style.left = left + 'px';
@@ -2940,6 +2995,8 @@
         els.heroTextPreview.style.boxShadow = 'none';
         els.heroTextPreview.style.padding = '0';
         els.heroTextPreview.style.borderRadius = '0';
+        els.heroTextPreview.style.display = 'block';
+        els.heroTextPreview.style.minWidth = '120px';
         inner.style.background = 'none';
         inner.style.padding = '0';
         inner.style.borderRadius = '0';
@@ -2948,22 +3005,26 @@
         inner.style.boxDecorationBreak = 'slice';
         inner.style.webkitBoxDecorationBreak = 'slice';
       } else if(panelStyle === 'inline'){
-        els.heroTextPreview.style.background = 'transparent';
-        els.heroTextPreview.style.boxShadow = 'none';
-        els.heroTextPreview.style.padding = '0';
-        els.heroTextPreview.style.borderRadius = '0';
-        inner.style.background = panelFill;
-        inner.style.padding = '14px 18px';
-        inner.style.borderRadius = '18px';
-        inner.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
-        inner.style.display = 'inline';
-        inner.style.boxDecorationBreak = 'clone';
-        inner.style.webkitBoxDecorationBreak = 'clone';
+        els.heroTextPreview.style.background = panelFill;
+        els.heroTextPreview.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
+        els.heroTextPreview.style.padding = '14px 18px';
+        els.heroTextPreview.style.borderRadius = '18px';
+        els.heroTextPreview.style.display = 'inline-block';
+        els.heroTextPreview.style.minWidth = '0';
+        inner.style.background = 'none';
+        inner.style.padding = '0';
+        inner.style.borderRadius = '0';
+        inner.style.boxShadow = 'none';
+        inner.style.display = 'block';
+        inner.style.boxDecorationBreak = 'slice';
+        inner.style.webkitBoxDecorationBreak = 'slice';
       } else {
         els.heroTextPreview.style.background = panelFill;
         els.heroTextPreview.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
         els.heroTextPreview.style.padding = '14px 18px';
         els.heroTextPreview.style.borderRadius = '18px';
+        els.heroTextPreview.style.display = 'block';
+        els.heroTextPreview.style.minWidth = '120px';
         inner.style.background = 'none';
         inner.style.padding = '0';
         inner.style.borderRadius = '0';
@@ -3158,24 +3219,13 @@
     const gctx = gradCanvas.getContext('2d');
     if(colors.length){
       const gradient = gctx.createLinearGradient(0, 0, fw, 0);
-      colors.forEach((c,i)=>{ gradient.addColorStop(i/(colors.length-1), `rgba(${c[0]},${c[1]},${c[2]},1)`); });
-      const leftColor = colors[0];
-      const rightColor = colors[colors.length-1];
-      gctx.fillStyle = `rgba(${leftColor[0]},${leftColor[1]},${leftColor[2]},1)`;
-      gctx.fillRect(0, 0, fw, frostCanvas.height);
+      const denom = Math.max(colors.length - 1, 1);
+      colors.forEach((c,i)=>{ gradient.addColorStop(i/denom, `rgba(${c[0]},${c[1]},${c[2]},1)`); });
       gctx.fillStyle = gradient;
       gctx.fillRect(0, 0, fw, frostCanvas.height);
-      const edgePad = Math.max(6, Math.round(fw * 0.035));
-      gctx.fillStyle = `rgba(${leftColor[0]},${leftColor[1]},${leftColor[2]},1)`;
-      gctx.fillRect(0, 0, edgePad, frostCanvas.height);
-      gctx.fillStyle = `rgba(${rightColor[0]},${rightColor[1]},${rightColor[2]},1)`;
-      gctx.fillRect(fw - edgePad, 0, edgePad, frostCanvas.height);
     }
 
-    frostCtx.save();
-    frostCtx.filter = 'blur(18px)';
     frostCtx.drawImage(gradCanvas, 0, 0);
-    frostCtx.restore();
 
     return frostCanvas;
   }
@@ -4526,6 +4576,7 @@
   els.moveX.addEventListener('input', e=>{ state.offset.x = +e.target.value; els.xVal.textContent = Math.round(state.offset.x); render(); serializeCurrent(); });
   els.moveY.addEventListener('input', e=>{ state.offset.y = +e.target.value; els.yVal.textContent = Math.round(state.offset.y); render(); serializeCurrent(); });
   els.previewZoom.addEventListener('input', e=>{ setPreviewZoom(+e.target.value, {force:true}); });
+  els.fullscreenZoomRange?.addEventListener('input', (e)=>{ setPreviewZoom(+e.target.value, {force:true}); });
   const stepPreviewZoom = (direction)=>{
     const maxZoom = state.previewZoomMax || PREVIEW_ZOOM_DEFAULT_MAX;
     const delta = PREVIEW_ZOOM_STEP * direction;
@@ -4552,6 +4603,7 @@
     const checked = !!els.toggleVertLogo.checked;
     state.vertLogo.enabled = checked;
     els.vertLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(els.vertLogoCard){ els.vertLogoCard.classList.toggle('collapsed', !checked); }
     if(!checked){
       state.vertLogo={enabled:false, src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
       els.vertLogoPrev.style.display='none';
@@ -4562,6 +4614,7 @@
     const checked = !!els.toggleSqLogo.checked;
     state.squareLogo.enabled = checked;
     if(els.sqLogoBlock) els.sqLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(els.sqLogoCard){ els.sqLogoCard.classList.toggle('collapsed', !checked); }
     if(!checked){
       state.squareLogo = { enabled:false, src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone: state.squareLogo.tone||'orig', source:'none', chosen:"" };
       els.sqLogoPrev.style.display='none';
@@ -4572,6 +4625,7 @@
     const checked = !!els.toggleBannerLogo.checked;
     state.bannerLogo.enabled = checked;
     if(els.bannerLogoBlock) els.bannerLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(els.bannerLogoCard){ els.bannerLogoCard.classList.toggle('collapsed', !checked); }
     if(!checked){
       state.bannerLogo = { enabled:false, src:null,w:0,h:0,tone:state.bannerLogo.tone||'orig', source:'none', chosen:"" };
       els.bannerLogoPrev.style.display='none';
@@ -4844,6 +4898,7 @@
   });
 
   els.heroPanelCustomHex?.addEventListener('input', (e)=>{
+    if(els.heroPanelCustomHex?.disabled) return;
     const val = normalizeHex(e.target.value, state.text.hero.panelCustom || '#111827');
     state.text.hero.panelCustom = val;
     state.text.hero.panel = 'custom';
@@ -4853,6 +4908,7 @@
     updateControls();
   });
   els.heroPanelCustomPicker?.addEventListener('input', (e)=>{
+    if(els.heroPanelCustomPicker?.disabled) return;
     const val = normalizeHex(e.target.value, state.text.hero.panelCustom || '#111827');
     state.text.hero.panelCustom = val;
     state.text.hero.panel = 'custom';
@@ -5468,11 +5524,11 @@
     if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
       const im = await loadImageCORS(state.bannerLogo.src);
       if(im){
-        const targetH = 30;
+        const targetH = 60;
         const baseW = im.naturalWidth || im.width; const baseH = im.naturalHeight || im.height;
         const scale = targetH / baseH; const w = Math.max(1, Math.round(baseW * scale));
         const source = toneImageSource(im, state.bannerLogo.tone);
-        ctx.save(); ctx.drawImage(source, 15, 15, w, targetH); ctx.restore();
+        ctx.save(); ctx.drawImage(source, 40, 30, w, targetH); ctx.restore();
       }
     }
 
@@ -5562,24 +5618,8 @@
         const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
         const panelColor = rgbPanel ? `rgba(${rgbPanel.r},${rgbPanel.g},${rgbPanel.b},${panelOpacity})` : `rgba(255,255,255,${panelOpacity})`;
         ctx.fillStyle = panelColor;
-        if(panelStyle === 'inline'){
-          for(let i=0;i<lines.length;i++){
-            const width = lineWidths[i] || 0;
-            const isLast = i === lines.length - 1;
-            const effectiveWidth = (align === 'justify' && !isLast) ? maxWidth : width;
-            const lineLeft = align === 'center' ? baseLeft + (maxWidth - effectiveWidth)/2 : align === 'right' ? baseLeft + (maxWidth - effectiveWidth) : baseLeft;
-            const startX = align === 'justify' ? baseLeft : lineLeft;
-            const rectLeft = startX - padX;
-            const rectTop = baseTop + i * lineHeightPx - padY;
-            const rectWidth = Math.max(0, effectiveWidth + padX * 2);
-            const rectHeight = fontSize + padY * 2;
-            drawRoundedRect(ctx, rectLeft, rectTop, rectWidth, rectHeight, radius);
-            ctx.fill();
-          }
-        } else {
-          drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
-          ctx.fill();
-        }
+        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
+        ctx.fill();
         ctx.restore();
       }
       let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
