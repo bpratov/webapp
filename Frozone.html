@@ -143,11 +143,12 @@
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .stage-inner.guides-hidden{box-shadow:none; border-color:transparent;}
-  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(100,116,139,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease, background .2s ease; background:transparent;}
+  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(0,0,0,0.98); pointer-events:none; opacity:1; transition:box-shadow .2s ease, background .2s ease; background:transparent;}
   .stage-inner.guides-hidden .frame,
   .stage-inner.guides-hidden .resizeHandle,
   .stage-inner.guides-hidden .guideLine,
-  .stage-inner.guides-hidden .stageWarning{display:none !important}
+  .stage-inner.guides-hidden .stageWarning,
+  .stage-inner.guides-hidden .serialPreview{display:none !important}
   .stage-inner.guides-hidden .heroText::after{opacity:0}
   .stage-inner.guides-hidden .heroHandle{display:none !important}
   .dropOverlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; color:var(--brand2); background:rgba(14,165,233,0.14); backdrop-filter:blur(18px); opacity:0; transition:opacity .2s ease; pointer-events:none; text-align:center; padding:24px; z-index:20}
@@ -179,8 +180,9 @@
   .heroText:focus::after, .heroText:focus-within::after, .heroText.dragging::after, .heroText.resizing::after, .heroText.editing::after{opacity:1}
   .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText.resizing{cursor:nwse-resize}
-  .heroText .heroInner{display:block; pointer-events:none; white-space:pre-wrap}
-  .heroText[data-panel-style="inline"] .heroInner{display:inline; box-decoration-break:clone; -webkit-box-decoration-break:clone}
+  .heroPanelFrame{display:inline-flex; align-items:stretch; pointer-events:none; transition:background .2s ease, box-shadow .2s ease, padding .2s ease, border-radius .2s ease}
+  .heroPanelFrame .heroInner{display:block; pointer-events:none; white-space:pre-wrap}
+  .heroText[data-panel-style="inline"] .heroPanelFrame{display:inline-flex}
   .heroText[data-align="left"] .heroInner{text-align:left}
   .heroText[data-align="center"] .heroInner{text-align:center}
   .heroText[data-align="right"] .heroInner{text-align:right}
@@ -201,11 +203,12 @@
   .heroHandle[data-corner="ne"]{top:0; right:0; cursor:nesw-resize}
   .heroHandle[data-corner="se"]{bottom:0; right:0; cursor:nwse-resize}
   .heroHandle[data-corner="sw"]{bottom:0; left:0; cursor:nesw-resize}
-  .heroShadowSummary{font-size:12px; color:var(--muted); margin-left:12px}
   .heroShadowRow{display:flex; align-items:center; gap:12px; position:relative}
   .heroShadowPopover{position:absolute; top:calc(100% + 10px); right:0; z-index:20; min-width:260px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:0 18px 44px rgba(2,6,23,0.26); display:none; flex-direction:column; gap:12px}
+  .heroShadowPopover::before{content:none}
   .heroShadowPopover.show{display:flex}
   .heroShadowPopover header{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .heroShadowPopover header .heroShadowTitle{font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
   .heroShadowPopover .shadowControls{display:grid; gap:12px}
   .heroShadowPopover .shadowField{display:flex; align-items:center; justify-content:space-between; gap:12px}
   .heroShadowPopover .shadowField label{min-width:78px; font-size:12px; color:var(--muted)}
@@ -219,9 +222,7 @@
   .heroShadowPopover footer{display:flex; justify-content:flex-end}
   .heroShadowPopover button.closeShadow{all:unset; color:var(--muted); font-size:12px; cursor:pointer}
   .heroShadowPopover button.closeShadow:hover{color:var(--ink)}
-  .heroShadowPopover::before{content:""; position:absolute; top:-12px; right:28px; width:20px; height:12px; background:var(--card); border-left:1px solid var(--border); border-top:1px solid var(--border); transform:rotate(45deg);}
-  :root[data-theme="dark"] .heroShadowPopover::before{border-color:var(--border);}
-  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
+  .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:48px; left:64px; height:120px; width:auto; object-fit:contain; z-index:45}
   .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
   .toneHint{display:block; font-size:12px; color:var(--muted); margin-top:6px}
   .textSettingsWrap{display:grid; gap:18px}
@@ -258,8 +259,29 @@
   .gradientField span{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
   .heroGradientAngle{display:grid; gap:6px}
   .heroGradientAngle label{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
-  .heroPanelRow .seg{flex-wrap:nowrap}
-  .heroPanelRow .colorField{width:150px}
+  .heroPanelSettings{display:grid; gap:16px}
+  .heroPanelRow{display:flex; flex-wrap:wrap; gap:14px; align-items:center}
+  .heroPanelTopRow{align-items:center}
+  .heroPanelTitle{font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted)}
+  .heroPanelTopRow .seg{flex:1 1 240px; min-width:220px}
+  .heroPanelWrapToggle{margin-left:auto; display:flex}
+  .heroPanelMidRow{align-items:flex-end}
+  .heroPanelMidRow .colorField{width:160px; flex:0 0 auto}
+  .heroPanelMidRow .colorField.disabled{opacity:0.55; pointer-events:none}
+  .heroPanelMidRow .colorField.disabled .colorHexInput{cursor:not-allowed}
+  .heroPanelMidRow .serialOpacityControl{flex:1 1 240px; min-width:220px; display:flex; align-items:center; gap:12px}
+  .heroPanelMidRow .serialOpacityControl input[type="range"]{flex:1}
+  .heroPanelMidRow .serialOpacityValue{min-width:44px}
+  .heroShadowRow{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px; position:relative}
+  .heroShadowInfo{display:flex; align-items:center; gap:12px}
+  .heroShadowTitle{font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted)}
+  .heroShadowSwitch{display:flex; align-items:center}
+  .heroShadowButton{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; border:1px solid var(--border); background:var(--stageInner); box-shadow:0 8px 18px rgba(15,23,42,0.08); cursor:pointer; transition:transform .15s ease, box-shadow .18s ease, border-color .18s ease}
+  .heroShadowButton .btn-ico{width:18px; height:18px; stroke:currentColor}
+  .heroShadowButton:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+  .heroShadowButton:hover{transform:translateY(-1px); box-shadow:0 12px 28px rgba(15,23,42,0.12)}
+  .heroShadowButton.active{border-color:rgba(14,165,233,0.45); box-shadow:0 12px 28px rgba(14,165,233,0.16); background:rgba(14,165,233,0.08); color:var(--brand2)}
+  .heroShadowSummary{font-size:12px; color:var(--muted); font-weight:600}
   .textFieldRow{display:grid; gap:10px}
   .textFieldRow label{font-size:13px; font-weight:600}
   .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
@@ -422,6 +444,17 @@
   .logoSectionHeading .title{font-weight:700; font-size:15px; letter-spacing:0.02em}
   .logoSectionHeading .meta{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:0.12em}
   .logoSectionInner{padding:18px 24px 22px; display:grid; gap:18px}
+  .logoSection.collapsed{box-shadow:0 6px 18px rgba(15,23,42,0.08)}
+  .logoSection.collapsed .logoSectionHead{padding:16px 20px 16px}
+  .logoSection.collapsed .logoSectionHeading .meta{display:none}
+  .logoSection.collapsed .logoSectionActions{gap:8px}
+  .logoSection.collapsed .logoSectionActions .uploadAction{display:none}
+  .logoSection.collapsed::before{opacity:0}
+  .logoSection.collapsed .logoSectionInner{display:none}
+  .logoSection.collapsed .logoSectionHeading{flex-direction:row; align-items:center; gap:10px}
+  .logoSection.collapsed .logoSectionHeading .title{font-size:14px}
+  .logoSection.collapsed .logoSectionActions{margin-left:auto}
+  .logoSection.collapsed .logoSectionActions .switch{margin-left:auto}
   .logoSectionActions{display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end}
   .logoControls{display:flex; flex-wrap:wrap; gap:18px; align-items:center}
   .logoControlGroup{display:flex; align-items:center; gap:10px; flex-wrap:nowrap}
@@ -494,15 +527,19 @@
   .thumbNum{font-size:12px; font-weight:700; color:var(--muted); flex:0 0 auto}
   .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
-  .previewControlRow{display:flex; flex-wrap:wrap; align-items:center; gap:16px}
-  .previewActions{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
-  .previewActions .btn{flex:0 0 auto}
-  .previewZoomControl{display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:1 1 auto; min-width:220px; flex-wrap:nowrap}
-  .previewZoomControl .muted{font-size:13px; white-space:nowrap}
-  .previewZoomControl input[type="range"]{flex:1 1 auto; min-width:120px; width:auto}
+  .previewToolbar{display:flex; justify-content:flex-start; width:100%;}
+  .previewToolbarCard{display:flex; align-items:center; gap:14px; padding:12px 16px; border:1px solid var(--border); border-radius:18px; background:var(--stageInner); box-shadow:0 12px 28px rgba(15,23,42,0.12); width:100%; flex-wrap:wrap;}
+  .previewToolbarCard .btn{flex:0 0 auto; height:40px; display:inline-flex; align-items:center; justify-content:center;}
+  .previewToolbarCard .btn.icon{width:40px; padding:0; border-radius:12px;}
+  .previewToolbarCard .btn.small{padding:10px 16px; border-radius:12px; font-weight:600; letter-spacing:0.02em;}
+  .previewZoomSlider{display:flex; align-items:center; gap:12px; flex:1 1 260px; min-width:220px}
+  .previewZoomLabel{font-size:12px; font-weight:700; color:var(--muted); letter-spacing:0.12em; text-transform:uppercase; white-space:nowrap}
+  .previewZoomValue{font-size:13px; font-weight:600; color:var(--muted); white-space:nowrap}
+  .previewZoomSlider input[type="range"]{flex:1 1 auto; min-width:140px}
   @media (max-width: 960px){
-    .previewControlRow{flex-direction:column; align-items:stretch}
-    .previewZoomControl{width:100%; justify-content:space-between}
+    .previewToolbarCard{flex-direction:column; align-items:stretch; gap:16px;}
+    .previewZoomSlider{width:100%;}
+    .previewToolbarCard .btn.icon{width:100%;}
   }
   @media (max-width: 560px){
     .unsplashResults{grid-template-columns:repeat(1, minmax(0,1fr));}
@@ -519,11 +556,20 @@
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
   .exitFullscreenBtn{position:absolute; top:12px; right:12px; z-index:62; display:none}
   .stage-inner.fullscreen-active .exitFullscreenBtn{display:inline-flex}
-  .fullscreenControlDock{position:absolute; top:16px; right:16px; display:none; gap:10px; align-items:center; z-index:63}
-  .fullscreenControlDock .btn{box-shadow:0 12px 28px rgba(2,6,23,0.28)}
-  .fullscreenZoomGroup{display:flex; gap:8px}
+  .fullscreenControlDock{position:absolute; top:16px; right:16px; display:none; z-index:63; align-items:flex-start}
+  .fullscreenToolbar{display:flex; align-items:flex-end; justify-content:flex-end; width:100%;}
+  .fullscreenToolbarCard{display:flex; align-items:center; gap:14px; padding:12px 16px; border-radius:18px; border:1px solid rgba(100,116,139,0.45); background:rgba(15,23,42,0.82); backdrop-filter:blur(18px); box-shadow:0 20px 42px rgba(2,6,23,0.55); flex-wrap:wrap;}
+  .fullscreenToolbarCard .btn{height:42px; min-width:42px; padding:0 14px; border-radius:12px; border:1px solid rgba(148,163,184,0.45); background:rgba(15,23,42,0.55); color:#f8fafc; display:inline-flex; align-items:center; justify-content:center; gap:8px; font-weight:600; letter-spacing:0.02em; transition:background .2s ease, border-color .2s ease, transform .2s ease}
+  .fullscreenToolbarCard .btn.icon{width:42px; padding:0}
+  .fullscreenToolbarCard .btn .btn-ico{stroke:currentColor}
+  .fullscreenToolbarCard .btn:hover{background:rgba(148,163,184,0.28); transform:translateY(-1px)}
+  .fullscreenToolbarCard .btn:focus-visible{outline:2px solid rgba(96,165,250,0.75); outline-offset:2px}
+  .fullscreenToolbarCard .btn.fullscreenGuideBtn[aria-pressed="true"]{background:rgba(59,130,246,0.35); border-color:rgba(96,165,250,0.65); color:#dbeafe}
+  .fullscreenZoomSlider{display:flex; align-items:center; gap:10px; min-width:200px; flex:1 1 240px}
+  .fullscreenZoomSlider label{font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(226,232,240,0.8); font-weight:700}
+  .fullscreenZoomSlider input[type="range"]{flex:1 1 auto}
+  .fullscreenZoomValue{font-size:13px; font-weight:600; color:rgba(226,232,240,0.9); white-space:nowrap}
   .stage-inner.fullscreen-active .fullscreenControlDock{display:flex}
-  .fullscreenGuideBtn[aria-pressed="true"]{background:rgba(148,163,184,0.25)}
 
   .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:flex-start; gap:0; min-width:56px; max-width:56px; height:56px; padding:0 12px; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .36s cubic-bezier(.4,0,.2,1), padding .36s cubic-bezier(.4,0,.2,1), gap .36s cubic-bezier(.4,0,.2,1), border-radius .36s cubic-bezier(.4,0,.2,1), transform .36s cubic-bezier(.22,.61,.36,1), box-shadow .36s cubic-bezier(.22,.61,.36,1), background .3s ease, color .3s ease;}
   .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .3s cubic-bezier(.22,.61,.36,1)}
@@ -564,6 +610,8 @@
   :root[data-theme="dark"] .partnerSettingsBtn{background:rgba(30,41,59,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 10px 24px rgba(2,6,23,0.6)}
   :root[data-theme="dark"] .logoSection{background:linear-gradient(135deg,rgba(30,41,59,0.92),rgba(15,23,42,0.82)); border-color:rgba(71,85,105,0.75); box-shadow:0 26px 46px rgba(2,6,23,0.68)}
   :root[data-theme="dark"] .logoSection::before{opacity:1}
+  :root[data-theme="dark"] .fullscreenToolbarCard{background:rgba(6,11,22,0.88); border-color:rgba(71,85,105,0.75); box-shadow:0 24px 48px rgba(0,0,0,0.65)}
+  :root[data-theme="dark"] .fullscreenToolbarCard .btn{background:rgba(15,23,42,0.7); border-color:rgba(99,112,139,0.6); color:#e2e8f0}
   :root[data-theme="dark"] .seg{background:linear-gradient(135deg,rgba(30,64,175,0.55),rgba(17,94,205,0.28)); border:1px solid rgba(96,165,250,0.35); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08), 0 6px 14px rgba(2,6,23,0.4)}
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
@@ -1021,7 +1069,7 @@
         <!-- Step: Square logo -->
         <div class="section" id="squareLogoSection" style="display:none" data-step-key="square-logo">
           <div class="section-title"><span class="badge">5</span> Square logo</div>
-          <div class="logoSection">
+          <div class="logoSection" id="sqLogoSectionCard">
             <div class="logoSectionHead">
               <div class="logoSectionHeading">
                 <span class="title">Square logo</span>
@@ -1071,7 +1119,7 @@
 
         <div class="section" id="bannerLogoSection" style="display:none" data-step-key="banner-logo">
           <div class="section-title"><span class="badge">6</span> Banner logo</div>
-          <div class="logoSection">
+          <div class="logoSection" id="bannerLogoSectionCard">
             <div class="logoSectionHead">
               <div class="logoSectionHeading">
                 <span class="title">Banner logo</span>
@@ -1115,7 +1163,7 @@
         <!-- Step: Vertical logo -->
         <div class="section" id="verticalLogoSection" style="display:none" data-step-key="vertical-logo">
           <div class="section-title"><span class="badge">7</span> Vertical logo</div>
-          <div class="logoSection">
+          <div class="logoSection" id="vertLogoSectionCard">
             <div class="logoSectionHead">
               <div class="logoSectionHeading">
                 <span class="title">Vertical logo</span>
@@ -1298,40 +1346,44 @@
                     <input id="heroGradAngle" type="number" value="0" step="1" />
                   </div>
                 </div>
-                <div class="heroRow heroPanelRow">
-                  <span class="logoControlLabel">Background panel</span>
-                  <div class="seg" id="heroPanelSeg">
-                    <button type="button" data-panel="none" class="active">None</button>
-                    <button type="button" data-panel="light">Light</button>
-                    <button type="button" data-panel="dark">Dark</button>
-                    <button type="button" data-panel="custom">Custom</button>
+                <div class="heroPanelSettings">
+                  <div class="heroPanelRow heroPanelTopRow">
+                    <span class="heroPanelTitle">Background panel</span>
+                    <div class="seg" id="heroPanelSeg">
+                      <button type="button" data-panel="none" class="active">None</button>
+                      <button type="button" data-panel="light">Light</button>
+                      <button type="button" data-panel="dark">Dark</button>
+                      <button type="button" data-panel="custom">Custom</button>
+                    </div>
+                    <label class="switch heroPanelWrapToggle"><input type="checkbox" id="heroPanelStyleToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Wrap each line</span></label>
                   </div>
-                  <div class="colorField" id="heroPanelCustomField" style="display:none">
-                    <input id="heroPanelCustomHex" type="text" value="#111827" maxlength="7" class="colorHexInput" />
-                    <input id="heroPanelCustomPicker" type="color" class="colorOverlay" value="#111827" />
-                  </div>
-                  <div class="heroControl" id="heroPanelOpacityControl" style="min-width:150px">
-                    <label for="heroPanelOpacity">Panel opacity</label>
-                    <div class="serialOpacityControl">
-                      <input id="heroPanelOpacity" type="range" min="0" max="100" value="70" />
-                      <span class="serialOpacityValue" id="heroPanelOpacityVal">70%</span>
+                  <div class="heroPanelRow heroPanelMidRow">
+                    <div class="colorField" id="heroPanelCustomField">
+                      <input id="heroPanelCustomHex" type="text" value="#111827" maxlength="7" class="colorHexInput" />
+                      <input id="heroPanelCustomPicker" type="color" class="colorOverlay" value="#111827" />
+                    </div>
+                    <div class="heroControl" id="heroPanelOpacityControl">
+                      <label for="heroPanelOpacity">Opacity</label>
+                      <div class="serialOpacityControl">
+                        <input id="heroPanelOpacity" type="range" min="0" max="100" value="70" />
+                        <span class="serialOpacityValue" id="heroPanelOpacityVal">70%</span>
+                      </div>
                     </div>
                   </div>
-                  <div class="heroControl heroPanelStyleControl">
-                    <label class="switch"><input type="checkbox" id="heroPanelStyleToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Wrap each line</span></label>
-                  </div>
-                </div>
-                <div class="heroRow heroShadowRow">
-                  <button class="btn ghost" type="button" id="heroShadowToggle">
-                    <i data-lucide="layers" class="btn-ico" aria-hidden="true"></i>
-                    <span class="btn-text">Text shadow</span>
-                  </button>
-                  <span class="heroShadowSummary" id="heroShadowSummary">Off</span>
-                  <div class="heroShadowPopover" id="heroShadowPopover" aria-hidden="true">
-                    <header>
-                      <label class="switch"><input type="checkbox" id="heroShadowEnable"><span class="tgl"><span class="knob"></span></span><span class="lbl">Enable shadow</span></label>
-                      <button type="button" class="closeShadow" id="heroShadowClose">Close</button>
-                    </header>
+                  <div class="heroPanelRow heroShadowRow">
+                    <div class="heroShadowInfo">
+                      <span class="heroShadowTitle">Text shadows</span>
+                      <label class="switch heroShadowSwitch"><input type="checkbox" id="heroShadowEnable"><span class="tgl"><span class="knob"></span></span><span class="lbl">Enable</span></label>
+                    </div>
+                    <button class="heroShadowButton" type="button" id="heroShadowToggle" aria-haspopup="dialog" aria-expanded="false">
+                      <i data-lucide="settings" class="btn-ico" aria-hidden="true"></i>
+                      <span class="heroShadowSummary" id="heroShadowSummary">Off</span>
+                    </button>
+                    <div class="heroShadowPopover" id="heroShadowPopover" aria-hidden="true">
+                      <header>
+                        <span class="heroShadowTitle">Shadow settings</span>
+                        <button type="button" class="closeShadow" id="heroShadowClose">Close</button>
+                      </header>
                     <div class="shadowControls">
                       <div class="shadowField">
                         <label for="heroShadowColor">Colour</label>
@@ -1365,6 +1417,7 @@
                         <span class="shadowValue" id="heroShadowSizeVal">24px</span>
                       </div>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -1412,27 +1465,27 @@
           <div id="carouselEmpty" class="carouselEmpty">Upload images to start your carousel.</div>
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
         </div>
-        <div class="previewControlRow">
-          <div class="previewActions">
-            <button class="btn small ghost" type="button" id="toggleGuidesBtn" aria-pressed="false">
-              <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
-              <span class="btn-text">Hide rulers</span>
-            </button>
+        <div class="previewToolbar" role="group" aria-label="Preview controls">
+          <div class="previewToolbarCard">
             <button class="btn ghost icon" type="button" id="zoomOutBtn" aria-label="Zoom out">
               <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
             </button>
+            <div class="previewZoomSlider">
+              <label class="previewZoomLabel" for="previewZoom">Zoom</label>
+              <input id="previewZoom" type="range" min="0.5" max="3" step="0.1" value="1">
+              <span class="previewZoomValue"><span id="zoomLabel">1.00</span>×</span>
+            </div>
             <button class="btn ghost icon" type="button" id="zoomInBtn" aria-label="Zoom in">
               <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
+            </button>
+            <button class="btn small ghost" type="button" id="toggleGuidesBtn" aria-pressed="false">
+              <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Hide rules</span>
             </button>
             <button class="btn small ghost" type="button" id="fullscreenBtn" aria-pressed="false">
               <i data-lucide="maximize-2" class="btn-ico" aria-hidden="true"></i>
               <span class="btn-text">Full screen</span>
             </button>
-          </div>
-          <div class="previewZoomControl">
-            <span class="muted">Preview zoom</span>
-            <span class="muted"><span id="zoomLabel">1.00</span>×</span>
-            <input id="previewZoom" type="range" min="0.5" max="3" step="0.1" value="1">
           </div>
         </div>
       </div>
@@ -1443,16 +1496,23 @@
               <span class="btn-text">Exit full screen</span>
             </button>
             <div class="fullscreenControlDock" id="fullscreenControls" aria-hidden="true">
-              <button class="btn ghost icon fullscreenGuideBtn" type="button" id="fullscreenGuideBtn" aria-pressed="false" aria-label="Toggle rulers in full screen">
-                <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
-              </button>
-              <div class="fullscreenZoomGroup">
-                <button class="btn ghost icon" type="button" id="fullscreenZoomOut" aria-label="Zoom out">
-                  <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
-                </button>
-                <button class="btn ghost icon" type="button" id="fullscreenZoomIn" aria-label="Zoom in">
-                  <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
-                </button>
+              <div class="fullscreenToolbar" role="group" aria-label="Fullscreen preview controls">
+                <div class="fullscreenToolbarCard">
+                  <button class="btn ghost icon fullscreenGuideBtn" type="button" id="fullscreenGuideBtn" aria-pressed="false" aria-label="Toggle rulers in full screen">
+                    <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                  <button class="btn ghost icon" type="button" id="fullscreenZoomOut" aria-label="Zoom out">
+                    <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                  <div class="fullscreenZoomSlider">
+                    <label for="fullscreenZoom">Zoom</label>
+                    <input id="fullscreenZoom" type="range" min="0.5" max="3" step="0.1" value="1">
+                    <span class="fullscreenZoomValue"><span id="fullscreenZoomLabel">1.00</span>×</span>
+                  </div>
+                  <button class="btn ghost icon" type="button" id="fullscreenZoomIn" aria-label="Zoom in">
+                    <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                </div>
               </div>
             </div>
           <div class="image-layer" id="imageLayer">
@@ -1491,7 +1551,9 @@
             <span id="serialTextPreview"></span>
           </div>
           <div class="heroText" id="heroTextPreview" data-align="center" data-valign="middle" data-mode="solid" data-panel="none" data-active="false" tabindex="0">
-            <span class="heroInner" id="heroInnerText"></span>
+            <div class="heroPanelFrame" id="heroPanelFrame">
+              <span class="heroInner" id="heroInnerText"></span>
+            </div>
             <textarea id="heroInlineEditor" class="heroEditor" rows="2" spellcheck="false" aria-label="Edit hero text"></textarea>
             <div class="heroHandle" data-corner="nw" aria-hidden="true"></div>
             <div class="heroHandle" data-corner="ne" aria-hidden="true"></div>
@@ -1718,6 +1780,7 @@
     logo1Gallery: document.getElementById('logo1Gallery'), logo2Gallery: document.getElementById('logo2Gallery'),
 
     squareLogoSection: document.getElementById('squareLogoSection'),
+    sqLogoSectionCard: document.getElementById('sqLogoSectionCard'),
     toggleSqLogo: document.getElementById('toggleSqLogo'),
     sqLogoBlock: document.getElementById('sqLogoBlock'),
     sqLogoPrev: document.getElementById('sqLogoPrev'),
@@ -1726,6 +1789,7 @@
     sqLogoGallery: document.getElementById('sqLogoGallery'),
 
     bannerLogoSection: document.getElementById('bannerLogoSection'),
+    bannerLogoSectionCard: document.getElementById('bannerLogoSectionCard'),
     toggleBannerLogo: document.getElementById('toggleBannerLogo'),
     bannerLogoBlock: document.getElementById('bannerLogoBlock'),
     bannerLogoInput: document.getElementById('bannerLogoInput'),
@@ -1734,6 +1798,7 @@
     bannerLogoGallery: document.getElementById('bannerLogoGallery'),
 
     verticalLogoSection: document.getElementById('verticalLogoSection'),
+    vertLogoSectionCard: document.getElementById('vertLogoSectionCard'),
     toggleVertLogo: document.getElementById('toggleVertLogo'),
     vertLogoBlock: document.getElementById('vertLogoBlock'),
     vertLogoPrev: document.getElementById('vertLogoPrev'),
@@ -1776,6 +1841,7 @@
     heroPanelCustomField: document.getElementById('heroPanelCustomField'),
     heroPanelCustomHex: document.getElementById('heroPanelCustomHex'),
     heroPanelCustomPicker: document.getElementById('heroPanelCustomPicker'),
+    heroPanelOpacityControl: document.getElementById('heroPanelOpacityControl'),
     heroPanelOpacity: document.getElementById('heroPanelOpacity'),
     heroPanelOpacityVal: document.getElementById('heroPanelOpacityVal'),
     heroPanelStyleToggle: document.getElementById('heroPanelStyleToggle'),
@@ -1801,6 +1867,7 @@
     serialOpacity: document.getElementById('serialOpacity'),
     serialOpacityValue: document.getElementById('serialOpacityValue'),
     heroTextPreview: document.getElementById('heroTextPreview'),
+    heroPanelFrame: document.getElementById('heroPanelFrame'),
     heroInnerText: document.getElementById('heroInnerText'),
     heroInlineEditor: document.getElementById('heroInlineEditor'),
     heroHandles: Array.from(document.querySelectorAll('.heroHandle')),
@@ -1812,6 +1879,8 @@
     fullscreenGuideBtn: document.getElementById('fullscreenGuideBtn'),
     fullscreenZoomIn: document.getElementById('fullscreenZoomIn'),
     fullscreenZoomOut: document.getElementById('fullscreenZoomOut'),
+    fullscreenZoom: document.getElementById('fullscreenZoom'),
+    fullscreenZoomLabel: document.getElementById('fullscreenZoomLabel'),
     fullscreenControls: document.getElementById('fullscreenControls'),
     guideVertical: document.getElementById('guideVertical'),
     guideHorizontal: document.getElementById('guideHorizontal'),
@@ -2382,9 +2451,10 @@
 
     if(els.squareLogoSection){
       els.squareLogoSection.style.display = isSquare ? 'block' : 'none';
-      const sqEnabled = state.squareLogo.enabled || !!state.squareLogo.src;
+      const sqEnabled = !!state.squareLogo.enabled;
       if(els.toggleSqLogo){ els.toggleSqLogo.checked = sqEnabled; }
       if(els.sqLogoBlock){ els.sqLogoBlock.style.display = sqEnabled ? 'grid' : 'none'; }
+      if(els.sqLogoSectionCard){ els.sqLogoSectionCard.classList.toggle('collapsed', !sqEnabled); }
     }
     if(els.frostSection){ els.frostSection.style.display = isHorizontal ? 'block' : 'none'; }
     if(els.toggleFrost){
@@ -2398,16 +2468,18 @@
     if(els.verticalLogoSection){ els.verticalLogoSection.style.display = isVertical ? 'block' : 'none'; }
     if(els.vertSizeRow){ els.vertSizeRow.style.display = isVertical ? 'flex' : 'none'; }
     if(isVertical){
-      const vertEnabled = state.vertLogo.enabled || !!state.vertLogo.src;
+      const vertEnabled = !!state.vertLogo.enabled;
       if(els.toggleVertLogo){ els.toggleVertLogo.checked = vertEnabled; }
       if(els.vertLogoBlock){ els.vertLogoBlock.style.display = vertEnabled ? 'grid' : 'none'; }
+      if(els.vertLogoSectionCard){ els.vertLogoSectionCard.classList.toggle('collapsed', !vertEnabled); }
     }
     if(els.bannerLogoSection){
       els.bannerLogoSection.style.display = isBannerFormat ? 'block' : 'none';
       if(isBannerFormat){
-        const bannerEnabled = state.bannerLogo.enabled || !!state.bannerLogo.src;
+        const bannerEnabled = !!state.bannerLogo.enabled;
         if(els.toggleBannerLogo){ els.toggleBannerLogo.checked = bannerEnabled; }
         if(els.bannerLogoBlock){ els.bannerLogoBlock.style.display = bannerEnabled ? 'grid' : 'none'; }
+        if(els.bannerLogoSectionCard){ els.bannerLogoSectionCard.classList.toggle('collapsed', !bannerEnabled); }
       }
     }
     if(els.textSettingsSection){ els.textSettingsSection.style.display = isTextFormat ? 'block' : 'none'; }
@@ -2486,30 +2558,38 @@
         if(els.heroGradEndPicker){ els.heroGradEndPicker.value = end; }
       }
       if(els.heroGradAngle){ els.heroGradAngle.value = state.text.hero.gradient?.angle ?? 0; }
+      const panelMode = state.text.hero.panel || 'none';
       if(els.heroPanelSeg){
-        const panel = state.text.hero.panel || 'none';
         [...els.heroPanelSeg.querySelectorAll('button')].forEach(btn=>{
-          const isActive = (btn.dataset.panel || 'none') === panel;
+          const isActive = (btn.dataset.panel || 'none') === panelMode;
           btn.classList.toggle('active', isActive);
           btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
       }
       if(els.heroPanelCustomField){
-        els.heroPanelCustomField.style.display = state.text.hero.panel === 'custom' ? 'inline-flex' : 'none';
-      }
-      if(els.heroPanelCustomHex){
-        const panelCustom = normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
-        applyHexInputStyle(els.heroPanelCustomHex, panelCustom);
-        if(els.heroPanelCustomPicker){ els.heroPanelCustomPicker.value = panelCustom; }
+        const customColor = normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
+        const displayColor = panelMode === 'custom' ? customColor : panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : customColor;
+        els.heroPanelCustomField.classList.toggle('disabled', panelMode !== 'custom');
+        if(els.heroPanelCustomHex){
+          els.heroPanelCustomHex.disabled = panelMode !== 'custom';
+          els.heroPanelCustomHex.value = displayColor.toUpperCase();
+          applyHexInputStyle(els.heroPanelCustomHex, displayColor);
+        }
+        if(els.heroPanelCustomPicker){
+          els.heroPanelCustomPicker.disabled = panelMode !== 'custom';
+          els.heroPanelCustomPicker.value = displayColor;
+        }
       }
       if(els.heroPanelOpacity){
         const opacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
         const pct = Math.round(opacity * 100);
         els.heroPanelOpacity.value = pct.toString();
+        els.heroPanelOpacity.disabled = panelMode === 'none';
         if(els.heroPanelOpacityVal){ els.heroPanelOpacityVal.textContent = `${pct}%`; }
+        if(els.heroPanelOpacityControl){ els.heroPanelOpacityControl.classList.toggle('dim', panelMode === 'none'); }
       }
       if(els.heroPanelStyleToggle){
-        const hasPanel = (state.text.hero.panel || 'none') !== 'none';
+        const hasPanel = panelMode !== 'none';
         els.heroPanelStyleToggle.checked = hasPanel && state.text.hero.panelStyle === 'inline';
         els.heroPanelStyleToggle.disabled = !hasPanel;
       }
@@ -2581,6 +2661,8 @@
     els.moveX.value = state.offset.x; els.moveY.value = state.offset.y;
     els.xVal.textContent = Math.round(state.offset.x); els.yVal.textContent = Math.round(state.offset.y);
     els.zoomLabel.textContent = state.previewZoom.toFixed(2);
+    if(els.fullscreenZoomLabel){ els.fullscreenZoomLabel.textContent = state.previewZoom.toFixed(2); }
+    if(els.fullscreenZoom){ els.fullscreenZoom.value = state.previewZoom.toFixed(2); }
     els.outMeta.textContent = `${state.format.wExport}×${state.format.hExport}px`;
     els.rotLab.textContent = `${((state.rotation%360)+360)%360}°`;
     els.exportBtn.disabled = !state.imageSrc;
@@ -2644,6 +2726,9 @@
     if(els.previewZoom){
       els.previewZoom.max = Math.max(limit, PREVIEW_ZOOM_MIN).toFixed(2);
     }
+    if(els.fullscreenZoom){
+      els.fullscreenZoom.max = Math.max(limit, PREVIEW_ZOOM_MIN).toFixed(2);
+    }
     const safe = Math.max(PREVIEW_ZOOM_MIN, Math.min(limit, state.previewZoom || 1));
     if(safe < state.previewZoom - 0.01){
       setPreviewZoom(parseFloat(safe.toFixed(2)), {force:true});
@@ -2657,12 +2742,16 @@
     const rounded = Math.round(clamped * 100) / 100;
     if(rounded === state.previewZoom && !opts.force){
       if(!opts.skipRender){ els.zoomLabel.textContent = state.previewZoom.toFixed(2); }
+      if(els.fullscreenZoomLabel){ els.fullscreenZoomLabel.textContent = state.previewZoom.toFixed(2); }
+      if(els.fullscreenZoom){ els.fullscreenZoom.value = state.previewZoom.toFixed(2); }
       updateZoomControls();
       return;
     }
     state.previewZoom = rounded;
     els.previewZoom.value = state.previewZoom;
     els.zoomLabel.textContent = state.previewZoom.toFixed(2);
+    if(els.fullscreenZoom){ els.fullscreenZoom.value = state.previewZoom.toFixed(2); }
+    if(els.fullscreenZoomLabel){ els.fullscreenZoomLabel.textContent = state.previewZoom.toFixed(2); }
     updateZoomControls();
     if(!opts.skipRender){ render(); }
   }
@@ -2723,7 +2812,7 @@
       const pressed = !!state.guidesHidden;
       els.toggleGuidesBtn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
       const textEl = els.toggleGuidesBtn.querySelector('.btn-text');
-      if(textEl){ textEl.textContent = pressed ? 'Show rulers' : 'Hide rulers'; }
+      if(textEl){ textEl.textContent = pressed ? 'Show rules' : 'Hide rules'; }
       const iconEl = els.toggleGuidesBtn.querySelector('i[data-lucide]');
       if(iconEl){ iconEl.setAttribute('data-lucide', pressed ? 'eye' : 'eye-off'); }
     }
@@ -2734,7 +2823,7 @@
       const icon = pressed ? 'eye' : 'eye-off';
       const iconEl = els.fullscreenGuideBtn.querySelector('i[data-lucide]');
       if(iconEl){ iconEl.setAttribute('data-lucide', icon); }
-      const label = pressed ? 'Show rulers' : 'Hide rulers';
+      const label = pressed ? 'Show rules' : 'Hide rules';
       els.fullscreenGuideBtn.setAttribute('aria-label', label);
       els.fullscreenGuideBtn.title = label;
     }
@@ -2838,10 +2927,9 @@
     if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
       const scaleX = (state.format.wPreview/state.format.wExport) * state.previewZoom;
       const scaleY = (state.format.hPreview/state.format.hExport) * state.previewZoom;
-      const targetH = 30 * scaleY;
-      const ratio = state.bannerLogo.w && state.bannerLogo.h ? state.bannerLogo.w/state.bannerLogo.h : 1;
-      const left = frameLeftPx + 15 * scaleX;
-      const top = frameTopPx + 15 * scaleY;
+      const targetH = 120 * scaleY;
+      const left = frameLeftPx + 64 * scaleX;
+      const top = frameTopPx + 48 * scaleY;
       els.bannerLogoPrev.style.display='block';
       els.bannerLogoPrev.style.height = targetH + 'px';
       els.bannerLogoPrev.style.left = left + 'px';
@@ -2935,42 +3023,42 @@
       const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
       const panelRgb = hexToRgb(basePanelColor);
       const panelFill = panelRgb ? `rgba(${panelRgb.r},${panelRgb.g},${panelRgb.b},${panelOpacity.toFixed(2)})` : `rgba(255,255,255,${panelOpacity.toFixed(2)})`;
+      const frameEl = els.heroPanelFrame;
+      if(frameEl){
+        frameEl.style.background = 'transparent';
+        frameEl.style.padding = '0';
+        frameEl.style.borderRadius = '0';
+        frameEl.style.boxShadow = 'none';
+        frameEl.style.display = 'inline-flex';
+      }
+      inner.style.padding = '0';
+      inner.style.borderRadius = '0';
+      inner.style.boxShadow = 'none';
+      inner.style.display = 'block';
+      inner.style.boxDecorationBreak = 'slice';
+      inner.style.webkitBoxDecorationBreak = 'slice';
       if(panelMode === 'none'){
         els.heroTextPreview.style.background = 'transparent';
         els.heroTextPreview.style.boxShadow = 'none';
         els.heroTextPreview.style.padding = '0';
         els.heroTextPreview.style.borderRadius = '0';
-        inner.style.background = 'none';
-        inner.style.padding = '0';
-        inner.style.borderRadius = '0';
-        inner.style.boxShadow = 'none';
-        inner.style.display = 'block';
-        inner.style.boxDecorationBreak = 'slice';
-        inner.style.webkitBoxDecorationBreak = 'slice';
       } else if(panelStyle === 'inline'){
         els.heroTextPreview.style.background = 'transparent';
         els.heroTextPreview.style.boxShadow = 'none';
         els.heroTextPreview.style.padding = '0';
         els.heroTextPreview.style.borderRadius = '0';
-        inner.style.background = panelFill;
-        inner.style.padding = '14px 18px';
-        inner.style.borderRadius = '18px';
-        inner.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
-        inner.style.display = 'inline';
-        inner.style.boxDecorationBreak = 'clone';
-        inner.style.webkitBoxDecorationBreak = 'clone';
+        if(frameEl){
+          frameEl.style.background = panelFill;
+          frameEl.style.padding = '14px 18px';
+          frameEl.style.borderRadius = '18px';
+          frameEl.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
+          frameEl.style.display = 'inline-flex';
+        }
       } else {
         els.heroTextPreview.style.background = panelFill;
         els.heroTextPreview.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
         els.heroTextPreview.style.padding = '14px 18px';
         els.heroTextPreview.style.borderRadius = '18px';
-        inner.style.background = 'none';
-        inner.style.padding = '0';
-        inner.style.borderRadius = '0';
-        inner.style.boxShadow = 'none';
-        inner.style.display = 'block';
-        inner.style.boxDecorationBreak = 'slice';
-        inner.style.webkitBoxDecorationBreak = 'slice';
       }
 
       const heroShadow = ensureHeroShadow(state.text.hero);
@@ -3018,6 +3106,12 @@
       els.heroTextPreview.style.background = 'transparent';
       els.heroTextPreview.style.boxShadow = 'none';
       els.heroTextPreview.style.padding = '0';
+      if(els.heroPanelFrame){
+        els.heroPanelFrame.style.background = 'transparent';
+        els.heroPanelFrame.style.padding = '0';
+        els.heroPanelFrame.style.borderRadius = '0';
+        els.heroPanelFrame.style.boxShadow = 'none';
+      }
       if(els.heroInnerText){
         els.heroInnerText.style.display = 'block';
         els.heroInnerText.style.boxDecorationBreak = 'slice';
@@ -3159,23 +3253,11 @@
     if(colors.length){
       const gradient = gctx.createLinearGradient(0, 0, fw, 0);
       colors.forEach((c,i)=>{ gradient.addColorStop(i/(colors.length-1), `rgba(${c[0]},${c[1]},${c[2]},1)`); });
-      const leftColor = colors[0];
-      const rightColor = colors[colors.length-1];
-      gctx.fillStyle = `rgba(${leftColor[0]},${leftColor[1]},${leftColor[2]},1)`;
-      gctx.fillRect(0, 0, fw, frostCanvas.height);
       gctx.fillStyle = gradient;
       gctx.fillRect(0, 0, fw, frostCanvas.height);
-      const edgePad = Math.max(6, Math.round(fw * 0.035));
-      gctx.fillStyle = `rgba(${leftColor[0]},${leftColor[1]},${leftColor[2]},1)`;
-      gctx.fillRect(0, 0, edgePad, frostCanvas.height);
-      gctx.fillStyle = `rgba(${rightColor[0]},${rightColor[1]},${rightColor[2]},1)`;
-      gctx.fillRect(fw - edgePad, 0, edgePad, frostCanvas.height);
     }
 
-    frostCtx.save();
-    frostCtx.filter = 'blur(18px)';
     frostCtx.drawImage(gradCanvas, 0, 0);
-    frostCtx.restore();
 
     return frostCanvas;
   }
@@ -4526,6 +4608,7 @@
   els.moveX.addEventListener('input', e=>{ state.offset.x = +e.target.value; els.xVal.textContent = Math.round(state.offset.x); render(); serializeCurrent(); });
   els.moveY.addEventListener('input', e=>{ state.offset.y = +e.target.value; els.yVal.textContent = Math.round(state.offset.y); render(); serializeCurrent(); });
   els.previewZoom.addEventListener('input', e=>{ setPreviewZoom(+e.target.value, {force:true}); });
+  els.fullscreenZoom?.addEventListener('input', e=>{ setPreviewZoom(+e.target.value, {force:true}); });
   const stepPreviewZoom = (direction)=>{
     const maxZoom = state.previewZoomMax || PREVIEW_ZOOM_DEFAULT_MAX;
     const delta = PREVIEW_ZOOM_STEP * direction;
@@ -4552,6 +4635,7 @@
     const checked = !!els.toggleVertLogo.checked;
     state.vertLogo.enabled = checked;
     els.vertLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(els.vertLogoSectionCard){ els.vertLogoSectionCard.classList.toggle('collapsed', !checked); }
     if(!checked){
       state.vertLogo={enabled:false, src:null,w:0,h:0,sizeKey:state.vertLogo.sizeKey||'M', tone: state.vertLogo.tone||'orig', source:'none', chosen:""};
       els.vertLogoPrev.style.display='none';
@@ -4562,6 +4646,7 @@
     const checked = !!els.toggleSqLogo.checked;
     state.squareLogo.enabled = checked;
     if(els.sqLogoBlock) els.sqLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(els.sqLogoSectionCard){ els.sqLogoSectionCard.classList.toggle('collapsed', !checked); }
     if(!checked){
       state.squareLogo = { enabled:false, src:null,w:0,h:0,sizeKey:state.squareLogo.sizeKey||'M', tone: state.squareLogo.tone||'orig', source:'none', chosen:"" };
       els.sqLogoPrev.style.display='none';
@@ -4572,6 +4657,7 @@
     const checked = !!els.toggleBannerLogo.checked;
     state.bannerLogo.enabled = checked;
     if(els.bannerLogoBlock) els.bannerLogoBlock.style.display = checked ? 'grid' : 'none';
+    if(els.bannerLogoSectionCard){ els.bannerLogoSectionCard.classList.toggle('collapsed', !checked); }
     if(!checked){
       state.bannerLogo = { enabled:false, src:null,w:0,h:0,tone:state.bannerLogo.tone||'orig', source:'none', chosen:"" };
       els.bannerLogoPrev.style.display='none';
@@ -4754,12 +4840,14 @@
     heroShadowPopoverOpen = true;
     els.heroShadowPopover.classList.add('show');
     els.heroShadowPopover.setAttribute('aria-hidden', 'false');
+    els.heroShadowToggle?.setAttribute('aria-expanded', 'true');
   }
   function closeHeroShadowPopover(){
     if(!els.heroShadowPopover) return;
     heroShadowPopoverOpen = false;
     els.heroShadowPopover.classList.remove('show');
     els.heroShadowPopover.setAttribute('aria-hidden', 'true');
+    els.heroShadowToggle?.setAttribute('aria-expanded', 'false');
   }
   closeHeroShadowPopover();
 
@@ -5468,11 +5556,11 @@
     if(state.format.key==='BANNER' && state.bannerLogo.enabled && state.bannerLogo.src){
       const im = await loadImageCORS(state.bannerLogo.src);
       if(im){
-        const targetH = 30;
+        const targetH = 120;
         const baseW = im.naturalWidth || im.width; const baseH = im.naturalHeight || im.height;
         const scale = targetH / baseH; const w = Math.max(1, Math.round(baseW * scale));
         const source = toneImageSource(im, state.bannerLogo.tone);
-        ctx.save(); ctx.drawImage(source, 15, 15, w, targetH); ctx.restore();
+        ctx.save(); ctx.drawImage(source, 64, 48, w, targetH); ctx.restore();
       }
     }
 
@@ -5562,24 +5650,12 @@
         const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
         const panelColor = rgbPanel ? `rgba(${rgbPanel.r},${rgbPanel.g},${rgbPanel.b},${panelOpacity})` : `rgba(255,255,255,${panelOpacity})`;
         ctx.fillStyle = panelColor;
-        if(panelStyle === 'inline'){
-          for(let i=0;i<lines.length;i++){
-            const width = lineWidths[i] || 0;
-            const isLast = i === lines.length - 1;
-            const effectiveWidth = (align === 'justify' && !isLast) ? maxWidth : width;
-            const lineLeft = align === 'center' ? baseLeft + (maxWidth - effectiveWidth)/2 : align === 'right' ? baseLeft + (maxWidth - effectiveWidth) : baseLeft;
-            const startX = align === 'justify' ? baseLeft : lineLeft;
-            const rectLeft = startX - padX;
-            const rectTop = baseTop + i * lineHeightPx - padY;
-            const rectWidth = Math.max(0, effectiveWidth + padX * 2);
-            const rectHeight = fontSize + padY * 2;
-            drawRoundedRect(ctx, rectLeft, rectTop, rectWidth, rectHeight, radius);
-            ctx.fill();
-          }
-        } else {
-          drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
-          ctx.fill();
-        }
+        const rectLeft = baseLeft - padX;
+        const rectTop = baseTop - padY;
+        const rectWidth = maxWidth + padX * 2;
+        const rectHeight = totalHeight + padY * 2;
+        drawRoundedRect(ctx, rectLeft, rectTop, rectWidth, rectHeight, radius);
+        ctx.fill();
         ctx.restore();
       }
       let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
