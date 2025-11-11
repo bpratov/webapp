@@ -142,6 +142,14 @@
   .stage{position:relative; flex:1; background:var(--stageBg); border-top:1px dashed var(--border); border-bottom:1px dashed var(--border); padding:16px; display:flex; transition:background .25s ease, border-color .2s ease; cursor:grab}
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
+  .stage-inner.guides-hidden{box-shadow:none; border-color:transparent;}
+  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(148,163,184,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease;}
+  .stage-inner.guides-hidden .frame,
+  .stage-inner.guides-hidden .resizeHandle,
+  .stage-inner.guides-hidden .guideLine,
+  .stage-inner.guides-hidden .stageWarning{display:none !important}
+  .stage-inner.guides-hidden .heroText::after{opacity:0}
+  .stage-inner.guides-hidden .heroHandle{display:none !important}
   .dropOverlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:600; font-size:16px; color:var(--brand2); background:rgba(14,165,233,0.14); backdrop-filter:blur(18px); opacity:0; transition:opacity .2s ease; pointer-events:none; text-align:center; padding:24px; z-index:20}
   .stage-inner.drag-over .dropOverlay{opacity:1}
   .stageHint{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:24px; font-size:14px; color:var(--muted); text-align:center; pointer-events:none; opacity:0.85}
@@ -151,10 +159,15 @@
   .image-layer img{display:block; user-select:none; pointer-events:none}
 
   .frame{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border:2px dashed var(--accent); border-radius:10px; pointer-events:none; box-shadow: 0 0 0 9999px rgba(2,6,23,0.35)}
+  .guideLine{position:absolute; pointer-events:none; z-index:34; opacity:0.65; transition:opacity .18s ease, border-color .18s ease}
+  .guideLine.vertical{top:0; bottom:0; border-left:1px dashed rgba(255,255,255,0.65)}
+  .guideLine.horizontal{left:0; right:0; border-top:1px dashed rgba(255,255,255,0.65)}
+  .guideLine.active{opacity:1; border-color:#fff}
 
   .frostBar{position:absolute; left:50%; transform:translateX(-50%); display:none; border-radius:0; overflow:hidden; box-shadow:0 -6px 28px rgba(2,6,23,0.24); pointer-events:none; z-index:40;}
+  .frostBar:not(.frost-active){box-shadow:none}
   .frostBg{position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; transition:background-image .2s ease, opacity .2s ease; filter:none;}
-  .veil{position:absolute; inset:0; background:linear-gradient(90deg,rgba(15,23,42,0.28),rgba(15,23,42,0.12)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -12px 24px rgba(2,6,23,0.3)}
+  .frostBar:not(.frost-active) .frostBg{opacity:0}
   .logoDock{position:absolute; right:0; left:0; top:0; bottom:0; display:flex; align-items:center; justify-content:flex-end; gap:24px; padding-right:24px}
   .logoSep{width:1px; background:rgba(98,101,106,.9); box-shadow: 1px 0 0 rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.12)}
   .logoDock img{height:30px; width:auto; object-fit:contain; filter:none}
@@ -171,10 +184,10 @@
   .heroText[data-align="center"] .heroInner{text-align:center}
   .heroText[data-align="right"] .heroInner{text-align:right}
   .heroText[data-panel="none"]{padding:0; background:transparent; border-radius:0; box-shadow:none}
-  .heroText[data-panel="light"], .heroText[data-panel="dark"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
+  .heroText[data-panel="light"], .heroText[data-panel="dark"], .heroText[data-panel="custom"]{padding:14px 18px; border-radius:18px; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText[data-panel="light"]{background:rgba(255,255,255,0.68)}
-  .heroText[data-panel="dark"]{background:rgba(15,23,42,0.68)}
-  .heroEditor{position:absolute; inset:0; min-width:100%; min-height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor; overflow:hidden; pointer-events:auto}
+  .heroText[data-panel="dark"]{background:rgba(5,11,25,0.78)}
+  .heroEditor{position:absolute; inset:0; min-width:100%; min-height:100%; padding:0; margin:0; border:none; outline:none; resize:none; background:transparent; color:inherit; font:inherit; line-height:inherit; letter-spacing:inherit; display:none; caret-color:currentColor; overflow:visible; pointer-events:auto}
   .heroText.editing .heroEditor{display:block}
   .heroText.editing .heroInner{visibility:hidden}
   .heroText.editing .heroHandle{display:none}
@@ -183,10 +196,10 @@
   .heroText[data-active="false"] .heroHandle{display:none}
   .heroText:hover .heroHandle, .heroText.dragging .heroHandle, .heroText.resizing .heroHandle{opacity:1}
   .heroHandle[data-corner="nw"], .heroHandle[data-corner="ne"], .heroHandle[data-corner="se"], .heroHandle[data-corner="sw"]{transform:translate(-50%,-50%)}
-  .heroHandle[data-corner="nw"]{top:-10px; left:-10px; cursor:nwse-resize}
-  .heroHandle[data-corner="ne"]{top:-10px; right:-10px; cursor:nesw-resize}
-  .heroHandle[data-corner="se"]{bottom:-10px; right:-10px; cursor:nwse-resize}
-  .heroHandle[data-corner="sw"]{bottom:-10px; left:-10px; cursor:nesw-resize}
+  .heroHandle[data-corner="nw"]{top:0; left:0; cursor:nwse-resize}
+  .heroHandle[data-corner="ne"]{top:0; right:0; cursor:nesw-resize}
+  .heroHandle[data-corner="se"]{bottom:0; right:0; cursor:nwse-resize}
+  .heroHandle[data-corner="sw"]{bottom:0; left:0; cursor:nesw-resize}
   .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
   .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
   .toneHint{display:block; font-size:12px; color:var(--muted); margin-top:6px}
@@ -225,6 +238,7 @@
   .heroGradientAngle{display:grid; gap:6px}
   .heroGradientAngle label{font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em}
   .heroPanelRow .seg{flex-wrap:nowrap}
+  .heroPanelRow .colorField{width:150px}
   .textFieldRow{display:grid; gap:10px}
   .textFieldRow label{font-size:13px; font-weight:600}
   .cornerPicker{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
@@ -233,10 +247,12 @@
   .cornerPicker button.active{border-color:var(--brand); box-shadow:0 6px 16px rgba(14,165,233,0.18)}
   .cornerPicker button.active svg{stroke:var(--brand2)}
   .serialColorRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
-  .serialColorRow .seg{flex-shrink:0}
-  .serialColorRow input[type="text"]{width:120px}
+  .serialColorRow .seg{flex-shrink:0; flex-wrap:nowrap}
+  .serialColorRow .colorField{width:150px}
+  .serialColorRow input[type="text"]{width:100%}
   .heroGrid{display:grid; gap:14px}
   .heroRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+  .heroRow.dual{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; align-items:end}
   .heroRow label{font-size:13px; font-weight:600}
   .heroRow select, .heroRow input[type="number"], .heroRow input[type="text"]{min-width:110px}
   .alignSeg{display:inline-flex; gap:6px; padding:4px; border:1px solid var(--border); border-radius:12px; background:var(--stageInner); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
@@ -259,7 +275,7 @@
   .playWrap{position:absolute; display:none; pointer-events:none; z-index:46}
   .playBg{position:absolute; left:0; top:0; width:100%; height:100%; border-radius:9999px; backdrop-filter: blur(6.2037px); background:rgba(0,0,0,0.40); box-shadow:inset 0 1px 2px rgba(255,255,255,0.2), 0 10px 30px rgba(2,6,23,0.25);}
   .playTri{position:absolute; inset:0; display:flex; align-items:center; justify-content:center}
-  .playTri svg{width:54%; max-width:72px; height:auto}
+  .playTri svg{width:58%; max-width:82px; height:auto}
 
   .sqLogo,.vertLogo{position:absolute; display:none; pointer-events:none}
 
@@ -373,6 +389,7 @@
   .switchGroup{display:flex; flex-direction:column; gap:12px; align-items:stretch; margin-bottom:20px; padding:14px 16px; border:1px solid var(--border); border-radius:14px; background:var(--chip-bg); box-shadow:0 6px 16px rgba(15,23,42,0.05)}
   .switchGroupRow{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
   .overlaySliderLabel{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; padding:10px 14px; border-radius:14px; border:1px solid var(--border); background:var(--chip-bg); font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted)}
+  .overlaySliderLabel.dim{opacity:0.55}
   .overlaySliderLabel .overlayLabelText{white-space:nowrap}
   .overlaySliderLabel input{grid-column:2/3; width:100%; margin:0}
   .overlaySliderLabel .overlayValue{font-size:13px; color:var(--ink); letter-spacing:normal; text-transform:none; justify-self:end; min-width:48px; text-align:right}
@@ -454,6 +471,8 @@
   .thumbName{font-size:11px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex:1}
   .carouselEmpty{padding:10px 16px; font-size:13px; color:var(--muted)}
   .previewControlRow{display:flex; flex-wrap:wrap; align-items:center; gap:16px}
+  .previewActions{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+  .previewActions .btn{flex:0 0 auto}
   .previewZoomControl{display:flex; align-items:center; gap:10px; justify-content:flex-end; flex:1 1 auto; min-width:220px; flex-wrap:nowrap}
   .previewZoomControl .muted{font-size:13px; white-space:nowrap}
   .previewZoomControl input[type="range"]{flex:1 1 auto; min-width:120px; width:auto}
@@ -474,11 +493,13 @@
   .globalDropOverlay.show{opacity:1}
 
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
+  .exitFullscreenBtn{position:absolute; top:12px; right:12px; z-index:62; display:none}
+  .stage-inner.fullscreen-active .exitFullscreenBtn{display:inline-flex}
 
-  .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:center; gap:0; min-width:56px; max-width:56px; height:56px; padding:0; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .36s cubic-bezier(.4,0,.2,1), padding .36s cubic-bezier(.4,0,.2,1), border-radius .36s cubic-bezier(.4,0,.2,1), transform .36s cubic-bezier(.22,.61,.36,1), box-shadow .36s cubic-bezier(.22,.61,.36,1), background .3s ease, color .3s ease;}
+  .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:flex-start; gap:0; min-width:56px; max-width:56px; height:56px; padding:0 12px; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .36s cubic-bezier(.4,0,.2,1), padding .36s cubic-bezier(.4,0,.2,1), gap .36s cubic-bezier(.4,0,.2,1), border-radius .36s cubic-bezier(.4,0,.2,1), transform .36s cubic-bezier(.22,.61,.36,1), box-shadow .36s cubic-bezier(.22,.61,.36,1), background .3s ease, color .3s ease;}
   .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .3s cubic-bezier(.22,.61,.36,1)}
   .floatingFab .fab-label{font-size:13px; font-weight:600; opacity:0; max-width:0; transform:translateX(8px); transition:opacity .28s ease, transform .28s ease, max-width .36s cubic-bezier(.4,0,.2,1); white-space:nowrap}
-  .floatingFab:hover, .floatingFab:focus-visible{max-width:220px; padding:0 20px 0 18px; border-radius:999px; justify-content:flex-start; gap:12px}
+  .floatingFab:hover, .floatingFab:focus-visible{max-width:220px; padding:0 20px 0 12px; border-radius:999px; gap:12px}
   .floatingFab:hover .fab-label, .floatingFab:focus-visible .fab-label{opacity:1; transform:translateX(0); max-width:160px}
   .floatingFab:hover{transform:translateY(-2px); box-shadow:0 26px 46px rgba(15,23,42,0.22)}
   .floatingFab:focus-visible{outline:3px solid rgba(14,165,233,0.45); outline-offset:3px}
@@ -517,7 +538,6 @@
   :root[data-theme="dark"] .seg button.active{background:rgba(15,23,42,0.85); color:#e2e8f0; box-shadow:0 6px 16px rgba(59,130,246,0.35)}
   :root[data-theme="dark"] .seg button:not(.active):hover{background:rgba(59,130,246,0.18); color:#f8fafc}
   :root[data-theme="dark"] .dropOverlay{background:rgba(14,165,233,0.22); color:#e0f2fe}
-  :root[data-theme="dark"] .veil{box-shadow:inset 0 2px 6px rgba(2,6,23,0.5)}
   :root[data-theme="dark"] .stage-inner{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
   :root[data-theme="dark"] .switchGroup{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 16px 36px rgba(2,6,23,0.6)}
   :root[data-theme="dark"] input[type="search"], :root[data-theme="dark"] input[type="url"], :root[data-theme="dark"] select{border-color:rgba(148,163,184,0.45); box-shadow:0 10px 26px rgba(1,9,23,0.35)}
@@ -577,7 +597,7 @@
       <h2>Frozone</h2>
       <p class="introTagline">LiveOps creative toolkit</p>
     </div>
-    <span class="introVersion">v6.18</span>
+    <span class="introVersion">v2.24</span>
   </div>
   <header id="appHeader">
     <div class="wrap inner">
@@ -866,9 +886,9 @@
               <label class="switch"><input type="checkbox" id="toggleLogo2"><span class="tgl"><span class="knob"></span></span><span class="lbl">Second logo</span></label>
             </div>
             <label id="overlayLabel" class="overlaySliderLabel" for="overlayAlpha">
-              <span class="overlayLabelText">Overlay opacity</span>
-              <input id="overlayAlpha" type="range" min="0" max="100" value="30">
-              <span class="overlayValue"><span id="overlayAlphaVal">30</span>%</span>
+              <span class="overlayLabelText">Frost tone</span>
+              <input id="overlayAlpha" type="range" min="0" max="100" value="50">
+              <span class="overlayValue"><span id="overlayAlphaVal">0</span></span>
             </label>
           </div>
 
@@ -903,7 +923,7 @@
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
-                  <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                  <span class="toneHint">Check partner brand rules before changing</span>
                 </div>
               </div>
               <div class="libWrap">
@@ -950,7 +970,7 @@
                     <button data-tone="white">White</button>
                     <button data-tone="black">Black</button>
                   </div>
-                  <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                  <span class="toneHint">Check partner brand rules before changing</span>
                 </div>
               </div>
               <div class="libWrap">
@@ -991,7 +1011,7 @@
                   <button data-tone="white">White</button>
                   <button data-tone="black">Black</button>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                <span class="toneHint">Check partner brand rules before changing</span>
               </div>
               <div class="libWrap">
                 <div class="libHeader">
@@ -1024,7 +1044,7 @@
                   <button data-tone="white">White</button>
                   <button data-tone="black">Black</button>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing logo colours.</span>
+                <span class="toneHint">Check partner brand rules before changing</span>
               </div>
               <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
               <div class="libWrap">
@@ -1065,7 +1085,7 @@
               </div>
               <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
-            <div class="toneHint">Check partner brand rules before changing logo colours.</div>
+            <div class="toneHint">Check partner brand rules before changing</div>
             <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
             <div class="libWrap">
               <div class="libHeader">
@@ -1110,7 +1130,7 @@
                     <button type="button" data-color="custom">Custom</button>
                   </div>
                 </div>
-                <div class="colorField" id="serialCustomWrap" style="display:none">
+                <div class="colorField" id="serialCustomWrap">
                   <input id="serialCustomColor" type="text" placeholder="#111111" maxlength="7" class="colorHexInput" />
                   <input id="serialCustomPicker" type="color" class="colorOverlay" value="#0f172a" />
                 </div>
@@ -1132,27 +1152,31 @@
                 <textarea id="heroTextInput" rows="3" placeholder="Type hero message…"></textarea>
               </div>
               <div class="heroGrid">
-                <div class="heroRow">
-                  <label for="heroFontSelect">Font</label>
-                  <select id="heroFontSelect">
-                    <option>SF Pro Text</option>
-                    <option>Inter</option>
-                    <option>Roboto</option>
-                    <option>Helvetica Neue</option>
-                    <option>Arial</option>
-                    <option>Neue Frutigier World</option>
-                  </select>
-                  <label for="heroWeightSelect">Weight</label>
-                  <select id="heroWeightSelect">
-                    <option>Thin</option>
-                    <option>Light</option>
-                    <option>Regular</option>
-                    <option>Medium</option>
-                    <option>Semibold</option>
-                    <option selected>Heavy</option>
-                    <option>Bold</option>
-                    <option>Black</option>
-                  </select>
+                <div class="heroRow dual">
+                  <div class="heroControl">
+                    <label for="heroFontSelect">Font</label>
+                    <select id="heroFontSelect">
+                      <option>SF Pro Text</option>
+                      <option>Inter</option>
+                      <option>Roboto</option>
+                      <option>Helvetica Neue</option>
+                      <option>Arial</option>
+                      <option>Neue Frutigier World</option>
+                    </select>
+                  </div>
+                  <div class="heroControl">
+                    <label for="heroWeightSelect">Weight</label>
+                    <select id="heroWeightSelect">
+                      <option>Thin</option>
+                      <option>Light</option>
+                      <option>Regular</option>
+                      <option>Medium</option>
+                      <option>Semibold</option>
+                      <option selected>Heavy</option>
+                      <option>Bold</option>
+                      <option>Black</option>
+                    </select>
+                  </div>
                 </div>
                 <div class="heroMetricGrid">
                   <div class="heroControl">
@@ -1173,6 +1197,7 @@
                       <button type="button" data-align="left" aria-label="Align left"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="16" y2="14"></line><line x1="6" y1="20" x2="20" y2="20"></line></svg></button>
                       <button type="button" data-align="center" class="active" aria-label="Align center"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="9" y1="14" x2="19" y2="14"></line><line x1="8" y1="20" x2="20" y2="20"></line></svg></button>
                       <button type="button" data-align="right" aria-label="Align right"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="12" y1="14" x2="22" y2="14"></line><line x1="10" y1="20" x2="22" y2="20"></line></svg></button>
+                      <button type="button" data-align="justify" aria-label="Align full width"><svg viewBox="0 0 28 28" aria-hidden="true"><line x1="6" y1="8" x2="22" y2="8"></line><line x1="6" y1="14" x2="22" y2="14"></line><line x1="6" y1="20" x2="22" y2="20"></line></svg></button>
                     </div>
                   </div>
                 </div>
@@ -1213,6 +1238,18 @@
                     <button type="button" data-panel="none" class="active">None</button>
                     <button type="button" data-panel="light">Light</button>
                     <button type="button" data-panel="dark">Dark</button>
+                    <button type="button" data-panel="custom">Custom</button>
+                  </div>
+                  <div class="colorField" id="heroPanelCustomField" style="display:none">
+                    <input id="heroPanelCustomHex" type="text" value="#111827" maxlength="7" class="colorHexInput" />
+                    <input id="heroPanelCustomPicker" type="color" class="colorOverlay" value="#111827" />
+                  </div>
+                  <div class="heroControl" id="heroPanelOpacityControl" style="min-width:150px">
+                    <label for="heroPanelOpacity">Panel opacity</label>
+                    <div class="serialOpacityControl">
+                      <input id="heroPanelOpacity" type="range" min="0" max="100" value="70" />
+                      <span class="serialOpacityValue" id="heroPanelOpacityVal">70%</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1261,6 +1298,16 @@
           <div id="imageCarousel" class="imageCarousel" role="listbox" aria-label="Uploaded images" tabindex="0"></div>
         </div>
         <div class="previewControlRow">
+          <div class="previewActions">
+            <button class="btn small ghost" type="button" id="fullscreenBtn" aria-pressed="false">
+              <i data-lucide="maximize-2" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Full screen</span>
+            </button>
+            <button class="btn small ghost" type="button" id="toggleGuidesBtn" aria-pressed="false">
+              <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Hide rulers</span>
+            </button>
+          </div>
           <div class="previewZoomControl">
             <span class="muted">Preview zoom</span>
             <span class="muted"><span id="zoomLabel">1.00</span>×</span>
@@ -1270,10 +1317,16 @@
       </div>
       <div class="stage">
         <div class="stage-inner" id="stage">
+          <button class="btn small ghost exitFullscreenBtn" type="button" id="exitFullscreenBtn">
+            <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
+            <span class="btn-text">Exit full screen</span>
+          </button>
           <div class="image-layer" id="imageLayer">
             <img id="img" alt="uploaded" />
           </div>
           <div class="frame" id="frame"></div>
+          <div class="guideLine vertical" id="guideVertical" aria-hidden="true"></div>
+          <div class="guideLine horizontal" id="guideHorizontal" aria-hidden="true"></div>
           <div class="resizeHandle" data-corner="nw" aria-hidden="true"></div>
           <div class="resizeHandle" data-corner="ne" aria-hidden="true"></div>
           <div class="resizeHandle" data-corner="se" aria-hidden="true"></div>
@@ -1281,7 +1334,6 @@
 
           <div class="frostBar" id="frostBar">
             <div class="frostBg" id="frostBg"></div>
-            <div class="veil" id="frostVeil"></div>
             <div class="logoDock" id="logoDockPrev">
               <img id="logo1Prev" alt="logo 1" style="display:none"/>
               <div class="logoSep" id="logoSepPrev" style="display:none"></div>
@@ -1293,7 +1345,7 @@
             <div class="playBg" id="playBg"></div>
             <div class="playTri" aria-hidden="true">
               <svg viewBox="0 0 59 63" fill="none" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 14 L44 31.5 L18 49 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
+                <path d="M18 12 L48 31.5 L18 51 Z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"></path>
               </svg>
             </div>
           </div>
@@ -1372,7 +1424,7 @@
       </div>
     </div>
   </div>
-  <div class="versionTag">V6.18</div>
+  <div class="versionTag">V2.24</div>
 
   <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -1511,7 +1563,7 @@
     gradientPreview: document.getElementById('gradientPreview'),
 
     frostSection: document.getElementById('frostSection'),
-    frostBar: document.getElementById('frostBar'), frostBg: document.getElementById('frostBg'), frostVeil: document.getElementById('frostVeil'),
+    frostBar: document.getElementById('frostBar'), frostBg: document.getElementById('frostBg'),
     toggleFrost: document.getElementById('toggleFrost'),
     togglePlay: document.getElementById('togglePlay'),
     playWrap: document.getElementById('playWrap'), playBg: document.getElementById('playBg'),
@@ -1583,6 +1635,11 @@
     heroGradEndPicker: document.getElementById('heroGradEndPicker'),
     heroGradAngle: document.getElementById('heroGradAngle'),
     heroPanelSeg: document.getElementById('heroPanelSeg'),
+    heroPanelCustomField: document.getElementById('heroPanelCustomField'),
+    heroPanelCustomHex: document.getElementById('heroPanelCustomHex'),
+    heroPanelCustomPicker: document.getElementById('heroPanelCustomPicker'),
+    heroPanelOpacity: document.getElementById('heroPanelOpacity'),
+    heroPanelOpacityVal: document.getElementById('heroPanelOpacityVal'),
 
     serialPreview: document.getElementById('serialPreview'),
     serialTextPreview: document.getElementById('serialTextPreview'),
@@ -1594,6 +1651,11 @@
     heroHandles: Array.from(document.querySelectorAll('.heroHandle')),
 
     overlayAlpha: document.getElementById('overlayAlpha'), overlayAlphaVal: document.getElementById('overlayAlphaVal'), overlayLabel: document.getElementById('overlayLabel'),
+    fullscreenBtn: document.getElementById('fullscreenBtn'),
+    exitFullscreenBtn: document.getElementById('exitFullscreenBtn'),
+    toggleGuidesBtn: document.getElementById('toggleGuidesBtn'),
+    guideVertical: document.getElementById('guideVertical'),
+    guideHorizontal: document.getElementById('guideHorizontal'),
 
     carousel: document.getElementById('imageCarousel'), carouselEmpty: document.getElementById('carouselEmpty'),
     deleteAllBtn: document.getElementById('deleteAllBtn'),
@@ -1655,7 +1717,9 @@
         solid:'#ffffff',
         gradient:{ start:'#0ea5e9', end:'#6366f1', angle:0 },
         position:{ x:0.5, y:0.42 },
-        panel:'none'
+        panel:'none',
+        panelCustom:'#111827',
+        panelOpacity:0.7
       }
     };
   }
@@ -1779,6 +1843,7 @@
     return {
       frost: {
         enabled: state.frost.enabled,
+        overlayAlpha: state.frost.overlayAlpha,
         logo1: serializeLogoStore(state.frost.logo1),
         logo2: serializeLogoStore(state.frost.logo2),
         logo2Active: !!els.toggleLogo2?.checked
@@ -1846,6 +1911,9 @@
 
     if(data.frost){
       if(typeof data.frost.enabled === 'boolean'){ state.frost.enabled = data.frost.enabled; if(els.toggleFrost) els.toggleFrost.checked = state.frost.enabled; }
+      if(typeof data.frost.overlayAlpha === 'number'){
+        state.frost.overlayAlpha = Math.max(0, Math.min(1, data.frost.overlayAlpha));
+      }
       await applyLogoSnapshot(data.frost.logo1, els.logo1Prev, state.frost.logo1, 'logo1');
       await applyLogoSnapshot(data.frost.logo2, els.logo2Prev, state.frost.logo2, 'logo2');
       if(typeof data.frost.logo2Active === 'boolean' && els.toggleLogo2){
@@ -1895,7 +1963,7 @@
 
     frost: {
       enabled: true,
-      overlayAlpha: 0.30,
+      overlayAlpha: 0.5,
       barHExp: 90, padYExp: 16, dockHExp: 65, padRightExp: 24, gapExp: 24,
       logo1: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
       logo2: { src:null, w:0, h:0, sizeKey:'M', tone:'orig', source:'none', chosen:"" },
@@ -1916,9 +1984,13 @@
       gradient:{ colors:['#38bdf8','#6366f1','#f472b6'], type:'linear', dataUrl:null, previewUrl:null, sourceName:'' },
       lastSelection:null
     },
+    guidesHidden:false,
+    fullscreen:false,
   };
 
   let frameMetrics = { left:0, top:0, width:0, height:0 };
+  let guidePositions = { vertical:null, horizontal:null };
+  let guideSnapActive = { vertical:false, horizontal:false };
   let frostPreviewCache = { key:null, data:null };
   let resizeState = null;
   let gradientPreviewFrame = null;
@@ -2115,6 +2187,14 @@
       if(els.sqLogoBlock){ els.sqLogoBlock.style.display = sqEnabled ? 'grid' : 'none'; }
     }
     if(els.frostSection){ els.frostSection.style.display = isHorizontal ? 'block' : 'none'; }
+    if(els.toggleFrost){
+      els.toggleFrost.checked = !!state.frost.enabled;
+      els.toggleFrost.disabled = !isHorizontal;
+    }
+    if(els.togglePlay){
+      els.togglePlay.checked = !!state.play.enabled;
+      els.togglePlay.disabled = !isHorizontal;
+    }
     if(els.verticalLogoSection){ els.verticalLogoSection.style.display = isVertical ? 'block' : 'none'; }
     if(els.vertSizeRow){ els.vertSizeRow.style.display = isVertical ? 'flex' : 'none'; }
     if(isVertical){
@@ -2142,20 +2222,22 @@
         });
       }
       if(els.serialColorSeg){
+        const mode = state.text.serial.color || 'black';
         [...els.serialColorSeg.querySelectorAll('button')].forEach(btn=>{
           const color = btn.dataset.color;
-          btn.classList.toggle('active', color === state.text.serial.color);
+          const active = color === mode;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-pressed', active ? 'true' : 'false');
         });
       }
-      if(els.serialCustomWrap){ els.serialCustomWrap.style.display = state.text.serial.color === 'custom' ? 'inline-flex' : 'none'; }
+      const customBase = normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
+      const displayColor = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : customBase;
       if(els.serialCustomColor){
-        const custom = normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
-        els.serialCustomColor.value = custom;
-        applyHexInputStyle(els.serialCustomColor, custom);
+        els.serialCustomColor.value = displayColor.toUpperCase();
+        applyHexInputStyle(els.serialCustomColor, displayColor);
       }
       if(els.serialCustomPicker){
-        const pick = normalizeHex(state.text.serial.custom || '#0f172a', '#0f172a');
-        els.serialCustomPicker.value = pick;
+        els.serialCustomPicker.value = displayColor;
       }
       if(els.serialOpacity){
         const opacity = Math.max(30, Math.min(100, Number(state.text.serial.opacity ?? 100)));
@@ -2211,6 +2293,20 @@
           btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
         });
       }
+      if(els.heroPanelCustomField){
+        els.heroPanelCustomField.style.display = state.text.hero.panel === 'custom' ? 'inline-flex' : 'none';
+      }
+      if(els.heroPanelCustomHex){
+        const panelCustom = normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
+        applyHexInputStyle(els.heroPanelCustomHex, panelCustom);
+        if(els.heroPanelCustomPicker){ els.heroPanelCustomPicker.value = panelCustom; }
+      }
+      if(els.heroPanelOpacity){
+        const opacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
+        const pct = Math.round(opacity * 100);
+        els.heroPanelOpacity.value = pct.toString();
+        if(els.heroPanelOpacityVal){ els.heroPanelOpacityVal.textContent = `${pct}%`; }
+      }
     }
 
     els.bVal.textContent = state.brightness;
@@ -2237,17 +2333,21 @@
     const anyLogos = !!(state.frost.logo1.src || state.frost.logo2.src);
     const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || anyLogos);
     els.frostBar.style.display = shouldShowBar ? 'block' : 'none';
+    els.frostBar.classList.toggle('frost-active', state.frost.enabled);
     els.frostBg.style.display = state.frost.enabled ? 'block' : 'none';
-    els.frostVeil.style.display = (state.frost.enabled && state.frost.overlayAlpha>0) ? 'block' : 'none';
 
     els.playWrap.style.display = (state.format.key==='HORIZ' && state.play.enabled) ? 'block' : 'none';
 
     els.overlayAlpha.disabled = !state.frost.enabled;
     els.overlayLabel.classList.toggle('dim', !state.frost.enabled);
     if(els.overlayAlpha){
-      const pct = Math.round(state.frost.overlayAlpha * 100);
-      els.overlayAlpha.value = pct.toString();
-      if(els.overlayAlphaVal){ els.overlayAlphaVal.textContent = pct.toString(); }
+      const toneVal = Math.max(0, Math.min(1, state.frost.overlayAlpha || 0.5));
+      const sliderVal = Math.round(toneVal * 100);
+      els.overlayAlpha.value = sliderVal.toString();
+      if(els.overlayAlphaVal){
+        const delta = Math.round((toneVal - 0.5) * 100);
+        els.overlayAlphaVal.textContent = delta === 0 ? '0' : `${delta>0?'+':''}${delta}`;
+      }
     }
 
     [...els.logo1Seg.querySelectorAll('button')].forEach(btn=>btn.classList.toggle('active', btn.dataset.size===state.frost.logo1.sizeKey));
@@ -2329,6 +2429,40 @@
     const frameLeftPx = (els.stage.clientWidth - fwPx)/2;
     const frameTopPx = (els.stage.clientHeight - fhPx)/2;
     frameMetrics = { left: frameLeftPx, top: frameTopPx, width: fwPx, height: fhPx };
+    if(els.stage){
+      els.stage.style.setProperty('--frame-w', `${fwPx}px`);
+      els.stage.style.setProperty('--frame-h', `${fhPx}px`);
+      els.stage.classList.toggle('guides-hidden', !!state.guidesHidden);
+      els.stage.classList.toggle('fullscreen-active', !!state.fullscreen);
+    }
+    if(els.toggleGuidesBtn){
+      const pressed = !!state.guidesHidden;
+      els.toggleGuidesBtn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      const textEl = els.toggleGuidesBtn.querySelector('.btn-text');
+      if(textEl){ textEl.textContent = pressed ? 'Show rulers' : 'Hide rulers'; }
+      const iconEl = els.toggleGuidesBtn.querySelector('i[data-lucide]');
+      if(iconEl){ iconEl.setAttribute('data-lucide', pressed ? 'eye' : 'eye-off'); }
+    }
+    const scaleYPreview = (state.format.hPreview/state.format.hExport) * state.previewZoom;
+    const barHPrevPx = state.format.key==='HORIZ' ? state.frost.barHExp * scaleYPreview : 0;
+    const barTopPx = frameTopPx + fhPx - barHPrevPx;
+    const showHorizontalGuide = state.format.key==='HORIZ';
+    guidePositions.vertical = frameLeftPx + fwPx/2;
+    guidePositions.horizontal = showHorizontalGuide ? frameTopPx + (barTopPx - frameTopPx)/2 : null;
+    if(!showHorizontalGuide){ guideSnapActive.horizontal = false; }
+    if(els.guideVertical){
+      els.guideVertical.style.left = `${guidePositions.vertical}px`;
+      els.guideVertical.style.display = state.guidesHidden ? 'none' : 'block';
+      els.guideVertical.classList.toggle('active', guideSnapActive.vertical && !state.guidesHidden);
+    }
+    if(els.guideHorizontal){
+      if(showHorizontalGuide && guidePositions.horizontal !== null){
+        els.guideHorizontal.style.top = `${guidePositions.horizontal}px`;
+      }
+      const showGuide = showHorizontalGuide && !state.guidesHidden;
+      els.guideHorizontal.style.display = showGuide ? 'block' : 'none';
+      els.guideHorizontal.classList.toggle('active', showGuide && guideSnapActive.horizontal);
+    }
 
     if(els.resizeHandles){
       const offset = (els.resizeHandles[0]?.offsetWidth || 18) / 2;
@@ -2364,7 +2498,6 @@
       Object.assign(els.frostBar.style, { width: fwPx+'px', height: barHPrevPx+'px', top: barTopPx+'px' });
       els.logoDockPrev.style.paddingRight = (state.frost.padRightExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
       els.logoDockPrev.style.gap = (state.frost.gapExp * (state.format.wPreview/1080) * state.previewZoom) + 'px';
-      els.frostVeil.style.opacity = state.frost.overlayAlpha;
       updateFrostPreviewTexture();
 
       const h1 = SIZE_MAP[state.frost.logo1.sizeKey] * scaleYPrev;
@@ -2469,8 +2602,9 @@
       els.heroTextPreview.style.top = top + 'px';
       els.heroTextPreview.dataset.align = state.text.hero.align || 'center';
       els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
+      const panelMode = state.text.hero.panel || 'none';
       els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
-      els.heroTextPreview.dataset.panel = state.text.hero.panel || 'none';
+      els.heroTextPreview.dataset.panel = panelMode;
       inner.textContent = state.text.hero.value;
       inner.style.fontSize = fontPx.toFixed(2) + 'px';
       inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
@@ -2479,7 +2613,10 @@
       const lh = state.text.hero.lineHeight || '110%';
       if(typeof lh === 'string' && lh.trim().endsWith('%')){ inner.style.lineHeight = lh.trim(); }
       else { const num = parseFloat(lh)||110; inner.style.lineHeight = (num/100).toFixed(2); }
-      inner.style.textAlign = state.text.hero.align || 'center';
+      const alignMode = state.text.hero.align || 'center';
+      inner.style.textAlign = alignMode === 'justify' ? 'justify' : alignMode;
+      inner.style.textJustify = alignMode === 'justify' ? 'inter-word' : '';
+      inner.style.textAlignLast = alignMode === 'justify' ? 'left' : '';
       const colorMode = state.text.hero.colorMode === 'gradient' ? 'gradient' : 'solid';
       if(colorMode === 'gradient'){
         const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
@@ -2497,6 +2634,21 @@
         inner.style.webkitBackgroundClip = 'initial';
         inner.style.backgroundClip = 'initial';
       }
+      const basePanelColor = panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
+      const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
+      if(panelMode === 'none'){
+        els.heroTextPreview.style.background = 'transparent';
+        els.heroTextPreview.style.boxShadow = 'none';
+        els.heroTextPreview.style.padding = '0';
+        els.heroTextPreview.style.borderRadius = '0';
+      } else {
+        const rgb = hexToRgb(basePanelColor);
+        const bg = rgb ? `rgba(${rgb.r},${rgb.g},${rgb.b},${panelOpacity.toFixed(2)})` : 'rgba(255,255,255,0.65)';
+        els.heroTextPreview.style.background = bg;
+        els.heroTextPreview.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
+        els.heroTextPreview.style.padding = '14px 18px';
+        els.heroTextPreview.style.borderRadius = '18px';
+      }
       if(heroEditing && els.heroInlineEditor){
         const editorStyle = els.heroInlineEditor.style;
         editorStyle.fontSize = inner.style.fontSize;
@@ -2510,7 +2662,7 @@
         editorStyle.minWidth = `${rect.width}px`;
         editorStyle.height = `${rect.height}px`;
         editorStyle.minHeight = `${rect.height}px`;
-        editorStyle.overflow = 'hidden';
+        editorStyle.overflow = 'visible';
         editorStyle.color = heroEditorTextColor();
         editorStyle.background = 'transparent';
         editorStyle.boxShadow = 'none';
@@ -2518,12 +2670,22 @@
     } else {
       els.heroTextPreview.style.display = 'none';
       els.heroTextPreview.dataset.panel = 'none';
+      els.heroTextPreview.style.background = 'transparent';
+      els.heroTextPreview.style.boxShadow = 'none';
+      els.heroTextPreview.style.padding = '0';
     }
+    refreshIcons();
   }
 
   function updateFrostPreviewTexture(){
     const shouldShowBar = (state.format.key==='HORIZ') && (state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src);
     if(!shouldShowBar || !state.imageSrc){
+      frostPreviewCache = { key:null, data:null };
+      els.frostBg.style.backgroundImage = '';
+      return;
+    }
+
+    if(!state.frost.enabled){
       frostPreviewCache = { key:null, data:null };
       els.frostBg.style.backgroundImage = '';
       return;
@@ -2538,7 +2700,8 @@
       state.previewZoom.toFixed(2),
       state.brightness,
       state.saturation,
-      state.contrast
+      state.contrast,
+      state.frost.overlayAlpha.toFixed(3)
     ].join('|');
 
     if(frostPreviewCache.key === cacheKey && frostPreviewCache.data){
@@ -2602,6 +2765,24 @@
     const stops = Math.max(8, Math.round(fw / 90));
     const band = Math.max(1, Math.round(fw / (stops * 2.2)));
     const depth = Math.max(2, Math.round(captureH * 0.55));
+    const tone = Math.max(0, Math.min(1, state.frost.overlayAlpha || 0.5));
+    const shift = (tone - 0.5) * 1.2;
+    const adjustColor = (color)=>{
+      const [r,g,b] = color;
+      if(shift >= 0){
+        return [
+          Math.round(r + (255 - r) * shift),
+          Math.round(g + (255 - g) * shift),
+          Math.round(b + (255 - b) * shift)
+        ];
+      }
+      const factor = Math.max(0, 1 + shift);
+      return [
+        Math.round(r * factor),
+        Math.round(g * factor),
+        Math.round(b * factor)
+      ];
+    };
     const colors = [];
     for(let i=0;i<stops;i++){
       const t = stops===1 ? 0.5 : i/(stops-1);
@@ -2616,8 +2797,8 @@
           count++;
         }
       }
-      if(count===0){ colors.push([240,244,248]); }
-      else { colors.push([Math.round(r/count), Math.round(g/count), Math.round(b/count)]); }
+      if(count===0){ colors.push(adjustColor([240,244,248])); }
+      else { colors.push(adjustColor([Math.round(r/count), Math.round(g/count), Math.round(b/count)])); }
     }
 
     const gradCanvas = document.createElement('canvas');
@@ -2644,25 +2825,6 @@
     frostCtx.filter = 'blur(18px)';
     frostCtx.drawImage(gradCanvas, 0, 0);
     frostCtx.restore();
-
-    const tint = frostCtx.createLinearGradient(0, 0, 0, frostCanvas.height);
-    tint.addColorStop(0, 'rgba(18,27,45,0.36)');
-    tint.addColorStop(0.55, 'rgba(22,32,52,0.28)');
-    tint.addColorStop(1, 'rgba(10,16,30,0.4)');
-    frostCtx.fillStyle = tint;
-    frostCtx.fillRect(0, 0, fw, frostCanvas.height);
-
-    const edgeFade = frostCtx.createLinearGradient(0, 0, fw, 0);
-    edgeFade.addColorStop(0, 'rgba(10,16,30,0.24)');
-    edgeFade.addColorStop(0.5, 'rgba(10,16,30,0)');
-    edgeFade.addColorStop(1, 'rgba(10,16,30,0.24)');
-    frostCtx.fillStyle = edgeFade;
-    frostCtx.fillRect(0, 0, fw, frostCanvas.height);
-
-    frostCtx.fillStyle = 'rgba(255,255,255,0.18)';
-    frostCtx.fillRect(0, 0, fw, 1);
-    frostCtx.fillStyle = 'rgba(6,10,20,0.36)';
-    frostCtx.fillRect(0, frostCanvas.height-2, fw, 2);
 
     return frostCanvas;
   }
@@ -4045,25 +4207,30 @@
     const btn = e.target.closest('button'); if(!btn) return;
     const color = btn.dataset.color || 'black';
     state.text.serial.color = color;
-    if(color !== 'custom'){ state.text.serial.custom = color === 'white' ? '#ffffff' : '#0f172a'; }
+    if(color === 'white'){ state.text.serial.custom = '#ffffff'; }
+    else if(color === 'black'){ state.text.serial.custom = '#111111'; }
     commitTextState({ propagateSerial: state.text.serial.applyAll });
   });
   els.serialCustomColor?.addEventListener('input', (e)=>{
-    const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
-    if(val !== state.text.serial.custom){
+    const fallback = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : (state.text.serial.custom || '#0f172a');
+    const val = normalizeHex(e.target.value, fallback);
+    if(val !== state.text.serial.custom || state.text.serial.color !== 'custom'){
       state.text.serial.custom = val;
-      commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+      state.text.serial.color = 'custom';
+      commitTextState({ propagateSerial: state.text.serial.applyAll });
       applyHexInputStyle(els.serialCustomColor, val);
     }
   });
   els.serialCustomPicker?.addEventListener('input', (e)=>{
-    const val = normalizeHex(e.target.value, state.text.serial.custom || '#0f172a');
+    const fallback = state.text.serial.color === 'white' ? '#ffffff' : state.text.serial.color === 'black' ? '#111111' : (state.text.serial.custom || '#0f172a');
+    const val = normalizeHex(e.target.value, fallback);
     state.text.serial.custom = val;
+    state.text.serial.color = 'custom';
     if(els.serialCustomColor){
       els.serialCustomColor.value = val;
       applyHexInputStyle(els.serialCustomColor, val);
     }
-    commitTextState({ propagateSerial: state.text.serial.applyAll, refreshControls:false });
+    commitTextState({ propagateSerial: state.text.serial.applyAll });
   });
   els.serialOpacity?.addEventListener('input', (e)=>{
     const value = Math.max(30, Math.min(100, Number(e.target.value)||100));
@@ -4174,28 +4341,70 @@
     const panel = btn.dataset.panel || 'none';
     state.text.hero.panel = panel;
     commitTextState({ refreshControls:false });
+    updateControls();
+  });
+  els.heroPanelCustomHex?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.hero.panelCustom || '#111827');
+    state.text.hero.panelCustom = val;
+    state.text.hero.panel = 'custom';
+    applyHexInputStyle(els.heroPanelCustomHex, val);
+    if(els.heroPanelCustomPicker){ els.heroPanelCustomPicker.value = val; }
+    commitTextState({ refreshControls:false });
+    updateControls();
+  });
+  els.heroPanelCustomPicker?.addEventListener('input', (e)=>{
+    const val = normalizeHex(e.target.value, state.text.hero.panelCustom || '#111827');
+    state.text.hero.panelCustom = val;
+    state.text.hero.panel = 'custom';
+    if(els.heroPanelCustomHex){
+      els.heroPanelCustomHex.value = val.toUpperCase();
+      applyHexInputStyle(els.heroPanelCustomHex, val);
+    }
+    commitTextState({ refreshControls:false });
+    updateControls();
+  });
+  els.heroPanelOpacity?.addEventListener('input', (e)=>{
+    const pct = Math.max(0, Math.min(100, Number(e.target.value)||0));
+    state.text.hero.panelOpacity = pct / 100;
+    if(els.heroPanelOpacityVal){ els.heroPanelOpacityVal.textContent = `${pct}%`; }
+    commitTextState({ refreshControls:false });
   });
   let heroDrag = null;
   let heroResize = null;
   let heroEditing = false;
+  const HERO_SNAP_THRESHOLD = 12;
   function updateHeroPositionFromPointer(e){
     if(!frameMetrics.width || !frameMetrics.height) return;
     const stageRect = els.stage.getBoundingClientRect();
-    const x = e.clientX - stageRect.left - frameMetrics.left;
-    const y = e.clientY - stageRect.top - frameMetrics.top;
-    const normX = Math.max(0, Math.min(1, x / frameMetrics.width));
-    const normY = Math.max(0, Math.min(1, y / frameMetrics.height));
+    const rawX = (e.clientX - stageRect.left - frameMetrics.left);
+    const rawY = (e.clientY - stageRect.top - frameMetrics.top);
+    let stageX = frameMetrics.left + rawX;
+    let stageY = frameMetrics.top + rawY;
+    guideSnapActive = { vertical:false, horizontal:false };
+    if(!state.guidesHidden){
+      if(typeof guidePositions.vertical === 'number' && Math.abs(stageX - guidePositions.vertical) <= HERO_SNAP_THRESHOLD){
+        stageX = guidePositions.vertical;
+        guideSnapActive.vertical = true;
+      }
+      if(typeof guidePositions.horizontal === 'number' && Math.abs(stageY - guidePositions.horizontal) <= HERO_SNAP_THRESHOLD){
+        stageY = guidePositions.horizontal;
+        guideSnapActive.horizontal = true;
+      }
+    }
+    const normX = (stageX - frameMetrics.left) / frameMetrics.width;
+    const normY = (stageY - frameMetrics.top) / frameMetrics.height;
     state.text.hero.position = { x: normX, y: normY };
     state.text.hero.vAlign = 'middle';
     render();
   }
-  const endHeroDrag = (e)=>{
-    if(heroDrag === null) return;
+  const endHeroDrag = ()=>{
+    if(!heroDrag) return;
     if(els.heroTextPreview){
-      try{ els.heroTextPreview.releasePointerCapture(heroDrag); }catch(err){}
+      try{ els.heroTextPreview.releasePointerCapture(heroDrag.id); }catch(err){}
       els.heroTextPreview.classList.remove('dragging');
     }
     heroDrag = null;
+    guideSnapActive = { vertical:false, horizontal:false };
     commitTextState({ refreshControls:false });
   };
   els.heroTextPreview?.addEventListener('pointerdown', (e)=>{
@@ -4205,15 +4414,22 @@
     if(document.activeElement !== els.heroTextPreview){
       try{ els.heroTextPreview.focus({ preventScroll:true }); }catch(err){ els.heroTextPreview.focus(); }
     }
-    heroDrag = e.pointerId;
-    els.heroTextPreview.classList.add('dragging');
+    heroDrag = { id:e.pointerId, startX:e.clientX, startY:e.clientY, moved:false };
+    guideSnapActive = { vertical:false, horizontal:false };
     els.heroTextPreview.setPointerCapture(e.pointerId);
-    updateHeroPositionFromPointer(e);
     e.preventDefault();
   });
   els.heroTextPreview?.addEventListener('pointermove', (e)=>{
-    if(heroDrag === null || e.pointerId !== heroDrag) return;
-    updateHeroPositionFromPointer(e);
+    if(!heroDrag || e.pointerId !== heroDrag.id) return;
+    const dx = Math.abs(e.clientX - heroDrag.startX);
+    const dy = Math.abs(e.clientY - heroDrag.startY);
+    if(!heroDrag.moved && Math.sqrt(dx*dx + dy*dy) > 2){
+      heroDrag.moved = true;
+      els.heroTextPreview.classList.add('dragging');
+    }
+    if(heroDrag.moved){
+      updateHeroPositionFromPointer(e);
+    }
   });
   els.heroTextPreview?.addEventListener('pointerup', endHeroDrag);
   els.heroTextPreview?.addEventListener('pointercancel', endHeroDrag);
@@ -4288,6 +4504,16 @@
     const start = normalizeHex(state.text.hero.gradient?.start || '#0ea5e9', '#0ea5e9');
     return getReadableInk(start);
   }
+  function resizeHeroEditor(){
+    if(!heroEditing || !els.heroInlineEditor || !els.heroInnerText) return;
+    els.heroInlineEditor.style.height = 'auto';
+    els.heroInlineEditor.style.width = 'auto';
+    const rect = els.heroInnerText.getBoundingClientRect();
+    if(rect.width > 0 && rect.height > 0){
+      els.heroInlineEditor.style.width = `${rect.width}px`;
+      els.heroInlineEditor.style.height = `${rect.height}px`;
+    }
+  }
   function openHeroEditor(){
     if(heroEditing) return;
     if(!els.heroInlineEditor || !els.heroTextPreview) return;
@@ -4312,7 +4538,7 @@
     editorStyle.minWidth = `${width}px`;
     editorStyle.height = `${height}px`;
     editorStyle.minHeight = `${height}px`;
-    editorStyle.overflow = 'hidden';
+    editorStyle.overflow = 'visible';
     editorStyle.color = heroEditorTextColor();
     editorStyle.background = 'transparent';
     editorStyle.boxShadow = 'none';
@@ -4321,6 +4547,7 @@
       els.heroInlineEditor.focus({ preventScroll:true });
       const len = els.heroInlineEditor.value.length;
       try{ els.heroInlineEditor.setSelectionRange(len, len); }catch(err){}
+      resizeHeroEditor();
     });
   }
   function closeHeroEditor({ commit = true } = {}){
@@ -4332,6 +4559,7 @@
     els.heroInlineEditor.style.height = '';
     els.heroInlineEditor.style.minWidth = '';
     els.heroInlineEditor.style.minHeight = '';
+    els.heroInlineEditor.style.overflow = '';
     const nextValue = els.heroInlineEditor.value.replace(/\r\n/g,'\n');
     if(commit && nextValue !== state.text.hero.value){
       state.text.hero.value = nextValue;
@@ -4370,6 +4598,12 @@
       closeHeroEditor({ commit:true });
     }
   });
+  els.heroInlineEditor?.addEventListener('input', (e)=>{
+    if(!heroEditing) return;
+    const val = e.target.value;
+    if(els.heroInnerText){ els.heroInnerText.textContent = val; }
+    resizeHeroEditor();
+  });
   els.heroInlineEditor?.addEventListener('blur', ()=>{
     if(heroEditing){ closeHeroEditor({ commit:true }); }
   });
@@ -4384,7 +4618,46 @@
     fitPreviewZoomToStage(); render(); updateControls(); buildFormatChips();
   });
 
-  els.overlayAlpha.addEventListener('input', (e)=>{ state.frost.overlayAlpha = (+e.target.value)/100; els.overlayAlphaVal.textContent = Math.round(state.frost.overlayAlpha*100); updateControls(); render(); });
+  els.overlayAlpha.addEventListener('input', (e)=>{
+    state.frost.overlayAlpha = Math.max(0, Math.min(1, (+e.target.value)/100));
+    const delta = Math.round((state.frost.overlayAlpha - 0.5) * 100);
+    if(els.overlayAlphaVal){ els.overlayAlphaVal.textContent = delta === 0 ? '0' : `${delta>0?'+':''}${delta}`; }
+    updateControls();
+    render();
+  });
+  els.toggleGuidesBtn?.addEventListener('click', ()=>{
+    state.guidesHidden = !state.guidesHidden;
+    guideSnapActive = { vertical:false, horizontal:false };
+    render();
+  });
+  const fullscreenTarget = ()=> els.stage?.parentElement || els.stage;
+  function syncFullscreenState(){
+    const target = fullscreenTarget();
+    const active = !!document.fullscreenElement && (document.fullscreenElement === target || document.fullscreenElement?.contains(target));
+    state.fullscreen = active;
+    if(els.fullscreenBtn){
+      els.fullscreenBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      const textEl = els.fullscreenBtn.querySelector('.btn-text');
+      if(textEl){ textEl.textContent = active ? 'Windowed view' : 'Full screen'; }
+      const iconEl = els.fullscreenBtn.querySelector('i[data-lucide]');
+      if(iconEl){ iconEl.setAttribute('data-lucide', active ? 'minimize-2' : 'maximize-2'); }
+    }
+    render();
+  }
+  els.fullscreenBtn?.addEventListener('click', ()=>{
+    const target = fullscreenTarget();
+    if(!target) return;
+    if(document.fullscreenElement){
+      if(document.exitFullscreen){ document.exitFullscreen().catch(()=>{}); }
+    } else {
+      const req = target.requestFullscreen || target.webkitRequestFullscreen || target.mozRequestFullScreen || target.msRequestFullscreen;
+      if(req){ req.call(target); }
+    }
+  });
+  els.exitFullscreenBtn?.addEventListener('click', ()=>{
+    if(document.fullscreenElement && document.exitFullscreen){ document.exitFullscreen().catch(()=>{}); }
+  });
+  document.addEventListener('fullscreenchange', syncFullscreenState);
 
   function segSizeHandler(segEl, which, map){
     if(!segEl) return;
@@ -4630,35 +4903,9 @@
 
       const shouldShowBar = state.frost.enabled || state.frost.logo1.src || state.frost.logo2.src;
 
-      if(shouldShowBar){
+      if(shouldShowBar && state.frost.enabled){
         const frostCanvas = buildFrostCanvas(baseLayer, barH);
         ctx.drawImage(frostCanvas, 0, barY);
-      }
-
-      if(state.frost.enabled){
-        const overlayStrength = Math.max(0, Math.min(1, state.frost.overlayAlpha));
-        if(overlayStrength > 0){
-          ctx.save();
-          const grad = ctx.createLinearGradient(0, barY, 0, barY + barH);
-          grad.addColorStop(0, `rgba(255,255,255,${0.08 + overlayStrength*0.18})`);
-          grad.addColorStop(0.55, `rgba(24,33,52,${0.22 + overlayStrength*0.2})`);
-          grad.addColorStop(1, `rgba(9,14,26,${0.32 + overlayStrength*0.22})`);
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, barY, fw, barH);
-          ctx.restore();
-        }
-        ctx.save();
-        const edgeShade = ctx.createLinearGradient(0, barY, fw, barY);
-        const edgeAlpha = 0.18 + overlayStrength*0.12;
-        edgeShade.addColorStop(0, `rgba(8,12,24,${edgeAlpha})`);
-        edgeShade.addColorStop(0.5, 'rgba(8,12,24,0)');
-        edgeShade.addColorStop(1, `rgba(8,12,24,${edgeAlpha})`);
-        ctx.fillStyle = edgeShade;
-        ctx.fillRect(0, barY, fw, barH);
-        ctx.restore();
-
-        ctx.save(); ctx.globalAlpha = 0.12 + overlayStrength*0.12; ctx.fillStyle = '#ffffff'; ctx.fillRect(0, barY, fw, 1); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.28 + overlayStrength*0.18; ctx.fillStyle = 'rgba(6,10,20,1)'; ctx.fillRect(0, barY + barH - 2, fw, 2); ctx.restore();
       }
 
       // logos on bar
@@ -4683,41 +4930,6 @@
       if(state.frost.logo1.src){ const m1 = await drawLogo(ctx, state.frost.logo1.src, h1, state.frost.logo1.tone, x); x -= m1.w; }
 
       // Play badge (fake background blur)
-      if(state.play.enabled){
-        const d = state.play.sizeExp;
-        const cy = (fh - state.frost.barHExp)/2; const cx = fw/2; const r = d/2;
-
-        const pad = Math.round(d * 0.45);
-        const sampleSize = d + pad*2;
-        const sx = Math.max(0, Math.round(cx - sampleSize/2));
-        const sy = Math.max(0, Math.round(cy - sampleSize/2));
-        const sw = Math.min(sampleSize, fw - sx);
-        const sh = Math.min(sampleSize, fh - sy);
-        const sampleCanvas = document.createElement('canvas');
-        sampleCanvas.width = sampleSize; sampleCanvas.height = sampleSize;
-        const sampleCtx = sampleCanvas.getContext('2d');
-        sampleCtx.drawImage(baseLayer, sx, sy, sw, sh, 0, 0, sampleSize, sampleSize);
-
-        ctx.save();
-        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
-        ctx.filter = `blur(${Math.max(12, Math.round(d*0.16))}px)`;
-        ctx.drawImage(sampleCanvas, cx - sampleSize/2, cy - sampleSize/2);
-        ctx.globalAlpha = 0.4;
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(cx - r, cy - r, d, d);
-        ctx.restore();
-
-        ctx.save(); ctx.globalAlpha = 0.35; ctx.strokeStyle = 'rgba(255,255,255,0.28)'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(cx, cy, r-1.2, 0, Math.PI*2); ctx.stroke(); ctx.restore();
-        ctx.save(); ctx.globalAlpha = 0.25; ctx.strokeStyle = 'rgba(0,0,0,0.55)'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(cx, cy, r-0.6, 0, Math.PI*2); ctx.stroke(); ctx.restore();
-
-        ctx.save(); ctx.lineWidth = 6; ctx.lineJoin = 'round'; ctx.lineCap='round'; ctx.strokeStyle='#fff'; ctx.fillStyle='#fff';
-        const scale = Math.min(d*0.55/59, d*0.55/63);
-        ctx.translate(cx - (59*scale)/2 - 1.5*scale, cy - (63*scale)/2);
-        ctx.scale(scale, scale);
-        const path = new Path2D('M18 14 L44 31.5 L18 49 Z');
-        ctx.fill(path); ctx.stroke(path);
-        ctx.restore();
-      }
     }
 
     // Square corner logo
@@ -4828,13 +5040,16 @@
       const scaleX = state.format.wPreview ? state.format.wExport / state.format.wPreview : 1;
       const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
       const padScale = Math.sqrt(scaleX * scaleY);
-      const panel = state.text.hero.panel || 'none';
-      const padX = panel === 'none' ? 0 : 18 * padScale;
-      const padY = panel === 'none' ? 0 : 14 * padScale;
-      const radius = panel === 'none' ? 0 : 18 * padScale;
-      if(panel !== 'none'){
+      const panelMode = state.text.hero.panel || 'none';
+      const padX = panelMode === 'none' ? 0 : 18 * padScale;
+      const padY = panelMode === 'none' ? 0 : 14 * padScale;
+      const radius = panelMode === 'none' ? 0 : 18 * padScale;
+      if(panelMode !== 'none'){
         ctx.save();
-        const panelColor = panel === 'dark' ? 'rgba(15,23,42,0.68)' : 'rgba(255,255,255,0.7)';
+        const basePanelColor = panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
+        const rgbPanel = hexToRgb(basePanelColor);
+        const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
+        const panelColor = rgbPanel ? `rgba(${rgbPanel.r},${rgbPanel.g},${rgbPanel.b},${panelOpacity})` : `rgba(255,255,255,${panelOpacity})`;
         drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
         ctx.fillStyle = panelColor;
         ctx.fill();
@@ -4857,7 +5072,31 @@
         fillStyle = grad;
       }
       ctx.fillStyle = fillStyle;
-      const drawLine = (text, startX, startY)=>{
+      const drawLine = (text, startX, startY, width, isLastLine)=>{
+        if(!text){ return; }
+        const shouldJustify = align === 'justify' && !isLastLine && text.trim().includes(' ');
+        if(shouldJustify){
+          const words = text.split(' ');
+          const spaceCount = words.length - 1;
+          let measuredWords = 0;
+          words.forEach((word)=>{ measuredWords += ctx.measureText(word).width; if(letterSpacing){ measuredWords += letterSpacing * word.length; } });
+          if(letterSpacing && words.length){ measuredWords -= letterSpacing * words.length; }
+          const baseSpace = ctx.measureText(' ').width + (letterSpacing || 0);
+          const totalSpace = Math.max(0, maxWidth - measuredWords);
+          const extra = spaceCount > 0 ? (totalSpace / spaceCount) : 0;
+          let x = startX;
+          words.forEach((word, idx)=>{
+            for(let i=0;i<word.length;i++){
+              const ch = word[i];
+              ctx.fillText(ch, x, startY);
+              x += ctx.measureText(ch).width + (letterSpacing || 0);
+            }
+            if(idx < spaceCount){
+              x += baseSpace + extra;
+            }
+          });
+          return;
+        }
         if(!letterSpacing){ ctx.fillText(text, startX, startY); return; }
         let x = startX;
         for(let i=0;i<text.length;i++){
@@ -4871,9 +5110,74 @@
         const line = lines[i];
         const width = lineWidths[i];
         const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
-        drawLine(line, lineLeft, y);
+        drawLine(line, align === 'justify' ? baseLeft : lineLeft, y, width, i === lines.length - 1);
         y += lineHeightPx;
       }
+      ctx.restore();
+    }
+
+    if(state.format.key==='HORIZ' && state.play.enabled){
+      const d = state.play.sizeExp;
+      const r = d / 2;
+      const cx = fw / 2;
+      const cy = (fh - state.frost.barHExp) / 2;
+      const pad = Math.round(d * 0.45);
+      const sampleSize = d + pad * 2;
+      const sx = Math.max(0, Math.round(cx - sampleSize / 2));
+      const sy = Math.max(0, Math.round(cy - sampleSize / 2));
+      const sw = Math.min(sampleSize, fw - sx);
+      const sh = Math.min(sampleSize, fh - sy);
+      const sampleCanvas = document.createElement('canvas');
+      sampleCanvas.width = sampleSize;
+      sampleCanvas.height = sampleSize;
+      const sampleCtx = sampleCanvas.getContext('2d');
+      sampleCtx.drawImage(baseLayer, sx, sy, sw, sh, 0, 0, sampleSize, sampleSize);
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.filter = `blur(${Math.max(12, Math.round(d * 0.16))}px)`;
+      ctx.drawImage(sampleCanvas, cx - sampleSize / 2, cy - sampleSize / 2);
+      ctx.globalAlpha = 0.4;
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(cx - r, cy - r, d, d);
+      ctx.restore();
+
+      ctx.save();
+      ctx.globalAlpha = 0.35;
+      ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 1.2, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.save();
+      ctx.globalAlpha = 0.25;
+      ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 0.6, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.save();
+      ctx.lineWidth = 6;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#fff';
+      ctx.fillStyle = '#fff';
+      const scale = Math.min(d * 0.55 / 59, d * 0.55 / 63);
+      ctx.translate(cx, cy);
+      ctx.scale(scale, scale);
+      ctx.beginPath();
+      ctx.moveTo(-11.5, -19.5);
+      ctx.lineTo(18.5, 0);
+      ctx.lineTo(-11.5, 19.5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
       ctx.restore();
     }
 
