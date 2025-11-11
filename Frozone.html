@@ -143,7 +143,7 @@
   .stage-inner{position:relative; margin:auto; width:100%; height:100%; border-radius:18px; background:var(--stageInner); border:1px solid var(--border); overflow:hidden; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7); transition:background .25s ease, border-color .2s ease, box-shadow .25s ease}
   .stage-inner.drag-over{border-color:rgba(14,165,233,0.6); box-shadow:inset 0 0 0 2px rgba(14,165,233,0.2), 0 0 0 4px rgba(14,165,233,0.12)}
   .stage-inner.guides-hidden{box-shadow:none; border-color:transparent;}
-  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(148,163,184,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease;}
+  .stage-inner.guides-hidden::before{content:""; position:absolute; left:50%; top:50%; width:var(--frame-w, 0); height:var(--frame-h, 0); transform:translate(-50%,-50%); border-radius:18px; box-shadow:0 0 0 9999px rgba(100,116,139,0.55); pointer-events:none; opacity:1; transition:box-shadow .2s ease, background .2s ease; background:transparent;}
   .stage-inner.guides-hidden .frame,
   .stage-inner.guides-hidden .resizeHandle,
   .stage-inner.guides-hidden .guideLine,
@@ -180,6 +180,7 @@
   .heroText.dragging{cursor:grabbing; box-shadow:0 14px 40px rgba(15,23,42,0.18)}
   .heroText.resizing{cursor:nwse-resize}
   .heroText .heroInner{display:block; pointer-events:none; white-space:pre-wrap}
+  .heroText[data-panel-style="inline"] .heroInner{display:inline; box-decoration-break:clone; -webkit-box-decoration-break:clone}
   .heroText[data-align="left"] .heroInner{text-align:left}
   .heroText[data-align="center"] .heroInner{text-align:center}
   .heroText[data-align="right"] .heroInner{text-align:right}
@@ -200,6 +201,26 @@
   .heroHandle[data-corner="ne"]{top:0; right:0; cursor:nesw-resize}
   .heroHandle[data-corner="se"]{bottom:0; right:0; cursor:nwse-resize}
   .heroHandle[data-corner="sw"]{bottom:0; left:0; cursor:nesw-resize}
+  .heroShadowSummary{font-size:12px; color:var(--muted); margin-left:12px}
+  .heroShadowRow{display:flex; align-items:center; gap:12px; position:relative}
+  .heroShadowPopover{position:absolute; top:calc(100% + 10px); right:0; z-index:20; min-width:260px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:0 18px 44px rgba(2,6,23,0.26); display:none; flex-direction:column; gap:12px}
+  .heroShadowPopover.show{display:flex}
+  .heroShadowPopover header{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .heroShadowPopover .shadowControls{display:grid; gap:12px}
+  .heroShadowPopover .shadowField{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .heroShadowPopover .shadowField label{min-width:78px; font-size:12px; color:var(--muted)}
+  .heroShadowPopover .shadowField .colorField{flex:1}
+  .heroShadowPopover .shadowField input[type="number"],
+  .heroShadowPopover .shadowField input[type="range"]{flex:1}
+  .heroShadowPopover .shadowField input[type="number"]{padding:8px 10px; border-radius:10px; border:1px solid var(--border); background:var(--stageInner); color:var(--ink); font-size:13px}
+  :root[data-theme="dark"] .heroShadowPopover .shadowField input[type="number"]{border-color:var(--border); background:rgba(15,23,42,0.65); color:var(--ink)}
+  .heroShadowPopover .shadowValue{min-width:42px; text-align:right; font-size:12px; color:var(--muted)}
+  .heroShadowPopover .colorField{width:100%}
+  .heroShadowPopover footer{display:flex; justify-content:flex-end}
+  .heroShadowPopover button.closeShadow{all:unset; color:var(--muted); font-size:12px; cursor:pointer}
+  .heroShadowPopover button.closeShadow:hover{color:var(--ink)}
+  .heroShadowPopover::before{content:""; position:absolute; top:-12px; right:28px; width:20px; height:12px; background:var(--card); border-left:1px solid var(--border); border-top:1px solid var(--border); transform:rotate(45deg);}
+  :root[data-theme="dark"] .heroShadowPopover::before{border-color:var(--border);}
   .bannerLogoPrev{position:absolute; display:none; pointer-events:none; top:15px; left:15px; height:30px; width:auto; object-fit:contain; z-index:45}
   .logoWarning{font-size:12px; color:#f97316; background:rgba(249,115,22,0.12); border:1px solid rgba(249,115,22,0.35); padding:10px 12px; border-radius:12px; margin:6px 0 0 0}
   .toneHint{display:block; font-size:12px; color:var(--muted); margin-top:6px}
@@ -415,6 +436,9 @@
   .modalFooter{padding:20px 28px; display:flex; gap:16px; justify-content:space-between; align-items:center; flex-wrap:wrap; border-top:1px solid var(--border); background:var(--card)}
   .modalFooterStart,.modalFooterEnd{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
   .modalIntro{font-size:13px; color:var(--muted); background:var(--chip-bg); border:1px dashed var(--border); border-radius:14px; padding:16px 18px; line-height:1.5}
+  .modalIntro p{margin:0 0 8px 0}
+  .modalIntro p:last-child{margin-bottom:0}
+  .modalIntroNote{color:var(--ink); font-weight:600}
   .modalNotice{margin:12px 0 0 0; font-size:12px; color:var(--muted); line-height:1.5}
   .partnerRows{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
   .partnerRow{display:grid; grid-template-columns:minmax(0,72px) 1fr auto; gap:16px; align-items:flex-start; padding:16px; border:1px solid var(--border); border-radius:16px; background:var(--card); box-shadow:0 14px 32px rgba(15,23,42,0.12)}
@@ -495,6 +519,11 @@
   .versionTag{position:fixed; left:24px; bottom:24px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(100,116,139,0.8); backdrop-filter:blur(8px); background:rgba(255,255,255,0.45); border-radius:999px; padding:6px 12px; box-shadow:0 10px 20px rgba(15,23,42,0.1);}
   .exitFullscreenBtn{position:absolute; top:12px; right:12px; z-index:62; display:none}
   .stage-inner.fullscreen-active .exitFullscreenBtn{display:inline-flex}
+  .fullscreenControlDock{position:absolute; top:16px; right:16px; display:none; gap:10px; align-items:center; z-index:63}
+  .fullscreenControlDock .btn{box-shadow:0 12px 28px rgba(2,6,23,0.28)}
+  .fullscreenZoomGroup{display:flex; gap:8px}
+  .stage-inner.fullscreen-active .fullscreenControlDock{display:flex}
+  .fullscreenGuideBtn[aria-pressed="true"]{background:rgba(148,163,184,0.25)}
 
   .floatingFab{position:fixed; right:24px; display:inline-flex; align-items:center; justify-content:flex-start; gap:0; min-width:56px; max-width:56px; height:56px; padding:0 12px; border-radius:50%; border:1px solid transparent; background:var(--card); color:var(--ink); font-weight:600; letter-spacing:0.02em; box-shadow:0 20px 38px rgba(15,23,42,0.16); z-index:61; cursor:pointer; white-space:nowrap; overflow:hidden; backdrop-filter:blur(14px); transition:max-width .36s cubic-bezier(.4,0,.2,1), padding .36s cubic-bezier(.4,0,.2,1), gap .36s cubic-bezier(.4,0,.2,1), border-radius .36s cubic-bezier(.4,0,.2,1), transform .36s cubic-bezier(.22,.61,.36,1), box-shadow .36s cubic-bezier(.22,.61,.36,1), background .3s ease, color .3s ease;}
   .floatingFab .btn-ico{width:22px; height:22px; stroke:currentColor; flex-shrink:0; transition:transform .3s cubic-bezier(.22,.61,.36,1)}
@@ -505,7 +534,8 @@
   .floatingFab:focus-visible{outline:3px solid rgba(14,165,233,0.45); outline-offset:3px}
   .floatingFab .fabIconWrap{display:inline-grid; place-items:center; width:32px; height:32px; position:relative; flex-shrink:0}
 
-  #downloadApp{bottom:110px; border-color:rgba(148,163,184,0.45)}
+  #downloadApp{bottom:110px; border-color:rgba(148,163,184,0.45); justify-content:center; padding:0 16px}
+  #downloadApp .btn-ico{margin-left:4px; position:relative; top:0.5px}
   #downloadApp .fab-label{color:var(--ink)}
   #downloadApp:hover{background:rgba(255,255,255,0.92)}
   :root[data-theme="dark"] #downloadApp{background:rgba(9,20,41,0.72); border-color:rgba(46,63,98,0.65); box-shadow:0 26px 50px rgba(1,5,19,0.6)}
@@ -577,6 +607,7 @@
   :root[data-theme="dark"] .modalHeader{background:linear-gradient(135deg,rgba(30,41,59,0.85),rgba(37,99,235,0.28)); border-bottom-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .modalFooter{background:rgba(15,23,42,0.75); border-top-color:rgba(71,85,105,0.75)}
   :root[data-theme="dark"] .modalIntro{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.7); color:rgba(226,232,240,0.82)}
+  :root[data-theme="dark"] .modalIntroNote{color:rgba(248,250,252,0.92)}
   :root[data-theme="dark"] .modalNotice{color:rgba(200,212,242,0.82)}
   :root[data-theme="dark"] .partnerRow{background:rgba(15,23,42,0.7); border-color:rgba(71,85,105,0.75); box-shadow:0 22px 48px rgba(2,6,23,0.7)}
   :root[data-theme="dark"] .partnerRowFields input{background:rgba(15,23,42,0.55); border-color:rgba(71,85,105,0.75); color:#e2e8f0}
@@ -628,7 +659,7 @@
 
       <div class="scroll">
         <!-- Step 1: Upload -->
-        <div class="section">
+        <div class="section" data-step-key="upload">
           <div class="section-title"><span class="badge">1</span> Upload image(s)</div>
           <div class="uploadGrid">
             <div class="uploadCell">
@@ -674,7 +705,7 @@
         </div>
 
         <!-- Step 2: Format -->
-        <div class="section">
+        <div class="section" data-step-key="format">
           <div class="section-title"><span class="badge">2</span> Choose format</div>
           <div class="stack" id="formatRow"></div>
           <div class="row" id="vertSizeRow" style="display:none; margin-top:18px">
@@ -686,8 +717,8 @@
           </div>
         </div>
 
-        <div class="section" id="bgSourceSection" aria-hidden="true">
-          <div class="section-title"><span class="badge">2b</span> Background source</div>
+        <div class="section" id="bgSourceSection" aria-hidden="true" data-step-key="background">
+          <div class="section-title"><span class="badge">3</span> Background source</div>
           <div class="stack">
             <div class="bgGuidance" id="bgGuidance" aria-live="polite">
               <div class="bgGuidanceTitle">Background tips</div>
@@ -823,7 +854,7 @@
         </div>
 
         <!-- Step 3: Adjust -->
-        <div class="section">
+        <div class="section" data-step-key="adjust">
           <div class="section-title"><span class="badge">3</span> Adjust image</div>
           <div class="adjust-grid">
             <div class="adjust-card">
@@ -877,7 +908,7 @@
         </div>
 
         <!-- Step 4: Frosted bar -->
-        <div class="section" id="frostSection">
+        <div class="section" id="frostSection" data-step-key="frost">
           <div class="section-title"><span class="badge">4</span> Frosted Bar </div>
           <div class="switchGroup">
             <div class="switchGroupRow">
@@ -987,31 +1018,43 @@
 
           
         </div>
-        <!-- Step 4b: Square logo -->
-        <div class="section" id="squareLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4b</span> Square logo (top-right)</div>
-          <div class="stack">
-            <div class="row" style="gap:16px">
-              <label class="switch"><input type="checkbox" id="toggleSqLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
-            </div>
-            <div id="sqLogoBlock" class="stack" style="display:none; margin-top:10px">
-              <div class="row">
+        <!-- Step: Square logo -->
+        <div class="section" id="squareLogoSection" style="display:none" data-step-key="square-logo">
+          <div class="section-title"><span class="badge">5</span> Square logo</div>
+          <div class="logoSection">
+            <div class="logoSectionHead">
+              <div class="logoSectionHeading">
+                <span class="title">Square logo</span>
+                <span class="meta">Top-right placement</span>
+              </div>
+              <div class="logoSectionActions">
+                <label class="switch"><input type="checkbox" id="toggleSqLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
                 <label class="btn ghost uploadAction">
                   <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                  <span class="btn-text">Square logo</span>
+                  <span class="btn-text">Upload square logo</span>
                   <input id="sqLogoInput" type="file" accept="image/*" style="display:none"/>
                 </label>
-                <div class="seg" id="sqLogoSeg">
-                  <button data-size="S" class="active">S</button>
-                  <button data-size="M">M</button>
-                  <button data-size="L">L</button>
+              </div>
+            </div>
+            <div class="logoSectionInner" id="sqLogoBlock" style="display:none">
+              <div class="logoControls" role="group" aria-label="Square logo controls">
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Size</span>
+                  <div class="seg" id="sqLogoSeg">
+                    <button data-size="S" class="active">S</button>
+                    <button data-size="M">M</button>
+                    <button data-size="L">L</button>
+                  </div>
                 </div>
-                <div class="seg" id="sqLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Tone</span>
+                  <div class="seg" id="sqLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="toneHint">Check partner brand rules before changing</span>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing</span>
               </div>
               <div class="libWrap">
                 <div class="libHeader">
@@ -1026,25 +1069,34 @@
           </div>
         </div>
 
-        <div class="section" id="bannerLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4c</span> Banner logo (top-left)</div>
-          <div class="stack">
-            <div class="row" style="gap:16px">
-              <label class="switch"><input type="checkbox" id="toggleBannerLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
-            </div>
-            <div id="bannerLogoBlock" class="stack" style="display:none; margin-top:10px">
-              <div class="row">
+        <div class="section" id="bannerLogoSection" style="display:none" data-step-key="banner-logo">
+          <div class="section-title"><span class="badge">6</span> Banner logo</div>
+          <div class="logoSection">
+            <div class="logoSectionHead">
+              <div class="logoSectionHeading">
+                <span class="title">Banner logo</span>
+                <span class="meta">Top-left placement</span>
+              </div>
+              <div class="logoSectionActions">
+                <label class="switch"><input type="checkbox" id="toggleBannerLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
                 <label class="btn ghost uploadAction">
                   <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                  <span class="btn-text">Banner logo</span>
+                  <span class="btn-text">Upload banner logo</span>
                   <input id="bannerLogoInput" type="file" accept="image/*" style="display:none"/>
                 </label>
-                <div class="seg" id="bannerLogoToneSeg">
-                  <button data-tone="orig" class="active">Original</button>
-                  <button data-tone="white">White</button>
-                  <button data-tone="black">Black</button>
+              </div>
+            </div>
+            <div class="logoSectionInner" id="bannerLogoBlock" style="display:none">
+              <div class="logoControls" role="group" aria-label="Banner logo controls">
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Tone</span>
+                  <div class="seg" id="bannerLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="toneHint">Check partner brand rules before changing</span>
                 </div>
-                <span class="toneHint">Check partner brand rules before changing</span>
               </div>
               <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
               <div class="libWrap">
@@ -1060,47 +1112,61 @@
           </div>
         </div>
 
-        <!-- Step 4c: Vertical logo -->
-        <div class="section" id="verticalLogoSection" style="display:none">
-          <div class="section-title"><span class="badge">4d</span> Vertical logo (top-left)</div>
-          <div class="row" style="gap:16px">
-            <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
-          </div>
-          <div id="vertLogoBlock" class="stack" style="display:none; margin-top:10px">
-            <div class="row">
-              <label class="btn ghost uploadAction">
-                <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
-                <span class="btn-text">Vertical logo</span>
-                <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
-              </label>
-              <div class="seg" id="vertLogoSeg">
-                <button data-size="S" class="active">S</button>
-                <button data-size="M">M</button>
-                <button data-size="L">L</button>
+        <!-- Step: Vertical logo -->
+        <div class="section" id="verticalLogoSection" style="display:none" data-step-key="vertical-logo">
+          <div class="section-title"><span class="badge">7</span> Vertical logo</div>
+          <div class="logoSection">
+            <div class="logoSectionHead">
+              <div class="logoSectionHeading">
+                <span class="title">Vertical logo</span>
+                <span class="meta">Top-left placement</span>
               </div>
-              <div class="seg" id="vertLogoToneSeg">
-                <button data-tone="orig" class="active">Original</button>
-                <button data-tone="white">White</button>
-                <button data-tone="black">Black</button>
+              <div class="logoSectionActions">
+                <label class="switch"><input type="checkbox" id="toggleVertLogo"><span class="tgl"><span class="knob"></span></span><span class="lbl">Add logo</span></label>
+                <label class="btn ghost uploadAction">
+                  <i data-lucide="upload" class="btn-ico" aria-hidden="true"></i>
+                  <span class="btn-text">Upload vertical logo</span>
+                  <input id="vertLogoInput" type="file" accept="image/*" style="display:none"/>
+                </label>
               </div>
-              <button class="btn small ghost" id="removeVertLogo">Remove</button>
             </div>
-            <div class="toneHint">Check partner brand rules before changing</div>
-            <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
-            <div class="libWrap">
-              <div class="libHeader">
-                <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
-                <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
-                  <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
-                </button>
+            <div class="logoSectionInner" id="vertLogoBlock" style="display:none">
+              <div class="logoControls" role="group" aria-label="Vertical logo controls">
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Size</span>
+                  <div class="seg" id="vertLogoSeg">
+                    <button data-size="S" class="active">S</button>
+                    <button data-size="M">M</button>
+                    <button data-size="L">L</button>
+                  </div>
+                </div>
+                <div class="logoControlGroup">
+                  <span class="logoControlLabel">Tone</span>
+                  <div class="seg" id="vertLogoToneSeg">
+                    <button data-tone="orig" class="active">Original</button>
+                    <button data-tone="white">White</button>
+                    <button data-tone="black">Black</button>
+                  </div>
+                  <span class="toneHint">Check partner brand rules before changing</span>
+                </div>
+                <button class="btn small ghost" id="removeVertLogo">Remove</button>
               </div>
-              <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              <div class="logoWarning">Logo must be added separately via Daryl. Use this preview to check spacing and visibility only.</div>
+              <div class="libWrap">
+                <div class="libHeader">
+                  <input id="vertLogoSearch" type="search" placeholder="Search partners…" />
+                  <button class="btn ghost icon partnerSettingsBtn" type="button" aria-label="Open partner logo settings" data-partner-settings>
+                    <i data-lucide="sliders" class="btn-ico" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div id="vertLogoGallery" class="libScroller" aria-label="Logo library"></div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="section" id="textSettingsSection" style="display:none">
-          <div class="section-title"><span class="badge">4e</span> Text settings</div>
+        <div class="section" id="textSettingsSection" style="display:none" data-step-key="text">
+          <div class="section-title"><span class="badge">8</span> Text settings</div>
           <div class="textSettingsWrap">
             <div class="textToggleBar">
               <label class="switch"><input type="checkbox" id="toggleSerial"><span class="tgl"><span class="knob"></span></span><span class="lbl">Serial code</span></label>
@@ -1251,6 +1317,55 @@
                       <span class="serialOpacityValue" id="heroPanelOpacityVal">70%</span>
                     </div>
                   </div>
+                  <div class="heroControl heroPanelStyleControl">
+                    <label class="switch"><input type="checkbox" id="heroPanelStyleToggle"><span class="tgl"><span class="knob"></span></span><span class="lbl">Wrap each line</span></label>
+                  </div>
+                </div>
+                <div class="heroRow heroShadowRow">
+                  <button class="btn ghost" type="button" id="heroShadowToggle">
+                    <i data-lucide="layers" class="btn-ico" aria-hidden="true"></i>
+                    <span class="btn-text">Text shadow</span>
+                  </button>
+                  <span class="heroShadowSummary" id="heroShadowSummary">Off</span>
+                  <div class="heroShadowPopover" id="heroShadowPopover" aria-hidden="true">
+                    <header>
+                      <label class="switch"><input type="checkbox" id="heroShadowEnable"><span class="tgl"><span class="knob"></span></span><span class="lbl">Enable shadow</span></label>
+                      <button type="button" class="closeShadow" id="heroShadowClose">Close</button>
+                    </header>
+                    <div class="shadowControls">
+                      <div class="shadowField">
+                        <label for="heroShadowColor">Colour</label>
+                        <div class="colorField">
+                          <input id="heroShadowColor" type="text" value="#000000" maxlength="7" class="colorHexInput" />
+                          <input id="heroShadowColorPicker" type="color" class="colorOverlay" value="#000000" />
+                        </div>
+                      </div>
+                      <div class="shadowField">
+                        <label for="heroShadowOpacity">Opacity</label>
+                        <input id="heroShadowOpacity" type="range" min="0" max="100" value="60" />
+                        <span class="shadowValue" id="heroShadowOpacityVal">60%</span>
+                      </div>
+                      <div class="shadowField">
+                        <label for="heroShadowAngle">Angle</label>
+                        <input id="heroShadowAngle" type="number" min="0" max="360" value="135" />
+                      </div>
+                      <div class="shadowField">
+                        <label for="heroShadowDistance">Distance</label>
+                        <input id="heroShadowDistance" type="range" min="0" max="200" value="12" />
+                        <span class="shadowValue" id="heroShadowDistanceVal">12px</span>
+                      </div>
+                      <div class="shadowField">
+                        <label for="heroShadowSpread">Spread</label>
+                        <input id="heroShadowSpread" type="range" min="0" max="100" value="0" />
+                        <span class="shadowValue" id="heroShadowSpreadVal">0%</span>
+                      </div>
+                      <div class="shadowField">
+                        <label for="heroShadowSize">Size</label>
+                        <input id="heroShadowSize" type="range" min="0" max="200" value="24" />
+                        <span class="shadowValue" id="heroShadowSizeVal">24px</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1258,8 +1373,8 @@
         </div>
 
         <!-- Step 5: Export -->
-        <div class="section">
-          <div class="section-title"><span class="badge">5</span> Mockup Master</div>
+        <div class="section" data-step-key="mockup">
+          <div class="section-title"><span class="badge">9</span> Mockup Master</div>
           <div class="mockupBlock">
             <label class="switch"><input type="checkbox" checked disabled><span class="tgl"><span class="knob"></span></span><span class="lbl">Depth auto-balance</span></label>
             <label class="switch"><input type="checkbox" disabled><span class="tgl"><span class="knob"></span></span><span class="lbl">Smart product lighting</span></label>
@@ -1272,8 +1387,8 @@
         </div>
 
         <!-- Step 6: Export -->
-        <div class="section">
-          <div class="section-title"><span class="badge">6</span> Export</div>
+        <div class="section" data-step-key="export">
+          <div class="section-title"><span class="badge">10</span> Export</div>
           <div class="exportActions">
             <button class="btn primary" id="exportBtn" disabled>
               <i data-lucide="download" class="btn-ico" aria-hidden="true"></i>
@@ -1299,13 +1414,19 @@
         </div>
         <div class="previewControlRow">
           <div class="previewActions">
-            <button class="btn small ghost" type="button" id="fullscreenBtn" aria-pressed="false">
-              <i data-lucide="maximize-2" class="btn-ico" aria-hidden="true"></i>
-              <span class="btn-text">Full screen</span>
-            </button>
             <button class="btn small ghost" type="button" id="toggleGuidesBtn" aria-pressed="false">
               <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
               <span class="btn-text">Hide rulers</span>
+            </button>
+            <button class="btn ghost icon" type="button" id="zoomOutBtn" aria-label="Zoom out">
+              <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
+            </button>
+            <button class="btn ghost icon" type="button" id="zoomInBtn" aria-label="Zoom in">
+              <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
+            </button>
+            <button class="btn small ghost" type="button" id="fullscreenBtn" aria-pressed="false">
+              <i data-lucide="maximize-2" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Full screen</span>
             </button>
           </div>
           <div class="previewZoomControl">
@@ -1315,12 +1436,25 @@
           </div>
         </div>
       </div>
-      <div class="stage">
-        <div class="stage-inner" id="stage">
-          <button class="btn small ghost exitFullscreenBtn" type="button" id="exitFullscreenBtn">
-            <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
-            <span class="btn-text">Exit full screen</span>
-          </button>
+        <div class="stage">
+          <div class="stage-inner" id="stage">
+            <button class="btn small ghost exitFullscreenBtn" type="button" id="exitFullscreenBtn">
+              <i data-lucide="minimize-2" class="btn-ico" aria-hidden="true"></i>
+              <span class="btn-text">Exit full screen</span>
+            </button>
+            <div class="fullscreenControlDock" id="fullscreenControls" aria-hidden="true">
+              <button class="btn ghost icon fullscreenGuideBtn" type="button" id="fullscreenGuideBtn" aria-pressed="false" aria-label="Toggle rulers in full screen">
+                <i data-lucide="eye-off" class="btn-ico" aria-hidden="true"></i>
+              </button>
+              <div class="fullscreenZoomGroup">
+                <button class="btn ghost icon" type="button" id="fullscreenZoomOut" aria-label="Zoom out">
+                  <i data-lucide="zoom-out" class="btn-ico" aria-hidden="true"></i>
+                </button>
+                <button class="btn ghost icon" type="button" id="fullscreenZoomIn" aria-label="Zoom in">
+                  <i data-lucide="zoom-in" class="btn-ico" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
           <div class="image-layer" id="imageLayer">
             <img id="img" alt="uploaded" />
           </div>
@@ -1402,7 +1536,10 @@
         </button>
       </div>
       <div class="modalBody">
-        <div class="modalIntro">Curate partner logos, rename entries, or paste fresh image URLs. Everything saves directly into this file so you can ship updates without leaving Frozone.</div>
+        <div class="modalIntro">
+          <p>Curate partner logos, rename entries, or paste fresh image URLs. Everything saves directly into this file so you can ship updates without leaving Frozone.</p>
+          <p class="modalIntroNote">Changes are stored locally with functional cookies, so use the same browser for a consistent library. Your updates stay on this device and won’t impact other teammates.</p>
+        </div>
         <div class="modalNotice">Before adding remote logos, confirm they follow partner brand guidelines and have transparent backgrounds when required.</div>
         <div id="partnerSettingsList" class="partnerRows"></div>
       </div>
@@ -1520,6 +1657,7 @@
     moveX: document.getElementById('moveX'), xVal: document.getElementById('xVal'),
     moveY: document.getElementById('moveY'), yVal: document.getElementById('yVal'),
     previewZoom: document.getElementById('previewZoom'), zoomLabel: document.getElementById('zoomLabel'),
+    zoomOutBtn: document.getElementById('zoomOutBtn'), zoomInBtn: document.getElementById('zoomInBtn'),
     exportBtn: document.getElementById('exportBtn'), exportAllBtn: document.getElementById('exportAllBtn'),
     outMeta: document.getElementById('outMeta'), lastExport: document.getElementById('lastExport'),
     batchMeta: document.getElementById('batchMeta'),
@@ -1640,6 +1778,23 @@
     heroPanelCustomPicker: document.getElementById('heroPanelCustomPicker'),
     heroPanelOpacity: document.getElementById('heroPanelOpacity'),
     heroPanelOpacityVal: document.getElementById('heroPanelOpacityVal'),
+    heroPanelStyleToggle: document.getElementById('heroPanelStyleToggle'),
+    heroShadowToggle: document.getElementById('heroShadowToggle'),
+    heroShadowSummary: document.getElementById('heroShadowSummary'),
+    heroShadowPopover: document.getElementById('heroShadowPopover'),
+    heroShadowEnable: document.getElementById('heroShadowEnable'),
+    heroShadowClose: document.getElementById('heroShadowClose'),
+    heroShadowColor: document.getElementById('heroShadowColor'),
+    heroShadowColorPicker: document.getElementById('heroShadowColorPicker'),
+    heroShadowOpacity: document.getElementById('heroShadowOpacity'),
+    heroShadowOpacityVal: document.getElementById('heroShadowOpacityVal'),
+    heroShadowAngle: document.getElementById('heroShadowAngle'),
+    heroShadowDistance: document.getElementById('heroShadowDistance'),
+    heroShadowDistanceVal: document.getElementById('heroShadowDistanceVal'),
+    heroShadowSpread: document.getElementById('heroShadowSpread'),
+    heroShadowSpreadVal: document.getElementById('heroShadowSpreadVal'),
+    heroShadowSize: document.getElementById('heroShadowSize'),
+    heroShadowSizeVal: document.getElementById('heroShadowSizeVal'),
 
     serialPreview: document.getElementById('serialPreview'),
     serialTextPreview: document.getElementById('serialTextPreview'),
@@ -1654,6 +1809,10 @@
     fullscreenBtn: document.getElementById('fullscreenBtn'),
     exitFullscreenBtn: document.getElementById('exitFullscreenBtn'),
     toggleGuidesBtn: document.getElementById('toggleGuidesBtn'),
+    fullscreenGuideBtn: document.getElementById('fullscreenGuideBtn'),
+    fullscreenZoomIn: document.getElementById('fullscreenZoomIn'),
+    fullscreenZoomOut: document.getElementById('fullscreenZoomOut'),
+    fullscreenControls: document.getElementById('fullscreenControls'),
     guideVertical: document.getElementById('guideVertical'),
     guideHorizontal: document.getElementById('guideHorizontal'),
 
@@ -1673,6 +1832,8 @@
     partnerSettingsClose: document.querySelector('.partnerSettingsClose'),
     partnerSettingsTriggers: Array.from(document.querySelectorAll('[data-partner-settings]')),
   };
+
+  const stepSections = Array.from(document.querySelectorAll('[data-step-key]'));
 
   bindHexPaletteTriggers();
 
@@ -1698,6 +1859,9 @@
   const EXPORT_START_QUALITY = 0.995;
   const EXPORT_MIN_QUALITY = 0.74;
   const EXPORT_QUALITY_STEP = 0.01;
+  const PREVIEW_ZOOM_MIN = 0.5;
+  const PREVIEW_ZOOM_DEFAULT_MAX = 3;
+  const PREVIEW_ZOOM_STEP = 0.1;
   const UNSPLASH_KEY = 'lS5t0PyTTNcbftZPooe7sNzTb7zLx5K82dY5UZGh6gw';
 
   function defaultTextState(){
@@ -1719,16 +1883,23 @@
         position:{ x:0.5, y:0.42 },
         panel:'none',
         panelCustom:'#111827',
-        panelOpacity:0.7
+        panelOpacity:0.7,
+        panelStyle:'block',
+        shadow:{ ...HERO_SHADOW_DEFAULT }
       }
     };
   }
 
   function cloneTextSettings(src){
     try{
-      return JSON.parse(JSON.stringify(src || defaultTextState()));
+      const cloned = JSON.parse(JSON.stringify(src || defaultTextState()));
+      if(!cloned.hero){ cloned.hero = defaultTextState().hero; }
+      ensureHeroShadow(cloned.hero);
+      return cloned;
     }catch(err){
-      return defaultTextState();
+      const fallback = defaultTextState();
+      ensureHeroShadow(fallback.hero);
+      return fallback;
     }
   }
 
@@ -1812,6 +1983,35 @@
 
   function mapHeroWeight(weight){
     return HERO_WEIGHT_MAP[weight] || 700;
+  }
+
+  const HERO_SHADOW_DEFAULT = {
+    enabled:false,
+    color:'#000000',
+    opacity:0.6,
+    angle:135,
+    distance:12,
+    spread:0,
+    size:24
+  };
+
+  function normalizeHeroShadow(shadow){
+    const base = shadow && typeof shadow === 'object' ? shadow : {};
+    const color = normalizeHex(base.color || '#000000', '#000000');
+    const opacity = Math.max(0, Math.min(1, Number(base.opacity ?? HERO_SHADOW_DEFAULT.opacity)));
+    const angleRaw = Number(base.angle ?? HERO_SHADOW_DEFAULT.angle);
+    const angle = Number.isFinite(angleRaw) ? ((angleRaw % 360) + 360) % 360 : HERO_SHADOW_DEFAULT.angle;
+    const distance = Math.max(0, Number(base.distance ?? HERO_SHADOW_DEFAULT.distance));
+    const spread = Math.max(0, Math.min(100, Number(base.spread ?? HERO_SHADOW_DEFAULT.spread)));
+    const size = Math.max(0, Number(base.size ?? HERO_SHADOW_DEFAULT.size));
+    return { enabled: !!base.enabled, color, opacity, angle, distance, spread, size };
+  }
+
+  function ensureHeroShadow(hero){
+    if(!hero){ return normalizeHeroShadow(HERO_SHADOW_DEFAULT); }
+    hero.shadow = normalizeHeroShadow(hero.shadow || HERO_SHADOW_DEFAULT);
+    hero.panelStyle = hero.panelStyle === 'inline' ? 'inline' : 'block';
+    return hero.shadow;
   }
 
   function bindHexPaletteTriggers(){
@@ -2213,6 +2413,7 @@
     if(els.textSettingsSection){ els.textSettingsSection.style.display = isTextFormat ? 'block' : 'none'; }
 
     if(isTextFormat){
+      const heroShadow = ensureHeroShadow(state.text.hero);
       if(els.toggleSerial){ els.toggleSerial.checked = !!state.text.serial.enabled; }
       if(els.serialSettingsPanel){ els.serialSettingsPanel.style.display = state.text.serial.enabled ? 'grid' : 'none'; }
       if(els.serialCodeInput && els.serialCodeInput.value !== state.text.serial.value){ els.serialCodeInput.value = state.text.serial.value || ''; }
@@ -2307,6 +2508,66 @@
         els.heroPanelOpacity.value = pct.toString();
         if(els.heroPanelOpacityVal){ els.heroPanelOpacityVal.textContent = `${pct}%`; }
       }
+      if(els.heroPanelStyleToggle){
+        const hasPanel = (state.text.hero.panel || 'none') !== 'none';
+        els.heroPanelStyleToggle.checked = hasPanel && state.text.hero.panelStyle === 'inline';
+        els.heroPanelStyleToggle.disabled = !hasPanel;
+      }
+      if(els.heroShadowEnable){ els.heroShadowEnable.checked = !!heroShadow.enabled; }
+      if(els.heroShadowToggle){ els.heroShadowToggle.classList.toggle('active', !!heroShadow.enabled); }
+      updateHeroShadowSummary(heroShadow);
+      if(els.heroShadowColor){
+        applyHexInputStyle(els.heroShadowColor, heroShadow.color || '#000000');
+      }
+      if(els.heroShadowColorPicker){
+        els.heroShadowColorPicker.value = normalizeHex(heroShadow.color || '#000000', '#000000');
+      }
+      const shadowOpacityPct = Math.round(Math.max(0, Math.min(1, heroShadow.opacity || 0)) * 100);
+      if(els.heroShadowOpacity){
+        els.heroShadowOpacity.value = shadowOpacityPct.toString();
+      }
+      if(els.heroShadowOpacityVal){
+        els.heroShadowOpacityVal.textContent = `${shadowOpacityPct}%`;
+      }
+      if(els.heroShadowAngle){ els.heroShadowAngle.value = Math.round(heroShadow.angle || 0).toString(); }
+      if(els.heroShadowDistance){
+        els.heroShadowDistance.value = Math.round(heroShadow.distance || 0).toString();
+      }
+      if(els.heroShadowDistanceVal){
+        els.heroShadowDistanceVal.textContent = `${Math.round(heroShadow.distance || 0)}px`;
+      }
+      if(els.heroShadowSpread){
+        els.heroShadowSpread.value = Math.round(heroShadow.spread || 0).toString();
+      }
+      if(els.heroShadowSpreadVal){
+        els.heroShadowSpreadVal.textContent = `${Math.round(heroShadow.spread || 0)}%`;
+      }
+      if(els.heroShadowSize){
+        els.heroShadowSize.value = Math.round(heroShadow.size || 0).toString();
+      }
+      if(els.heroShadowSizeVal){
+        els.heroShadowSizeVal.textContent = `${Math.round(heroShadow.size || 0)}px`;
+      }
+      const shadowInputs = [
+        els.heroShadowColor,
+        els.heroShadowOpacity,
+        els.heroShadowAngle,
+        els.heroShadowDistance,
+        els.heroShadowSpread,
+        els.heroShadowSize
+      ];
+      shadowInputs.forEach(input=>{ if(input){ input.disabled = !heroShadow.enabled; } });
+      if(els.heroShadowColorPicker){ els.heroShadowColorPicker.disabled = !heroShadow.enabled; }
+      if(!state.text.hero.enabled){ closeHeroShadowPopover(); }
+      if(els.heroShadowPopover){
+        if(heroShadowPopoverOpen){
+          els.heroShadowPopover.classList.add('show');
+          els.heroShadowPopover.setAttribute('aria-hidden', 'false');
+        } else {
+          els.heroShadowPopover.classList.remove('show');
+          els.heroShadowPopover.setAttribute('aria-hidden', 'true');
+        }
+      }
     }
 
     els.bVal.textContent = state.brightness;
@@ -2366,6 +2627,8 @@
       els.stageHint.style.display = state.imageSrc ? 'none' : 'flex';
     }
 
+    refreshStepBadges();
+
   }
 
   function fitPreviewZoomToStage(){
@@ -2376,29 +2639,47 @@
     const fitByW = (stageRect.width - margin) / state.format.wPreview;
     const fitByH = (stageRect.height - margin) / state.format.hPreview;
     const candidate = Math.min(fitByW, fitByH);
-    const limit = Math.max(0.5, Math.min(3, Number.isFinite(candidate) ? candidate : 3));
+    const limit = Math.max(PREVIEW_ZOOM_MIN, Math.min(PREVIEW_ZOOM_DEFAULT_MAX, Number.isFinite(candidate) ? candidate : PREVIEW_ZOOM_DEFAULT_MAX));
     state.previewZoomMax = limit;
     if(els.previewZoom){
-      els.previewZoom.max = Math.max(limit, 0.5).toFixed(2);
+      els.previewZoom.max = Math.max(limit, PREVIEW_ZOOM_MIN).toFixed(2);
     }
-    const safe = Math.max(0.5, Math.min(limit, state.previewZoom || 1));
+    const safe = Math.max(PREVIEW_ZOOM_MIN, Math.min(limit, state.previewZoom || 1));
     if(safe < state.previewZoom - 0.01){
       setPreviewZoom(parseFloat(safe.toFixed(2)), {force:true});
     }
+    updateZoomControls();
   }
 
   function setPreviewZoom(value, opts = {}){
-    const maxZoom = state.previewZoomMax || 3;
-    const clamped = Math.max(0.5, Math.min(maxZoom, value));
+    const maxZoom = state.previewZoomMax || PREVIEW_ZOOM_DEFAULT_MAX;
+    const clamped = Math.max(PREVIEW_ZOOM_MIN, Math.min(maxZoom, value));
     const rounded = Math.round(clamped * 100) / 100;
     if(rounded === state.previewZoom && !opts.force){
       if(!opts.skipRender){ els.zoomLabel.textContent = state.previewZoom.toFixed(2); }
+      updateZoomControls();
       return;
     }
     state.previewZoom = rounded;
     els.previewZoom.value = state.previewZoom;
     els.zoomLabel.textContent = state.previewZoom.toFixed(2);
+    updateZoomControls();
     if(!opts.skipRender){ render(); }
+  }
+
+  function updateZoomControls(){
+    const maxZoom = state.previewZoomMax || PREVIEW_ZOOM_DEFAULT_MAX;
+    const atMin = state.previewZoom <= PREVIEW_ZOOM_MIN + 0.001;
+    const atMax = state.previewZoom >= maxZoom - 0.001;
+    const disableBtn = (btn, disabled)=>{
+      if(!btn) return;
+      btn.disabled = disabled;
+      btn.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+    };
+    disableBtn(els.zoomOutBtn, atMin);
+    disableBtn(els.fullscreenZoomOut, atMin);
+    disableBtn(els.zoomInBtn, atMax);
+    disableBtn(els.fullscreenZoomIn, atMax);
   }
 
   function applyLogoPreviewTone(el, tone){
@@ -2435,6 +2716,9 @@
       els.stage.classList.toggle('guides-hidden', !!state.guidesHidden);
       els.stage.classList.toggle('fullscreen-active', !!state.fullscreen);
     }
+    if(els.fullscreenControls){
+      els.fullscreenControls.setAttribute('aria-hidden', state.fullscreen ? 'false' : 'true');
+    }
     if(els.toggleGuidesBtn){
       const pressed = !!state.guidesHidden;
       els.toggleGuidesBtn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
@@ -2442,6 +2726,17 @@
       if(textEl){ textEl.textContent = pressed ? 'Show rulers' : 'Hide rulers'; }
       const iconEl = els.toggleGuidesBtn.querySelector('i[data-lucide]');
       if(iconEl){ iconEl.setAttribute('data-lucide', pressed ? 'eye' : 'eye-off'); }
+    }
+    if(els.fullscreenGuideBtn){
+      const pressed = !!state.guidesHidden;
+      els.fullscreenGuideBtn.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+      els.fullscreenGuideBtn.classList.toggle('active', pressed);
+      const icon = pressed ? 'eye' : 'eye-off';
+      const iconEl = els.fullscreenGuideBtn.querySelector('i[data-lucide]');
+      if(iconEl){ iconEl.setAttribute('data-lucide', icon); }
+      const label = pressed ? 'Show rulers' : 'Hide rulers';
+      els.fullscreenGuideBtn.setAttribute('aria-label', label);
+      els.fullscreenGuideBtn.title = label;
     }
     const scaleYPreview = (state.format.hPreview/state.format.hExport) * state.previewZoom;
     const barHPrevPx = state.format.key==='HORIZ' ? state.frost.barHExp * scaleYPreview : 0;
@@ -2603,8 +2898,10 @@
       els.heroTextPreview.dataset.align = state.text.hero.align || 'center';
       els.heroTextPreview.dataset.valign = state.text.hero.vAlign || 'middle';
       const panelMode = state.text.hero.panel || 'none';
+      const panelStyle = panelMode === 'none' ? 'block' : (state.text.hero.panelStyle === 'inline' ? 'inline' : 'block');
       els.heroTextPreview.dataset.mode = state.text.hero.colorMode || 'solid';
       els.heroTextPreview.dataset.panel = panelMode;
+      els.heroTextPreview.dataset.panelStyle = panelStyle;
       inner.textContent = state.text.hero.value;
       inner.style.fontSize = fontPx.toFixed(2) + 'px';
       inner.style.fontFamily = `'${state.text.hero.font || 'SF Pro Text'}', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial'`;
@@ -2636,18 +2933,65 @@
       }
       const basePanelColor = panelMode === 'dark' ? '#050b19' : panelMode === 'light' ? '#ffffff' : normalizeHex(state.text.hero.panelCustom || '#111827', '#111827');
       const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
+      const panelRgb = hexToRgb(basePanelColor);
+      const panelFill = panelRgb ? `rgba(${panelRgb.r},${panelRgb.g},${panelRgb.b},${panelOpacity.toFixed(2)})` : `rgba(255,255,255,${panelOpacity.toFixed(2)})`;
       if(panelMode === 'none'){
         els.heroTextPreview.style.background = 'transparent';
         els.heroTextPreview.style.boxShadow = 'none';
         els.heroTextPreview.style.padding = '0';
         els.heroTextPreview.style.borderRadius = '0';
+        inner.style.background = 'none';
+        inner.style.padding = '0';
+        inner.style.borderRadius = '0';
+        inner.style.boxShadow = 'none';
+        inner.style.display = 'block';
+        inner.style.boxDecorationBreak = 'slice';
+        inner.style.webkitBoxDecorationBreak = 'slice';
+      } else if(panelStyle === 'inline'){
+        els.heroTextPreview.style.background = 'transparent';
+        els.heroTextPreview.style.boxShadow = 'none';
+        els.heroTextPreview.style.padding = '0';
+        els.heroTextPreview.style.borderRadius = '0';
+        inner.style.background = panelFill;
+        inner.style.padding = '14px 18px';
+        inner.style.borderRadius = '18px';
+        inner.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
+        inner.style.display = 'inline';
+        inner.style.boxDecorationBreak = 'clone';
+        inner.style.webkitBoxDecorationBreak = 'clone';
       } else {
-        const rgb = hexToRgb(basePanelColor);
-        const bg = rgb ? `rgba(${rgb.r},${rgb.g},${rgb.b},${panelOpacity.toFixed(2)})` : 'rgba(255,255,255,0.65)';
-        els.heroTextPreview.style.background = bg;
+        els.heroTextPreview.style.background = panelFill;
         els.heroTextPreview.style.boxShadow = '0 14px 40px rgba(15,23,42,0.18)';
         els.heroTextPreview.style.padding = '14px 18px';
         els.heroTextPreview.style.borderRadius = '18px';
+        inner.style.background = 'none';
+        inner.style.padding = '0';
+        inner.style.borderRadius = '0';
+        inner.style.boxShadow = 'none';
+        inner.style.display = 'block';
+        inner.style.boxDecorationBreak = 'slice';
+        inner.style.webkitBoxDecorationBreak = 'slice';
+      }
+
+      const heroShadow = ensureHeroShadow(state.text.hero);
+      if(heroShadow && heroShadow.enabled){
+        const shadowHex = normalizeHex(heroShadow.color || '#000000', '#000000');
+        const rgb = hexToRgb(shadowHex);
+        if(rgb){
+          const angleRad = (heroShadow.angle || 0) * Math.PI / 180;
+          const distPx = Math.max(0, Number(heroShadow.distance || 0)) * scale;
+          const sizePx = Math.max(0, Number(heroShadow.size || 0)) * scale;
+          const spreadPx = Math.max(0, Number(heroShadow.spread || 0)) * scale * 0.25;
+          const offsetX = Math.cos(angleRad) * distPx;
+          const offsetY = Math.sin(angleRad) * distPx;
+          const blur = sizePx + spreadPx;
+          const alpha = Math.max(0, Math.min(1, Number(heroShadow.opacity || 0)));
+          inner.style.textShadow = `${offsetX.toFixed(2)}px ${offsetY.toFixed(2)}px ${blur.toFixed(2)}px rgba(${rgb.r},${rgb.g},${rgb.b},${alpha.toFixed(3)})`;
+        } else {
+          inner.style.textShadow = 'none';
+        }
+      } else {
+        inner.style.textShadow = 'none';
       }
       if(heroEditing && els.heroInlineEditor){
         const editorStyle = els.heroInlineEditor.style;
@@ -2670,10 +3014,17 @@
     } else {
       els.heroTextPreview.style.display = 'none';
       els.heroTextPreview.dataset.panel = 'none';
+      els.heroTextPreview.dataset.panelStyle = 'block';
       els.heroTextPreview.style.background = 'transparent';
       els.heroTextPreview.style.boxShadow = 'none';
       els.heroTextPreview.style.padding = '0';
+      if(els.heroInnerText){
+        els.heroInnerText.style.display = 'block';
+        els.heroInnerText.style.boxDecorationBreak = 'slice';
+        els.heroInnerText.style.webkitBoxDecorationBreak = 'slice';
+      }
     }
+    updateZoomControls();
     refreshIcons();
   }
 
@@ -3668,6 +4019,33 @@
     showPasteFeedback(ok ? 'success' : 'error', ok ? 'Image imported' : 'Import failed');
   }
 
+  function isSectionVisible(section){
+    if(!section) return false;
+    if(section.style && section.style.display === 'none') return false;
+    if(section.getAttribute && section.getAttribute('aria-hidden') === 'true') return false;
+    if(typeof section.offsetParent !== 'undefined'){ return section.offsetParent !== null; }
+    const rects = section.getClientRects?.();
+    return !!(rects && rects.length);
+  }
+
+  function refreshStepBadges(){
+    if(!stepSections || stepSections.length === 0) return;
+    let step = 1;
+    stepSections.forEach(section=>{
+      if(!section) return;
+      const badge = section.querySelector('.badge');
+      if(!badge) return;
+      const visible = isSectionVisible(section);
+      if(visible){
+        badge.textContent = step.toString();
+        section.dataset.stepNumber = step.toString();
+        step++;
+      } else if(section.dataset.stepNumber){
+        badge.textContent = section.dataset.stepNumber;
+      }
+    });
+  }
+
   function persistPartnerLibrary(){
     if(partnerDataScript){
       partnerDataScript.textContent = JSON.stringify(partnerLibrary, null, 2);
@@ -4148,6 +4526,17 @@
   els.moveX.addEventListener('input', e=>{ state.offset.x = +e.target.value; els.xVal.textContent = Math.round(state.offset.x); render(); serializeCurrent(); });
   els.moveY.addEventListener('input', e=>{ state.offset.y = +e.target.value; els.yVal.textContent = Math.round(state.offset.y); render(); serializeCurrent(); });
   els.previewZoom.addEventListener('input', e=>{ setPreviewZoom(+e.target.value, {force:true}); });
+  const stepPreviewZoom = (direction)=>{
+    const maxZoom = state.previewZoomMax || PREVIEW_ZOOM_DEFAULT_MAX;
+    const delta = PREVIEW_ZOOM_STEP * direction;
+    const target = state.previewZoom + delta;
+    const clamped = Math.max(PREVIEW_ZOOM_MIN, Math.min(maxZoom, parseFloat(target.toFixed(2))));
+    setPreviewZoom(clamped, {force:true});
+  };
+  els.zoomOutBtn?.addEventListener('click', ()=>{ stepPreviewZoom(-1); });
+  els.zoomInBtn?.addEventListener('click', ()=>{ stepPreviewZoom(1); });
+  els.fullscreenZoomOut?.addEventListener('click', ()=>{ stepPreviewZoom(-1); });
+  els.fullscreenZoomIn?.addEventListener('click', ()=>{ stepPreviewZoom(1); });
 
   els.toggleFrost.addEventListener('change', ()=>{ state.frost.enabled = els.toggleFrost.checked; updateControls(); render(); });
   els.togglePlay.addEventListener('change', ()=>{ state.play.enabled = els.togglePlay.checked; updateControls(); render(); });
@@ -4343,6 +4732,117 @@
     commitTextState({ refreshControls:false });
     updateControls();
   });
+  els.heroPanelStyleToggle?.addEventListener('change', ()=>{
+    state.text.hero.panelStyle = els.heroPanelStyleToggle.checked ? 'inline' : 'block';
+    commitTextState();
+  });
+
+  function updateHeroShadowSummary(shadow){
+    if(!els.heroShadowSummary) return;
+    if(shadow && shadow.enabled){
+      const pct = Math.round(Math.max(0, Math.min(1, shadow.opacity || 0)) * 100);
+      const dist = Math.round(shadow.distance || 0);
+      els.heroShadowSummary.textContent = `${pct}% • ${dist}px`;
+    } else {
+      els.heroShadowSummary.textContent = 'Off';
+    }
+  }
+
+  let heroShadowPopoverOpen = false;
+  function openHeroShadowPopover(){
+    if(!els.heroShadowPopover) return;
+    heroShadowPopoverOpen = true;
+    els.heroShadowPopover.classList.add('show');
+    els.heroShadowPopover.setAttribute('aria-hidden', 'false');
+  }
+  function closeHeroShadowPopover(){
+    if(!els.heroShadowPopover) return;
+    heroShadowPopoverOpen = false;
+    els.heroShadowPopover.classList.remove('show');
+    els.heroShadowPopover.setAttribute('aria-hidden', 'true');
+  }
+  closeHeroShadowPopover();
+
+  els.heroShadowToggle?.addEventListener('click', ()=>{
+    if(heroShadowPopoverOpen){ closeHeroShadowPopover(); }
+    else { openHeroShadowPopover(); }
+  });
+  els.heroShadowClose?.addEventListener('click', ()=>{
+    closeHeroShadowPopover();
+    try{ els.heroShadowToggle?.focus({ preventScroll:true }); }catch(err){ els.heroShadowToggle?.focus(); }
+  });
+  document.addEventListener('click', (e)=>{
+    if(!heroShadowPopoverOpen) return;
+    if(els.heroShadowPopover?.contains(e.target) || els.heroShadowToggle?.contains(e.target)){ return; }
+    closeHeroShadowPopover();
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && heroShadowPopoverOpen){
+      closeHeroShadowPopover();
+    }
+  });
+  els.heroShadowEnable?.addEventListener('change', ()=>{
+    const shadow = ensureHeroShadow(state.text.hero);
+    shadow.enabled = !!els.heroShadowEnable.checked;
+    commitTextState({ refreshControls:false });
+    updateHeroShadowSummary(shadow);
+    updateControls();
+  });
+  els.heroShadowColor?.addEventListener('change', (e)=>{
+    const shadow = ensureHeroShadow(state.text.hero);
+    const val = normalizeHex(e.target.value, shadow.color || '#000000');
+    shadow.color = val;
+    applyHexInputStyle(els.heroShadowColor, val);
+    if(els.heroShadowColorPicker){ els.heroShadowColorPicker.value = val; }
+    commitTextState({ refreshControls:false });
+  });
+  els.heroShadowColorPicker?.addEventListener('input', (e)=>{
+    const shadow = ensureHeroShadow(state.text.hero);
+    const val = normalizeHex(e.target.value, shadow.color || '#000000');
+    shadow.color = val;
+    if(els.heroShadowColor){
+      els.heroShadowColor.value = val.toUpperCase();
+      applyHexInputStyle(els.heroShadowColor, val);
+    }
+    commitTextState({ refreshControls:false });
+  });
+  els.heroShadowOpacity?.addEventListener('input', (e)=>{
+    const shadow = ensureHeroShadow(state.text.hero);
+    const pct = Math.max(0, Math.min(100, Number(e.target.value)||0));
+    shadow.opacity = pct / 100;
+    if(els.heroShadowOpacityVal){ els.heroShadowOpacityVal.textContent = `${pct}%`; }
+    updateHeroShadowSummary(shadow);
+    commitTextState({ refreshControls:false });
+  });
+  els.heroShadowAngle?.addEventListener('input', (e)=>{
+    const shadow = ensureHeroShadow(state.text.hero);
+    const val = Number(e.target.value);
+    shadow.angle = Number.isFinite(val) ? ((val % 360) + 360) % 360 : shadow.angle;
+    commitTextState({ refreshControls:false });
+  });
+  els.heroShadowDistance?.addEventListener('input', (e)=>{
+    const shadow = ensureHeroShadow(state.text.hero);
+    const val = Math.max(0, Number(e.target.value)||0);
+    shadow.distance = val;
+    if(els.heroShadowDistanceVal){ els.heroShadowDistanceVal.textContent = `${Math.round(val)}px`; }
+    updateHeroShadowSummary(shadow);
+    commitTextState({ refreshControls:false });
+  });
+  els.heroShadowSpread?.addEventListener('input', (e)=>{
+    const shadow = ensureHeroShadow(state.text.hero);
+    const val = Math.max(0, Math.min(100, Number(e.target.value)||0));
+    shadow.spread = val;
+    if(els.heroShadowSpreadVal){ els.heroShadowSpreadVal.textContent = `${Math.round(val)}%`; }
+    commitTextState({ refreshControls:false });
+  });
+  els.heroShadowSize?.addEventListener('input', (e)=>{
+    const shadow = ensureHeroShadow(state.text.hero);
+    const val = Math.max(0, Number(e.target.value)||0);
+    shadow.size = val;
+    if(els.heroShadowSizeVal){ els.heroShadowSizeVal.textContent = `${Math.round(val)}px`; }
+    commitTextState({ refreshControls:false });
+  });
+
   els.heroPanelCustomHex?.addEventListener('input', (e)=>{
     const val = normalizeHex(e.target.value, state.text.hero.panelCustom || '#111827');
     state.text.hero.panelCustom = val;
@@ -4373,6 +4873,7 @@
   let heroResize = null;
   let heroEditing = false;
   const HERO_SNAP_THRESHOLD = 12;
+  const IMAGE_SNAP_THRESHOLD = 16;
   function updateHeroPositionFromPointer(e){
     if(!frameMetrics.width || !frameMetrics.height) return;
     const stageRect = els.stage.getBoundingClientRect();
@@ -4626,6 +5127,11 @@
     render();
   });
   els.toggleGuidesBtn?.addEventListener('click', ()=>{
+    state.guidesHidden = !state.guidesHidden;
+    guideSnapActive = { vertical:false, horizontal:false };
+    render();
+  });
+  els.fullscreenGuideBtn?.addEventListener('click', ()=>{
     state.guidesHidden = !state.guidesHidden;
     guideSnapActive = { vertical:false, horizontal:false };
     render();
@@ -5017,6 +5523,10 @@
       ctx.font = `${weight} ${fontSize}px ${fontStack}`;
       ctx.textBaseline = 'top';
       ctx.textAlign = 'left';
+      ctx.shadowColor = 'rgba(0,0,0,0)';
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
       const measureLine = (text)=>{
         if(!text) return 0;
         if(!letterSpacing){ return ctx.measureText(text).width; }
@@ -5041,6 +5551,7 @@
       const scaleY = state.format.hPreview ? state.format.hExport / state.format.hPreview : 1;
       const padScale = Math.sqrt(scaleX * scaleY);
       const panelMode = state.text.hero.panel || 'none';
+      const panelStyle = panelMode === 'none' ? 'block' : (state.text.hero.panelStyle === 'inline' ? 'inline' : 'block');
       const padX = panelMode === 'none' ? 0 : 18 * padScale;
       const padY = panelMode === 'none' ? 0 : 14 * padScale;
       const radius = panelMode === 'none' ? 0 : 18 * padScale;
@@ -5050,9 +5561,25 @@
         const rgbPanel = hexToRgb(basePanelColor);
         const panelOpacity = Math.max(0, Math.min(1, Number(state.text.hero.panelOpacity ?? 0.7)));
         const panelColor = rgbPanel ? `rgba(${rgbPanel.r},${rgbPanel.g},${rgbPanel.b},${panelOpacity})` : `rgba(255,255,255,${panelOpacity})`;
-        drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
         ctx.fillStyle = panelColor;
-        ctx.fill();
+        if(panelStyle === 'inline'){
+          for(let i=0;i<lines.length;i++){
+            const width = lineWidths[i] || 0;
+            const isLast = i === lines.length - 1;
+            const effectiveWidth = (align === 'justify' && !isLast) ? maxWidth : width;
+            const lineLeft = align === 'center' ? baseLeft + (maxWidth - effectiveWidth)/2 : align === 'right' ? baseLeft + (maxWidth - effectiveWidth) : baseLeft;
+            const startX = align === 'justify' ? baseLeft : lineLeft;
+            const rectLeft = startX - padX;
+            const rectTop = baseTop + i * lineHeightPx - padY;
+            const rectWidth = Math.max(0, effectiveWidth + padX * 2);
+            const rectHeight = fontSize + padY * 2;
+            drawRoundedRect(ctx, rectLeft, rectTop, rectWidth, rectHeight, radius);
+            ctx.fill();
+          }
+        } else {
+          drawRoundedRect(ctx, baseLeft - padX, baseTop - padY, maxWidth + padX * 2, totalHeight + padY * 2, radius);
+          ctx.fill();
+        }
         ctx.restore();
       }
       let fillStyle = normalizeHex(state.text.hero.solid || '#ffffff', '#ffffff');
@@ -5072,6 +5599,23 @@
         fillStyle = grad;
       }
       ctx.fillStyle = fillStyle;
+      const heroShadow = ensureHeroShadow(state.text.hero);
+      if(heroShadow && heroShadow.enabled){
+        const shadowHex = normalizeHex(heroShadow.color || '#000000', '#000000');
+        const rgb = hexToRgb(shadowHex);
+        if(rgb){
+          const angleRad = (heroShadow.angle || 0) * Math.PI / 180;
+          const dist = Math.max(0, Number(heroShadow.distance || 0));
+          const sizePx = Math.max(0, Number(heroShadow.size || 0));
+          const spreadPx = Math.max(0, Number(heroShadow.spread || 0)) * 0.25;
+          const blur = sizePx + spreadPx;
+          const alpha = Math.max(0, Math.min(1, Number(heroShadow.opacity || 0)));
+          ctx.shadowColor = `rgba(${rgb.r},${rgb.g},${rgb.b},${alpha.toFixed(3)})`;
+          ctx.shadowBlur = blur;
+          ctx.shadowOffsetX = Math.cos(angleRad) * dist;
+          ctx.shadowOffsetY = Math.sin(angleRad) * dist;
+        }
+      }
       const drawLine = (text, startX, startY, width, isLastLine)=>{
         if(!text){ return; }
         const shouldJustify = align === 'justify' && !isLastLine && text.trim().includes(' ');
@@ -5108,7 +5652,7 @@
       let y = baseTop;
       for(let i=0;i<lines.length;i++){
         const line = lines[i];
-        const width = lineWidths[i];
+        const width = lineWidths[i] || 0;
         const lineLeft = align === 'center' ? baseLeft + (maxWidth - width)/2 : align === 'right' ? baseLeft + (maxWidth - width) : baseLeft;
         drawLine(line, align === 'justify' ? baseLeft : lineLeft, y, width, i === lines.length - 1);
         y += lineHeightPx;
@@ -5276,8 +5820,33 @@
     if(!state.dragging) return;
     const dx = (e.clientX - state.dragging.startX)/state.previewZoom;
     const dy = (e.clientY - state.dragging.startY)/state.previewZoom;
-    state.offset.x = Math.max(-state.limits.x, Math.min(state.dragging.ox + dx, state.limits.x));
-    state.offset.y = Math.max(-state.limits.y, Math.min(state.dragging.oy + dy, state.limits.y));
+    const limitX = state.limits.x;
+    const limitY = state.limits.y;
+    let nextX = state.dragging.ox + dx;
+    let nextY = state.dragging.oy + dy;
+    guideSnapActive = { vertical:false, horizontal:false };
+    if(!state.guidesHidden && frameMetrics.width && frameMetrics.height){
+      const baseCenterX = frameMetrics.left + frameMetrics.width/2;
+      const baseCenterY = frameMetrics.top + frameMetrics.height/2;
+      if(typeof guidePositions.vertical === 'number'){
+        const stageX = baseCenterX + (nextX * state.previewZoom);
+        if(Math.abs(stageX - guidePositions.vertical) <= IMAGE_SNAP_THRESHOLD){
+          nextX = (guidePositions.vertical - baseCenterX) / state.previewZoom;
+          guideSnapActive.vertical = true;
+        }
+      }
+      if(typeof guidePositions.horizontal === 'number'){
+        const stageY = baseCenterY + (nextY * state.previewZoom);
+        if(Math.abs(stageY - guidePositions.horizontal) <= IMAGE_SNAP_THRESHOLD){
+          nextY = (guidePositions.horizontal - baseCenterY) / state.previewZoom;
+          guideSnapActive.horizontal = true;
+        }
+      }
+    }
+    nextX = Math.max(-limitX, Math.min(nextX, limitX));
+    nextY = Math.max(-limitY, Math.min(nextY, limitY));
+    state.offset.x = nextX;
+    state.offset.y = nextY;
     render();
   });
   window.addEventListener('mouseup', ()=>{
@@ -5285,6 +5854,8 @@
       state.dragging=null;
       els.imageLayer.classList.remove('dragging');
       els.stage.classList.remove('dragging');
+      guideSnapActive = { vertical:false, horizontal:false };
+      render();
       serializeCurrent();
     }
   });
